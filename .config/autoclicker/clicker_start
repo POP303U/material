@@ -2,5 +2,4 @@
 
 while true; do
     xdotool click 1
-    wait 1
 done
