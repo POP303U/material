@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Check if wlogout is already running
+if pgrep -x "wofi" >/dev/null; then
+    pkill -x "wofi"
+    exit 0
+fi
+
+#wofi --height 590px \
+#     --width 1140px \
+#     --allow-images true
+wofi
+#wlogout -b $wlColms -c 0 -r 0 -m 0 --layout $wLayout --css <(echo "$wlStyle") --protocol layer-shell
+

@@ -1,0 +1,5 @@
+top left:    margin : 0px 50px 50px 0px;
+bottom left: margin : 50px 50px 0px 0px;
+top right:   margin : 0px 0px 50px 50px;
+bottom right:margin : 50px 0px 0px 50px;
+

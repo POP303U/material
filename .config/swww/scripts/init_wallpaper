@@ -1,0 +1,5 @@
+#!/bin/sh
+
+swww init
+swww img ~/.config/swww/walls/rain_world1.png
+

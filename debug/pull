@@ -1,0 +1,30 @@
+#!/bin/sh
+
+mkdir -v ../.config
+rm -r ../.config # really fucking dangerous operation
+    
+cp -rvf ~/.config/autoclicker    ../.config
+cp -rvf ~/.config/swaylock       ../.config
+cp -rvf ~/.config/wlogout        ../.config
+cp -rvf ~/.config/gtk-3.0        ../.config
+cp -rvf ~/.config/swww           ../.config
+cp -rvf ~/.config/swaylock       ../.config
+cp -rvf ~/.config/mako           ../.config
+cp -rvf ~/.config/wofi           ../.config
+cp -rvf ~/.config/hypr           ../.config
+cp -rvf ~/.config/waybar         ../.config
+cp -rvf ~/.config/alacritty      ../.config
+cp -rvf ~/.config/neofetch       ../.config
+cp -rvf ~/.config/dunst          ../.config
+cp -rvf ~/.config/kitty          ../.config
+cp -rvf ~/.config/cava           ../.config
+cp -rvf ~/.config/rofi           ../.config
+cp -rvf ~/.xinitrc               ..
+cp -rvf ~/.Xmodmap               ..
+cp -rvf ~/.bashrc                ..
+cp -rvf ~/.tmux.conf             ..
+
+mkdir ../.config/autoclicker
+mv ../.config/clicker_start ../.config/autoclicker
+mv ../.config/clicker_stop ../.config/autoclicker
+# nice

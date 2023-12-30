@@ -1,0 +1,298 @@
+#!/bin/sh
+
+BASE_PACKAGES=(
+"hyprland"
+"kitty" 
+"waybar"
+"swaylock-effects"
+"wofi"
+"wlogout"
+"thunar"
+"wl-clipboard"
+"wlr-randr"
+"jq"
+"wofi-emoji"
+"ttf-jetbrains-mono-nerd"
+"ttf-cascadia-code-nerd"
+"bibata-cursor-theme-bin"
+"pavucontrol"
+"noto-fonts-emoji"
+"polkit-gnome"
+"python-requests"
+"swww"
+"swappy"
+"grim"
+"slurp"
+"pamixer"
+"gvfs"
+"pokemon-colorscripts-git"
+"bluez"
+"bluez-utils"
+"lxappearance"
+"xfce4-settings"
+"nwg-look"
+"rose-pine-gtk-theme-full"
+"xdg-desktop-portal-hyprland"
+"vim"
+)
+
+MINIMAL_PACKAGES=(
+"p7zip" 
+"unrar"
+"tar"
+"rsync"
+"github-cli"
+"git"
+"fzf"
+"exfat-utils"
+"fuse-exfat"
+"ntfs-3g"
+"xfsprogs"
+"xfsdump"
+"flac"
+"jasper"
+"aria2"
+"less"
+"neofetch"
+"htop"
+"btop"
+"curl"
+"wget"
+"jp2a"
+"pfetch"
+"helix"
+"neovim"
+)
+
+EXTENDED_PACKAGES=(
+"brave-bin"
+"emacs"
+"vencord-desktop-bin"
+"thunar"
+"filezilla"
+"libreoffice-fresh"
+)
+
+GAMING_PACKAGES=(
+"steam"
+"wine"
+"wine-mono"
+"wine-gecko"
+"vinegar"
+"bottles"
+"lutris"
+)
+
+BLUE='\033[1;34m'
+RED='\033[1;31m'
+CYAN='\033[01;36m'
+YELLOW='\033[01;33m'
+WHITE_BOLD="\033[1;38;5;15m"
+RESET='\033[0m'
+PURPLE='\033[01;35m'
+WHITE='\033[01;37m'
+
+install_yay() {
+    YAY_EXISTS=/sbin/yay
+
+    # initialize [multilib] if not enables
+    echo -e "[${PURPLE}info${RESET}] Enabling multilib"
+    sudo sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman\.d\/mirrorlist/c\[multilib]\nInclude = /etc/pacman.d/mirrorlist' /etc/pacman.conf
+    echo -e "[${PURPLE}info${RESET}] Syncing multilib repositories"
+    sudo pacman -Syy --noconfirm >/dev/null 2>&1
+
+    if [ -f "$YAY_EXISTS" ]; then
+        AUR_HELPER=yay
+        echo -e "[${PURPLE}info${RESET}] Yay was detected, using yay..."
+    else
+        echo -e "[${PURPLE}info${RESET}] Performing full system sync"
+        sudo pacman -Syu >/dev/null 2>&1 
+
+        # install yay
+        sudo pacman -S --needed base-devel --noconfirm >/dev/null 2>&1
+
+        git clone https://aur.archlinux.org/yay.git >/dev/null 2>&1
+        echo -e "[${BLUE}ok${RESET}] Cloned yay from the AUR"
+
+        cd yay
+        echo -e "[${PURPLE}info${RESET}] Installing yay..."
+        makepkg -si --noconfirm && echo -e "[${BLUE}ok${RESET}] Building yay from the AUR"
+
+        echo -e "[${PURPLE}info${RESET}] Removing temporary files..."
+        cd ..
+        rm -rf yay
+
+        AUR_HELPER=yay
+    fi
+}
+
+fix_groups() {
+    sudo usermod -aG input $USER
+}
+
+start_wireless() {
+    # Start the bluetooth service
+    echo -e "[${PURPLE}info${RESET}] Starting the Bluetooth Service..."
+    sudo systemctl enable --now bluetooth.service >/dev/null 2>&1
+
+    sleep 2
+
+    ### Disable wifi powersave mode ###
+    echo -e "[${PURPLE}info${RESET}] Disabling wifi powersave..." 
+
+    LOC="/etc/NetworkManager/conf.d/wifi-powersave.conf"
+    echo -e "[${PURPLE}info${RESET}] The following has been added to $LOC.\n"
+    echo -e "[connection]\nwifi.powersave = 2" | sudo tee -a $LOC
+
+    echo -e "[${PURPLE}info${RESET}] Restarting NetworkManager service..."
+    sudo systemctl restart NetworkManager
+    echo -e "[${PURPLE}info${RESET}] Waiting for Internet to reconnect..."
+    sleep 5
+}
+
+copy_config() {
+    cp -r ../.config/autoclicker   ~/.config
+    cp -r ../.config/swaylock      ~/.config
+    cp -r ../.config/wlogout       ~/.config
+    cp -r ../.config/mako          ~/.config
+    cp -r ../.config/swww          ~/.config
+    cp -r ../.config/hypr          ~/.config
+    cp -r ../.config/wofi          ~/.config
+    cp -r ../.config/rofi          ~/.config
+    cp -r ../.config/alacritty     ~/.config
+    cp -r ../.config/neofetch      ~/.config
+    cp -r ../.config/gtk-3.0       ~/.config
+    cp -r ../.config/dunst         ~/.config
+    cp -r ../.config/kitty         ~/.config
+    cp -r ../.config/waybar        ~/.config
+    cp -r ../.config/cava          ~/.config
+    cp -r ../.tmux.conf            ~
+    cp -r ../.bashrc               ~
+    cp -r ../.Xmodmap              ~
+    cp -r ../.xinitrc              ~
+
+    # Set some files as exacutable 
+    chmod +x ~/.config/hypr/xdg-portal-hyprland
+    chmod +x ~/.config/swww/scripts/init_wallpaper
+    chmod +x ~/.config/swww/scripts/change_wallpaper
+    chmod +x ~/.config/waybar/scripts/waybar-wttr.py
+
+    # Clean out other portals
+    echo -e "Cleaning out conflicting xdg portals...\n"
+    $AUR_HELPER -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null 2>&1
+}
+
+install_doas() {
+    ### Install Opendoas ###
+    echo -e 'Installing opendoas...'
+    sudo pacman -S opendoas --noconfirm
+    sudo chown -c root:root /etc/doas.conf
+    sudo chmod -c 0400 /etc/doas.conf
+    sudo rm -f /etc/doas.conf
+    echo "permit :wheel 
+    permit nopass '$(whoami)'
+    " | sudo tee -a /etc/doas.conf > /dev/null
+}
+
+stage_1() {
+    echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
+
+    echo -e "[${PURPLE}info${RESET}] Installing base packages"
+    for PACKAGE in "${BASE_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done
+
+    start_wireless
+    echo -e "[${PURPLE}info${RESET}] Copying config files..."
+    copy_config 
+
+    fix_groups
+
+    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
+    if [ $STAGE -gt 1 ]; then 
+        echo -e "[${PURPLE}info${RESET}] Entering stage 2"
+        stage_2
+    else 
+        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+    fi
+}
+
+stage_2() {
+    echo -e "Executing Stage 2"
+
+    echo -e "[${PURPLE}info${RESET}] Installing minimal packages"
+    for PACKAGE in "${MINIMAL_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done
+   
+    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
+    if [ $STAGE -gt 2 ]; then 
+        echo -e "[${PURPLE}info${RESET}] Entering stage 3"
+        stage_3
+    else 
+        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+    fi
+}
+
+stage_3() {
+    echo -e "[${PURPLE}info${RESET}] Executing Stage 3"
+
+    echo -e "[${PURPLE}info${RESET}]Installing extended packages..."
+    for PACKAGE in "${EXTENDED_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done
+    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
+    if [ $STAGE -gt 3 ]; then 
+        echo -e "[${PURPLE}info${RESET}] Entering stage 4"
+        stage_4
+    else 
+        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+    fi
+}
+
+stage_4() {
+    echo -e "[${PURPLE}info${RESET}] Executing Stage 4"
+
+    echo -e "[${PURPLE}info${RESET}] Installing gaming packages"
+     for PACKAGE in "${GAMING_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done   
+    echo -e "Stage-${STAGE} installation finished!"
+}
+
+echo -e "
+#-------------------------#
+# ${BLUE}Easy Hyprland installer${RESET} #
+#-------------------------#
+
+${WHITE_BOLD}Tip: See installed packages at the top of the script${RESET}
+${CYAN}1${RESET}. Base 
+${CYAN}2${RESET}. Minimal
+${CYAN}3${RESET}. Extended
+${CYAN}4${RESET}. Gaming
+"
+
+read -n1 -rep "$: " STAGE
+
+if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then 
+    echo -e "${RED}Choose a valid option${RESET}"
+else 
+    install_yay 
+    stage_1
+fi

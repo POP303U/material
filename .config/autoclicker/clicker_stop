@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pkill -SIGKILL $(ps -A | grep 'clicker_start' | tail -1 | awk '{print $4}')
