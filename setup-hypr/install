@@ -151,48 +151,46 @@ start_wireless() {
 }
 
 copy_config() {
-    cp -r ../.config/autoclicker   ~/.config
-    cp -r ../.config/swaylock      ~/.config
-    cp -r ../.config/wlogout       ~/.config
-    cp -r ../.config/mako          ~/.config
-    cp -r ../.config/swww          ~/.config
-    cp -r ../.config/hypr          ~/.config
-    cp -r ../.config/wofi          ~/.config
-    cp -r ../.config/rofi          ~/.config
-    cp -r ../.config/alacritty     ~/.config
-    cp -r ../.config/neofetch      ~/.config
-    cp -r ../.config/gtk-3.0       ~/.config
-    cp -r ../.config/dunst         ~/.config
-    cp -r ../.config/kitty         ~/.config
-    cp -r ../.config/waybar        ~/.config
-    cp -r ../.config/cava          ~/.config
-    cp -r ../.tmux.conf            ~
-    cp -r ../.bashrc               ~
-    cp -r ../.Xmodmap              ~
-    cp -r ../.xinitrc              ~
+    echo -e "[${PURPLE}info${RESET}] Copying configs..."
+    rm -rf ~/.config/autoclicker; cp -r ../.config/autoclicker   ~/.config && echo -e "[${BLUE}ok${RESET}] Copied autoclicker to ~/.config/autoclicker"
+    rm -rf ~/.config/swaylock; cp -r ../.config/swaylock      ~/.config && echo -e "[${BLUE}ok${RESET}] Copied swaylock to ~/.config/swaylock"
+    rm -rf ~/.config/wlogout; cp -r ../.config/wlogout       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied wlogout to ~/.config/wlogout"
+    rm -rf ~/.config/mako; cp -r ../.config/mako          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied mako to ~/.config/mako"
+    rm -rf ~/.config/swww; cp -r ../.config/swww          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied swww to ~/.config/swww"
+    rm -rf ~/.config/hypr; cp -r ../.config/hypr          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied hypr to ~/.config/hypr"
+    rm -rf ~/.config/wofi; cp -r ../.config/wofi          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied wofi to ~/.config/wofi"
+    rm -rf ~/.config/alacritty; cp -r ../.config/alacritty     ~/.co && echo -e "[${BLUE}ok${RESET}] Copied alacritty to ~/.config/alacritty"
+    rm -rf ~/.config/neofetch; cp -r ../.config/neofetch      ~/.conf && echo -e "[${BLUE}ok${RESET}] Copied neofetch to ~/.config/neofetch"
+    rm -rf ~/.config/gtk-3; cp -r ../.config/gtk-3.0       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied gtk-3 to ~/.config/gtk-3"
+    rm -rf ~/.config/dunst; cp -r ../.config/dunst         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied dunst to ~/.config/dunst"
+    rm -rf ~/.config/kitty; cp -r ../.config/kitty         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied kitty to ~/.config/kitty"
+    rm -rf ~/.config/waybar; cp -r ../.config/waybar        ~/.config && echo -e "[${BLUE}ok${RESET}] Copied waybar to ~/.config/waybar"
+    rm -rf ~/.config/cava; cp -r ../.config/cava          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied cava to ~/.config/cava"
+    rm -rf ~/.tmux.conf; cp -r ../.tmux.conf            ~ && echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
+    rm -rf ~/.bashrc; cp -r ../.bashrc               ~ && echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
 
     # Set some files as exacutable 
-    chmod +x ~/.config/hypr/xdg-portal-hyprland
-    chmod +x ~/.config/swww/scripts/init_wallpaper
-    chmod +x ~/.config/swww/scripts/change_wallpaper
-    chmod +x ~/.config/waybar/scripts/waybar-wttr.py
+    chmod +x ~/.config/hypr/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
+    chmod +x ~/.config/swww/scripts/init_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/config/swww/scripts/init_wallpaper' is executable: .wxr-xr-x "
+    chmod +x ~/.config/swww/scripts/change_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/.config/swww/scripts/change_wallpaper' is executable: .wxr-xr-x "
+    chmod +x ~/.config/waybar/scripts/waybar-wttr.py && echo -e "[${BLUE}ok${RESET}] '~/.config/waybar/scripts/waybar-wttr.py' is executable: .wxr-xr-x "
 
     # Clean out other portals
-    echo -e "Cleaning out conflicting xdg portals...\n"
+    echo -e "[${PURPLE}info${RESET}] Cleaning out conflicting xdg portals..."
     $AUR_HELPER -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null 2>&1
 }
 
-install_doas() {
+#install_doas() {
     ### Install Opendoas ###
-    echo -e 'Installing opendoas...'
-    sudo pacman -S opendoas --noconfirm
-    sudo chown -c root:root /etc/doas.conf
-    sudo chmod -c 0400 /etc/doas.conf
-    sudo rm -f /etc/doas.conf
-    echo "permit :wheel 
-    permit nopass '$(whoami)'
-    " | sudo tee -a /etc/doas.conf > /dev/null
-}
+#    echo -e 'Installing opendoas...'
+#    sudo pacman -S opendoas --noconfirm
+#    sudo chown -c root:root /etc/doas.conf
+#    sudo chmod -c 0400 /etc/doas.conf
+#    sudo rm -f /etc/doas.conf
+#    echo "permit :wheel 
+#    permit nopass '$(whoami)'
+#    " | sudo tee -a /etc/doas.conf > /dev/null
+#}
 
 stage_1() {
     echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
