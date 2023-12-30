@@ -18,8 +18,5 @@ cp -rvf ../.config/kitty         ~/.config
 cp -rvf ../.config/cava          ~/.config
 cp -rvf ../.tmux.conf            ~
 cp -rvf ../.bashrc               ~
-cp -rvf ../.Xmodmap              ~
-cp -rvf ../.xinitrc              ~
 
-chmod +x ~/.config/i3blocks/scripts *
 # nice

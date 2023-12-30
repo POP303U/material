@@ -18,9 +18,6 @@ cp -rvf ~/.config/neofetch       ../.config
 cp -rvf ~/.config/dunst          ../.config
 cp -rvf ~/.config/kitty          ../.config
 cp -rvf ~/.config/cava           ../.config
-cp -rvf ~/.config/rofi           ../.config
-cp -rvf ~/.xinitrc               ..
-cp -rvf ~/.Xmodmap               ..
 cp -rvf ~/.bashrc                ..
 cp -rvf ~/.tmux.conf             ..
 
