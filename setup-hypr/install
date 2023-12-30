@@ -142,7 +142,7 @@ start_wireless() {
 
     LOC="/etc/NetworkManager/conf.d/wifi-powersave.conf"
     echo -e "[${PURPLE}info${RESET}] The following has been added to $LOC.\n"
-    echo -e "[connection]\nwifi.powersave = 2" | sudo tee -a $LOC
+    echo -e "[connection]\nwifi.powersave = 2\n" | sudo tee -a $LOC
 
     echo -e "[${PURPLE}info${RESET}] Restarting NetworkManager service..."
     sudo systemctl restart NetworkManager
@@ -152,22 +152,22 @@ start_wireless() {
 
 copy_config() {
     echo -e "[${PURPLE}info${RESET}] Copying configs..."
-    rm -rf ~/.config/autoclicker; cp -r ../.config/autoclicker   ~/.config && echo -e "[${BLUE}ok${RESET}] Copied autoclicker to ~/.config/autoclicker"
-    rm -rf ~/.config/swaylock; cp -r ../.config/swaylock      ~/.config && echo -e "[${BLUE}ok${RESET}] Copied swaylock to ~/.config/swaylock"
-    rm -rf ~/.config/wlogout; cp -r ../.config/wlogout       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied wlogout to ~/.config/wlogout"
-    rm -rf ~/.config/mako; cp -r ../.config/mako          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied mako to ~/.config/mako"
-    rm -rf ~/.config/swww; cp -r ../.config/swww          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied swww to ~/.config/swww"
-    rm -rf ~/.config/hypr; cp -r ../.config/hypr          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied hypr to ~/.config/hypr"
-    rm -rf ~/.config/wofi; cp -r ../.config/wofi          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied wofi to ~/.config/wofi"
-    rm -rf ~/.config/alacritty; cp -r ../.config/alacritty     ~/.co && echo -e "[${BLUE}ok${RESET}] Copied alacritty to ~/.config/alacritty"
-    rm -rf ~/.config/neofetch; cp -r ../.config/neofetch      ~/.conf && echo -e "[${BLUE}ok${RESET}] Copied neofetch to ~/.config/neofetch"
-    rm -rf ~/.config/gtk-3; cp -r ../.config/gtk-3.0       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied gtk-3 to ~/.config/gtk-3"
-    rm -rf ~/.config/dunst; cp -r ../.config/dunst         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied dunst to ~/.config/dunst"
-    rm -rf ~/.config/kitty; cp -r ../.config/kitty         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied kitty to ~/.config/kitty"
-    rm -rf ~/.config/waybar; cp -r ../.config/waybar        ~/.config && echo -e "[${BLUE}ok${RESET}] Copied waybar to ~/.config/waybar"
-    rm -rf ~/.config/cava; cp -r ../.config/cava          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied cava to ~/.config/cava"
-    rm -rf ~/.tmux.conf; cp -r ../.tmux.conf            ~ && echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
-    rm -rf ~/.bashrc; cp -r ../.bashrc               ~ && echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
+    rm -rf ~/.config/autoclicker; cp -r    ../.config/autoclicker   ~/.config && echo -e "[${BLUE}ok${RESET}] Copied autoclicker to ~/.config/autoclicker"
+    rm -rf ~/.config/swaylock;    cp -r    ../.config/swaylock      ~/.config && echo -e "[${BLUE}ok${RESET}] Copied swaylock to ~/.config/swaylock"
+    rm -rf ~/.config/wlogout;     cp -r    ../.config/wlogout       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied wlogout to ~/.config/wlogout"
+    rm -rf ~/.config/mako;        cp -r    ../.config/mako          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied mako to ~/.config/mako"
+    rm -rf ~/.config/swww;        cp -r    ../.config/swww          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied swww to ~/.config/swww"
+    rm -rf ~/.config/hypr;        cp -r    ../.config/hypr          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied hypr to ~/.config/hypr"
+    rm -rf ~/.config/wofi;        cp -r    ../.config/wofi          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied wofi to ~/.config/wofi"
+    rm -rf ~/.config/alacritty;   cp -r    ../.config/alacritty     ~/.config && echo -e "[${BLUE}ok${RESET}] Copied alacritty to ~/.config/alacritty"
+    rm -rf ~/.config/neofetch;    cp -r    ../.config/neofetch      ~/.config && echo -e "[${BLUE}ok${RESET}] Copied neofetch to ~/.config/neofetch"
+    rm -rf ~/.config/gtk-3;       cp -r    ../.config/gtk-3.0       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied gtk-3 to ~/.config/gtk-3"
+    rm -rf ~/.config/dunst;       cp -r    ../.config/dunst         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied dunst to ~/.config/dunst"
+    rm -rf ~/.config/kitty;       cp -r    ../.config/kitty         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied kitty to ~/.config/kitty"
+    rm -rf ~/.config/waybar;      cp -r    ../.config/waybar        ~/.config && echo -e "[${BLUE}ok${RESET}] Copied waybar to ~/.config/waybar"
+    rm -rf ~/.config/cava;        cp -r    ../.config/cava          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied cava to ~/.config/cava"
+    rm -rf ~/.tmux.conf;          cp -r    ../.tmux.conf            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
+    rm -rf ~/.bashrc;             cp -r    ../.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
 
     # Set some files as exacutable 
     chmod +x ~/.config/hypr/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
