@@ -218,6 +218,30 @@ enable_sddm_quest() {
         echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
     fi 
 }
+install_sddm() {
+    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
+        echo -e "[${PURPLE}info${RESET}] Installing sddm packages"
+        for PACKAGE in "${SDDM_PACKAGES[@]}"; do
+            if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+                echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+            else
+                echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+            fi
+        done
+
+        if [[ $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
+            git clone https://github.com/POP303U/rose-pine-sddm.git ~/rose-pine-sddm
+            sudo mv ~/rose-pine-sddm /usr/share/sddm/themes/
+            sudo cp /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf
+            sudo sed -i 's/\(Current=\).*/\1rose-pine-sddm/' /etc/sddm.conf
+            echo -e "[${BLUE}ok${RESET}] Installed custom Rosé-Pine sddm theme"
+        else 
+            echo -e "[${PURPLE}info${RESET}] Skipping custom sddm theme"
+        fi
+    else
+        echo -e "[${PURPLE}info${RESET}] Skipping sddm packages"
+    fi
+}
 stage_1() {
     echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
 
@@ -234,28 +258,6 @@ stage_1() {
     echo -e "[${PURPLE}info${RESET}] Copying config files..."
     copy_config 
     fix_groups
-
-    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
-        echo -e "[${PURPLE}info${RESET}] Installing sddm packages"
-        for PACKAGE in "${SDDM_PACKAGES[@]}"; do
-            if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
-                echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
-            else
-                echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
-            fi
-        done
-
-        if [[ $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
-            git clone https://github.com/POP303U/rose-pine-sddm.git ~/rose-pine-sddm
-            sudo mv ~/rose-pine-sddm /usr/share/sddm/themes/
-            sudo sed -i 's/\(Current=\).*/\1rose-pine-sddm/' /etc/sddm.conf
-            echo -e "[${BLUE}ok${RESET}] Installed custom Rosé-Pine sddm theme"
-        else 
-            echo -e "[${PURPLE}info${RESET}] Skipping custom sddm theme"
-        fi
-    else
-        echo -e "[${PURPLE}info${RESET}] Skipping sddm packages"
-    fi
 
     echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
     if [ $STAGE -gt 1 ]; then 
