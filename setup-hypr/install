@@ -222,7 +222,8 @@ enable_sddm_quest() {
 install_wofi_wallpaper_git() {
     git clone https://github.com/POP303U/wofi-wallpaper.git ~/wofi-wallpaper
     chmod +x ~/wofi-wallpaper/wofi-wallpaper
-    sudo cp wofi-wallpaper/wofi-wallpaper /bin
+    sudo cp  ~/wofi-wallpaper/wofi-wallpaper /bin
+    rm -rf   ~/wofi-wallpaper
 }
 
 install_sddm() {
