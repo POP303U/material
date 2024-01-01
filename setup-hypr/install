@@ -230,7 +230,7 @@ install_sddm() {
         done
 
         if [[ $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
-            git clone https://github.com/POP303U/rose-pine-sddm.git ~/rose-pine-sddm
+            git clone https://github.com/POP303U/rose-pine-sddm.git ~/rose-pine-sddm >/dev/null 2>&1
             sudo mv ~/rose-pine-sddm /usr/share/sddm/themes/
             sudo cp /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf
             sudo sed -i 's/\(Current=\).*/\1rose-pine-sddm/' /etc/sddm.conf
