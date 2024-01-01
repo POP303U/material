@@ -20,15 +20,7 @@ swww img "$CURRENT_BG" \
     --invert-y \
     --transition-pos "$( hyprctl cursorpos )"
 
-#swww img "$BG" \
-#    --transition-type wipe \
-#    --transition-pos "$(hyprctl cursorpos)" \
-#    --invert-y \
-#    --transition-fps 60 \
-#    --transition-angle 30 \
-#    --transition-step 90
-
-### transitions:
+### transition types:
 #"none"
 #"simple"
 #"left"
