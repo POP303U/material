@@ -83,6 +83,13 @@ GAMING_PACKAGES=(
 "lutris"
 )
 
+SDDM_PACKAGES=(
+"sddm"
+"qt5-quickcontrols2"
+"qt5-graphicaleffects"
+"qt5-svg"
+)
+
 BLUE='\033[1;34m'
 RED='\033[1;31m'
 CYAN='\033[01;36m'
@@ -180,18 +187,37 @@ copy_config() {
     $AUR_HELPER -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null 2>&1
 }
 
-#install_doas() {
-    ### Install Opendoas ###
-#    echo -e 'Installing opendoas...'
-#    sudo pacman -S opendoas --noconfirm
-#    sudo chown -c root:root /etc/doas.conf
-#    sudo chmod -c 0400 /etc/doas.conf
-#    sudo rm -f /etc/doas.conf
-#    echo "permit :wheel 
-#    permit nopass '$(whoami)'
-#    " | sudo tee -a /etc/doas.conf > /dev/null
-#}
+install_doas() {
+    echo -e "[${PURPLE}info${RESET}] Installing opendoas..."
+    sudo pacman -S opendoas --noconfirm
+    sudo chown -c root:root /etc/doas.conf
+    sudo chmod -c 0400 /etc/doas.conf
+    sudo rm -f /etc/doas.conf
+    echo "permit :wheel 
+    permit nopass '$(whoami)'
+    " | sudo tee -a /etc/doas.conf
+    echo -e "[${BLUE}ok${RESET}] Successfully installed opendoas..."
+}
 
+enable_sddm_quest() {
+    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" || $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
+
+        echo -e "\n${WHITE_BOLD}Do you want to enable sddm now? (y/n)${RESET}"
+        read -n1 -rep "$: " SDDM_ENABLE
+
+        if [[ $SDDM_ENABLE == "y" || $SDDM_ENABLE == "Y" || $SDDM_ENABLE == "" ]]; then
+            echo -e "[${BLUE}ok${RESET}] Enabled sddm successfully"
+            sudo systemctl enable sddm.service
+            sudo systemctl start sddm.service
+        else
+            echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
+            echo -e "[${PURPLE}info${RESET}] You can enable sddm manually with:"
+            echo -e "[${PURPLE}info${RESET}] 'sudo systemctl enable sddm.service'"
+        fi
+    else 
+        echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
+    fi 
+}
 stage_1() {
     echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
 
@@ -207,8 +233,29 @@ stage_1() {
     start_wireless
     echo -e "[${PURPLE}info${RESET}] Copying config files..."
     copy_config 
-
     fix_groups
+
+    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
+        echo -e "[${PURPLE}info${RESET}] Installing sddm packages"
+        for PACKAGE in "${SDDM_PACKAGES[@]}"; do
+            if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+                echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+            else
+                echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+            fi
+        done
+
+        if [[ $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
+            git clone https://github.com/POP303U/rose-pine-sddm.git ~/rose-pine-sddm
+            sudo mv ~/rose-pine-sddm /usr/share/sddm/themes/
+            sudo sed -i 's/\(Current=\).*/\1rose-pine-sddm/' /etc/sddm.conf
+            echo -e "[${BLUE}ok${RESET}] Installed custom Rosé-Pine sddm theme"
+        else 
+            echo -e "[${PURPLE}info${RESET}] Skipping custom sddm theme"
+        fi
+    else
+        echo -e "[${PURPLE}info${RESET}] Skipping sddm packages"
+    fi
 
     echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
     if [ $STAGE -gt 1 ]; then 
@@ -216,6 +263,7 @@ stage_1() {
         stage_2
     else 
         echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+        enable_sddm_quest
     fi
 }
 
@@ -237,6 +285,7 @@ stage_2() {
         stage_3
     else 
         echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+        enable_sddm_quest
     fi
 }
 
@@ -257,6 +306,7 @@ stage_3() {
         stage_4
     else 
         echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+        enable_sddm_quest
     fi
 }
 
@@ -272,6 +322,7 @@ stage_4() {
         fi
     done   
     echo -e "Stage-${STAGE} installation finished!"
+    enable_sddm_quest
 }
 
 echo -e "
@@ -285,8 +336,15 @@ ${CYAN}2${RESET}. Minimal
 ${CYAN}3${RESET}. Extended
 ${CYAN}4${RESET}. Gaming
 "
-
 read -n1 -rep "$: " STAGE
+
+echo -e "\n${WHITE_BOLD}Install sddm? (y/n)${RESET}"
+read -n1 -rep "$: " SDDM_INSTALL
+
+if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
+    echo -e "${WHITE_BOLD}\nInstall custom Rosé-Pine sddm? (y/n) [https://github.com/POP303U/rose-pine-sddm]${RESET}"
+    read -n1 -rep "$: " SDDM_CUSTOM_INSTALL
+fi
 
 if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then 
     echo -e "${RED}Choose a valid option${RESET}"
