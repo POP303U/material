@@ -218,6 +218,7 @@ enable_sddm_quest() {
         echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
     fi 
 }
+
 install_sddm() {
     if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
         echo -e "[${PURPLE}info${RESET}] Installing sddm packages"
@@ -242,6 +243,7 @@ install_sddm() {
         echo -e "[${PURPLE}info${RESET}] Skipping sddm packages"
     fi
 }
+
 stage_1() {
     echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
 
@@ -330,7 +332,7 @@ stage_4() {
 
 echo -e "
 #-------------------------#
-# ${BLUE}Easy Hyprland installer${RESET} #
+# ${YELLOW}Easy Hyprland installer${RESET} #
 #-------------------------#
 
 ${WHITE_BOLD}Tip: See installed packages at the top of the script${RESET}
