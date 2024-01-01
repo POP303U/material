@@ -219,7 +219,7 @@ enable_sddm_quest() {
     fi 
 }
 
-install_wofi-wallpaper-git() {
+install_wofi_wallpaper_git() {
     git clone https://github.com/POP303U/wofi-wallpaper.git ~/wofi-wallpaper
     chmod +x ~/wofi-wallpaper/wofi-wallpaper
     sudo cp wofi-wallpaper/wofi-wallpaper /bin
@@ -267,7 +267,7 @@ stage_1() {
     copy_config 
     fix_groups
     install_sddm
-    install_wofi-wallpaper-git 
+    install_wofi_wallpaper_git 
 
     echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
     if [ $STAGE -gt 1 ]; then 
