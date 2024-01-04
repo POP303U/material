@@ -1,13 +1,12 @@
 <div align="center"> 
 <h1> hypr-dots </h1>
 My Personal Hyprland dotfiles
+
 </div>
 
 <p align="center">
     <img src="https://github.com/POP303U/dotfiles/assets/115036828/b632333d-13ce-46e7-b18d-f85e0b56c519" alt="Material Bread logo">
 </p>
-
-
 
 ## Installation
 
