@@ -32,4 +32,3 @@ git pull
 ## Credits
 - [backgrounds](https://github.com/the-argus/wallpapers)
 - [inspiration](https://github.com/prasanthrangan/hyprdots)
-- [inspiration](https://github.com/prasanthrangan/hyprdots)
