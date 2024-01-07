@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# this is extremly bad
+# sooooo much bloat
 BASE_PACKAGES=(
 "hyprland"
 "kitty" 
@@ -30,6 +32,8 @@ BASE_PACKAGES=(
 "bluez-utils"
 "lxappearance"
 "xfce4-settings"
+"networkmanager"
+"network-manager-applet"
 "nwg-look"
 "rose-pine-gtk-theme-full"
 "xdg-desktop-portal-hyprland"
