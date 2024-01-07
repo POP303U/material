@@ -1,5 +1,7 @@
 #!/bin/sh
 
-swww init
-swww img ~/.config/swww/walls/rain_world1.png
+NAME_FILE="${HOME}/.config/swww/current/name"
+NAME=$(cat $NAME_FILE)
+
+swww init && swww img "${HOME}/.config/swww/walls/${NAME}"
 
