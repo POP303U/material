@@ -16,6 +16,7 @@
 
 # vim mode yay
 set -o vi
+bind -s 'set completion-ignore-case on'
 shopt -s histappend
 shopt -s checkwinsize
 
@@ -316,8 +317,9 @@ if [[ -f "~/.config/swww/change_wallpaper" ]]; then . ~/.config/swww/change_wall
 export QT_QPA_PLATFORMTHEME=gnome
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/.config/emacs/bin
-export PATH=$PATH:/home/archy/.local/bin
+export PATH=$PATH:/home/${USER}/.local/bin
 export SUDO_PROMPT='sudo (%p@%h) password: ' # doas like password thing
+export SUDO='doas'
 export TERM_PROGRAM=tmux
 export TERMINAL=/usr/bin/kitty
 export EDITOR=nvim
@@ -343,6 +345,7 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias edit='${EDITOR}'
 alias vim='nvim'
+alias dv='${SUDO} nvim'
 alias vi='nvim'
 alias v='nvim'
 alias btw='clear; neofetch' # i use arch btw 
@@ -352,6 +355,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias dmci='${SUDO} make clean install'
 
 #alias bottles-run='nohup flatpak run com.usebottles.bottles&'
 #alias bottles-fix='flatpak override --user --filesystem="host" com.usebottles.bottles'
@@ -361,10 +365,10 @@ alias debug-dunst='pkill -9 dunst && dunst &'
 alias keysoup='sudo systemctl restart keyd && sudo systemctl enable keyd && sudo systemctl start keyd'    
 
 alias vf='${EDITOR} $(fzf)'
-alias dvf='doas ${EDITOR} $(fzf)'
+alias dvf='${SUDO} ${EDITOR} $(fzf)'
 alias s-bashrc='source ~/.bashrc'
 #alias cvf='${EDITOR} $(fzf) | sed 's|/[^/]*$||'b
-#alias cdvf='doas ${EDITOR} $(fzf) | sed 's|/[^/]*$||'"
+#alias cdvf='${SUDO} ${EDITOR} $(fzf) | sed 's|/[^/]*$||'"
 #alias cdfzf='$(fzf) | sed 's|/[^/]*$||''
 
 # For editing configs
@@ -392,11 +396,15 @@ alias v-waybar='cd ~/.config/waybar && ${EDITOR} ~/.config/waybar/config.jsonc'
 alias v-autoclicker='cd ~/.config/autoclicker && ${EDITOR} ~/.config/autoclicker/clicker_start'
 alias v-wlogout='cd ~/.config/wlogout && ${EDITOR} ~/.config/wlogout/style.css '
 alias v-wofi='cd ~/.config/wofi && ${EDITOR} ~/.config/wofi/style.css'
+alias v-sxhkd='cd ~/.config/sxhkd && ${EDITOR} ~/.config/sxhkd/sxhkdrc'
+alias v-bspwm='cd ~/.config/bspwm && ${EDITOR} ~/.config/bspwm/bspwmrc'
 alias v-swww='cd ~/.config/swww/scripts && ${EDITOR} ~/.config/swww/scripts/change_wallpaper'
+alias v-tmux='cd && ${EDITOR} ~/.tmux.conf'
+alias v-xinit='cd && ${EDITOR} ~/.xinitrc'
 
 #sudo
-alias dv-keyd='cd /etc/keyd/ && doas ${EDITOR} /etc/keyd/default_shell.conf'
-alias dv-tty='cd /etc/ && doas ${EDITOR} /etc/issue'
+alias dv-keyd='cd /etc/keyd/ && ${SUDO} ${EDITOR} /etc/keyd/default_shell.conf'
+alias dv-tty='cd /etc/ && ${SUDO} ${EDITOR} /etc/issue'
 alias g-projects='cd ~/personal/github' 
 alias v-projects='cd $PROJECTS && nvim'
 
@@ -591,6 +599,10 @@ ex ()
     fi
 }
 
+cpstat () {
+  tar c "$1" | pv | tar x -C "$2"
+}
+
 pac() {
     # Check if the first argument is -i
     case $1 in
@@ -721,3 +733,4 @@ battery, memory and more!
 '
 
 ### EOF ###
+
