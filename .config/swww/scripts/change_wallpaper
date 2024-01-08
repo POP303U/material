@@ -1,7 +1,22 @@
 #!/bin/sh
 
+function create_name() {
+	NAME_FILE="$WALLPAPER_PATH/current/name"
+	if [[ ! -f "$NAME_FILE" ]]; then
+		touch "$NAME_FILE"
+	fi
+
+	# empty the file for new text
+	echo -n > $NAME_FILE
+	echo "$CURRENT_BG" > $NAME_FILE
+}
+
 DIR="${HOME}/.config/swww/walls"
-CURRENT_BG="$(find "$DIR" -name '*.jpg' -o -name '*.png' | shuf -n1)"
+WALLPAPER_PATH="/home/${USER}/.config/swww"
+CURRENT_BG="$(find "$WALLPAPER_PATH" -name '*.jpg' -o -name '*.png' | shuf -n1)"
+
+create_name
+
 
 # Check if the program is running
 if pgrep "swww-deamon" >/dev/null; then
