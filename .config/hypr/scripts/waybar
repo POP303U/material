@@ -3,8 +3,8 @@
 # Check if wlogout is already running
 if pgrep -x "waybar" >/dev/null; then
     pkill -x "waybar"
-    waybar
+    waybar -c ~/.config/waybar/bar/bottom/config.jsonc -s ~/.config/waybar/bar/bottom/style.css
     exit 0
 else 
-    waybar
+    waybar -c ~/.config/waybar/bar/bottom/config.jsonc -s ~/.config/waybar/bar/bottom/style.css
 fi
