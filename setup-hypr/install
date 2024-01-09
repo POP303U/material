@@ -161,7 +161,7 @@ copy_config() {
     echo -e "[${PURPLE}info${RESET}] Copying configs..."
 
     rm -rf ../configs_backup
-    mkdir ../.configs_backup # create backup dir
+    mkdir ../configs_backup # create backup dir
 
     for CONFIG in ../configs/.config/*; do
         CONFIG_NAME=$(basename "$CONFIG")
