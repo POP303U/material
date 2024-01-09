@@ -1,0 +1,8 @@
+#!/bin/sh
+
+NAME_FILE="${HOME}/.config/swww/current/name"
+NAME_CONTENTS=$(cat $NAME_FILE)
+
+swww init 
+swww img "${HOME}/.config/swww/walls/${NAME_CONTENTS}"
+

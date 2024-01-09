@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# Check if wlogout is already running
+if pgrep -x "wlogout" >/dev/null; then
+    pkill -x "wlogout"
+    exit 0
+fi
+
+export WLOGOUT_PATH="~/.config/wlogout"
+
+# Style Normal
+#wlogout -css "${WLOGOUT_PATH}style_normal.css" \
+#-l   "${WLOGOUT_PATH}layout_normal"    \
+#       --protocol layer-shell
+
+wlogout -css ~/.config/wlogout/style.css \
+        --protocol layer-shell
+#wlogout -b $wlColms -c 0 -r 0 -m 0 --layout $wLayout --css <(echo "$wlStyle") --protocol layer-shell
+

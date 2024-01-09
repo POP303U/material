@@ -1,0 +1,10 @@
+#!/bin/sh
+
+battery_level=`cat /sys/class/power_supply/BAT1/capacity`
+if [ $battery_level -le 20 ]; then
+    notify-send "Battery low" "Battery level is ${battery_level}%!"
+fi
+
+if [ $battery_level -le 5 ]; then
+    notify-send "Battery low" "Battery level critical ${battery_level}%!"
+fi
