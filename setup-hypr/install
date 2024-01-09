@@ -25,6 +25,7 @@ BASE_PACKAGES=(
 "grim"
 "slurp"
 "gvfs"
+"nwg-look"
 "pamixer"
 "pokemon-colorscripts-git"
 "bluez"
@@ -178,6 +179,8 @@ copy_config() {
 
     rm -rf ~/.tmux.conf;          cp -r    ../configs/.tmux.conf            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
     rm -rf ~/.bashrc;             cp -r    ../configs/.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
+    rm -rf ~/.gtkrc-2.0;          cp -r    ../configs/.gtkrc-2.0            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied gtkrc-2.0 to ~/.gtkrc-2.0"
+    rm -rf ~/.icons;              cp -r    ../configs/.icons                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
 
     # Set some files as exacutable 
     chmod +x ~/.config/hypr/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
