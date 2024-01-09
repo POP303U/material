@@ -31,7 +31,6 @@ BASE_PACKAGES=(
 "bluez-utils"
 "networkmanager"
 "network-manager-applet"
-"nwg-look"
 "rose-pine-gtk-theme-full"
 "bibata-cursor-theme-bin"
 "xdg-desktop-portal-hyprland"
