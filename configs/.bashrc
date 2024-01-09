@@ -599,6 +599,10 @@ ex ()
     fi
 }
 
+cppwd () {
+    cp -r "$1" .
+}
+
 cpstat () {
   tar c "$1" | pv | tar x -C "$2"
 }
