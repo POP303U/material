@@ -365,7 +365,6 @@ fi
 if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then 
     echo -e "${RED}Choose a valid option${RESET}"
 else 
-    copy_config
-    #install_yay 
-    #stage_1
+    install_yay 
+    stage_1
 fi
