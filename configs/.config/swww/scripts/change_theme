@@ -1,0 +1,142 @@
+#!/bin/bash
+
+SWWW_DIR="/home/${USER}/.config/swww"
+CURRENT_BG_FILE="${SWWW_DIR}/current/name"
+CURRENT_THEME_FILE="${SWWW_DIR}/current/theme"
+CURRENT_BG="$(cat "$CURRENT_BG_FILE")"
+CURRENT_THEME="$(cat "$CURRENT_BG_FILE")"
+
+case "$1" in
+    "dawn")
+        export THEME_TYPE_SHORT="dawn"
+        export CURRENT_BG="abstract_moon.png"
+        export CURRENT_THEME="rose-pine-dawn"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "moon")
+        export THEME_TYPE_SHORT="moon"
+        export CURRENT_BG="leafy_moon.png"
+        export CURRENT_THEME="rose-pine-moon"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "pine")
+        export THEME_TYPE_SHORT="main"
+        export CURRENT_BG="anime_city_upscaled.png"
+        export CURRENT_THEME="rose-pine"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    *)
+        echo "Unsupported operation: $1"
+        exit 1
+        ;;
+esac
+
+#case "$2" in
+#    "bg")
+#        ;;
+#    "-")
+#        echo "Ignoring \$2 arg, using \$3 is now undefined behavior"
+#        ;;
+#    *)
+#        echo "Unsupported operation: $2"
+#        exit 1
+#            ;;
+#esac
+
+create_name() {
+	export NAME_FILE="$SWWW_DIR/current/name"
+	if [[ ! -f "$NAME_FILE" ]]; then
+		touch "$NAME_FILE"
+	fi
+
+	# empty the file for new text
+	echo -n > $NAME_FILE
+	echo "$CURRENT_BG" > $NAME_FILE
+}
+
+set_bg() {
+    create_name
+    # Check if the program is running
+    if pgrep "swww-deamon" >/dev/null; then
+        swww init
+    fi
+
+    echo $CURRENT_BG
+
+    swww img "$HOME/.config/swww/walls/$CURRENT_BG" \
+        --transition-bezier .6,.94,.86,.23\
+        --transition-type "grow" \
+        --transition-duration 1 \
+        --transition-fps 144 \
+        --invert-y \
+        --transition-pos "2502, 1410"
+}
+
+
+reload_configs() {
+    touch ~/.config/hypr/hyprland.conf
+    sleep 1
+    kill -SIGUSR1 $(pidof kitty)
+}
+
+colorize_wofi() {
+    sed -i -e '/@define-color base/s: .*;: base '"$(awk '/@define-color base/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color surface/s: .*;: surface '"$(awk '/@define-color surface/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color overlay/s: .*;: overlay '"$(awk '/@define-color overlay/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color muted/s: .*;: muted '"$(awk '/@define-color muted/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color subtle/s: .*;: subtle '"$(awk '/@define-color subtle/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color text/s: .*;: text '"$(awk '/@define-color text/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color love/s: .*;: love '"$(awk '/@define-color love/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color gold/s: .*;: gold '"$(awk '/@define-color gold/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color rose/s: .*;: rose '"$(awk '/@define-color rose/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color pine/s: .*;: pine '"$(awk '/@define-color pine/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color foam/s: .*;: foam '"$(awk '/@define-color foam/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color highlight-low/s: .*;: highlight-low '"$(awk '/@define-color highlight-low/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color highlight-med/s: .*;: highlight-med '"$(awk '/@define-color highlight-med/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
+        -e '/@define-color highlight-high/s: .*;: highlight-high '"$(awk '/@define-color highlight-high/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' ~/.config/wofi/style.css
+}
+
+colorize_kitty() {
+    sed -i 's|^include.*|include ./'${CURRENT_THEME}'.conf|' $HOME/.config/kitty/kitty.conf
+}
+
+colorize_tmux() {
+    sed -i 's|^set -g @rose_pine_variant.*|set -g @rose_pine_variant "'${THEME_TYPE_SHORT}'" # Options are "main", "moon" or "dawn"|' $HOME/.tmux.conf
+}
+
+colorize_nvim() {
+    sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${CURRENT_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+}
+
+colorize_waybar() {
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/bottom/style.css
+}
+
+colorize_wlogout() {
+    sed -i 's|^@import.*|@import "themes/'${CURRENT_THEME}'.css";|' $HOME/.config/wlogout/style.css
+}
+
+change_theme() {
+    # apps
+    colorize_waybar
+    colorize_wofi
+    colorize_tmux
+    colorize_nvim
+    colorize_kitty
+    colorize_wlogout
+    set_bg
+
+    # reload
+    reload_configs
+}
+
+#if [ "$#" -ne 2 ]; then
+#    echo "Usage: $0 <theme> <bg>"
+#    exit 1
+#fi
+
+change_theme
