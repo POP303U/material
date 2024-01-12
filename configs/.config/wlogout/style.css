@@ -3,14 +3,14 @@
     font-size: 18px;
 }
 
-@import "theme.css";
+@import "themes/rose-pine.css";
 
 window {
     background-color: rgba(0,0,0,.7);
 }
 
 button {
-    color: #e0def4;
+    color: @text;
     background-color: @main-bg;
     outline-style: none;
     border: none;
