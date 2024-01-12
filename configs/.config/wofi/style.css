@@ -1,8 +1,24 @@
+@define-color base #191724;
+@define-color surface #1f1d2e;
+@define-color overlay #26233A;
+@define-color muted #6E6A86;
+@define-color subtle #908CAA;
+@define-color text #E0DEF4;
+@define-color love #EB6F92;
+@define-color gold #F6C177;
+@define-color rose #EBBCBA;
+@define-color pine #31748f;
+@define-color foam #9CCFD8;
+@define-color iris #C4A7E7;
+@define-color highlight-low #21202E;
+@define-color highlight-med #403D52;
+@define-color highlight-high #524F67;
+
 #window {
     margin: 0px;
-    border: 5px solid #191724;
+    border: 5px solid @base;
     font-size: 15px;
-    background-color: rgba(31, 29, 46, 1);
+    background-color: @surface;
     border-radius: 20px;
 }
 
@@ -15,7 +31,7 @@
     border: none;
     font: "CaskaydiaCove Nerd Font";
     font-weight: bold;
-    background-color: rgba(31, 29, 46, 1);
+    background-color: @surface;
    	outline: none;
     border-radius: 15px;
     margin: 10px;
@@ -23,17 +39,17 @@
 }
 
 #input:focus {
-    border: 0px solid #1f1d2e;
+    border: 0px solid @surface;
     margin-bottom: 0px;
-    color: #e0def4;
+    color: @text;
 }
 
 #inner-box {
     margin: 4px;
-    border: 10px solid #1f1d2e;
-    color: #e0def4;
+    border: 10px solid @surface;
+    color: @text;
     font-weight: bold;
-    background-color: #1f1d2e;
+    background-color: @surface;
     border-radius: 15px;
 }
 
@@ -53,7 +69,7 @@
 }
 
 #text:selected {
-    color: #1f1d2e;
+    color: @surface;
     margin: 0px 0px;
     border: none;
     border-radius: 15px;
@@ -63,7 +79,6 @@
     margin: 0px 0px;
     border: none;
     border-radius: 15px;
-    background-color: transparent;
 }
 
 #entry:selected {
