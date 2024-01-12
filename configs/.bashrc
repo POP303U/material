@@ -391,6 +391,7 @@ alias v-dunst='cd ~/.config/dunst && ${EDITOR} ~/.config/dunst/dunstrc'
 alias v-bashrc='cd ~ && ${EDITOR} ~/.bashrc'
 alias v-emacs='cd ~/.config/emacs && ${EDITOR} ~/.config/emacs/config.org'
 alias v-hypr='cd ~/.config/hypr && ${EDITOR} ~/.config/hypr/hyprland.conf'
+alias v-hypr-gsettings='cd ~/.config/hypr && ${EDITOR} ~/.config/hypr/gsettings'
 alias v-hypr-binds='cd ~/.config/emacs && ${EDITOR} ~/config.org'
 alias v-waybar='cd ~/.config/waybar && ${EDITOR} ~/.config/waybar/config.jsonc'
 alias v-autoclicker='cd ~/.config/autoclicker && ${EDITOR} ~/.config/autoclicker/clicker_start'
@@ -561,6 +562,9 @@ pretty_angle          # angle brackets like 'nice_shell_artix' prompt
 #pretty_dollar         # dollar prompt but pretty
 #default_arrow         # default arrow
 
+kitty-reload() {
+    kill -SIGUSR1 $(pidof kitty)
+}
 
 hg() {
     history | grep "$1";
