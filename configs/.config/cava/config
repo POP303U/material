@@ -18,7 +18,7 @@ framerate = 144
 # The number of bars (0-512). 0 sets it to auto (fill up console).
 # Bars' width and space between bars in number of characters.
 ; bars = 0
-; bar_width = 4 
+; bar_width = 2
 ; bar_spacing = 1
 # bar_height is only used for output in "noritake" format
 ; bar_height = 32
@@ -185,46 +185,50 @@ gradient = 1
 # TO SET A THEME CHANGE THE ORDER
 # THE BOTTOM THEME IS THE ONE BEING LOADED
 
-# sweetpastel (https://github.com/sweetpastel/cava)
-gradient_color_1 = '#FFDEDE'
-gradient_color_2 = '#A3CBE7'
-gradient_color_3 = '#C9D4FF'
-gradient_color_4 = '#CEACE8'
-gradient_color_5 = '#ECE3B1'
-gradient_color_6 = '#B4E3AD'
-gradient_color_7 = '#E5A3A1'
+# OVERDRIVE
+#gradient_color_1 = '#31748f'
+#gradient_color_2 = '#3e8fb0'
+#gradient_color_3 = '#9ccfd8'
+#gradient_color_4 = '#ebbcba'
+#gradient_color_5 = '#ea9a97'
+#gradient_color_6 = '#eb6f92'
 
-# Everblush (https://github.com/Everblush/cava)
-gradient_color_4 = '#8ccf7e'
-gradient_color_2 = '#67b0e8'
-gradient_color_3 = '#67b0e8'
-gradient_color_1 = '#c47fd5'
+# sweetpastel (https://github.com/sweetpastel/cava)
+#gradient_color_1 = '#FFDEDE'
+#gradient_color_2 = '#A3CBE7'
+#gradient_color_3 = '#C9D4FF'
+#gradient_color_4 = '#CEACE8'
+#gradient_color_5 = '#ECE3B1'
+#gradient_color_6 = '#B4E3AD'
+#gradient_color_7 = '#E5A3A1'
 
 # OVERDRIVE INVERSE
-gradient_color_6 = '#31748f'
-gradient_color_5 = '#3e8fb0'
-gradient_color_4 = '#9ccfd8'
-gradient_color_3 = '#ebbcba'
-gradient_color_2 = '#ea9a97'
-gradient_color_1 = '#eb6f92'
+#gradient_color_6 = '#31748f'
+#gradient_color_5 = '#3e8fb0'
+#gradient_color_4 = '#9ccfd8'
+#gradient_color_3 = '#ebbcba'
+#gradient_color_2 = '#ea9a97'
+#gradient_color_1 = '#eb6f92'
 
 # catppuccin mocha (https://github.com/catppuccin/cava)
-gradient_color_1 = '#94e2d5'
-gradient_color_2 = '#89dceb'
-gradient_color_3 = '#74c7ec'
-gradient_color_4 = '#89b4fa'
-gradient_color_5 = '#cba6f7'
-gradient_color_6 = '#f5c2e7'
-gradient_color_7 = '#eba0ac'
-gradient_color_8 = '#f38ba8'
+#gradient_color_1 = '#94e2d5'
+#gradient_color_2 = '#89dceb'
+#gradient_color_3 = '#74c7ec'
+#gradient_color_4 = '#89b4fa'
+#gradient_color_5 = '#cba6f7'
+#gradient_color_6 = '#f5c2e7'
+#gradient_color_7 = '#eba0ac'
+#gradient_color_8 = '#f38ba8'
 
-# OVERDRIVE
-gradient_color_1 = '#31748f'
-gradient_color_2 = '#3e8fb0'
-gradient_color_3 = '#9ccfd8'
-gradient_color_4 = '#ebbcba'
-gradient_color_5 = '#ea9a97'
-gradient_color_6 = '#eb6f92'
+# titanium-mono
+gradient_color_1 = '#4e4e4e'
+gradient_color_2 = '#6e6e6e'
+gradient_color_3 = '#848484'
+gradient_color_4 = '#9c9c9c'
+gradient_color_5 = '#afafaf'
+gradient_color_6 = '#b8b8b8'
+gradient_color_7 = '#fafafa'
+gradient_color_8 = '#ffffff'
 
 [smoothing]
 
