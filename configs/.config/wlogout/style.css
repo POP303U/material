@@ -3,7 +3,7 @@
     font-size: 18px;
 }
 
-@import "themes/rose-pine.css";
+@import "themes/titanium-mono.css";
 
 window {
     background-color: rgba(0,0,0,.7);
@@ -98,7 +98,7 @@ button:hover#reboot {
 }
 
 #reboot {
-    background-image: image(url("$HOME/.config/wlogout/icons/reboot_#ebbcba.png"), url("/usr/share/wlogout/icons/reboot.png"), url("~/.config/wlogout/icons/reboot_white.png"));
+    background-image: image(url("$HOME/.config/wlogout/icons/reboot_#ebbcba.png"), url("/usr/share/wlogout/icons/reboot.png"), url("$HOME/.config/wlogout/icons/reboot_white.png"));
     border-radius: 0px 0px 30px 0px;
     margin : 0px 0px 0px 0px;
 }
