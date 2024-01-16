@@ -1,13 +1,26 @@
 #!/usr/bin/env sh
 
-# Check if wlogout is already running
+# Check if wofi is already running
 if pgrep -x "wofi" >/dev/null; then
     pkill -x "wofi"
     exit 0
 fi
 
-#wofi --height 590px \
-#     --width 1140px \
-#     --allow-images true
-wofi -c ~/.config/wofi/config -s ~/.config/wofi/style.css -C ~/.config/wofi/themes/rose-pine.css
-
+case "$1" in
+    "wofi")
+        wofi
+        ;;
+    "wallpaper")
+        wofi-wallpaper
+        ;;
+    "emoji")
+        wofi-emoji
+        ;;
+    "rice")
+        wofi-rice-selector
+        ;;
+    *)
+        echo "Invalid choice $1"
+        pkill -x "wofi"
+        ;;
+esac
