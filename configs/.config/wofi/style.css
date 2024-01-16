@@ -1,18 +1,15 @@
-@define-color base #191724;
-@define-color surface #1f1d2e;
-@define-color overlay #26233A;
-@define-color muted #6E6A86;
-@define-color subtle #908CAA;
-@define-color text #E0DEF4;
-@define-color love #EB6F92;
-@define-color gold #F6C177;
-@define-color rose #EBBCBA;
-@define-color pine #31748f;
-@define-color foam #9CCFD8;
-@define-color iris #C4A7E7;
-@define-color highlight-low #21202E;
-@define-color highlight-med #403D52;
-@define-color highlight-high #524F67;
+@define-color base #151515;
+@define-color surface #181818;
+@define-color overlay #313131;
+@define-color muted #4E4E4E;
+@define-color subtle #848484;
+@define-color text #FAFAFA;
+@define-color love #B8B8B8;
+@define-color gold #848484;
+@define-color rose #7F7F7F;
+@define-color pine #AFAFAF;
+@define-color foam #9C9C9C;
+@define-color iris #6E6E6E;
 
 #window {
     margin: 0px;
@@ -85,5 +82,5 @@
     margin: 0px 0px;
     border: none;
     border-radius: 15px;
-    background: linear-gradient(90deg,rgba(196, 167, 231, 1)0%,   rgba(224, 222, 244, 1) 100%);
+    background: linear-gradient(90deg, @foam 0%,  @text 100%);
 }
