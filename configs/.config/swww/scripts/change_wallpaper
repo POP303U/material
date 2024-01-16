@@ -35,6 +35,7 @@ swww img "$CURRENT_BG" \
     --invert-y \
     --transition-pos "$( hyprctl cursorpos )"
 
+
 ### transition types:
 #"none"
 #"simple"

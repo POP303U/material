@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SWWW_DIR="/home/${USER}/.config/swww"
+CURRENT_GTK_FILE="${SWWW_DIR}/current/gtk"
 CURRENT_BG_FILE="${SWWW_DIR}/current/name"
 CURRENT_THEME_FILE="${SWWW_DIR}/current/theme"
 CURRENT_BG="$(cat "$CURRENT_BG_FILE")"
@@ -9,22 +10,50 @@ CURRENT_THEME="$(cat "$CURRENT_BG_FILE")"
 case "$1" in
     "dawn")
         export THEME_TYPE_SHORT="dawn"
-        export CURRENT_BG="abstract_moon.png"
+        export CURRENT_BG="dawn-abstract_moon.png"
         export CURRENT_THEME="rose-pine-dawn"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
     "moon")
         export THEME_TYPE_SHORT="moon"
-        export CURRENT_BG="leafy_moon.png"
+        export CURRENT_BG="moon-leafy.png"
         export CURRENT_THEME="rose-pine-moon"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
     "pine")
         export THEME_TYPE_SHORT="main"
-        export CURRENT_BG="anime_city_upscaled.png"
+        export CURRENT_BG="pine-anime_city.png"
         export CURRENT_THEME="rose-pine"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "gruv")
+        export THEME_TYPE_SHORT="gruv"
+        export CURRENT_BG="gruvbox-arch.png"
+        export CURRENT_THEME="gruvbox"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "catppuccin-mocha")
+        export THEME_TYPE_SHORT="catppuccin-mocha"
+        export CURRENT_BG="catppuccin-mocha-cat.png"
+        export CURRENT_THEME="catppuccin-mocha"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "catppuccin-latte")
+        export THEME_TYPE_SHORT="catppuccin-latte"
+        export CURRENT_BG="catppuccin-latte-cat.png"
+        export CURRENT_THEME="catppuccin-latte"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "titanium-mono")
+        export THEME_TYPE_SHORT="titanium-mono"
+        export CURRENT_BG="titanium-mono-gojo.png"
+        export CURRENT_THEME="titanium-mono"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
@@ -78,6 +107,10 @@ set_bg() {
 
 reload_configs() {
     touch ~/.config/hypr/hyprland.conf
+    pkill -9 dunst
+    dunst & disown
+
+    # kitty kitty kitty
     sleep 1
     kill -SIGUSR1 $(pidof kitty)
 }
@@ -94,10 +127,7 @@ colorize_wofi() {
         -e '/@define-color rose/s: .*;: rose '"$(awk '/@define-color rose/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
         -e '/@define-color pine/s: .*;: pine '"$(awk '/@define-color pine/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
         -e '/@define-color foam/s: .*;: foam '"$(awk '/@define-color foam/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color highlight-low/s: .*;: highlight-low '"$(awk '/@define-color highlight-low/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color highlight-med/s: .*;: highlight-med '"$(awk '/@define-color highlight-med/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color highlight-high/s: .*;: highlight-high '"$(awk '/@define-color highlight-high/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' ~/.config/wofi/style.css
+        -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':'  ~/.config/wofi/style.css
 }
 
 colorize_kitty() {
@@ -109,7 +139,20 @@ colorize_tmux() {
 }
 
 colorize_nvim() {
-    sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${CURRENT_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+    if [[ "$CURRENT_THEME" == "titanium-mono" ]]; then
+        echo "[nvim] ${CURRENT_THEME} Not yet implemented"
+    else
+        sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${CURRENT_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+    fi
+}
+
+colorize_dunst() {
+    local BG="$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
+    local FG="$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
+    local BR="$(sed -n '3p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
+    sed -i 's|background.*|'"${BG}"'|' $HOME/.config/dunst/dunstrc
+    sed -i 's|foreground.*|'"${FG}"'|' $HOME/.config/dunst/dunstrc
+    sed -i 's|frame_color.*|'"${BR}"'|' $HOME/.config/dunst/dunstrc
 }
 
 colorize_waybar() {
@@ -126,6 +169,7 @@ change_theme() {
     colorize_wofi
     colorize_tmux
     colorize_nvim
+    colorize_dunst
     colorize_kitty
     colorize_wlogout
     set_bg
