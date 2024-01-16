@@ -32,5 +32,6 @@ git pull
 ```
 
 ## Credits
-- [backgrounds](https://github.com/the-argus/wallpapers)
+- [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
+- [gruvbox backgrounds](https://gruvbox-wallpapers.pages.dev)
 - [inspiration](https://github.com/prasanthrangan/hyprdots)
