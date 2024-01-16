@@ -181,6 +181,7 @@ copy_config() {
     rm -rf ~/.bashrc;             cp -r    ../configs/.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
     rm -rf ~/.gtkrc-2.0;          cp -r    ../configs/.gtkrc-2.0            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied gtkrc-2.0 to ~/.gtkrc-2.0"
     rm -rf ~/.icons;              cp -r    ../configs/.icons                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
+    rm -rf ~/.bin;              cp -r    ../configs/.bin ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
 
     # Set some files as exacutable 
     chmod +x ~/.config/hypr/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
@@ -226,10 +227,19 @@ enable_sddm_quest() {
 }
 
 install_wofi_wallpaper_git() {
-    git clone https://github.com/POP303U/wofi-wallpaper.git ~/wofi-wallpaper
-    chmod +x ~/wofi-wallpaper/wofi-wallpaper
-    sudo cp  ~/wofi-wallpaper/wofi-wallpaper /bin
-    rm -rf   ~/wofi-wallpaper
+    git clone https://github.com/POP303U/wofi-wallpaper.git ~/wofi/wofi-wall
+    chmod +x ~/wofi/wofi-wall/wofi-wallpaper
+    sudo cp ~/wofi/wofi-wall/wofi-wallpaper /bin
+}
+
+install_wofi_rice_selector_git() {
+    git clone https://github.com/POP303U/wofi-rice-selector.git ~/wofi/wofi-rice
+    chmod +x ~/wofi/wofi-rice/wofi-rice-selector
+    sudo cp ~/wofi/wofi-rice/wofi-rice-selector /bin
+}
+
+cleanup() {
+    rm -rf ~/wofi
 }
 
 install_sddm() {
@@ -269,12 +279,14 @@ stage_1() {
         fi
     done
 
-    start_wireless
     echo -e "[${PURPLE}info${RESET}] Copying config files..."
     copy_config 
+    start_wireless
     fix_groups
     install_sddm
     install_wofi_wallpaper_git 
+    install_wofi_rice_selector_git
+    cleanup
 
     echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
     if [ $STAGE -gt 1 ]; then 
