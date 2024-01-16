@@ -1,4 +1,4 @@
-import = ["/home/pops/.config/alacritty/rose-pine.toml"]
+import = ["/home/pops/.config/alacritty/graphite-lead.toml"]
 
 [font]
 size = 15.0
