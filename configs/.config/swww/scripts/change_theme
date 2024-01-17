@@ -12,6 +12,7 @@ case "$1" in
         export THEME_TYPE_SHORT="dawn"
         export CURRENT_BG="dawn-abstract_moon.png"
         export CURRENT_THEME="rose-pine-dawn"
+        export LIGHT="light"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
@@ -19,6 +20,7 @@ case "$1" in
         export THEME_TYPE_SHORT="moon"
         export CURRENT_BG="moon-leafy.png"
         export CURRENT_THEME="rose-pine-moon"
+        export LIGHT="dark"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
@@ -26,13 +28,15 @@ case "$1" in
         export THEME_TYPE_SHORT="main"
         export CURRENT_BG="pine-anime_city.png"
         export CURRENT_THEME="rose-pine"
+        export LIGHT="dark"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
     "gruv")
         export THEME_TYPE_SHORT="gruv"
-        export CURRENT_BG="gruvbox-arch.png"
+        export CURRENT_BG="gruvbox-astro.jpg"
         export CURRENT_THEME="gruvbox"
+        export LIGHT="dark"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
@@ -40,6 +44,7 @@ case "$1" in
         export THEME_TYPE_SHORT="catppuccin-mocha"
         export CURRENT_BG="catppuccin-mocha-cat.png"
         export CURRENT_THEME="catppuccin-mocha"
+        export LIGHT="dark"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
@@ -47,6 +52,7 @@ case "$1" in
         export THEME_TYPE_SHORT="catppuccin-latte"
         export CURRENT_BG="catppuccin-latte-cat.png"
         export CURRENT_THEME="catppuccin-latte"
+        export LIGHT="light"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
@@ -54,6 +60,23 @@ case "$1" in
         export THEME_TYPE_SHORT="titanium-mono"
         export CURRENT_BG="titanium-mono-gojo.png"
         export CURRENT_THEME="titanium-mono"
+        export LIGHT="dark"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "solarized-dark")
+        export THEME_TYPE_SHORT="solarized"
+        export CURRENT_BG="solarized-dark-construction.png"
+        export CURRENT_THEME="solarized-dark"
+        export LIGHT="dark"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "solarized-light")
+        export THEME_TYPE_SHORT="solarized"
+        export CURRENT_BG="solarized-light-star.webp"
+        export CURRENT_THEME="solarized-light"
+        export LIGHT="light"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
@@ -104,6 +127,10 @@ set_bg() {
         --transition-pos "2502, 1410"
 }
 
+kitty_trans() {
+    local RULE="$(sed -n '1p' $HOME/.config/kitty/rules/${LIGHT})"
+    sed -i 's|^background_opacity.*|'"${RULE}"'|' $HOME/.config/kitty/kitty.conf
+}
 
 reload_configs() {
     touch ~/.config/hypr/hyprland.conf
@@ -130,6 +157,26 @@ colorize_wofi() {
         -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':'  ~/.config/wofi/style.css
 }
 
+colorize_cava() {
+    local GR_1="$(sed -n '1p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    local GR_2="$(sed -n '2p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    local GR_3="$(sed -n '3p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    local GR_4="$(sed -n '4p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    local GR_5="$(sed -n '5p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    local GR_6="$(sed -n '6p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    local GR_7="$(sed -n '7p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    local GR_8="$(sed -n '8p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    # ^ im am so sorry
+    sed -i 's|^gradient_color_1.*|'"${GR_1}"'|' $HOME/.config/cava/config
+    sed -i 's|^gradient_color_2.*|'"${GR_2}"'|' $HOME/.config/cava/config
+    sed -i 's|^gradient_color_3.*|'"${GR_3}"'|' $HOME/.config/cava/config
+    sed -i 's|^gradient_color_4.*|'"${GR_4}"'|' $HOME/.config/cava/config
+    sed -i 's|^gradient_color_5.*|'"${GR_5}"'|' $HOME/.config/cava/config
+    sed -i 's|^gradient_color_6.*|'"${GR_6}"'|' $HOME/.config/cava/config
+    sed -i 's|^gradient_color_7.*|'"${GR_7}"'|' $HOME/.config/cava/config
+    sed -i 's|^gradient_color_8.*|'"${GR_8}"'|' $HOME/.config/cava/config
+}
+
 colorize_kitty() {
     sed -i 's|^include.*|include ./'${CURRENT_THEME}'.conf|' $HOME/.config/kitty/kitty.conf
 }
@@ -142,7 +189,10 @@ colorize_nvim() {
     if [[ "$CURRENT_THEME" == "titanium-mono" ]]; then
         echo "[nvim] ${CURRENT_THEME} Not yet implemented"
     else
-        sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${CURRENT_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+        _TEMP_="$CURRENT_THEME"
+        if [[ "$CURRENT_THEME" == "solarized-dark" ]]; then _TEMP_="solarized"; fi
+        if [[ "$CURRENT_THEME" == "solarized-light" ]]; then _TEMP_="solarized"; fi
+        sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${_TEMP_}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
     fi
 }
 
@@ -171,8 +221,12 @@ change_theme() {
     colorize_nvim
     colorize_dunst
     colorize_kitty
+    colorize_cava
     colorize_wlogout
+
+    # background / transparency rules
     set_bg
+    kitty_trans
 
     # reload
     reload_configs
