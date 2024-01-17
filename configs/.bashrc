@@ -316,7 +316,8 @@ if [[ -f "~/.config/swww/change_wallpaper" ]]; then . ~/.config/swww/change_wall
 export QT_QPA_PLATFORMTHEME=gnome
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/.config/emacs/bin
-export PATH=$PATH:/home/archy/.local/bin
+export PATH=$PATH:~/.local/bin
+export PATH=$PATH: ~/.bin/colorscripts
 export SUDO_PROMPT='sudo (%p@%h) password: ' # doas like password thing
 export TERM_PROGRAM=tmux
 export TERMINAL=/usr/bin/kitty
@@ -353,6 +354,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias yt-dlpxa='yt-dlp -x --add-metadata '${1}''
+alias kt-img='kitty +kitten icat '${1}''
 
 #alias bottles-run='nohup flatpak run com.usebottles.bottles&'
 #alias bottles-fix='flatpak override --user --filesystem="host" com.usebottles.bottles'
@@ -380,6 +382,7 @@ alias v-alacritty='cd ~/.config/alacritty && ${EDITOR} ~/.config/alacritty/alacr
 alias v-cava='cd ~/.config/cava && ${EDITOR} ~/.config/cava/config'
 alias v-gtk2='cd ~/.config/gtk-2.0 && ${EDITOR} ~/.config/gtk-2.0/gtkfilechooser.ini'
 alias v-gtk3='cd ~/.config/gtk-3.0 && ${EDITOR} ~/.config/gtk-3.0/settings.ini'
+alias v-tmux='cd ~ && ${EDITOR} ~/.tmux.conf '
 alias v-lf='cd ~/.config/lf && ${EDITOR} ~/.config/lf/lfrc'
 alias v-nano='cd ~/.config/nano && ${EDITOR} ~/.config/nano/nanorc'
 alias v-neofetch='cd ~/.config/neofetch && ${EDITOR} ~/.config/neofetch/config.conf'
@@ -566,7 +569,7 @@ bf () {
 }
 
 die () {
-    pkill -SIGTERM $1
+    pkill -SIGKILL $1
 }
 
 ex ()
