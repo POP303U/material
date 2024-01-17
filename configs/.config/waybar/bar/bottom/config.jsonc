@@ -77,7 +77,7 @@
     },
 
     "custom/bg_switcher" : {
-        "on-click": "~/.config/swww/scripts/change_wallpaper",
+        "on-click": "wofi-wallpaper",
         "format" : "󱨀",
     },
 
