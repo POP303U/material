@@ -13,3 +13,6 @@ insensitive=true
 allow_images=true
 image_size=40
 gtk_dark=true
+key_down=Control_L-n
+key_up=Control_L-p
+columns=1
