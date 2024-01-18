@@ -13,6 +13,8 @@ BASE_PACKAGES=(
 "wl-clipboard"
 "wlr-randr"
 "jq"
+"hyprpicker"
+"cliphist"
 "wofi-emoji"
 "ttf-jetbrains-mono-nerd"
 "ttf-cascadia-code-nerd"
