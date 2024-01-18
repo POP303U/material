@@ -186,14 +186,11 @@ colorize_tmux() {
 }
 
 colorize_nvim() {
-    if [[ "$CURRENT_THEME" == "titanium-mono" ]]; then
-        echo "[nvim] ${CURRENT_THEME} Not yet implemented"
-    else
-        _TEMP_="$CURRENT_THEME"
-        if [[ "$CURRENT_THEME" == "solarized-dark" ]]; then _TEMP_="solarized"; fi
-        if [[ "$CURRENT_THEME" == "solarized-light" ]]; then _TEMP_="solarized"; fi
-        sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${_TEMP_}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
-    fi
+    local NVIM_THEME="$CURRENT_THEME"
+    if [[ "$CURRENT_THEME" == "titanium-mono" ]]; then NVIM_THEME="monochrome"; fi
+    if [[ "$CURRENT_THEME" == "solarized-dark" ]]; then NVIM_THEME="solarized"; fi
+    if [[ "$CURRENT_THEME" == "solarized-light" ]]; then NVIM_THEME="solarized"; fi
+    sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${NVIM_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
 }
 
 colorize_dunst() {
