@@ -32,11 +32,19 @@ case "$1" in
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
-    "gruv")
-        export THEME_TYPE_SHORT="gruv"
+    "gruvbox-dark")
+        export THEME_TYPE_SHORT="gruvdark"
         export CURRENT_BG="gruvbox-astro.jpg"
-        export CURRENT_THEME="gruvbox"
+        export CURRENT_THEME="gruvbox-dark"
         export LIGHT="dark"
+        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
+        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        ;;
+    "gruvbox-light")
+        export THEME_TYPE_SHORT="gruvlight"
+        export CURRENT_BG="gruvbox-light-fighterjet.png"
+        export CURRENT_THEME="gruvbox-light"
+        export LIGHT="light"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
@@ -178,7 +186,11 @@ colorize_cava() {
 }
 
 colorize_kitty() {
-    sed -i 's|^include.*|include ./'${CURRENT_THEME}'.conf|' $HOME/.config/kitty/kitty.conf
+    local KITTY_THEME="$CURRENT_THEME"
+    if [[ "$THEME_TYPE_SHORT" == "gruvdark" ]]; then KITTY_THEME="gruvbox-dark"; fi
+    if [[ "$THEME_TYPE_SHORT" == "gruvlight" ]]; then KITTY_THEME="gruvbox-light"; fi
+
+    sed -i 's|^incl.*|include ./'${KITTY_THEME}'.conf|' $HOME/.config/kitty/kitty.conf
 }
 
 colorize_tmux() {
@@ -188,9 +200,11 @@ colorize_tmux() {
 colorize_nvim() {
     local NVIM_THEME="$CURRENT_THEME"
     if [[ "$CURRENT_THEME" == "titanium-mono" ]]; then NVIM_THEME="monochrome"; fi
+    if [[ "$CURRENT_THEME" == "gruvbox-dark"  || "$CURRENT_THEME" == "gruvbox-light" ]]; then NVIM_THEME="gruvbox"; fi
     if [[ "$CURRENT_THEME" == "solarized-dark" ]]; then NVIM_THEME="solarized"; fi
     if [[ "$CURRENT_THEME" == "solarized-light" ]]; then NVIM_THEME="solarized"; fi
     sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${NVIM_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+    sed -i 's|^vim.opt.*|vim.opt.background = "'${LIGHT}'"|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
 }
 
 colorize_dunst() {
