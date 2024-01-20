@@ -230,14 +230,14 @@ enable_sddm_quest() {
 }
 
 install_wofi_wallpaper_git() {
-    git clone https://github.com/POP303U/wofi-wallpaper.git ~/wofi/wofi-wall
-    chmod +x ~/wofi/wofi-wall/wofi-wallpaper
+    git clone https://github.com/POP303U/wofi-wallpaper ~/wofi/wofi-wall >/dev/null 2>&1
+    chmod +x ~/wofi/wofi-wall/wofi-wallpaper >/dev/null 2>&1
     sudo cp ~/wofi/wofi-wall/wofi-wallpaper /bin
 }
 
 install_wofi_rice_selector_git() {
-    git clone https://github.com/POP303U/wofi-rice-selector.git ~/wofi/wofi-rice
-    chmod +x ~/wofi/wofi-rice/wofi-rice-selector
+    git clone https://github.com/POP303U/wofi-rice-selector ~/wofi/wofi-rice >/dev/null 2>&1
+    chmod +x ~/wofi/wofi-rice/wofi-rice-selector >/dev/null 2>&1
     sudo cp ~/wofi/wofi-rice/wofi-rice-selector /bin
 }
 
