@@ -1,14 +1,14 @@
-@define-color base #151515;
-@define-color surface #181818;
-@define-color overlay #313131;
-@define-color muted #4E4E4E;
-@define-color subtle #848484;
-@define-color text #FAFAFA;
-@define-color love #B8B8B8;
-@define-color gold #848484;
-@define-color rose #7F7F7F;
-@define-color pine #AFAFAF;
-@define-color foam #9C9C9C;
+@define-color base #151515;
+@define-color surface #181818;
+@define-color overlay #313131;
+@define-color muted #4E4E4E;
+@define-color subtle #848484;
+@define-color text #FAFAFA;
+@define-color love #B8B8B8;
+@define-color gold #848484;
+@define-color rose #7F7F7F;
+@define-color pine #AFAFAF;
+@define-color foam #9C9C9C;
 @define-color iris #6E6E6E;
 
 #window {
