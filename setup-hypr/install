@@ -98,6 +98,7 @@ RED='\033[1;31m'
 CYAN='\033[01;36m'
 YELLOW='\033[01;33m'
 WHITE_BOLD="\033[1;38;5;15m"
+GREEN="\033[01;32m"
 RESET='\033[0m'
 PURPLE='\033[01;35m'
 WHITE='\033[01;37m'
@@ -359,9 +360,14 @@ stage_4() {
 }
 
 echo -e "
-#-------------------------#
+${GREEN}    __  __                 __                __
+${GREEN}   / / / /_  ______  _____/ /___ _____  ____/ /
+${GREEN}  / /_/ / / / / __ \/ ___/ / __ '/ __ \/ __  / 
+${GREEN} / __  / /_/ / /_/ / /  / / /_/ / / / / /_/ /  
+${GREEN}/_/ /_/\__, / .___/_/  /_/\__,_/_/ /_/\__,_/   
+${GREEN}      /____/_/                                 ${RESET}
+
 # ${YELLOW}Easy Hyprland installer${RESET} #
-#-------------------------#
 
 ${WHITE_BOLD}Tip: See installed packages at the top of the script${RESET}
 ${CYAN}1${RESET}. Base 
