@@ -365,6 +365,7 @@ alias dunst-lorem='notify-send "Discord (193)" "Hello i guys i may be stupid aaa
 
 alias keysoup='sudo systemctl restart keyd && sudo systemctl enable keyd && sudo systemctl start keyd'    
 
+alias dv='doas nvim'
 alias vf='${EDITOR} $(fzf)'
 alias dvf='doas ${EDITOR} $(fzf)'
 alias s-bashrc='source ~/.bashrc'
