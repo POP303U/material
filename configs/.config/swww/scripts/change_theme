@@ -50,7 +50,7 @@ case "$1" in
         ;;
     "catppuccin-mocha")
         export THEME_TYPE_SHORT="catppuccin-mocha"
-        export CURRENT_BG="catppuccin-mocha-cat.png"
+        export CURRENT_BG="mocha-cat-leaves.png"
         export CURRENT_THEME="catppuccin-mocha"
         export LIGHT="dark"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
@@ -58,7 +58,7 @@ case "$1" in
         ;;
     "catppuccin-latte")
         export THEME_TYPE_SHORT="catppuccin-latte"
-        export CURRENT_BG="catppuccin-latte-cat.png"
+        export CURRENT_BG="latte-cloud.png"
         export CURRENT_THEME="catppuccin-latte"
         export LIGHT="light"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
@@ -218,6 +218,9 @@ colorize_dunst() {
 
 colorize_waybar() {
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/bottom/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/top/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/compact-bottom/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/compact-top/style.css
 }
 
 colorize_wlogout() {
