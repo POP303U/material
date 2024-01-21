@@ -230,15 +230,27 @@ enable_sddm_quest() {
 }
 
 install_wofi_wallpaper_git() {
+    echo -e "[${PURPLE}info${RESET}] Installing wofi-wallpaper"
     git clone https://github.com/POP303U/wofi-wallpaper ~/wofi/wofi-wall >/dev/null 2>&1
     chmod +x ~/wofi/wofi-wall/wofi-wallpaper >/dev/null 2>&1
     sudo cp ~/wofi/wofi-wall/wofi-wallpaper /bin
+    echo -e "[${BLUE}ok${RESET}] wofi-wallpaper installation finished!"
 }
 
 install_wofi_rice_selector_git() {
+    echo -e "[${PURPLE}info${RESET}] Installing wofi-rice-selector"
     git clone https://github.com/POP303U/wofi-rice-selector ~/wofi/wofi-rice >/dev/null 2>&1
     chmod +x ~/wofi/wofi-rice/wofi-rice-selector >/dev/null 2>&1
     sudo cp ~/wofi/wofi-rice/wofi-rice-selector /bin
+    echo -e "[${BLUE}ok${RESET}] wofi-rice-selector installation finished!"
+}
+
+install_wofi_waybar_selector_git() {
+    echo -e "[${PURPLE}info${RESET}] Installing wofi-waybar-selector"
+    git clone https://github.com/POP303U/wofi-waybar-selector ~/wofi/wofi-waybar >/dev/null 2>&1
+    chmod +x ~/wofi/wofi-waybar/wofi-waybar-selector >/dev/null 2>&1
+    sudo cp ~/wofi/wofi-waybar/wofi-waybar-selector /bin
+    echo -e "[${BLUE}ok${RESET}] wofi-waybar-selector installation finished!"
 }
 
 cleanup() {
@@ -287,8 +299,13 @@ stage_1() {
     start_wireless
     fix_groups
     install_sddm
+
+    # Custom script for hypr-dots on my github
     install_wofi_wallpaper_git 
     install_wofi_rice_selector_git
+    install_wofi_waybar_selector_git
+
+    # Cleanup the mess from git bruh
     cleanup
 
     echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
