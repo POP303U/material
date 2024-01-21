@@ -359,6 +359,7 @@ stage_4() {
     enable_sddm_quest
 }
 
+# https://patorjk.com/software/taag/#p=display&f=Slant&t=Hyprland
 echo -e "
 ${GREEN}    __  __                 __                __
 ${GREEN}   / / / /_  ______  _____/ /___ _____  ____/ /
