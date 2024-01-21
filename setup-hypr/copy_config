@@ -1,4 +1,14 @@
 #!/bin/sh
+
+BLUE='\033[1;34m'
+RED='\033[1;31m'
+CYAN='\033[01;36m'
+YELLOW='\033[01;33m'
+WHITE_BOLD="\033[1;38;5;15m"
+GREEN="\033[01;32m"
+RESET='\033[0m'
+PURPLE='\033[01;35m'
+WHITE='\033[01;37m'
     echo -e "[${PURPLE}info${RESET}] Copying configs..."
 
     rm -rf ../configs_backup
