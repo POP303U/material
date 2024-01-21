@@ -1,0 +1,31 @@
+#!/bin/sh
+    echo -e "[${PURPLE}info${RESET}] Copying configs..."
+
+    rm -rf ../configs_backup
+    mkdir ../configs_backup # create backup dir
+
+    for CONFIG in ../configs/.config/*; do
+        CONFIG_NAME=$(basename "$CONFIG")
+        cp -r ~/.config/$CONFIG_NAME ../configs_backup # backup important
+
+        if [ ! -f "$CONFIG" ]; then
+            if cp -r "$CONFIG" ~/.config; then
+                echo -e "[${BLUE}ok${RESET}] Copied $CONFIG_NAME to ~/.config/$CONFIG_NAME"
+            else
+                echo -e "[${RED}fail${RESET}] Copied $CONFIG_NAME to ~/.config/$CONFIG_NAME"
+            fi	
+        fi
+    done
+
+    rm -rf ~/.tmux.conf;          cp -r    ../configs/.tmux.conf            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
+    rm -rf ~/.bashrc;             cp -r    ../configs/.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
+    rm -rf ~/.gtkrc-2.0;          cp -r    ../configs/.gtkrc-2.0            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied gtkrc-2.0 to ~/.gtkrc-2.0"
+    rm -rf ~/.icons;              cp -r    ../configs/.icons                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
+    rm -rf ~/.bin;              cp -r    ../configs/.bin ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
+
+    # Set some files as exacutable 
+    chmod +x ~/.config/hypr/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
+    chmod +x ~/.config/swww/scripts/init_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/config/swww/scripts/init_wallpaper' is executable: .wxr-xr-x "
+    chmod +x ~/.config/waybar/scripts/waybar-wttr.py && echo -e "[${BLUE}ok${RESET}] '~/.config/waybar/scripts/waybar-wttr.py' is executable: .wxr-xr-x "
+
+
