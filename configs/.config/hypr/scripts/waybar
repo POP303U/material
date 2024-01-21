@@ -1,10 +1,15 @@
 #!/usr/bin/env sh
 
+WAYBAR_DIR="/home/${USER}/.config/waybar"
+CURRENT_STYLE="$(cat "${WAYBAR_DIR}/current/rice")"
+CURRENT_NAME="$(cat "${WAYBAR_DIR}/rices/${CURRENT_STYLE}")"
+CURRENT_WAYBAR_CALL="waybar -c $HOME/.config/waybar/bar/${CURRENT_NAME}/config.jsonc -s $HOME/.config/waybar/bar/${CURRENT_NAME}/style.css"
+
 # Check if wlogout is already running
 if pgrep -x "waybar" >/dev/null; then
     pkill -x "waybar"
-    waybar -c ~/.config/waybar/bar/bottom/config.jsonc -s ~/.config/waybar/bar/bottom/style.css
+    $CURRENT_WAYBAR_CALL
     exit 0
 else 
-    waybar -c ~/.config/waybar/bar/bottom/config.jsonc -s ~/.config/waybar/bar/bottom/style.css
+    $CURRENT_WAYBAR_CALL
 fi
