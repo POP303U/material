@@ -19,6 +19,7 @@ cp -rvf ~/.config/neofetch       ../configs/.config/
 cp -rvf ~/.config/dunst          ../configs/.config/
 cp -rvf ~/.config/kitty          ../configs/.config/
 cp -rvf ~/.config/cava           ../configs/.config/
+cp -rvf ~/.config/qt5ct          ../configs/.config/
 cp -rvf ~/.config/xsettingsd     ../configs/.config/
 cp -rvf ~/.bashrc                ../configs/
 cp -rvf ~/.gtkrc-2.0             ../configs/

@@ -16,6 +16,7 @@ cp -rvf ../.config/dunst         ~/.config
 cp -rvf ../.config/neofetch      ~/.config
 cp -rvf ../.config/kitty         ~/.config
 cp -rvf ../.config/cava          ~/.config
+cp -rvf ../.config/qt5ct          ~/.config/
 cp -rvf ../.tmux.conf            ~
 cp -rvf ../.bashrc               ~
 
