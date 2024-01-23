@@ -3,7 +3,7 @@
 [global]
     ### Display ###
 
-frame_color = "#fefefe"
+frame_color = "#ebbcba"
     # Which monitor should the notifications be displayed on.
     monitor = 0
 
@@ -263,16 +263,16 @@ frame_color = "#fefefe"
 
 [urgency_low]
 
-background = "#181818"
-foreground = "#fafafa"
+background = "#1f1d2e"
+foreground = "#ffffff"
 
     timeout = 10
     #default_icon = /path/to/icon
 
 [urgency_normal]
 
-background = "#181818"
-foreground = "#fafafa"
+background = "#1f1d2e"
+foreground = "#ffffff"
 
     timeout = 10
     override_pause_level = 30
@@ -280,8 +280,8 @@ foreground = "#fafafa"
 
 [urgency_critical]
 
-background = "#181818"
-foreground = "#fafafa"
+background = "#1f1d2e"
+foreground = "#ffffff"
 
     timeout = 0
     override_pause_level = 60
