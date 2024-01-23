@@ -82,7 +82,7 @@ case "$1" in
         ;;
     "solarized-light")
         export THEME_TYPE_SHORT="solarized"
-        export CURRENT_BG="solarized-light-star.webp"
+        export CURRENT_BG="solarized-light-post-modern.png"
         export CURRENT_THEME="solarized-light"
         export LIGHT="light"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
@@ -117,6 +117,14 @@ create_name() {
 	echo "$CURRENT_BG" > $NAME_FILE
 }
 
+set_gtk() {
+    if [[ "$LIGHT" == "dark" ]]; then THEME="Adwaita-dark"; fi
+    if [[ "$LIGHT" == "light" ]]; then THEME="Adwaita"; fi
+
+    sed -i 's|^gtk-theme.*|gtk-theme='${THEME}'|' ~/.local/share/nwg-look/gsettings
+    nwg-look -a
+}
+
 set_bg() {
     create_name
     # Check if the program is running
@@ -148,6 +156,9 @@ reload_configs() {
     # kitty kitty kitty
     sleep 1
     kill -SIGUSR1 $(pidof kitty)
+
+    sleep .6
+    set_gtk
 }
 
 colorize_wofi() {
@@ -221,22 +232,32 @@ colorize_waybar() {
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/top/style.css
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/compact-bottom/style.css
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/compact-top/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/colorful-bottom/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/colorful-top/style.css
 }
 
 colorize_wlogout() {
     sed -i 's|^@import.*|@import "themes/'${CURRENT_THEME}'.css";|' $HOME/.config/wlogout/style.css
 }
 
+colorize_hypr() {
+    local GRAD_COL="$(sed -n '1p' $HOME/.config/hypr/themes/${CURRENT_THEME})"
+    local SHAD_COL="$(sed -n '2p' $HOME/.config/hypr/themes/${CURRENT_THEME})"
+    sed -i 's|^$grad_col.*|'"${GRAD_COL}"'|' $HOME/.config/hypr/hyprland.conf
+    sed -i 's|^$shad_col.*|'"${SHAD_COL}"'|' $HOME/.config/hypr/hyprland.conf
+}
+
 change_theme() {
     # apps
     colorize_waybar
+    colorize_wlogout
     colorize_wofi
     colorize_tmux
     colorize_nvim
     colorize_dunst
     colorize_kitty
     colorize_cava
-    colorize_wlogout
+    colorize_hypr
 
     # background / transparency rules
     set_bg
