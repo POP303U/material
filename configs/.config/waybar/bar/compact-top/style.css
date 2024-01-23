@@ -6,7 +6,7 @@
     min-height: 0;
 }
 
-@import "../../themes/titanium-mono.css";
+@import "../../themes/rose-pine.css";
 
 window#waybar {
     background: @base;
