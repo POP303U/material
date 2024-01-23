@@ -12,6 +12,9 @@ bar_spacing = 1
 sleep_timer = 0
 
 [input]
+method = pulse
+; source = default
+
 [output]
 
 method = noncurses
@@ -24,14 +27,14 @@ fragment_shader = northern_lights.frag
 gradient = 1
 
 # AUTOMATICALLY WRITTEN BY HYPR-DOTS DO NOT MODIFY
-gradient_color_1 = '#4e4e4e'
-gradient_color_2 = '#6e6e6e'
-gradient_color_3 = '#848484'
-gradient_color_4 = '#9c9c9c'
-gradient_color_5 = '#afafaf'
-gradient_color_6 = '#b8b8b8'
-gradient_color_7 = '#fafafa'
-gradient_color_8 = '#ffffff'
+gradient_color_1 = '#31748f'
+gradient_color_2 = '#9ccfd8'
+gradient_color_3 = '#c4a7e7'
+gradient_color_4 = '#ebbcba'
+gradient_color_5 = '#eb6f92'
+gradient_color_6 = '#f6c177'
+gradient_color_7 = '#f6c177'
+gradient_color_8 = '#f6c177'
 
 [smoothing]
 
