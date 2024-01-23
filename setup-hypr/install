@@ -10,6 +10,7 @@ BASE_PACKAGES=(
 "wofi"
 "wlogout"
 "thunar"
+"tumbler"
 "wl-clipboard"
 "wlr-randr"
 "jq"
@@ -32,9 +33,10 @@ BASE_PACKAGES=(
 "pokemon-colorscripts-git"
 "bluez"
 "bluez-utils"
+"blueman"
 "networkmanager"
 "network-manager-applet"
-"rose-pine-gtk-theme-full"
+"dracula-icons-git"
 "bibata-cursor-theme-bin"
 "xdg-desktop-portal-hyprland"
 )
@@ -209,6 +211,12 @@ install_doas() {
     echo -e "[${BLUE}ok${RESET}] Successfully installed opendoas..."
 }
 
+### Dracula already in ~/.config/qt5ct/colors
+#install_dracula_qt5_git() {
+#    git clone https://github.com/dracula/qt5.git ~/.temp/dracula
+#    cp ~/.temp/dracula/Dracula.conf ~/.config/qt5ct/colors
+#}
+
 enable_sddm_quest() {
     if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" || $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
 
@@ -231,30 +239,42 @@ enable_sddm_quest() {
 
 install_wofi_wallpaper_git() {
     echo -e "[${PURPLE}info${RESET}] Installing wofi-wallpaper"
-    git clone https://github.com/POP303U/wofi-wallpaper ~/wofi/wofi-wall >/dev/null 2>&1
-    chmod +x ~/wofi/wofi-wall/wofi-wallpaper >/dev/null 2>&1
-    sudo cp ~/wofi/wofi-wall/wofi-wallpaper /bin
+    git clone https://github.com/POP303U/wofi-wallpaper ~/.temp/wofi-wall 
+    chmod +x ~/.temp/wofi-wall/wofi-wallpaper >/dev/null 
+    sudo cp ~/.temp/wofi-wall/wofi-wallpaper /bin
+    sudo chown pops:pops /bin/wofi-wallpaper
     echo -e "[${BLUE}ok${RESET}] wofi-wallpaper installation finished!"
 }
 
 install_wofi_rice_selector_git() {
     echo -e "[${PURPLE}info${RESET}] Installing wofi-rice-selector"
-    git clone https://github.com/POP303U/wofi-rice-selector ~/wofi/wofi-rice >/dev/null 2>&1
-    chmod +x ~/wofi/wofi-rice/wofi-rice-selector >/dev/null 2>&1
-    sudo cp ~/wofi/wofi-rice/wofi-rice-selector /bin
+    git clone https://github.com/POP303U/wofi-rice-selector ~/.temp/wofi-rice 
+    chmod +x ~/.temp/wofi-rice/wofi-rice-selector >/dev/null 
+    sudo cp ~/.temp/wofi-rice/wofi-rice-selector /bin
+    sudo chown pops:pops /bin/wofi-rice-selector
     echo -e "[${BLUE}ok${RESET}] wofi-rice-selector installation finished!"
 }
 
 install_wofi_waybar_selector_git() {
     echo -e "[${PURPLE}info${RESET}] Installing wofi-waybar-selector"
-    git clone https://github.com/POP303U/wofi-waybar-selector ~/wofi/wofi-waybar >/dev/null 2>&1
-    chmod +x ~/wofi/wofi-waybar/wofi-waybar-selector >/dev/null 2>&1
-    sudo cp ~/wofi/wofi-waybar/wofi-waybar-selector /bin
+    git clone https://github.com/POP303U/wofi-waybar-selector ~/.temp/wofi-waybar 
+    chmod +x ~/.temp/wofi-waybar/wofi-waybar-selector >/dev/null 
+    sudo cp ~/.temp/wofi-waybar/wofi-waybar-selector /bin
+    sudo chown pops:pops /bin/wofi-waybar-selector
     echo -e "[${BLUE}ok${RESET}] wofi-waybar-selector installation finished!"
 }
 
+install_wofi_manager_git() {
+    echo -e "[${PURPLE}info${RESET}] Installing wofi-manager-selector"
+    git clone https://github.com/POP303U/wofi-manager ~/.temp/wofi-waybar 
+    chmod +x ~/.temp/wofi-man/wofi-manager >/dev/null 
+    sudo cp ~/.temp/wofi-man/wofi-manager /bin
+    sudo chown pops:pops /bin/wofi-manager
+    echo -e "[${BLUE}ok${RESET}] wofi-manager installation finished!"
+}
+
 cleanup() {
-    rm -rf ~/wofi
+    rm -rf ~/.temp
 }
 
 install_sddm() {
@@ -287,7 +307,7 @@ stage_1() {
 
     echo -e "[${PURPLE}info${RESET}] Installing base packages"
     for PACKAGE in "${BASE_PACKAGES[@]}"; do
-        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm ; then
             echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
         else
             echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
@@ -304,6 +324,8 @@ stage_1() {
     install_wofi_wallpaper_git 
     install_wofi_rice_selector_git
     install_wofi_waybar_selector_git
+    install_wofi_manager_git
+    #install_dracula_qt5_git | see function for information 
 
     # Cleanup the mess from git bruh
     cleanup
