@@ -2,8 +2,8 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/pops/.gtkrc-2.0.mine"
-gtk-theme-name="rose-pine-moon-gtk"
-gtk-icon-theme-name="rose-pine-moon-icons"
+gtk-theme-name="rose-pine-gtk"
+gtk-icon-theme-name="Dracula"
 gtk-font-name="CaskaydiaCove Nerd Font 11"
 gtk-cursor-theme-name="Bibata-Modern-Classic"
 gtk-cursor-theme-size=24
