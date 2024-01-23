@@ -19,6 +19,15 @@ case "$1" in
     "rice")
         wofi-rice-selector
         ;;
+    "manager")
+        wofi-manager "main"
+        ;;
+    "cliphist")
+        cliphist list | wofi --dmenu | cliphist decode | wl-copy
+        ;;
+    "waybar")
+        wofi-waybar-selector
+        ;;
     *)
         echo "Invalid choice $1"
         pkill -x "wofi"
