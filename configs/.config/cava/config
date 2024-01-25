@@ -12,7 +12,7 @@ bar_spacing = 1
 sleep_timer = 0
 
 [input]
-method = pulse
+; method = pulse
 ; source = default
 
 [output]
