@@ -1,0 +1,148 @@
+* {
+    border: none;
+    font-family: "JetbrainsMono Nerd Font";
+    font-weight: bold;
+    font-size: 16px;
+}
+
+@import "../../themes/rose-pine.css";
+
+window#waybar {
+    background: @base;
+}
+
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#memory,
+#disk,
+#cpu,
+#bluetooth,
+#temperature,
+#workspaces,
+#window,
+#tray,
+#backlight 
+#clock,
+#language,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio {
+    background: @surface;
+    color: @base;
+    opacity: 9.9;
+    margin: 5px 5px;
+    border-radius: 10px 10px 10px 10px;
+    padding: 6px;
+    border: 0px solid transparent;
+}
+
+#tray {
+    margin: 10px;
+}
+
+#clock {
+    background-color: @foam;
+}
+
+#battery {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#battery.charging, #battery.plugged {
+    color: #ffffff;
+    background-color: #26A65B;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#backlight {
+    background-color: #90b1b1;
+}
+
+#network {
+    background-color: #ab45ff;
+}
+
+#network.disconnected {
+    background-color: #f53c3c;
+}
+
+#pulseaudio {
+    background-color: @gold;
+    color: #1a1b26;
+}
+
+#pulseaudio.muted {
+    background-color: #f7768e;
+    color: #282828;
+}
+
+#disk {
+    background-color: @love;
+}
+
+#memory {
+    background-color: @pine;
+}
+
+#cpu {
+    background-color: @iris;
+}
+
+#network {
+    color: @gold;
+    border-radius: 10px 0px 0px 10px;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
+}
+
+#workspaces button {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: @workspace-button-inactive;
+}
+
+#workspaces button.active {
+    color: @workspace-button-active
+}
+
+#workspaces button.focused {
+    color: @workspace-button-active;
+    border-radius: 10px;
+}
+
+#workspaces button.urgent {
+    background: @love;
+    border-radius: 10px;
+}
+
+#workspaces button:hover {
+    background: @base;
+    color: @subtle;
+    border-radius: 10px;
+}
+
