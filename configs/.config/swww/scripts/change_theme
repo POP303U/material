@@ -205,7 +205,10 @@ colorize_kitty() {
 }
 
 colorize_tmux() {
-    sed -i 's|^set -g @rose_pine_variant.*|set -g @rose_pine_variant "'${THEME_TYPE_SHORT}'" # Options are "main", "moon" or "dawn"|' $HOME/.tmux.conf
+    if [[ "$LIGHT" == "light" ]]; then TMUX_THEME="white"; fi
+    if [[ "$LIGHT" == "dark" ]]; then TMUX_THEME="black"; fi
+    sed -i 's|^set -g status-bg.*|set -g status-bg '${TMUX_THEME}'' $HOME/.tmux.conf
+    #sed -i 's|^set -g @rose_pine_variant.*|set -g @rose_pine_variant "'${THEME_TYPE_SHORT}'" # Options are "main", "moon" or "dawn"|' $HOME/.tmux.conf
 }
 
 colorize_nvim() {
