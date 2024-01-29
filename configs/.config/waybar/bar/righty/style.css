@@ -8,7 +8,8 @@
 @import "../../themes/rose-pine.css";
 
 window#waybar {
-    background: @base;
+    background: @bar-tr;
+    border-radius: 20px;
 }
 
 #clock,
@@ -32,19 +33,23 @@ window#waybar {
 #disk,
 #temperature,
 #backlight,
+#custom-weather,
+#custom-arch_logo,
+#keyboard-state,
 #network,
 #pulseaudio {
     background: @surface;
     color: @base;
     opacity: 9.9;
-    margin: 5px 5px;
+    margin: 5px 7px;
     border-radius: 10px 10px 10px 10px;
-    padding: 6px;
+    padding: 5px;
     border: 0px solid transparent;
 }
 
 #tray {
     margin: 10px;
+    margin-bottom: 10px;
 }
 
 #clock {
@@ -87,15 +92,12 @@ label:focus {
     background-color: #f53c3c;
 }
 
-#pulseaudio {
-    background-color: @gold;
-    color: #1a1b26;
-}
 
 #pulseaudio.muted {
     background-color: #f7768e;
     color: #282828;
 }
+
 
 #disk {
     background-color: @love;
@@ -120,29 +122,53 @@ label:focus {
     background-color: #eb4d4b;
 }
 
+#workspaces {
+    background-color: transparent;
+    font-weight: bold;
+    font-style: normal;
+    opacity: 0.8;
+    font-size: 16px;
+    color: @foam7;
+}
+
 #workspaces button {
-    padding-bottom: 5px;
-    padding-top: 5px;
-    color: @workspace-button-inactive;
+  color: @foam;
+  transition: all 0.3s ease-in-out;
+  opacity: 0.4;
 }
 
 #workspaces button.active {
-    color: @workspace-button-active
-}
-
-#workspaces button.focused {
-    color: @workspace-button-active;
-    border-radius: 10px;
-}
-
-#workspaces button.urgent {
-    background: @love;
-    border-radius: 10px;
+  background-color: @muted;
+  opacity: 0.9;
+  margin: 8px;
+  border-radius: 5px;
 }
 
 #workspaces button:hover {
-    background: @base;
-    color: @subtle;
-    border-radius: 10px;
+  opacity: 0.8;
+  margin-right: 4px;
+  margin-left: 4px;
+  color: white;
 }
 
+#pulseaudio {
+    background-color: @gold;
+}
+
+#pulseaudio.microphone {
+    background-color: @love;
+    color: @base;
+}
+
+#keyboard-state {
+    background-color: @rose;
+}
+
+#custom-arch_logo {
+    margin-top: 10px;
+    background-color: @foam;
+}
+
+#custom-weather {
+    background-color: @pine;
+}

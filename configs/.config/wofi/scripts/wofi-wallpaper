@@ -1,0 +1,46 @@
+#!/bin/sh
+set -euo pipefail
+
+function create_name() {
+	NAME_FILE="$WALLPAPER_PATH/current/name"
+	if [[ ! -f "$NAME_FILE" ]]; then
+		touch "$NAME_FILE"
+	fi
+
+	# empty the file for new text
+	echo -n > $NAME_FILE
+	echo "$WALLPAPER_NAME" > $NAME_FILE
+}
+
+function reload_hypr() { 
+    WAYBAR_RICE="$(cat "$HOME/.config/waybar/current/rice")"
+    if [[ "$WAYBAR_RICE" == "Tower-Left" || "$WAYBAR_RICE" == "Tower-Right" ]]; then
+        touch ~/.config/hypr/hyprland.conf 
+    fi
+}
+
+WALLPAPER_PATH="/home/${USER}/.config/swww"
+WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls | wofi -p "wallpaper" --dmenu -i)
+WALLPAPER="/home/${USER}/.config/swww/walls/${WALLPAPER_NAME}"
+
+if [[ ! -f "$WALLPAPER" ]]; then
+    echo "Error: Wallpaper file with the name '$WALLPAPER_NAME' not found in the specified directory."
+    exit 1
+fi
+
+create_name
+
+TRANSITION_TYPE="$(cat "$HOME/.config/swww/current/transition")"
+swww img "/home/${USER}/.config/swww/walls/$WALLPAPER_NAME" \
+    \
+    \
+    --transition-bezier .6,.94,.86,.23\
+    --transition-type "${TRANSITION_TYPE}" \
+    --transition-duration 1 \
+    --transition-fps 144 \
+    --invert-y \
+    --transition-pos "2555, 1434" \
+
+reload_hypr
+
+# Options up here ^

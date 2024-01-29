@@ -1,36 +1,61 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "right", // Waybar position (top|bottom|left|right)
+    "margin": "10 10 10 0",
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
     // Modules configuration
 
-    "modules-left": ["hyprland/workspaces"],
-    "modules-right": [
-        "custom/notif", 
-        "custom/lavg", 
+    "modules-left": [
+        "custom/arch_logo",
+        "keyboard-state",
         "memory",
         "disk",
         "cpu",
+    ],
+
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+
+    "modules-right": [
         "pulseaudio", 
+        "pulseaudio#microphone",
         "clock", 
         "tray"],
+
+   "hyprland/workspaces": {
+        "active-only":false,
+        "all-outputs": false,
+        "format": "{}",
+        "on-click": "activate",
+        "persistent_workspaces":{
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+      },
 
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "on-click": "activate",
         "format": "{icon}",
-        "urgent": " ",
+        "urgent": "!",
         "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "7": "",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "10",
         },
         "persistent-workspaces": {
             "1": [],
@@ -38,23 +63,37 @@
             "3": [],
             "4": [],
             "5": [],
-            "6": [],
-            "7": [],
         }
     },
+
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": {
+            "capslock": "C {icon}",                                                                                                                                                       
+            "numlock": "N {icon}"
+        },
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    }, 
 
     "tray": {
         "icon-size": 15,
         "spacing": 10
     },
+
     "clock": {
         "format": "{:%H\n%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
+
     "cpu": {
-        "format": " {usage}%" ,
-        "tooltip": false
+        "interval": 1,
+        "format": "󰻠 {}%",
+        "max-length": 10
     },
 
     "memory": {
@@ -82,18 +121,7 @@
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
     },
-    "battery#bat2": {
-        "bat": "BAT2"
-    },
-    "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },
+
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{icon} {volume}%",
@@ -109,8 +137,43 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click-right": "pavucontrol"
     },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": " Muted",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "scroll-step": 5
+    },
+
+    "custom/weather" : {
+        //shows the current weather and forecast
+        "tooltip" : true,
+        "format" : "{}",
+        "interval" : 30,
+        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "return-type" : "json"
+    },
+
+    "custom/arch_logo": {
+        "on-click": "~/.config/hypr/scripts/system_upgrade",
+        "format" : "󰣇",
+    },
+
+    "custom/power_button" : {
+        "on-click": "~/.config/hypr/scripts/wlogout",
+        "format" : "",
+    },
+
+    "custom/bg_switcher" : {
+        "on-click": "wofi-wallpaper",
+        "format" : "󱨀",
+    },
+
 
     "disk": {
         "interval": 30,

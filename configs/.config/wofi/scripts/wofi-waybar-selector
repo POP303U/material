@@ -1,0 +1,47 @@
+#!/bin/sh
+set -euo pipefail
+
+function set_hypr_blurls() {
+    sed -i 's|.*blurls = way.*|blurls = waybar|' ~/.config/hypr/decoration.conf
+}
+
+function unset_hypr_blurls() {
+    sed -i 's|.*blurls = way.*|#blurls = waybar|' ~/.config/hypr/decoration.conf
+}
+
+function reload_waybar() {
+	# waybar reloads every time hyprland is modified
+	touch "$HOME/.config/hypr/hyprland.conf"
+}
+
+function create_name() {
+	NAME_FILE="/home/${USER}/.config/waybar/current/name"
+	NAME_FULL_FILE="/home/${USER}/.config/waybar/current/rice"
+	if [[ ! -f "$NAME_FILE" ]]; then
+		touch "$NAME_FILE"
+	fi
+
+	# empty the file for new text
+	echo -n > $NAME_FILE
+	echo "$BAR_NAME" > $NAME_FILE
+	echo "$BAR_FULL_NAME" > $NAME_FULL_FILE
+}
+
+BAR_FULL_NAME=$(dir -1 /home/${USER}/.config/waybar/rices | wofi -p "Select your preferred bar" --dmenu -i) 
+BAR_FILE="/home/${USER}/.config/waybar/rices/${BAR_FULL_NAME}"
+BAR_NAME="$(cat "$BAR_FILE")"
+
+if [[ ! -f "$BAR_FILE" ]]; then
+    echo "Error: Rice file with the name '$RICE_FULL_NAME' not found in the specified directory."
+    exit 1
+fi
+
+create_name
+
+if [[ "$BAR_NAME" == "lefty" || "$BAR_NAME" == "righty" ]]; then
+    set_hypr_blurls 
+else 
+    unset_hypr_blurls
+fi
+
+reload_waybar

@@ -1,0 +1,19 @@
+#!/bin/sh
+set -euo pipefail
+
+function run_submenu() {
+    eval "$MENU_NAME"
+}
+
+
+SUBMENU_TYPE="${1}"
+SUBMENU=$(dir -1 /home/${USER}/.config/wofi/manager/submenus/${SUBMENU_TYPE} | wofi -p "hypr-dots settings menu" --dmenu -i) 
+MENU_FILE="/home/${USER}/.config/wofi/manager/submenus/${SUBMENU_TYPE}/${SUBMENU}"
+MENU_NAME="$(cat "$MENU_FILE")"
+
+if [[ ! -f "$MENU_FILE" ]]; then
+    echo "Error: Rice file with the name '$MENU_NAME' not found in the specified directory."
+    exit 1
+fi
+
+run_submenu

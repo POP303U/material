@@ -1,0 +1,49 @@
+#!/bin/sh
+set -euo pipefail
+
+case "$1" in
+    "theme")
+        ARG1="theme"
+        PROOMPT="Select your preferred theme"
+        ;;
+    "-")
+        echo "Ignoring \$2 arg, using \$3 is now undefined behavior"
+        PROOMPT="Select your preferred rice"
+        ARG1="-"
+        ;;
+    *)
+        echo "Unsupported operation: $2"
+        exit 1
+        ARG1=""
+        ;;
+esac
+
+
+function change_rice() {
+	CHANGE_RICE="/home/${USER}/.config/swww/scripts/change_theme"
+	$CHANGE_RICE $RICE_NAME "$ARG1"
+}
+
+function create_name() {
+	NAME_FILE="/home/${USER}/.config/swww/current/rice"
+	if [[ ! -f "$NAME_FILE" ]]; then
+		touch "$NAME_FILE"
+	fi
+
+	# empty the file for new text
+	echo -n > $NAME_FILE
+	echo "$RICE_FULL_NAME" > $NAME_FILE
+}
+
+RICE_FULL_NAME=$(dir -1 /home/${USER}/.config/swww/rices | wofi -p "${PROOMPT}" --dmenu -i) 
+RICE_FILE="/home/${USER}/.config/swww/rices/${RICE_FULL_NAME}"
+RICE_NAME="$(cat "$RICE_FILE")"
+
+if [[ ! -f "$RICE_FILE" ]]; then
+    echo "Error: Rice file with the name '$RICE_FULL_NAME' not found in the specified directory."
+    exit 1
+fi
+
+create_name
+change_rice
+
