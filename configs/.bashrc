@@ -317,7 +317,9 @@ export QT_QPA_PLATFORMTHEME=gnome
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/.config/emacs/bin
 export PATH=$PATH:~/.local/bin
-export PATH=$PATH: ~/.bin/colorscripts
+export PATH=$PATH:~/.bin/colorscripts
+export PATH=$PATH:~/.config/hypr/scripts
+export PATH=$PATH:~/.bin
 export SUDO_PROMPT='sudo (%p@%h) password: ' # doas like password thing
 export TERM_PROGRAM=tmux
 export TERMINAL=/usr/bin/kitty
@@ -506,7 +508,7 @@ function powerliney() {
 }
 
 function default_shell() {
-    PS1='[\u@\h \W]\$'
+    PS1='[\u@\h \W]\$ '
 }
 
 ### PS2
@@ -565,6 +567,10 @@ hg() {
     history | grep "$1";
 }
 
+duhk() {
+    du -h --max-depth=1 | sort -hk 1,1
+}
+
 bf () {
     du -h -x -s -- * | sort -r -h | head -20;
 }
@@ -596,10 +602,6 @@ ex ()
     else
         echo "'$1' is not a valid file"
     fi
-}
-
-duhk() {
-    du -h --max-depth=1 | sort -hk 1,1
 }
 
 clch() {
