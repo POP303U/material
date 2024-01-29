@@ -1,6 +1,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "left", // Waybar position (top|bottom|left|right)
+    "margin": "10 0 10 10",
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
@@ -19,26 +20,42 @@
     ],
 
     "modules-right": [
-        "custom/weather", 
         "pulseaudio", 
         "pulseaudio#microphone",
         "clock", 
         "tray"],
+
+   "hyprland/workspaces": {
+        "active-only":false,
+        "all-outputs": false,
+        "format": "{}",
+        "on-click": "activate",
+        "persistent_workspaces":{
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+      },
 
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "on-click": "activate",
         "format": "{icon}",
-        "urgent": " ",
+        "urgent": "!",
         "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "7": "",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "10",
         },
         "persistent-workspaces": {
             "1": [],
@@ -46,8 +63,6 @@
             "3": [],
             "4": [],
             "5": [],
-            "6": [],
-            "7": [],
         }
     },
 
