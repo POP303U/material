@@ -11,22 +11,25 @@ case "$1" in
         wofi
         ;;
     "wallpaper")
-        wofi-wallpaper
+        ~/.config/wofi/scripts/wofi-wallpaper
         ;;
     "emoji")
-        wofi-emoji
+        ~/.config/wofi/scripts/wofi-emoji
         ;;
     "rice")
-        wofi-rice-selector
+        ~/.config/wofi/scripts/wofi-rice-selector -
+        ;;
+    "theme")
+        ~/.config/wofi/scripts/wofi-rice-selector theme
         ;;
     "manager")
-        wofi-manager "main"
+        ~/.config/wofi/scripts/wofi-manager "main"
+        ;;
+    "waybar")
+        ~/.config/wofi/scripts/wofi-waybar-selector
         ;;
     "cliphist")
         cliphist list | wofi --dmenu | cliphist decode | wl-copy
-        ;;
-    "waybar")
-        wofi-waybar-selector
         ;;
     *)
         echo "Invalid choice $1"
