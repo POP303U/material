@@ -88,23 +88,45 @@ case "$1" in
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
         echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
         ;;
+    "-h")
+        echo "Usage: change_theme [THEME] [FLAGS]"
+        echo "Change hypr-dots rice or colorscheme"
+        echo ""
+        echo "[THEME]"
+        echo "solarized-light:  set theme to Solarized (light version)"
+        echo "solarized-dark:   set theme to Solarized (dark version)"
+        echo "gruvbox-light:    set theme to Gruvbox   (light version)"
+        echo "gruvbox-dark:     set theme to Gruvbox   (dark version)"
+        echo "titanium-mono:    set theme to Titanium Mono"
+        echo "pine:             set theme to Rose Piné"
+        echo "dawn:             set theme to Rose Piné Dawn"
+        echo "moon:             set theme to Rose Piné Moon"
+        echo ""
+        echo "[FLAGS]"
+        echo ""
+        echo "theme:        ignore wallpaper changes"
+        echo "-:            also set wallpaper with script"
+        exit 0
+        ;;
     *)
         echo "Unsupported operation: $1"
         exit 1
         ;;
 esac
 
-#case "$2" in
-#    "bg")
-#        ;;
-#    "-")
-#        echo "Ignoring \$2 arg, using \$3 is now undefined behavior"
-#        ;;
-#    *)
-#        echo "Unsupported operation: $2"
-#        exit 1
-#            ;;
-#esac
+case "$2" in
+    "theme")
+        export THEME_FLAG="true"
+        echo "Ignoring wallpaper changes"
+        ;;
+    "-")
+        echo "Ignoring \$2 arg, using \$3 is now undefined behavior"
+        ;;
+    *)
+        echo "Unsupported operation: $2"
+        exit 1
+            ;;
+esac
 
 create_name() {
 	export NAME_FILE="$SWWW_DIR/current/name"
@@ -126,7 +148,10 @@ set_gtk() {
 }
 
 set_bg() {
+    local TRANSITION_TYPE="$(cat "$HOME/.config/swww/current/transition")"
+
     create_name
+
     # Check if the program is running
     if pgrep "swww-deamon" >/dev/null; then
         swww init
@@ -136,11 +161,27 @@ set_bg() {
 
     swww img "$HOME/.config/swww/walls/$CURRENT_BG" \
         --transition-bezier .6,.94,.86,.23\
-        --transition-type "grow" \
+        --transition-type "${TRANSITION_TYPE}" \
         --transition-duration 1 \
         --transition-fps 144 \
         --invert-y \
         --transition-pos "2502, 1410"
+
+    ### transition types:
+    #"none"
+    #"simple"
+    #"left"
+    #"right"
+    #"top"
+    #"bottom"
+    #"wipe"
+    #"grow"
+    #"center"
+    #"outer"
+    #"any"
+    #"wave"
+    #"random"
+    #"fade"
 }
 
 kitty_trans() {
@@ -174,58 +215,59 @@ colorize_wofi() {
         -e '/@define-color pine/s: .*;: pine '"$(awk '/@define-color pine/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
         -e '/@define-color foam/s: .*;: foam '"$(awk '/@define-color foam/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
         -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':'  ~/.config/wofi/style.css
-}
+    }
 
-colorize_cava() {
-    local GR_1="$(sed -n '1p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_2="$(sed -n '2p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_3="$(sed -n '3p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_4="$(sed -n '4p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_5="$(sed -n '5p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_6="$(sed -n '6p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_7="$(sed -n '7p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_8="$(sed -n '8p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    # ^ im am so sorry
-    sed -i 's|^gradient_color_1.*|'"${GR_1}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_2.*|'"${GR_2}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_3.*|'"${GR_3}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_4.*|'"${GR_4}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_5.*|'"${GR_5}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_6.*|'"${GR_6}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_7.*|'"${GR_7}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_8.*|'"${GR_8}"'|' $HOME/.config/cava/config
-}
+    colorize_cava() {
+        local GR_1="$(sed -n '1p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+        local GR_2="$(sed -n '2p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+        local GR_3="$(sed -n '3p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+        local GR_4="$(sed -n '4p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+        local GR_5="$(sed -n '5p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+        local GR_6="$(sed -n '6p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+        local GR_7="$(sed -n '7p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+        local GR_8="$(sed -n '8p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+        # ^ im am so sorry
+        
+        sed -i 's|^gradient_color_1.*|'"${GR_1}"'|' $HOME/.config/cava/config
+        sed -i 's|^gradient_color_2.*|'"${GR_2}"'|' $HOME/.config/cava/config
+        sed -i 's|^gradient_color_3.*|'"${GR_3}"'|' $HOME/.config/cava/config
+        sed -i 's|^gradient_color_4.*|'"${GR_4}"'|' $HOME/.config/cava/config
+        sed -i 's|^gradient_color_5.*|'"${GR_5}"'|' $HOME/.config/cava/config
+        sed -i 's|^gradient_color_6.*|'"${GR_6}"'|' $HOME/.config/cava/config
+        sed -i 's|^gradient_color_7.*|'"${GR_7}"'|' $HOME/.config/cava/config
+        sed -i 's|^gradient_color_8.*|'"${GR_8}"'|' $HOME/.config/cava/config
+    }
 
-colorize_kitty() {
-    local KITTY_THEME="$CURRENT_THEME"
-    if [[ "$THEME_TYPE_SHORT" == "gruvdark" ]]; then KITTY_THEME="gruvbox-dark"; fi
-    if [[ "$THEME_TYPE_SHORT" == "gruvlight" ]]; then KITTY_THEME="gruvbox-light"; fi
+    colorize_kitty() {
+        local KITTY_THEME="$CURRENT_THEME"
+        if [[ "$THEME_TYPE_SHORT" == "gruvdark" ]]; then KITTY_THEME="gruvbox-dark"; fi
+        if [[ "$THEME_TYPE_SHORT" == "gruvlight" ]]; then KITTY_THEME="gruvbox-light"; fi
 
-    sed -i 's|^incl.*|include ./'${KITTY_THEME}'.conf|' $HOME/.config/kitty/kitty.conf
-}
+        sed -i 's|^incl.*|include ./'${KITTY_THEME}'.conf|' $HOME/.config/kitty/kitty.conf
+    }
 
-colorize_tmux() {
-    if [[ "$LIGHT" == "light" ]]; then TMUX_THEME="white"; fi
-    if [[ "$LIGHT" == "dark" ]]; then TMUX_THEME="black"; fi
-    sed -i 's|^set -g status-bg.*|set -g status-bg '${TMUX_THEME}'' $HOME/.tmux.conf
-    #sed -i 's|^set -g @rose_pine_variant.*|set -g @rose_pine_variant "'${THEME_TYPE_SHORT}'" # Options are "main", "moon" or "dawn"|' $HOME/.tmux.conf
-}
+    colorize_tmux() {
+        if [[ "$LIGHT" == "light" ]]; then TMUX_THEME="white"; fi
+        if [[ "$LIGHT" == "dark" ]]; then TMUX_THEME="black"; fi
+        sed -i 's|^set -g status-bg.*|set -g status-bg '${TMUX_THEME}'|' $HOME/.tmux.conf
+        #sed -i 's|^set -g @rose_pine_variant.*|set -g @rose_pine_variant "'${THEME_TYPE_SHORT}'" # Options are "main", "moon" or "dawn"|' $HOME/.tmux.conf
+    }
 
-colorize_nvim() {
-    local NVIM_THEME="$CURRENT_THEME"
-    if [[ "$CURRENT_THEME" == "titanium-mono" ]]; then NVIM_THEME="monochrome"; fi
-    if [[ "$CURRENT_THEME" == "gruvbox-dark"  || "$CURRENT_THEME" == "gruvbox-light" ]]; then NVIM_THEME="gruvbox"; fi
-    if [[ "$CURRENT_THEME" == "solarized-dark" ]]; then NVIM_THEME="solarized"; fi
-    if [[ "$CURRENT_THEME" == "solarized-light" ]]; then NVIM_THEME="solarized"; fi
-    sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${NVIM_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
-    sed -i 's|^vim.opt.*|vim.opt.background = "'${LIGHT}'"|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
-}
+    colorize_nvim() {
+        local NVIM_THEME="$CURRENT_THEME"
+        if [[ "$CURRENT_THEME" == "titanium-mono" ]]; then NVIM_THEME="monochrome"; fi
+        if [[ "$CURRENT_THEME" == "gruvbox-dark"  || "$CURRENT_THEME" == "gruvbox-light" ]]; then NVIM_THEME="gruvbox"; fi
+        if [[ "$CURRENT_THEME" == "solarized-dark" ]]; then NVIM_THEME="solarized"; fi
+        if [[ "$CURRENT_THEME" == "solarized-light" ]]; then NVIM_THEME="solarized"; fi
+        sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${NVIM_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+        sed -i 's|^vim.opt.*|vim.opt.background = "'${LIGHT}'"|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+    }
 
-colorize_dunst() {
-    local BG="$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
-    local FG="$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
-    local BR="$(sed -n '3p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
-    sed -i 's|background.*|'"${BG}"'|' $HOME/.config/dunst/dunstrc
+    colorize_dunst() {
+        local BG="$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
+        local FG="$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
+        local BR="$(sed -n '3p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
+        sed -i 's|background.*|'"${BG}"'|' $HOME/.config/dunst/dunstrc
     sed -i 's|foreground.*|'"${FG}"'|' $HOME/.config/dunst/dunstrc
     sed -i 's|frame_color.*|'"${BR}"'|' $HOME/.config/dunst/dunstrc
 }
@@ -242,7 +284,8 @@ colorize_waybar() {
 }
 
 colorize_wlogout() {
-    sed -i 's|^@import.*|@import "themes/'${CURRENT_THEME}'.css";|' $HOME/.config/wlogout/style.css
+    sed -i 's|^@import.*|@import "themes/'${CURRENT_THEME}'.css";|' $HOME/.config/wlogout/style_compact.css
+    sed -i 's|^@import.*|@import "themes/'${CURRENT_THEME}'.css";|' $HOME/.config/wlogout/style_normal.css
 }
 
 colorize_hypr() {
@@ -267,16 +310,16 @@ change_theme() {
     colorize_hypr
 
     # background / transparency rules
-    set_bg
+    if [[ "$THEME_FLAG" != "true" ]]; then set_bg; fi
     kitty_trans
 
     # reload
     reload_configs
 }
 
-#if [ "$#" -ne 2 ]; then
-#    echo "Usage: $0 <theme> <bg>"
-#    exit 1
-#fi
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <theme> <bg>"
+    exit 1
+fi
 
 change_theme
