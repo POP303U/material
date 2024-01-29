@@ -90,9 +90,6 @@ GAMING_PACKAGES=(
 
 SDDM_PACKAGES=(
 "sddm"
-"qt5-quickcontrols2"
-"qt5-graphicaleffects"
-"qt5-svg"
 )
 
 BLUE='\033[1;34m'
@@ -237,46 +234,6 @@ enable_sddm_quest() {
     fi 
 }
 
-install_wofi_wallpaper_git() {
-    echo -e "[${PURPLE}info${RESET}] Installing wofi-wallpaper"
-    git clone https://github.com/POP303U/wofi-wallpaper ~/.temp/wofi-wall 
-    chmod +x ~/.temp/wofi-wall/wofi-wallpaper >/dev/null 
-    sudo cp ~/.temp/wofi-wall/wofi-wallpaper /bin
-    sudo chown pops:pops /bin/wofi-wallpaper
-    echo -e "[${BLUE}ok${RESET}] wofi-wallpaper installation finished!"
-}
-
-install_wofi_rice_selector_git() {
-    echo -e "[${PURPLE}info${RESET}] Installing wofi-rice-selector"
-    git clone https://github.com/POP303U/wofi-rice-selector ~/.temp/wofi-rice 
-    chmod +x ~/.temp/wofi-rice/wofi-rice-selector >/dev/null 
-    sudo cp ~/.temp/wofi-rice/wofi-rice-selector /bin
-    sudo chown pops:pops /bin/wofi-rice-selector
-    echo -e "[${BLUE}ok${RESET}] wofi-rice-selector installation finished!"
-}
-
-install_wofi_waybar_selector_git() {
-    echo -e "[${PURPLE}info${RESET}] Installing wofi-waybar-selector"
-    git clone https://github.com/POP303U/wofi-waybar-selector ~/.temp/wofi-waybar 
-    chmod +x ~/.temp/wofi-waybar/wofi-waybar-selector >/dev/null 
-    sudo cp ~/.temp/wofi-waybar/wofi-waybar-selector /bin
-    sudo chown pops:pops /bin/wofi-waybar-selector
-    echo -e "[${BLUE}ok${RESET}] wofi-waybar-selector installation finished!"
-}
-
-install_wofi_manager_git() {
-    echo -e "[${PURPLE}info${RESET}] Installing wofi-manager-selector"
-    git clone https://github.com/POP303U/wofi-manager ~/.temp/wofi-waybar 
-    chmod +x ~/.temp/wofi-man/wofi-manager >/dev/null 
-    sudo cp ~/.temp/wofi-man/wofi-manager /bin
-    sudo chown pops:pops /bin/wofi-manager
-    echo -e "[${BLUE}ok${RESET}] wofi-manager installation finished!"
-}
-
-cleanup() {
-    rm -rf ~/.temp
-}
-
 install_sddm() {
     if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
         echo -e "[${PURPLE}info${RESET}] Installing sddm packages"
@@ -320,12 +277,7 @@ stage_1() {
     fix_groups
     install_sddm
 
-    # Custom script for hypr-dots on my github
-    install_wofi_wallpaper_git 
-    install_wofi_rice_selector_git
-    install_wofi_waybar_selector_git
-    install_wofi_manager_git
-    #install_dracula_qt5_git | see function for information 
+    #install_dracula_qt5_git | see function for information on deprecation
 
     # Cleanup the mess from git bruh
     cleanup
