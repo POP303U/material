@@ -1,3 +1,37 @@
 #!/bin/sh
 
-kitty --hold sh -c "echo 'Performing full system upgrade...'; sudo pacman -Syyu" 
+BLACK='\033[01;30m'   # Black
+RED='\033[01;31m'   # Red
+GREEN='\033[01;32m'   # Green
+YELLOW='\033[01;33m'   # Yellow
+BLUE='\033[01;34m'   # Blue
+PURPLE='\033[01;35m'   # Purple
+CYAN='\033[01;36m'   # Cyan
+WHITE='\033[01;37m'   # White
+RESET='\033[00m'      # Reset
+export SUDO_PROMPT='sudo (%p@%h) password: ' # doas like password thing
+
+kitty --hold sh -c "echo -e '${RESET}
+${PURPLE}       .              
+${PURPLE}      / \                           __                     __
+${PURPLE}     /   \         _______  _______/ /____  ____ ___  ____/ /
+${PURPLE}    /^.   \      /  ___/ / / / ___/ __/ _ \/ __ \`__ \/ __  / 
+${PURPLE}   /  .-.  \     (__  ) /_/ (__  ) /_/  __/ / / / / / /_/ /  
+${CYAN}  /  (   ) _\   /____/\__, /____/\__/\___/_/ /_/ /_/\__,_/   
+${CYAN} / _.~   ~._^\       /____/                                  
+${CYAN}/.^         ^.\ 
+${WHITE} 
+${WHITE} 
+${CYAN}<==== ${PURPLE}Obligatory Warning${CYAN} ====>
+${WHITE}
+${WHITE} ${RED}Warning!
+${WHITE} Arch Linux is a rolling release distro and updates 
+${WHITE} may bring breaking changes to packages / system.
+${WHITE} It is ${RED}strongly ${WHITE}recommended to take a backup with timeshift before 
+${WHITE} continuing! Don't complain if something broke and you didn't take a backup!
+${WHITE}
+${CYAN}<=====>
+${WHITE}
+${YELLOW}Enter sudo password to update... ${RESET}' &&
+
+sudo pacman -Syyu" 
