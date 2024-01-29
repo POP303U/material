@@ -1,0 +1,1 @@
+echo "grow" > $HOME/.config/swww/current/transition

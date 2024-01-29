@@ -1,0 +1,1 @@
+echo "none" > $HOME/.config/swww/current/transition
