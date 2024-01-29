@@ -20,31 +20,6 @@ tooltip {
     border-style: solid;
 }
 
-#workspaces button {
-    padding: 5px;
-    color: @workspace-button-inactive;
-    margin-right: 5px;
-}
-
-#workspaces button.active {
-    color: @workspace-button-active
-}
-
-#workspaces button.focused {
-    color: @workspace-button-active;
-    border-radius: 10px;
-}
-
-#workspaces button.urgent {
-    background: @love;
-    border-radius: 10px;
-}
-
-#workspaces button:hover {
-    background: @base;
-    color: @subtle;
-    border-radius: 10px;
-}
 
 #custom-power_profile,
 #custom-weather,
@@ -171,4 +146,32 @@ tooltip {
     border-radius: 10px 10px 10px 10px;
     border-right: 0px;
     margin-left: 10px;
+}
+
+#workspaces button {
+    padding: 5px;
+    color: @workspace-button-inactive;
+    margin-right: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.active {
+    color: @workspace-button-active;
+}
+
+#workspaces button.focused {
+    color: @workspace-button-active;
+    border-radius: 10px;
+}
+
+#workspaces button.urgent {
+    background: @love;
+    border-radius: 10px;
+}
+
+#workspaces button:hover {
+    background: @base;
+    color: @subtle;
+    transition: all 0.3s ease-in-out;
+    border-radius: 10px;
 }
