@@ -1,4 +1,5 @@
 @define-color bar-bg rgba(0, 0, 0, 0);
+@define-color bar-tr rgba(40, 40, 40, 0.7);
 
 @define-color base #282828;
 @define-color surface #32302F;
