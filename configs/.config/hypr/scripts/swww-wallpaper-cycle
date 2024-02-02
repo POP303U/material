@@ -1,0 +1,83 @@
+#!/bin/sh
+
+CURRENT_RICE="$(cat "$HOME/.config/swww/current/rice")"
+CURRENT_WALLPAPER="$(cat "$HOME/.config/swww/current/name")"
+RICE_DIR="$HOME/.config/swww/walls/$CURRENT_RICE/"
+mapfile -t WALLPAPERS < <(dir -1 "$RICE_DIR")
+
+function reload_and_save() {
+	NAME_FILE="$HOME/.config/swww/current/name"
+    CURRENT_BAR="$(cat $HOME/.config/waybar/current/name)"
+	if [[ ! -f "$NAME_FILE" ]]; then
+		touch "$NAME_FILE"
+	fi
+
+	echo "$NEXT_ELEMENT" > $NAME_FILE
+
+    # Only reload waybar if transparency is present
+    if [[ "$CURRENT_BAR" == "lefty" || "$CURRENT_BAR" == "righty" ]]; then touch ~/.config/hypr/hyprland.conf; fi
+}
+
+function get_resolution() {
+    RESOLUTION="$(wlr-randr | grep current | awk '{print $1}' | tr =x= ,)"
+}
+
+function apply_wall() {
+    cp -vf $RICE_DIR/$NEXT_ELEMENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+    swww img "$RICE_DIR/$NEXT_ELEMENT" \
+        --transition-bezier .43,1.19,1,.4 \
+        --transition-type "$TRANSITION" \
+        --transition-duration 0.7 \
+        --transition-fps 144 \
+        --invert-y \
+        --transition-pos "${RESOLUTION}"
+}
+
+function select_wall() {
+    # Find the INDEX of the search string in the array
+    local INDEX=-1
+    local MODE=$1
+    for ((i=0; i<${#WALLPAPERS[@]}; i++)); do
+        if [ "${WALLPAPERS[i]}" == "$CURRENT_WALLPAPER" ]; then
+            INDEX=$i
+            echo "${WALLPAPERS[i]}"
+            break
+        fi
+    done
+
+    if [ "$INDEX" -ge 0 ]; then
+        case "$MODE" in 
+            -n)
+                NEXT_INDEX=$(( (INDEX + 1) % ${#WALLPAPERS[@]} ))
+                NEXT_ELEMENT="${WALLPAPERS[NEXT_INDEX]}"
+                ;;
+            -p)
+                NEXT_INDEX=$(( (INDEX - 1 + ${#WALLPAPERS[@]}) % ${#WALLPAPERS[@]} ))
+                NEXT_ELEMENT="${WALLPAPERS[NEXT_INDEX]}"
+                ;;
+        esac
+    fi
+}
+
+function main() {
+    case "$1" in
+        -n)
+            TRANSITION="grow"
+            select_wall "$1"
+            ;;
+        -p)
+            TRANSITION="outer"
+            select_wall "$1"
+            ;;
+        *)
+            echo "Invalid option: $1"
+            exit 1
+            ;;
+    esac
+
+    get_resolution
+    apply_wall
+    reload_and_save
+}
+
+main "$1"
