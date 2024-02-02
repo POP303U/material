@@ -28,7 +28,7 @@ fi
 #ease-in-out:      .6,.94,.86,.23
 #ease`ish:         .75,.47,.29,.83
 swww img "$CURRENT_BG" \
-    --transition-bezier .6,.94,.86,.23\
+    --transition-bezier .43,1.19,1,.4\
     --transition-type "grow" \
     --transition-duration 1 \
     --transition-fps 144 \
