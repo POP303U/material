@@ -14,8 +14,8 @@ case $STYLE in
     "compact")
         wlogout \
             -b 2                                                   \
-            -L 500 \
-            -R 500 \
+            -L 500                                                 \
+            -R 500                                                 \
             --css      "$HOME/.config/wlogout/style_compact.css"   \
             --layout   "$HOME/.config/wlogout/layout_compact.json" \
             --protocol layer-shell
