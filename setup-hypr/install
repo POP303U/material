@@ -79,6 +79,14 @@ EXTENDED_PACKAGES=(
 "libreoffice-fresh"
 )
 
+OPTIONAL_PACKAGES=(
+"eza"
+)
+
+SDDM_PACKAGES=(
+"sddm"
+)
+
 GAMING_PACKAGES=(
 "steam"
 "wine"
@@ -87,10 +95,6 @@ GAMING_PACKAGES=(
 "vinegar"
 "bottles"
 "lutris"
-)
-
-SDDM_PACKAGES=(
-"sddm"
 )
 
 BLUE='\033[1;34m'
@@ -251,7 +255,12 @@ install_sddm() {
             sudo mv ~/rose-pine-sddm /usr/share/sddm/themes/
             sudo cp /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf
             sudo sed -i 's/\(Current=\).*/\1rose-pine-sddm/' /etc/sddm.conf
-            echo -e "[${BLUE}ok${RESET}] Installed custom Rosé-Pine sddm theme"
+            echo -e "[${BLUE}ok${RESET}] Installed custom adaptive sddm theme"
+
+            # time to get hacky, dont want to create extra repo so here we areee
+            sed -i 's|Background="Backgrounds/cat_leaves.png"|Background="Backgrounds/current"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
+            sed -i 's|PartialBlur="false"|PartialBlur="true"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
+            sed -i 's|BlueRadius="0"|BlurRadius="15"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
         else 
             echo -e "[${PURPLE}info${RESET}] Skipping custom sddm theme"
         fi
@@ -265,7 +274,7 @@ stage_1() {
 
     echo -e "[${PURPLE}info${RESET}] Installing base packages"
     for PACKAGE in "${BASE_PACKAGES[@]}"; do
-        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm ; then
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
             echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
         else
             echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
@@ -282,6 +291,16 @@ stage_1() {
 
     # Cleanup the mess from git bruh
     cleanup
+
+    if [[ $OPTIONAL_DEPS == "y" || $OPTIONAL_DEPS == "Y" || $OPTIONAL_DEPS == "" || $OPTIONAL_DEPS == "y" || $OPTIONAL_DEPS == "Y" || $OPTIONAL_DEPS == "" ]]; then
+        for PACKAGE in "${OPTIONAL_PACKAGES[@]}"; do
+            if cargo install "$PACKAGE"; then
+                echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+            else
+                echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+            fi
+        done
+    fi
 
     echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
     if [ $STAGE -gt 1 ]; then 
@@ -373,8 +392,11 @@ read -n1 -rep "$: " STAGE
 echo -e "\n${WHITE_BOLD}Install sddm? (y/n)${RESET}"
 read -n1 -rep "$: " SDDM_INSTALL
 
+echo -e "\n${WHITE_BOLD}Install optional dependencies? (y/n)${RESET}"
+read -n1 -rep "$: " OPTIONAL_DEPS
+
 if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
-    echo -e "${WHITE_BOLD}\nInstall custom Rosé-Pine sddm? (y/n) [https://github.com/POP303U/rose-pine-sddm]${RESET}"
+    echo -e "${WHITE_BOLD}\nInstall custom adaptive sddm? (y/n) [https://github.com/POP303U/rose-pine-sddm]${RESET}"
     read -n1 -rep "$: " SDDM_CUSTOM_INSTALL
 fi
 
@@ -382,5 +404,4 @@ if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then
     echo -e "${RED}Choose a valid option${RESET}"
 else 
     install_yay 
-    stage_1
 fi
