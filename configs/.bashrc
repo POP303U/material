@@ -321,6 +321,7 @@ export PATH=$PATH:~/.bin/colorscripts
 export PATH=$PATH:~/.config/hypr/scripts
 export PATH=$PATH:~/.bin
 export SUDO_PROMPT='sudo (%p@%h) password: ' # doas like password thing
+export SUDO=sudo
 export TERM_PROGRAM=tmux
 export TERMINAL=/usr/bin/kitty
 export EDITOR=nvim
@@ -338,42 +339,84 @@ cyn='\[\033[01;36m\]'   # Cyan
 wht='\[\033[01;37m\]'   # White
 clr='\[\033[00m\]'      # Reset
 
+###
 # good aliases
+###
+
+# get list of packages that needs this package
+function_depends() {
+    search=$(echo "$1")
+    sudo pacman -Sii $search | grep "Required" | sed -e "s/Required By     : //g" | sed -e "s/  /\n/g"
+}
+
+alias depends='function_depends'
+
+# cd into subdirectories easily
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
+
+# Set editor to neovim
 alias edit='${EDITOR}'
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
-alias btw='clear; neofetch' # i use arch btw 
+
+# neofetch btw
+alias btw='clear -T $TERM; neofetch' # i use arch btw 
+
+# make commands defaults better
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias free='free -mt'
+alias pacman='sudo pacman --color auto'
+alias sudo='sudo '
+
+# get current bootloader
+alias boot="sudo bootctl status | grep Product"
+
+# give the list of all installed desktops - xsessions desktops
+alias xd="ls /usr/share/xsessions"
+alias xdw="ls /usr/share/wayland-sessions"
+
+# list users
+alias userlist="cut -d: -f1 /etc/passwd | sort"
+
+# systeminfo
+alias probe="sudo -E hw-probe -all -upload"
+alias sysfailed="systemctl list-units --failed"
+
+# get error messages
+alias jctl="journalctl -p 3 -xb"
+
+# alias to notify when command finished ex: (pacman -Syu ; alert "Updates finished")
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# extract music with metadata, with video
 alias yt-dlpxa='yt-dlp -x --add-metadata '${1}''
+alias yt-dlpa='yt-dlp --add-metadata '${1}''
+
+# print image with kitty
 alias kt-img='kitty +kitten icat '${1}''
 
-#alias bottles-run='nohup flatpak run com.usebottles.bottles&'
-#alias bottles-fix='flatpak override --user --filesystem="host" com.usebottles.bottles'
-alias roblox='nohup flatpak run net.brinkervii.grapejuice app&'
-#alias fix-roblox='pkill -9 Roblox'
+# my own fetching tool yay
+alias hyprfetch='clear -T $TERM; hyprfetch'
+
+# dunst debugging tools
 alias dunst-pkill='pkill -9 dunst ; pkill -9 mako ; dunst & disown'
 alias dunst-lorem='notify-send "Discord (193)" "Hello i guys i may be stupid aaaaa"'
 
 alias keysoup='sudo systemctl restart keyd && sudo systemctl enable keyd && sudo systemctl start keyd'    
 
-alias dv='doas nvim'
+# fuzzy finding with neovim
+alias dv='${SUDO} nvim'
 alias vf='${EDITOR} $(fzf)'
-alias dvf='doas ${EDITOR} $(fzf)'
-alias s-bashrc='source ~/.bashrc'
-#alias cvf='${EDITOR} $(fzf) | sed 's|/[^/]*$||'b
-#alias cdvf='doas ${EDITOR} $(fzf) | sed 's|/[^/]*$||'"
-#alias cdfzf='$(fzf) | sed 's|/[^/]*$||''
+alias dvf='${SUDO} ${EDITOR} $(fzf)'
 
 # For editing configs
 alias v-i3='cd ~/.config/i3 && ${EDITOR} ~/.config/i3/config'
@@ -402,12 +445,19 @@ alias v-autoclicker='cd ~/.config/autoclicker && ${EDITOR} ~/.config/autoclicker
 alias v-wlogout='cd ~/.config/wlogout && ${EDITOR} ~/.config/wlogout/style.css '
 alias v-wofi='cd ~/.config/wofi && ${EDITOR} ~/.config/wofi/style.css'
 alias v-swww='cd ~/.config/swww/scripts && ${EDITOR} ~/.config/swww/scripts/change_wallpaper'
+alias s-bashrc='source ~/.bashrc'
 
-#sudo
-alias dv-keyd='cd /etc/keyd/ && doas ${EDITOR} /etc/keyd/default_shell.conf'
-alias dv-tty='cd /etc/ && doas ${EDITOR} /etc/issue'
-alias g-projects='cd ~/personal/github' 
-alias v-projects='cd $PROJECTS && nvim'
+# for sudo editing
+alias dv-fstab='cd /etc/ && ${SUDO} ${EDITOR} /etc/fstab'
+alias dv-vconsole='cd /etc/ && ${SUDO} ${EDITOR} /etc/vconsole.conf'
+alias dv-environment='cd /etc/ && ${SUDO} ${EDITOR} /etc/environment'
+alias dv-pacman='cd /etc/ && ${SUDO} ${EDITOR} /etc/pacman.conf'
+alias dv-mkinitcpio='cd /etc/ && ${SUDO} ${EDITOR} /etc/mkinitcpio.conf'
+alias dv-mirrorlist='cd /etc/ && ${SUDO} ${EDITOR} /etc/pacman.d/mirrorlist'
+alias dv-hosts='cd /etc/ && ${SUDO} ${EDITOR} /etc/hosts'
+alias dv-hostname='cd /etc/ && ${SUDO} ${EDITOR} /etc/hostname'
+alias dv-keyd='cd /etc/keyd/ && ${SUDO} ${EDITOR} /etc/keyd/default_shell.conf'
+alias dv-tty='cd /etc/ && ${SUDO} ${EDITOR} /etc/issue'
 
 # Conditional ls ((stupidly nested) not anymore!)
 if [ -e "$HOME/.cargo/bin/eza" ]; then
