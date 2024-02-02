@@ -31,6 +31,8 @@ fi
 create_name
 
 TRANSITION_TYPE="$(cat "$HOME/.config/swww/current/transition")"
+
+cp -vf ~/.config/swww/walls/$WALLPAPER_NAME /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 swww img "/home/${USER}/.config/swww/walls/$WALLPAPER_NAME" \
     \
     \
