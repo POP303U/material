@@ -31,6 +31,17 @@ git pull
 ./install
 ```
 
+## Custom created themes with wofi-manager
+
+* Nature
+![image](https://github.com/POP303U/hypr-dots/assets/115036828/f7c0ff01-accc-4cd9-8dbd-47d0830c6ce6)
+
+* Peace
+![image](https://github.com/POP303U/hypr-dots/assets/115036828/f4e4dc2e-260c-4cba-819f-943bd2756c73)
+
+* The Seven Seas
+![image](https://github.com/POP303U/hypr-dots/assets/115036828/1609be17-4263-491e-9192-38bdc4faef80)
+
 ## Themes 
 * Catppuccin-Latte
 ![swappy-20240117_222742](https://github.com/POP303U/hypr-dots/assets/115036828/6ee5f780-da71-4541-8332-0aa64d4eab32)
