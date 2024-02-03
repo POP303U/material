@@ -75,27 +75,26 @@ git pull
 
 | Keys | Action |
 | :--  | :-- |
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd>| launch kitty terminal
+| <kbd>Alt</kbd> + <kbd>Enter</kbd>| launch kitty terminal
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd>| launch brave 
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | launch thunar file manager  
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Q</kbd>| quit active/focused window
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>| quit hyprland session
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd> | toggle window on focus to float
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> | rice select menu (wofi)
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | open clipboard history (wofi)
+| <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>L</kbd> | lock screen (swaylock)
+| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>R</kbd> | rice select menu (wofi)
+| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>C</kbd> | open clipboard history (wofi)
 | <kbd>Alt</kbd> + <kbd>D</kbd> | launch desktop applications (wofi)
 | <kbd>Alt</kbd> + <kbd>S</kbd> | launch hypr-dots settings menu (wofi)
 | <kbd>Alt</kbd> + <kbd>F12</kbd> | mute audio output (toggle)
-| <kbd>Alt</kbd> + <kbd>F11</kbd>| increase volume (hold)
-| <kbd>Alt</kbd> + <kbd>F10</kbd>| decrease volume (hold)
+| <kbd>Alt</kbd> + <kbd>F11</kbd>| increase volume
+| <kbd>Alt</kbd> + <kbd>F10</kbd>| decrease volume
 | <kbd>Alt</kbd> + <kbd>F</kbd> | make current application fullscreen
 | <kbd>Alt</kbd> + <kbd>M</kbd> | launch logout menu (wlogout)
 | <kbd>Win</kbd> + <kbd>→</kbd> | next wallpaper
 | <kbd>Win</kbd> + <kbd>←</kbd> | previous wallpaper
-| <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>L</kbd> | lock screen (swaylock)
 | <kbd>Shift</kbd> + <kbd>Print</kbd>  | select area for a screenshot
-| <kbd>Print</kbd> | take screenshot
-| <kbd>Alt</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd> | launch hex colorpicker (hyprpicker)
+| <kbd>Alt</kbd> + <kbd>P</kbd> | launch hex colorpicker (hyprpicker)
 | <kbd>Alt</kbd> + <kbd>RightClick</kbd> | resize the window
 | <kbd>Alt</kbd> + <kbd>LeftClick</kbd> | change the window position
 | <kbd>Alt</kbd> + <kbd>MouseScroll</kbd> | cycle through workspaces
@@ -104,6 +103,7 @@ git pull
 | <kbd>Alt</kbd> + <kbd>[0-9]</kbd> | switch to workspace [0-9]
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9]
 | <kbd>Alt</kbd> + <kbd>Alt</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9] (silently)
+| <kbd>Print</kbd> | take screenshot
 
 ## Credits
 - [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
