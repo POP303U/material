@@ -64,9 +64,6 @@ MINIMAL_PACKAGES=(
 "btop"
 "curl"
 "wget"
-"jp2a"
-"pfetch"
-"helix"
 "neovim"
 )
 
@@ -79,8 +76,14 @@ EXTENDED_PACKAGES=(
 "libreoffice-fresh"
 )
 
-OPTIONAL_PACKAGES=(
+TTY_PACKAGES=(
+"terminus-font"
+)
+
+OPTIONAL_PACKAGES_RUST=(
 "eza"
+"fd"
+"bat"
 )
 
 SDDM_PACKAGES=(
@@ -213,12 +216,6 @@ install_doas() {
     echo -e "[${BLUE}ok${RESET}] Successfully installed opendoas..."
 }
 
-### Dracula already in ~/.config/qt5ct/colors
-#install_dracula_qt5_git() {
-#    git clone https://github.com/dracula/qt5.git ~/.temp/dracula
-#    cp ~/.temp/dracula/Dracula.conf ~/.config/qt5ct/colors
-#}
-
 enable_sddm_quest() {
     if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" || $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
 
@@ -269,6 +266,21 @@ install_sddm() {
     fi
 }
 
+install_and_apply_tty() {
+    if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" || $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]]; then
+
+        for PACKAGE in "${TTY_PACKAGES[@]}"; do
+            if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+                echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+            else
+                echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+            fi
+        done
+
+        echo 'FONT=ter-v28b' | sudo tee -a /etc/vconsole.conf
+    fi
+}
+
 stage_1() {
     echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
 
@@ -286,15 +298,11 @@ stage_1() {
     start_wireless
     fix_groups
     install_sddm
+    install_and_apply_tty
 
-    #install_dracula_qt5_git | see function for information on deprecation
-
-    # Cleanup the mess from git bruh
-    cleanup
-
-    if [[ $OPTIONAL_DEPS == "y" || $OPTIONAL_DEPS == "Y" || $OPTIONAL_DEPS == "" || $OPTIONAL_DEPS == "y" || $OPTIONAL_DEPS == "Y" || $OPTIONAL_DEPS == "" ]]; then
-        for PACKAGE in "${OPTIONAL_PACKAGES[@]}"; do
-            if cargo install "$PACKAGE"; then
+    if [[ $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" || $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" ]]; then
+        for PACKAGE in "${OPTIONAL_PACKAGES_RUST[@]}"; do
+            if $AUR_HELPER -S --noconfirm "$PACKAGE" >/dev/null 2>&1; then
                 echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
             else
                 echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
@@ -387,21 +395,56 @@ ${CYAN}2${RESET}. Minimal
 ${CYAN}3${RESET}. Extended
 ${CYAN}4${RESET}. Gaming
 "
-read -n1 -rep "$: " STAGE
+read -n1 -rep "(1/2/3/4) $: " STAGE
 
-echo -e "\n${WHITE_BOLD}Install sddm? (y/n)${RESET}"
-read -n1 -rep "$: " SDDM_INSTALL
-
-echo -e "\n${WHITE_BOLD}Install optional dependencies? (y/n)${RESET}"
-read -n1 -rep "$: " OPTIONAL_DEPS
+echo -e "
+${GREEN}   _____     __    __         
+${GREEN}  / ___/____/ /___/ /___ ___  
+${GREEN}  \__ \/ __  / __  / __ '__ \ 
+${GREEN} ___/ / /_/ / /_/ / / / / / / 
+${GREEN}/____/\__,_/\__,_/_/ /_/ /_/  ${RESET}
+"
+echo -e "\n${WHITE_BOLD}Install sddm? ${RESET}"
+read -n1 -rep "(y/n) $: " SDDM_INSTALL
 
 if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
-    echo -e "${WHITE_BOLD}\nInstall custom adaptive sddm? (y/n) [https://github.com/POP303U/rose-pine-sddm]${RESET}"
-    read -n1 -rep "$: " SDDM_CUSTOM_INSTALL
+    echo -e "${WHITE_BOLD}\nInstall custom adaptive sddm? [https://github.com/POP303U/rose-pine-sddm]${RESET}"
+    read -n1 -rep "(y/n) $: " SDDM_CUSTOM_INSTALL
 fi
+
+echo -e "
+${GREEN}    ____             __ 
+${GREEN}   / __ \__  _______/ /_
+${GREEN}  / /_/ / / / / ___/ __/
+${GREEN} / _, _/ /_/ (__  ) /_  
+${GREEN}/_/ |_|\__,_/____/\__/  ${RESET}
+"
+echo -e "${WHITE_BOLD}Install beautiful ls/cat/find -> eza/bat/fd? ${RESET}"
+echo -e "${WHITE_BOLD}Preview: ${RESET}"
+echo -e "---------------------------------------------------
+[4mPermissions[0m  [4mSize[0m [4mUser[0m [4mDate Modified[0m [4mName[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m      [1;90m-[0m [1;33mpops[0m [34m 3 Feb 15:02[0m  [1;34mconfigs[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m      [1;90m-[0m [1;33mpops[0m [34m 3 Feb 13:40[0m  [1;34mconfigs_backup[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m      [1;90m-[0m [1;33mpops[0m [34m25 Jan 16:20[0m  [1;34mdebug[0m
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [1;32m1.0Ki[0m [1;33mpops[0m [34m30 Dec  2023[0m  LICENSE
+.[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [1;32m2.2Ki[0m [1;33mpops[0m [34m20 Jan 15:56[0m  [1;4;33mREADME.md[0m
+[1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m      [1;90m-[0m [1;33mpops[0m [34m 3 Feb 15:16[0m  [1;34msetup-hypr[0m
+---------------------------------------------------"
+read -n1 -rep "(y/n) $: " OPTIONAL_DEPS_RUST
+
+echo -e "
+${GREEN}   __  __       
+${GREEN}  / /_/ /___  __
+${GREEN} / __/ __/ / / /
+${GREEN}/ /_/ /_/ /_/ / 
+${GREEN}\__/\__/\__, /  
+${GREEN}       /____/    ${RESET}
+"
+echo -e "\n${WHITE_BOLD}Install tty fonts? ${RESET}"
+read -n1 -rep "(y/n) $: " TTY_INSTALL
 
 if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then 
     echo -e "${RED}Choose a valid option${RESET}"
 else 
     install_yay 
-fi
+    stage_1
