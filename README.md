@@ -70,6 +70,41 @@ git pull
 * Titanium-Mono
 ![swappy-20240117_220450](https://github.com/POP303U/hypr-dots/assets/115036828/63597ecd-3e62-4de7-8392-85f26b4f792a)
 
+
+## Keybindings
+
+| Keys | Action |
+| :--  | :-- |
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd>| launch kitty terminal
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd>| launch brave 
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | launch thunar file manager  
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Q</kbd>| quit active/focused window
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>| quit hyprland session
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd> | toggle window on focus to float
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> | rice select menu (wofi)
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | open clipboard history (wofi)
+| <kbd>Alt</kbd> + <kbd>D</kbd> | launch desktop applications (wofi)
+| <kbd>Alt</kbd> + <kbd>S</kbd> | launch hypr-dots settings menu (wofi)
+| <kbd>Alt</kbd> + <kbd>F12</kbd> | mute audio output (toggle)
+| <kbd>Alt</kbd> + <kbd>F11</kbd>| increase volume (hold)
+| <kbd>Alt</kbd> + <kbd>F10</kbd>| decrease volume (hold)
+| <kbd>Alt</kbd> + <kbd>F</kbd> | make current application fullscreen
+| <kbd>Alt</kbd> + <kbd>M</kbd> | launch logout menu (wlogout)
+| <kbd>Win</kbd> + <kbd>→</kbd> | next wallpaper
+| <kbd>Win</kbd> + <kbd>←</kbd> | previous wallpaper
+| <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>L</kbd> | lock screen (swaylock)
+| <kbd>Shift</kbd> + <kbd>Print</kbd>  | select area for a screenshot
+| <kbd>Print</kbd> | take screenshot
+| <kbd>Alt</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd> | launch hex colorpicker (hyprpicker)
+| <kbd>Alt</kbd> + <kbd>RightClick</kbd> | resize the window
+| <kbd>Alt</kbd> + <kbd>LeftClick</kbd> | change the window position
+| <kbd>Alt</kbd> + <kbd>MouseScroll</kbd> | cycle through workspaces
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| move windows
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| resize currently focused window 
+| <kbd>Alt</kbd> + <kbd>[0-9]</kbd> | switch to workspace [0-9]
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9]
+| <kbd>Alt</kbd> + <kbd>Alt</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9] (silently)
+
 ## Credits
 - [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
 - [gruvbox backgrounds](https://gruvbox-wallpapers.pages.dev)
