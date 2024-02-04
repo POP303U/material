@@ -448,3 +448,4 @@ if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then
 else 
     install_yay 
     stage_1
+fi
