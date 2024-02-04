@@ -45,3 +45,4 @@ echo -e "${YELLOW}▉▉  |${RESET_} Qt5 Theme${BLACK_} .......... ${RESET_}${BO
 echo -e "${YELLOW}  ▉▉|${RESET_} GTK Font${BLACK_} ........... ${RESET_}${BOLD__}${GTK_FONT}"
 echo -e "${PURPLE}▉▉  |${RESET_} Swww Transition${BLACK_} .... ${RESET_}${BOLD__}${TRANSITION_TYPE}"
 echo -e "${PURPLE}  ▉▉|${RESET_} Wlogout Theme${BLACK_} ...... ${RESET_}${BOLD__}${WLOGOUT_THEME}"
+echo 
