@@ -63,7 +63,7 @@ HISTCONTROL=ignoreboth
 ##	* Leading partial directory names are striped off
 ##		/home/me/stuff -> ~/stuff (if USER=me)
 ##		/usr/share/big_dir_name -> ../share/big_dir_name (if pwdmaxlen=20)
-##
+#G
 ##	Original source: WOLFMAN'S color bash promt
 ##	https://wiki.chakralinux.org/index.php?title=Color_Bash_Prompt#Wolfman.27s
 ##
@@ -339,15 +339,17 @@ cyn='\[\033[01;36m\]'   # Cyan
 wht='\[\033[01;37m\]'   # White
 clr='\[\033[00m\]'      # Reset
 
-###
-# good aliases
-###
-
 # get list of packages that needs this package
 function_depends() {
     search=$(echo "$1")
     sudo pacman -Sii $search | grep "Required" | sed -e "s/Required By     : //g" | sed -e "s/  /\n/g"
 }
+
+###################################
+#
+# Good aliases
+#
+###################################
 
 alias depends='function_depends'
 
@@ -357,11 +359,14 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
+alias ........='cd ../../../../../../..'
+alias .........='cd ../../../../../../../..'
 
 # Set editor to neovim
 alias edit='${EDITOR}'
-alias vim='nvim'
-alias vi='nvim'
+#alias vim='nvim'
+#alias vi='nvim'
 alias v='nvim'
 
 # neofetch btw
@@ -445,11 +450,14 @@ alias v-autoclicker='cd ~/.config/autoclicker && ${EDITOR} ~/.config/autoclicker
 alias v-wlogout='cd ~/.config/wlogout && ${EDITOR} ~/.config/wlogout/style.css '
 alias v-wofi='cd ~/.config/wofi && ${EDITOR} ~/.config/wofi/style.css'
 alias v-swww='cd ~/.config/swww/scripts && ${EDITOR} ~/.config/swww/scripts/change_wallpaper'
+alias v-xinitrc='cd ~ && ${EDITOR} ~/.xinitrc'
 alias s-bashrc='source ~/.bashrc'
 
 # for sudo editing
 alias dv-fstab='cd /etc/ && ${SUDO} ${EDITOR} /etc/fstab'
 alias dv-vconsole='cd /etc/ && ${SUDO} ${EDITOR} /etc/vconsole.conf'
+alias dv-issue='cd /etc/ && ${SUDO} ${EDITOR} /etc/issue'
+alias dv-motd='cd /etc/ && ${SUDO} ${EDITOR} /etc/motd'
 alias dv-environment='cd /etc/ && ${SUDO} ${EDITOR} /etc/environment'
 alias dv-pacman='cd /etc/ && ${SUDO} ${EDITOR} /etc/pacman.conf'
 alias dv-mkinitcpio='cd /etc/ && ${SUDO} ${EDITOR} /etc/mkinitcpio.conf'
@@ -457,7 +465,6 @@ alias dv-mirrorlist='cd /etc/ && ${SUDO} ${EDITOR} /etc/pacman.d/mirrorlist'
 alias dv-hosts='cd /etc/ && ${SUDO} ${EDITOR} /etc/hosts'
 alias dv-hostname='cd /etc/ && ${SUDO} ${EDITOR} /etc/hostname'
 alias dv-keyd='cd /etc/keyd/ && ${SUDO} ${EDITOR} /etc/keyd/default_shell.conf'
-alias dv-tty='cd /etc/ && ${SUDO} ${EDITOR} /etc/issue'
 
 # Conditional ls ((stupidly nested) not anymore!)
 if [ -e "$HOME/.cargo/bin/eza" ]; then
@@ -583,36 +590,6 @@ function pretty_dollar() {
     PS2=''${pur}': '${clr}''
 }   
 
-################################
-#
-# Select your Prompt!
-#
-################################
-# Uncomment the prompt you want to select it
-# Customize the arrow for a command spanning multiple lines
-
-# PS1 =>
-#simple_and_functional  # simple prompt with all information necessary
-#fancy_bash_prompt      # fancy bash prompt 
-#useful_shell           # two line bash prompt with much information
-#nice_shell_artix       # simple shell i use (artix)
-#nice_shell_void        # simple shell i use (void)
-#arch_iso               # prompt based on artix live iso
-#artix_iso              # prompt based on artix live iso
-#gentoo_iso             # prompt based on gentoo live iso
-#general_iso            # prompt based on mostly all linux distros defaults
-#default_shell          # default bash prompt
-simplistica            # simple, kinda like those zsh prompts or something
-#powerliney             # powerline based bash prompt
-
-# PS2 =>
-#fat_arrow             # simple fat blue arrow 
-#small_arrow           # simple small blue arrow 
-pretty_angle          # angle brackets like 'nice_shell_artix' prompt         
-#pretty_dollar         # dollar prompt but pretty
-#default_arrow         # default arrow
-
-
 hg() {
     history | grep "$1";
 }
@@ -621,12 +598,131 @@ duhk() {
     du -h --max-depth=1 | sort -hk 1,1
 }
 
-bf () {
+bf() {
     du -h -x -s -- * | sort -r -h | head -20;
 }
 
-die () {
+die() {
     pkill -SIGKILL $1
+}
+
+kbdfont() {
+    local FONTSIZE="28"
+    local FONTTYPE="n"
+
+    case $1 in
+        -h)
+            echo "usage: kbdfont -s <fontsize> -t <normal/bold> -w <false/true>Y"
+            echo ":: -s: set the fontsize"
+            echo ":: -t: set the the type of font"
+            echo ":: -w: save font into /etc/vconsole.conf"
+            ;;
+        -s)
+            case $2 in 
+                12)
+                    FONTSIZE="12"
+                    ;;
+                14)
+                    FONTSIZE="14"
+                    ;;
+                16)
+                    FONTSIZE="16"
+                    ;;
+                18)
+                    FONTSIZE="18"
+                    ;;
+                20)
+                    FONTSIZE="20"
+                    ;;
+                22)
+                    FONTSIZE="22"
+                    ;;
+                24)
+                    FONTSIZE="24"
+                    ;;
+                28)
+                    FONTSIZE="28"
+                    ;;
+                32)
+                    FONTSIZE="32"
+                    ;;
+                *)
+                    echo "'$2' is not a valid font size"
+                    echo "Available fontsize options: "
+                    echo " :: 12, doesn't support bold"
+                    echo " :: 14"
+                    echo " :: 16"
+                    echo " :: 18"
+                    echo " :: 20"
+                    echo " :: 22"
+                    echo " :: 24"
+                    echo " :: 28"
+                    echo " :: 32"
+                    ;;
+            esac
+            ;;
+        *)           
+            echo "resorting to defaults: "
+            echo "setfont ${BUILTFONT}" 
+            BUILTFONT="ter-v${FONTSIZE}${FONTTYPE}.psf.gz"
+            setfont "/usr/share/kbd/consolefonts/${BUILTFONT}"            
+            ;;
+    esac
+
+    case $3 in 
+        -t)
+            case $4 in
+                normal)
+                    FONTTYPE="n"
+                    ;;
+                bold)
+                    FONTTYPE="b"
+                    ;;
+                *)
+                    echo "'$4' is not a fonttype"
+                    echo
+                    echo "options:"
+                    echo " :: normal"
+                    echo " :: bold"
+                    ;;
+            esac
+            ;;
+        *)
+            echo "'$3' is not a valid switch"
+            ;;
+    esac
+
+    case $5 in 
+        -w)
+            case $6 in 
+                true)
+                    if [ ! -f "/etc/vconsole.conf" ]; then sudo touch /etc/vconsole.conf; fi
+                    if [ -z "$(cat /etc/vconsole.conf | grep FONT )" ]; then
+                        echo "FONT=ter-v${FONT_SIZE}${FONT_TYPE}" | sudo tee -a /etc/vconsole.conf
+                    else
+                        sudo sed -i 's|FONT=.*|FONT=ter-v'${FONTSIZE}''${FONTTYPE}'|' /etc/vconsole.conf
+                    fi
+                    echo "saving into /etc/vconsole.conf"
+                    ;;
+                false)
+                    echo "not saving into /etc/vconsole.conf"
+                    ;;
+                *)
+                    echo "'$6' is not a option"
+                    echo
+                    echo "options:"
+                    echo " :: true: save into /etc/vconsole.conf"
+                    echo " :: false: dont save into /etc/vconsole.conf"
+                    ;;
+            esac
+            ;;
+        *)
+            echo "'$5' is not a valid switch"
+            ;;
+    esac
+
+    BUILTFONT="ter-v${FONTSIZE}${FONTTYPE}.psf.gz"
+    setfont "/usr/share/kbd/consolefonts/${BUILTFONT}"
 }
 
 ex ()
@@ -675,11 +771,11 @@ pac() {
                 sudo pacman -S "$@"
             else
                 echo "No packages specified for installation."
-            fi ;;
-        -r|--remove) shift
-            if [ "$#" -gt 0 ]; then
-                # Install the packages using pacman
-                sudo pacman -Rn "$@"
+                fi ;;
+            -r|--remove) shift
+                if [ "$#" -gt 0 ]; then
+                    # Install the packages using pacman
+                    sudo pacman -Rn "$@"
             else
                 echo "No packages specified for removal."
             fi ;;
@@ -707,92 +803,55 @@ operations:
     ;;
      esac
 }
-clear
-### Fetching scripts
-#neofetch
-#pfetch
-#screenfetch
-#fastfetch
-pokemon-colorscripts --no-title -r 
 
-alias hypr-binds='printf "
-#----------------------#
-# Hyprland Cheat Sheet #
-#----------------------#
-Super = Alt;
-    
-### Programs ###
-Open Kitty:         Super + Enter,
-Kill Window:        Super + Shift + Q,
-Open Thunar:        Super + Shift + E
-Open Rust docs:     Super + Shift + D
-Open Brave:         Super + Shift + W
-Open Wofi-emoji:    Super + E,
-Open Wlogout:       Super + M,
-Open Wofi:          Super + D,
+if [ ! -z "$DISPLAY" ]; then
+    ################################
+    #
+    # Select your Prompt!
+    #
+    ################################
+    # Uncomment the prompt you want to select it
+    # Customize the arrow for a command spanning multiple lines
 
-### Resizing by 1 ###
-Resize Left:        Super + Ctrl + H
-Resize Down:        Super + Ctrl + J
-Resize Up:          Super + Ctrl + K
-Resize Right:       Super + Ctrl + L
+    # PS1 =>
+    #simple_and_functional  # simple prompt with all information necessary
+    #fancy_bash_prompt      # fancy bash prompt 
+    #useful_shell           # two line bash prompt with much information
+    #nice_shell_artix       # simple shell i use (artix)
+    #nice_shell_void        # simple shell i use (void)
+    #arch_iso               # prompt based on artix live iso
+    #artix_iso              # prompt based on artix live iso
+    #gentoo_iso             # prompt based on gentoo live iso
+    #general_iso            # prompt based on mostly all linux distros defaults
+    #default_shell          # default bash prompt
+    simplistica            # simple, kinda like those zsh prompts or something
+    #powerliney             # powerline based bash prompt
 
-### Resizing by 10 ###
-Resize Left:        Super + Shift + Ctrl + H
-Resize Down:        Super + Shift + Ctrl + J
-Resize Up:          Super + Shift + Ctrl + K
-Resize Right:       Super + Shift + Ctrl + L
+    # PS2 =>
+    #nice_arrow            # simple fat blue arrow 
+    #small_arrow           # simple small blue arrow 
+    pretty_angle           # angle brackets like 'nice_shell_artix' prompt         
+    #pretty_dollar         # dollar prompt but pretty
+    #default_arrow         # default arrow
 
-### Change window focus ###
-Move Left:          Super + H
-Move Down:          Super + J
-Move Up:            Super + K
-Move Right:         Super + L
+        
+    ################################
+    #
+    # Customize your Login!
+    #
+    ################################
+    # Uncomment the fetching script you want to run on login
 
-### Change workspaces ###
-Go to Workspace 1:  Super + 1
-Go to Workspace 2:  Super + 2
-Go to Workspace 3:  Super + 3
-Go to Workspace 4:  Super + 4
-Go to Workspace 5:  Super + 5
-Go to Workspace 6:  Super + 6
-Go to Workspace 7:  Super + 7
-Go to Workspace 8:  Super + 8
-Go to Workspace 9:  Super + 9
-Go to Workspace 10: Super + 0
-Scroll to the right: Super + MouseScrollUp
-Scroll to the left: Super + MouseScrollUp
+    #neofetch
+    #pfetch
+    #screenfetch
+    #fastfetch
+    #hyprfetch
+    pokemon-colorscripts --no-title -r 
 
-### Move focused window to workspace ###
-Get to Workspace 1: Super + Shift + 1
-Get to Workspace 2: Super + Shift + 2
-Get to Workspace 3: Super + Shift + 3
-Get to Workspace 4: Super + Shift + 4
-Get to Workspace 5: Super + Shift + 5
-Get to Workspace 6: Super + Shift + 6
-Get to Workspace 7: Super + Shift + 7
-Get to Workspace 8: Super + Shift + 8
-Get to Workspace 9: Super + Shift + 9
-Get to Workspace 10:Super + Shift + 0
-
-### Misc ###
-Toggle floating:    Super + Shift + J
-Change splits:      Super + Shift + I   
-Start autoclicker:  Super + Shift + C
-Stop autoclicker:   Super + Shift + V
-Change fullscreen:  Super + F
-Pseudo Tiling:      Super + P
-Screenshots:        Super + Print || Shift + Print
-Move Window:        Super + RightMouse
-Resize Window:      Super + LeftMouse
-Force quit:         Super + Shift + M
-
-## Extra Information ##
-Waybar has popup menus which you can access by hovering the mouse over
-each individual module that contain useful information like weather, cpu usage,
-battery, memory and more!
-
-"
-'
+else 
+    artix_iso              # prompt based on artix live iso
+    nice_arrow             # simple fat blue arrow 
+fi
 
 ### EOF ###
