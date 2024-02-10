@@ -1,0 +1,1 @@
+sed -i 's|layout =.*|layout = dwindle|' ~/.config/hypr/hyprland.conf
