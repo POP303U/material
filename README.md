@@ -5,7 +5,7 @@ My Personal Hyprland dotfiles
 </div>
 
 <p align="center">
-    <img src="https://github.com/POP303U/dotfiles/assets/115036828/b632333d-13ce-46e7-b18d-f85e0b56c519" alt="Material Bread logo">
+    <img src="https://github.com/POP303U/hypr-dots/assets/115036828/7ef49c08-fcf1-4d50-b1a1-c8d6157f0f4c" alt="Material Bread logo">
 </p>
 
 ## Installation
@@ -108,4 +108,4 @@ git pull
 ## Credits
 - [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
 - [gruvbox backgrounds](https://gruvbox-wallpapers.pages.dev)
-- [inspiration](https://github.com/prasanthrangan/hyprdots)
+- [inspiration + backgrounds](https://github.com/prasanthrangan/hyprdots)
