@@ -1,7 +1,6 @@
 <div align="center"> 
 <h1> hypr-dots </h1>
-My Personal Hyprland dotfiles
-
+// My Personal Hyprland dotfiles //
 </div>
 
 <p align="center">
@@ -12,9 +11,9 @@ My Personal Hyprland dotfiles
 ## Installation
 
 The installation script is made for Arch, but **could** work on some Arch based distros with **systemd**.
-It only currently works with AMD Cards with nvidia support in the future.
+It only currently works with AMD Cards with Nvidia support in the future.
 
-After a minimal Arch install (with grub and systemd), clone and execute -
+After a minimal Arch install (with grub, systemd and pipewire), clone and execute -
 
 ```sh
 sudo pacman -Syu git
