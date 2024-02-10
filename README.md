@@ -5,6 +5,7 @@ My Personal Hyprland dotfiles
 </div>
 
 <p align="center">
+    Default configuration when installed:
     <img src="https://github.com/POP303U/hypr-dots/assets/115036828/7ef49c08-fcf1-4d50-b1a1-c8d6157f0f4c" alt="Material Bread logo">
 </p>
 
