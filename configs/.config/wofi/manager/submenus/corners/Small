@@ -1,0 +1,1 @@
+sed -i 's|rounding =.*|rounding = 10| ' ~/.config/hypr/decoration.conf
