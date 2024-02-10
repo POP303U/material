@@ -19,9 +19,13 @@ case "$1" in
     "rice")
         ~/.config/wofi/scripts/wofi-rice-selector -
         ;;
+
+    ### WARNING: Will be deprecated, some pywal thingy will replace it
     "theme")
-        ~/.config/wofi/scripts/wofi-rice-selector theme
+        ~/.config/wofi/scripts/wofi-rice-selector theme         
         ;;
+    ###
+    
     "manager")
         ~/.config/wofi/scripts/wofi-manager "main"
         ;;
