@@ -1,0 +1,16 @@
+
+Welcome to hypr-dots!
+
+ * Repository: https://github.com/POP303U/hypr-dots
+ * Hyprland: https://hyprland.org
+ * Wayland: https://wayland.freedesktop.org
+
+ Tips: 
+  :: If you encounter any issues / problems with my config
+     you can create a issue on my Github.
+  :: You can launch Hyprland with `Hyprland` in a tty.
+  :: If you want to use sddm run the installer again and
+     check the sddm option.
+     
+~ hypr-dots ~
+
