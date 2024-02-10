@@ -20,8 +20,9 @@ function reload_hypr() {
 }
 
 WALLPAPER_PATH="/home/${USER}/.config/swww"
-WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls | wofi -p "wallpaper" --dmenu -i)
-WALLPAPER="/home/${USER}/.config/swww/walls/${WALLPAPER_NAME}"
+CURRENT_RICE="$(cat /home/${USER}/.config/swww/current/rice)"
+WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls/${CURRENT_RICE} | wofi -p "wallpaper" --dmenu -i)
+WALLPAPER="/home/${USER}/.config/swww/walls/${CURRENT_RICE}/${WALLPAPER_NAME}"
 
 if [[ ! -f "$WALLPAPER" ]]; then
     echo "Error: Wallpaper file with the name '$WALLPAPER_NAME' not found in the specified directory."
