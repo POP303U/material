@@ -45,22 +45,17 @@ BASE_PACKAGES=(
 MINIMAL_PACKAGES=(
 "p7zip" 
 "unrar"
+"thunar"
 "tar"
 "rsync"
-"github-cli"
 "git"
 "fzf"
 "exfat-utils"
 "fuse-exfat"
 "ntfs-3g"
-"xfsprogs"
-"xfsdump"
-"flac"
-"jasper"
-"aria2"
 "less"
 "neofetch"
-"htop"
+"pfetch"
 "btop"
 "curl"
 "wget"
@@ -69,10 +64,7 @@ MINIMAL_PACKAGES=(
 
 EXTENDED_PACKAGES=(
 "firefox"
-"emacs"
 "vencord-desktop-bin"
-"thunar"
-"filezilla"
 "libreoffice-fresh"
 )
 
@@ -87,6 +79,9 @@ OPTIONAL_PACKAGES_RUST=(
 )
 
 SDDM_PACKAGES=(
+"qt5-quickcontrols2" 
+"qt5-graphicaleffects" 
+"qt5-svg"
 "sddm"
 )
 
@@ -100,6 +95,7 @@ GAMING_PACKAGES=(
 "lutris"
 )
 
+# Define colors to be used in the script
 BLUE='\033[1;34m'
 RED='\033[1;31m'
 CYAN='\033[01;36m'
@@ -403,10 +399,10 @@ get_options() {
     # ${YELLOW}Easy Hyprland installer${RESET} #
 
     ${WHITE_BOLD}Tip: See installed packages at the top of the script${RESET}
-    ${CYAN}1${RESET}. Base 
-    ${CYAN}2${RESET}. Minimal
-    ${CYAN}3${RESET}. Extended
-    ${CYAN}4${RESET}. Gaming
+    ${CYAN}1${RESET}. Base     (${RED}not recommended${RESET}) (only what's needed to run, you will experience issues)
+    ${CYAN}2${RESET}. Minimal  (${GREEN}recommended${RESET})     (all needed dependencies, incl. filebrowser, shell tools)
+    ${CYAN}3${RESET}. Extended (extra packages, like browser, office suite and vencord)
+    ${CYAN}4${RESET}. Gaming   (wine, steam, bottles and everything for gaming ready)
     "
     read -n1 -rep "(1/2/3/4) $: " STAGE
 
