@@ -24,10 +24,11 @@ tooltip {
     padding: 5px;
     color: @workspace-button-inactive;
     margin-right: 5px;
+    transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.active {
-    color: @workspace-button-active
+    color: @workspace-button-active;
 }
 
 #workspaces button.focused {
@@ -43,6 +44,7 @@ tooltip {
 #workspaces button:hover {
     background: @base;
     color: @subtle;
+    transition: all 0.3s ease-in-out;
     border-radius: 10px;
 }
 
