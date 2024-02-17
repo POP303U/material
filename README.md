@@ -1,4 +1,4 @@
-<div align="center"> hypr
+<div align="center">
 <h1> Material Design Hyprland </h1>
 // My Personal Hyprland dotfiles //
 </div>
