@@ -1,5 +1,5 @@
-<div align="center"> 
-<h1> hypr-dots </h1>
+<div align="center"> hypr
+<h1> Material Design Hyprland </h1>
 // My Personal Hyprland dotfiles //
 </div>
 
@@ -17,16 +17,16 @@ After a minimal Arch install (with grub, systemd and pipewire), clone and execut
 
 ```sh
 sudo pacman -Syu git
-git clone https://github.com/POP303U/hypr-dots ~/hypr-dots
-cd ~/hypr-dots/setup-hypr
+git clone https://github.com/POP303U/material ~/material
+cd ~/material/setup-hypr
 ./install
 ```
 
 ### Updating
-To update hypr-dots you will need to pull the latest changes from github and restore the configs by doing -
+To update material you will need to pull the latest changes from github and restore the configs by doing -
 
 ```sh
-cd ~/hypr-dots/setup-hypr
+cd ~/material/setup-hypr
 git pull
 ./install
 ```
@@ -85,7 +85,7 @@ git pull
 | <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>R</kbd> | rice select menu (wofi)
 | <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>C</kbd> | open clipboard history (wofi)
 | <kbd>Alt</kbd> + <kbd>D</kbd> | launch desktop applications (wofi)
-| <kbd>Alt</kbd> + <kbd>S</kbd> | launch hypr-dots settings menu (wofi)
+| <kbd>Alt</kbd> + <kbd>S</kbd> | launch material settings menu (wofi)
 | <kbd>Alt</kbd> + <kbd>F12</kbd> | mute audio output (toggle)
 | <kbd>Alt</kbd> + <kbd>F11</kbd>| increase volume
 | <kbd>Alt</kbd> + <kbd>F10</kbd>| decrease volume
