@@ -1,0 +1,12 @@
+#!/bin/sh
+
+WAYBAR_STATUS_FILE="/home/${USER}/.config/swww/current/waybar_status"
+WAYBAR_STATUS="$(cat $WAYBAR_STATUS_FILE)"
+
+if [[ "$WAYBAR_STATUS" == "on" ]]; then
+    echo "off" > $WAYBAR_STATUS_FILE
+    pkill waybar
+else 
+    echo "on" > $WAYBAR_STATUS_FILE
+    ~/.config/hypr/scripts/manage-waybar
+fi

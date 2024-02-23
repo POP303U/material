@@ -1,11 +1,15 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 WAYBAR_DIR="/home/${USER}/.config/waybar"
 CURRENT_STYLE="$(cat "${WAYBAR_DIR}/current/rice")"
 CURRENT_NAME="$(cat "${WAYBAR_DIR}/rices/${CURRENT_STYLE}")"
 CURRENT_WAYBAR_CALL="waybar -c $HOME/.config/waybar/bar/${CURRENT_NAME}/config.jsonc -s $HOME/.config/waybar/bar/${CURRENT_NAME}/style.css"
 
-# Check if wlogout is already running
+# Check if waybar is turned off
+WAYBAR_STATUS_FILE="/home/${USER}/.config/swww/current/waybar_status"
+WAYBAR_STATUS="$(cat $WAYBAR_STATUS_FILE)"
+[[ "$WAYBAR_STATUS" == "off" ]] && exit 128
+
 if pgrep -x "waybar" >/dev/null; then
     pkill -x "waybar"
     $CURRENT_WAYBAR_CALL

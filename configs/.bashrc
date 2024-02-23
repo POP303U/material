@@ -26,296 +26,15 @@ HISTFILESIZE=10000000
 HISTTIMEFORMAT="%F %T "
 HISTCONTROL=ignoreboth
 
-##	FUNCTIONS:
-##
-##	* bash_prompt_command()
-##	  This function takes your current working directory and stores a shortened
-##	  version in the variable "NEW_PWD".
-##
-##	* format_font()
-##	  A small helper function to generate color formating codes from simple
-##	  number codes (defined below as local variables for convenience).
-##
-##	* fancy_bash_prompt()
-##	  This function colorizes the bash promt. The exact color scheme can be
-##	  configured here. The structure of the function is as follows:
-##		1. A. Definition of available colors for 16 bits.
-##		1. B. Definition of some colors for 256 bits (add your own).
-##		2. Configuration >> EDIT YOUR PROMT HERE<<.
-##		4. Generation of color codes.
-##		5. Generation of window title (some terminal expect the first
-##		   part of $PS1 to be the window title)
-##		6. Formating of the bash promt ($PS1).
-##
-##	* Main script body:	
-##	  It calls the adequate helper functions to colorize your promt and sets
-##	  a hook to regenerate your working directory "NEW_PWD" when you change it.
-
-
-################################################################################
-##  FUNCTIONS                                                                 ##
-################################################################################
-
-##
-##	ARRANGE $PWD AND STORE IT IN $NEW_PWD
-##	* The home directory (HOME) is replaced with a ~
-##	* The last pwdmaxlen characters of the PWD are displayed
-##	* Leading partial directory names are striped off
-##		/home/me/stuff -> ~/stuff (if USER=me)
-##		/usr/share/big_dir_name -> ../share/big_dir_name (if pwdmaxlen=20)
-#G
-##	Original source: WOLFMAN'S color bash promt
-##	https://wiki.chakralinux.org/index.php?title=Color_Bash_Prompt#Wolfman.27s
-##
-
-bash_prompt_command() {
-	# How many characters of the $PWD should be kept
-	local pwdmaxlen=30
-
-	# Indicate that there has been dir truncation
-	local trunc_symbol=".."
-
-	# Store local dir
-	local dir=${PWD##*/}
-
-	# Which length to use
-	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
-
-	NEW_PWD=${PWD/#$HOME/\~}
-	
-	local pwdoffset=$(( ${#NEW_PWD} - pwdmaxlen ))
-
-	# Generate name
-	if [ ${pwdoffset} -gt "0" ]
-	then
-		NEW_PWD=${NEW_PWD:$pwdoffset:$pwdmaxlen}
-		NEW_PWD=${trunc_symbol}/${NEW_PWD#*/}
-	fi
-}
-
-##
-##	GENERATE A FORMAT SEQUENCE
-##
-format_font()
-{
-	## FIRST ARGUMENT TO RETURN FORMAT STRING
-	local output=$1
-
-
-	case $# in
-	2)
-		eval $output="'\[\033[0;${2}m\]'";;
-	3)
-		eval $output="'\[\033[0;${2};${3}m\]'";;
-	4)
-		eval $output="'\[\033[0;${2};${3};${4}m\]'";;
-	*)
-		eval $output="'\[\033[0m\]'";;
-	esac
-}
-
-##
-## COLORIZE BASH PROMT
-##
-fancy_bash_prompt() {
-
-	############################################################################
-	## COLOR CODES                                                            ##
-	## These can be used in the configuration below                           ##
-	############################################################################
-	
-	## FONT EFFECT
-	local      NONE='0'
-	local      BOLD='1'
-	local       DIM='2'
-	local UNDERLINE='4'
-	local     BLINK='5'
-	local    INVERT='7'
-	local    HIDDEN='8'
-	
-	## COLORS
-	local   DEFAULT='9'
-	local     BLACK='0'
-	local       RED='1'
-	local     GREEN='2'
-	local    YELLOW='3'
-	local      BLUE='4'
-	local   MAGENTA='5'
-	local      CYAN='6'
-	local    L_GRAY='7'
-	local    D_GRAY='60'
-	local     L_RED='61'
-	local   L_GREEN='62'
-	local  L_YELLOW='63'
-	local    L_BLUE='64'
-	local L_MAGENTA='65'
-	local    L_CYAN='66'
-	local     WHITE='67'
-	
-	## TYPE
-	local     RESET='0'
-	local    EFFECT='0'
-	local     COLOR='30'
-	local        BG='40'
-	
-	## 256 COLOR CODES
-	local NO_FORMAT="\[\033[0m\]"
-	local ORANGE_BOLD="\[\033[1;38;5;208m\]"
-	local TOXIC_GREEN_BOLD="\[\033[1;38;5;118m\]"
-	local RED_BOLD="\[\033[1;38;5;1m\]"
-	local CYAN_BOLD="\[\033[1;38;5;87m\]"
-	local BLACK_BOLD="\[\033[1;38;5;0m\]"
-	local WHITE_BOLD="\[\033[1;38;5;15m\]"
-	local GRAY_BOLD="\[\033[1;90m\]"
-	local BLUE_BOLD="\[\033[1;38;5;74m\]"
-	
-	##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
-	  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-	##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ## 
-	
-	##                          CONFIGURE HERE                                ##
-
-	############################################################################
-	## CONFIGURATION                                                          ##
-	## Choose your color combination here                                     ##
-	############################################################################
-	
-	## CONFIGURATION: ROSE-PINE
-	START=$BLACK; START_BG=$D_GRAY; TEXTEFFECT_S=$BOLD
-	FONT_COLOR_1=$WHITE; BACKGROUND_1=$BLACK; TEXTEFFECT_1=$BOLD
-	FONT_COLOR_2=$WHITE; BACKGROUND_2=$D_GRAY; TEXTEFFECT_2=$BOLD
-	FONT_COLOR_3=$BLACK; BACKGROUND_3=$L_CYAN; TEXTEFFECT_3=$BOLD
-	PROMT_FORMAT=$WHITE_BOLD	
-
-	############################################################################
-	## TEXT FORMATING                                                         ##
-	## Generate the text formating according to configuration                 ##
-	############################################################################
-	
-	## CONVERT CODES: add offset
-    S_FC=$(($START+$COLOR))
-	S_BG=$(($START_BG+$BG))
-	S_FE=$(($TEXTEFFECT_S+$EFFECT))
-
-	FC1=$(($FONT_COLOR_1+$COLOR))
-	BG1=$(($BACKGROUND_1+$BG))
-	FE1=$(($TEXTEFFECT_1+$EFFECT))
-	
-	FC2=$(($FONT_COLOR_2+$COLOR))
-	BG2=$(($BACKGROUND_2+$BG))
-	FE2=$(($TEXTEFFECT_2+$EFFECT))
-	
-	FC3=$(($FONT_COLOR_3+$COLOR))
-	BG3=$(($BACKGROUND_3+$BG))
-	FE3=$(($TEXTEFFECT_3+$EFFECT))
-	
-	FC4=$(($FONT_COLOR_4+$COLOR))
-	BG4=$(($BACKGROUND_4+$BG))
-	FE4=$(($TEXTEFFECT_4+$EFFECT))
-
-	## CALL FORMATING HELPER FUNCTION: effect + font color + BG color
-	local TEXT_FORMAT_S
-	local TEXT_FORMAT_1
-	local TEXT_FORMAT_2
-	local TEXT_FORMAT_3
-	local TEXT_FORMAT_4	
-	format_font TEXT_FORMAT_S $S_FC $S_BG1 $S_FE
-	format_font TEXT_FORMAT_1 $FE1 $FC1 $BG1
-	format_font TEXT_FORMAT_2 $FE2 $FC2 $BG2
-	format_font TEXT_FORMAT_3 $FC3 $FE3 $BG3
-	format_font TEXT_FORMAT_4 $FC4 $FE4 $BG4
-	
-	# GENERATE PROMT SECTIONS
-	local PROMT_START=$"$TEXT_FORMAT_S \u "
-	local PROMT_USER=$"$TEXT_FORMAT_1 \u "
-	local PROMT_HOST=$"$TEXT_FORMAT_2 \h "
-	local PROMT_PWD=$"$TEXT_FORMAT_3 \${NEW_PWD} "
-	local PROMT_INPUT=$"$PROMT_FORMAT "
-
-	############################################################################
-	## SEPARATOR FORMATING                                                    ##
-	## Generate the separators between sections                               ##
-	## Uses background colors of the sections                                 ##
-	############################################################################
-	
-	## CONVERT CODES
-   
-	S_TSFC1=$(($BACKGROUND_2+$BG))
-	S_TSBG1=$(($BACKGROUND_1+$COLOR))
-
-	TSFC1=$(($BACKGROUND_1+$COLOR))
-	TSBG1=$(($BACKGROUND_2+$BG))
-	
-	TSFC2=$(($BACKGROUND_2+$COLOR))
-	TSBG2=$(($BACKGROUND_3+$BG))
-	
-	TSFC3=$(($BACKGROUND_3+$COLOR))
-	TSBG3=$(($DEFAULT+$BG))
-
-	## CALL FORMATING HELPER FUNCTION: effect + font color + BG color
-	local SEPARATOR_FORMAT_S
-	local SEPARATOR_FORMAT_1
-	local SEPARATOR_FORMAT_2
-	local SEPARATOR_FORMAT_3
-	format_font SEPARATOR_FORMAT_S $S_TSBG1 $S_TSFC1
-	format_font SEPARATOR_FORMAT_1 $TSFC1 $TSBG1
-	format_font SEPARATOR_FORMAT_2 $TSFC2 $TSBG2
-	format_font SEPARATOR_FORMAT_3 $TSFC3 $TSBG3
-	
-	# GENERATE SEPARATORS WITH FANCY SLANT
-	local SLANT=$'\ue0bc'	
-    local TRIANGLE=$'\ue0b0'
-
-	local START=$SEPARATOR_FORMAT_S$TRIANGLE
-	local SEPARATOR_1=$SEPARATOR_FORMAT_1$SLANT
-	local SEPARATOR_2=$SEPARATOR_FORMAT_2$SLANT
-	local SEPARATOR_3=$SEPARATOR_FORMAT_3$SLANT
-
-	############################################################################
-	## WINDOW TITLE                                                           ##
-	## Prevent messed up terminal-window titles                               ##
-	############################################################################
-	case $TERM in
-	xterm*|rxvt*)
-		local TITLEBAR='\[\033]0;\u:${NEW_PWD}\007\]'
-		;;
-	*)
-		local TITLEBAR=""
-		;;
-	esac
-
-	############################################################################
-	## BASH PROMT                                                             ##
-	## Generate promt and remove format from the rest                         ##
-	############################################################################
-    PS1="$TITLEBAR\n${PROMT_USER}${SEPARATOR_1}${PROMT_HOST}${SEPARATOR_2}${PROMT_PWD}${SEPARATOR_3}${PROMT_INPUT}"
-
-    # Didn't work im dieing aaa
-    #${START}
-    
-    ## For terminal line coloring, leaving the rest standard
-    none="$(tput sgr0)"
-    trap 'echo -ne "${none}"' DEBUG
-}
-
 ################################################################################
 ##  MAIN                                                                      ##
 ################################################################################
 
-##	Bash provides an environment variable called PROMPT_COMMAND. 
-##	The contents of this variable are executed as a regular Bash command 
-##	just before Bash displays a prompt. 
-##	We want it to call our own command to truncate PWD and store it in NEW_PWD
-PROMPT_COMMAND=bash_prompt_command
-
-##	Call bash_promnt only once, then unset it (not needed any more)
-##	It will set $PS1 with colors and relative to $NEW_PWD, 
-##	which gets updated by $PROMT_COMMAND on behalf of the terminal
-
-if [[ -f "~/.config/swww/change_wallpaper" ]]; then . ~/.config/swww/change_wallpaper; fi
+export PROMPT_COMMAND=shortened_pwd # store current shortened path in $CURRENT_PATH
 export QT_QPA_PLATFORMTHEME=gnome
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/.config/emacs/bin
+export PATH=$PATH:~/.config/wofi/scripts
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/.bin/colorscripts
 export PATH=$PATH:~/.config/hypr/scripts
@@ -328,16 +47,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PROJECTS="/mnt/sdc1/Projects/"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-blk='\[\033[01;30m\]'   # Black
-red='\[\033[01;31m\]'   # Red
-grn='\[\033[01;32m\]'   # Green
-ylw='\[\033[01;33m\]'   # Yellow
-blu='\[\033[01;34m\]'   # Blue
-pur='\[\033[01;35m\]'   # Purple
-cyn='\[\033[01;36m\]'   # Cyan
-wht='\[\033[01;37m\]'   # White
-clr='\[\033[00m\]'      # Reset
+export GRC="$(which grc)"
 
 # get list of packages that needs this package
 function_depends() {
@@ -365,14 +75,55 @@ alias .........='cd ../../../../../../../..'
 
 # Set editor to neovim
 alias edit='${EDITOR}'
-#alias vim='nvim'
-#alias vi='nvim'
 alias v='nvim'
 
 # neofetch btw
 alias btw='clear -T $TERM; neofetch' # i use arch btw 
 
-# make commands defaults better
+# coloring with grc + make commands defaults better
+alias colourify="$GRC -es"
+alias blkid='colourify blkid'
+alias configure='colourify ./configure'
+alias df='colourify df'
+alias diff='colourify diff'
+alias docker='colourify docker'
+alias docker-compose='colourify docker-compose'
+alias docker-machine='colourify docker-machine'
+alias du='colourify du'
+alias env='colourify env'
+alias free='colourify free'
+alias fdisk='colourify fdisk'
+alias findmnt='colourify findmnt'
+alias make='colourify make'
+alias gcc='colourify gcc'
+alias g++='colourify g++'
+alias id='colourify id'
+alias ip='colourify ip'
+alias iptables='colourify iptables'
+alias as='colourify as'
+alias gas='colourify gas'
+alias journalctl='colourify journalctl'
+alias kubectl='colourify kubectl'
+alias ld='colourify ld'
+alias lsof='colourify lsof'
+alias lsblk='colourify lsblk'
+alias lspci='colourify lspci'
+alias netstat='colourify netstat'
+alias ping='colourify ping'
+alias ss='colourify ss'
+alias traceroute='colourify traceroute'
+alias traceroute6='colourify traceroute6'
+alias head='colourify head'
+alias tail='colourify tail'
+alias dig='colourify dig'
+alias mount='colourify mount'
+alias ps='colourify ps'
+alias mtr='colourify mtr'
+alias semanage='colourify semanage'
+alias getsebool='colourify getsebool'
+alias ifconfig='colourify ifconfig'
+alias sockstat='colourify sockstat'
+
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -386,8 +137,8 @@ alias sudo='sudo '
 alias boot="sudo bootctl status | grep Product"
 
 # give the list of all installed desktops - xsessions desktops
-alias xd="ls /usr/share/xsessions"
-alias xdw="ls /usr/share/wayland-sessions"
+alias xd="ls -1 /usr/share/xsessions"
+alias xdw="ls -1 /usr/share/wayland-sessions"
 
 # list users
 alias userlist="cut -d: -f1 /etc/passwd | sort"
@@ -408,6 +159,9 @@ alias yt-dlpa='yt-dlp --add-metadata '${1}''
 
 # print image with kitty
 alias kt-img='kitty +kitten icat '${1}''
+
+# resizing
+alias res16x9='convert '$1' -resize 1920x1080^ -gravity center -extent 1920x1080 '$2''
 
 # my own fetching tool yay
 alias hyprfetch='clear -T $TERM; hyprfetch'
@@ -440,6 +194,7 @@ alias v-neofetch='cd ~/.config/neofetch && ${EDITOR} ~/.config/neofetch/config.c
 alias v-nvim='cd ~/.config/nvim && ${EDITOR} ~/.config/nvim/init.lua'
 alias v-paru='cd ~/.config/paru && ${EDITOR} ~/.config/paru/paru.conf'
 alias v-rofi='cd ~/.config/rofi && ${EDITOR} ~/.config/rofi/config.rasi'
+alias v-tofi='cd ~/.config/tofi && ${EDITOR} ~/.config/tofi/config'
 alias v-dunst='cd ~/.config/dunst && ${EDITOR} ~/.config/dunst/dunstrc'
 alias v-bashrc='cd ~ && ${EDITOR} ~/.bashrc'
 alias v-emacs='cd ~/.config/emacs && ${EDITOR} ~/.config/emacs/config.org'
@@ -450,6 +205,7 @@ alias v-autoclicker='cd ~/.config/autoclicker && ${EDITOR} ~/.config/autoclicker
 alias v-wlogout='cd ~/.config/wlogout && ${EDITOR} ~/.config/wlogout/style.css '
 alias v-wofi='cd ~/.config/wofi && ${EDITOR} ~/.config/wofi/style.css'
 alias v-swww='cd ~/.config/swww/scripts && ${EDITOR} ~/.config/swww/scripts/change_wallpaper'
+alias v-sway='cd ~/.config/sway && ${EDITOR} ~/.config/sway/config'
 alias v-xinitrc='cd ~ && ${EDITOR} ~/.xinitrc'
 alias s-bashrc='source ~/.bashrc'
 
@@ -482,38 +238,58 @@ fi
 #
 ################################
 
-function current_git () {
+function current_git() {
+#    local GIT_DIRECTORY="$(git rev-parse --git-dir 2>/dev/null)"
+
+#    if [ "$?" != "128" ]; then
+#     
+#    fi
+
     if [ -d .git ] ; then
         printf "%s" "($(git branch 2> /dev/null | awk '/\*/{print $2}'))";
         printf "%s" " "
     fi
 }
 
-function current_kernel () {
+function current_kernel() {
     printf "%s" "$(uname -r)"
 }
 
-function current_host () {
+function current_host() {
     printf "%s" "$(uname -a | awk '{print $2}')"
 }
 
-function current_user () {
+function current_user() {
     printf "%s" "$(users | awk '{print $1}')"
 }
 
-function current_path () {
-    CUR_PWD="${PWD/#$HOME/\~}"
-    
-    if [ "${#CUR_PWD}" -gt "30" ]; then
-    	#printf "%s" "${CUR_PWD:0:30-3}..."
-        printf "%s" "...${CUR_PWD: -30-3}"
-    else
-    	printf "%s" "${PWD/#$HOME/\~}"
-    fi
+function current_time() {
+    printf "%s" "$(date +%r | xargs)"    
 }
 
-function current_time () {
-    printf "%s" "$(date +%r | xargs)"    
+function shortened_pwd() {
+	# How many characters of the $PWD should be kept
+	local MAXLENGTH=30
+
+	# Indicate that there has been dir truncation
+	local TRUNC_SYM=".."
+
+	# Store local dir
+	local DIR=${PWD##*/}
+
+	# Which length to use
+	MAXLENGTH=$(( ( MAXLENGTH < ${#DIR} ) ? ${#DIR} : MAXLENGTH ))
+
+	CURRENT_PATH=${PWD/#$HOME/\~}
+	
+	local PWDOFFSET=$(( ${#CURRENT_PATH} - MAXLENGTH ))
+
+	# Generate name
+	if [ ${PWDOFFSET} -gt "0" ]
+	then
+		CURRENT_PATH=${CURRENT_PATH:$PWDOFFSET:$MAXLENGTH}
+		CURRENT_PATH=${TRUNC_SYM}/${CURRENT_PATH#*/}
+	fi
 }
 
 ################################
@@ -522,88 +298,128 @@ function current_time () {
 #
 ################################
 
+###################
 ### PS1
+###################
+BLACK='\[\033[01;30m\]'   # Black
+RED='\[\033[01;31m\]'     # Red
+GREEN='\[\033[01;32m\]'   # Green
+YELLOW='\[\033[01;33m\]'  # Yellow
+BLUE='\[\033[01;34m\]'    # Blue
+PURPLE='\[\033[01;35m\]'  # Purple
+CYAN='\[\033[01;36m\]'    # Cyan
+WHITE='\[\033[01;37m\]'   # White
+CLEAR='\[\033[00m\]'      # Reset
 
 function simple_and_functional() {
-	PS1=''${blu}'$(current_git)'${pur}''${grn}'$(current_host)'${blu}' | '${pur}'$(current_user) '${blu}'|'${ylw}' $(current_path)'${grn}' \$ '${clr} 
+	PS1=''${BLUE}'$(current_git)'${PURPLE}''${GREEN}'$(current_host)'${BLUE}' | '${PURPLE}'$(current_user) '${BLUE}'|'${YELLOW}' ${CURRENT_PATH}'${GREEN}' \$ '${CLEAR} 
 }
 
-function artix_iso() {
-	PS1=''${grn}'$(current_host)'${clr}':'${red}'['${blu}'$(current_user)'${red}']'${clr}':'${pur}'$(current_path)'${ylw}' \$ '${clr} 
+function default_artix_iso() {
+	PS1=''${GREEN}'$(current_host)'${CLEAR}':'${RED}'['${BLUE}'$(current_user)'${RED}']'${CLEAR}':'${PURPLE}'${CURRENT_PATH}'${YELLOW}' \$ '${CLEAR} 
 }
 
-function arch_iso() {
-    PS1=''${red}'$(current_user)'${clr}'@$(current_host) $(current_path) # '
+function default_arch_iso() {
+    PS1=''${RED}'$(current_user)'${CLEAR}'@$(current_host) ${CURRENT_PATH} # '
 }
 
-function gentoo_iso() {
-    PS1=''${grn}'$(current_user)@$(current_host) '${blu}'$(current_path) '${clr}'% '
+function default_gentoo_iso() {
+    PS1=''${GREEN}'$(current_user)@$(current_host) '${BLUE}'${CURRENT_PATH} '${CLEAR}'% '
 }
 
 function general_iso() {
-    PS1=''${grn}'$(current_user)@$(current_host) '${blu}'$(current_path) \$'${clr}' '
+    PS1=''${GREEN}'$(current_user)@$(current_host) '${BLUE}'${CURRENT_PATH} \$'${CLEAR}' '
 }
 
-function useful_shell() {
-    PS1='\n'${red}'╔('${grn}'$(current_host)'${red}')'═'('${blu}'$(current_user)'${red}')'═'('${cyn}'$(current_kernel)'${red}')'═'('${pur}'$(current_time)'${red}')\n╚'${red}'('${ylw}'$(current_path)'${red}')'${blu}' => '${clr}''
+function complicated_shell() {
+    PS1='\n'${RED}'╔('${GREEN}'$(current_host)'${RED}')'═'('${BLUE}'$(current_user)'${RED}')'═'('${CYAN}'$(current_kernel)'${RED}')'═'('${PURPLE}'$(current_time)'${RED}')\n╚'${RED}'('${YELLOW}'${CURRENT_PATH}'${RED}')'${BLUE}' => '${CLEAR}''
 }
 
 function nice_shell_artix() {
-    PS1=''${grn}'$(current_git)'${blu}'  '${clr}'$(current_path) '${blu}' '${clr}''
+    PS1=''${GREEN}'$(current_git)'${BLUE}'  '${CLEAR}'${CURRENT_PATH} '${BLUE}' '${CLEAR}''
 }
 
 function nice_shell_void() {
-    PS1=''${blu}'$(current_git)'${grn}'  '${clr}'$(current_path) '${grn}' '${clr}''
+    PS1=''${BLUE}'$(current_git)'${GREEN}'  '${CLEAR}'${CURRENT_PATH} '${GREEN}' '${CLEAR}''
 }
 
 function simplistica() {
-    PS1=''${ylw}'$(current_path)\n'${blu}' '${clr}''
+    PS1=''${YELLOW}'${CURRENT_PATH}\n'${BLUE}' '${CLEAR}''
 }
 
 function powerliney() {
-    PS1=''${ylw}'$(current_path) '${pur}' '${blu}'$(current_user)@$(current_host) '${pur}' '${clr}''
+    PS1=''${YELLOW}'${CURRENT_PATH} '${PURPLE}' '${BLUE}'$(current_user)@$(current_host) '${PURPLE}' '${CLEAR}''
+}
+
+function fancy_bash_prompt() {
+    ##	Original source: WOLFMAN'S color bash promt
+    ##	https://wiki.chakralinux.org/index.php?title=Color_Bash_Prompt#Wolfman.27s
+    PS1='\n\[\033[0;1;97;40m\] \u \[\033[0;30;100m\]\[\033[0;1;97;100m\] \h \[\033[0;90;106m\]\[\033[0;30;1;106m\] ${CURRENT_PATH} \[\033[0;96;49m\]\[\033[1;38;5;15m\] '
+}
+
+function starship_prompt() {
+    PS1='\n'${CYAN}'${CURRENT_PATH}\n'${GREEN}'❯ '${CLEAR}''
 }
 
 function default_shell() {
     PS1='[\u@\h \W]\$ '
 }
 
+###################
 ### PS2
+###################
 
 function nice_arrow() {
-    PS2=''${blu}'=> '${clr}''
+    PS2=''${BLUE}'=> '${CLEAR}''
 }
 
 function small_arrow() {
-    PS2=''${blu}'-> '${clr}''
+    PS2=''${BLUE}'-> '${CLEAR}''
 }
 
 function default_arrow() {
-    PS2=''${clr}'> '
+    PS2=''${CLEAR}'> '
 }   
 
 function pretty_angle() {
-    PS2=''${pur}' '${clr}''
+    PS2=''${PURPLE}' '${CLEAR}''
 }   
 
 function pretty_dollar() {
-    PS2=''${pur}': '${clr}''
+    PS2=''${PURPLE}': '${CLEAR}''
 }   
+
+convdir() {
+    for i in *$1; do ffmpeg -i "$i" "${i%.*}.$2"; done
+}
 
 hg() {
     history | grep "$1";
 }
 
 duhk() {
-    du -h --max-depth=1 | sort -hk 1,1
+    colourify du -h --max-depth=1 | colourify sort -hk 1,1
 }
 
 bf() {
-    du -h -x -s -- * | sort -r -h | head -20;
+    colourify du -h -x -s -- * | colourify sort -r -h | head -20;
+}
+
+fman() {
+    compgen -c | fzf | xargs man
+}
+
+pc() {
+    if [[ -z "$1" ]]; then
+        echo "usage: pc <program>"
+        echo "Runs a program in the background"
+    else
+        "$1" & disown
+    fi
 }
 
 die() {
-    pkill -SIGKILL $1
+    colourify pkill -SIGKILL $1
 }
 
 kbdfont() {
@@ -666,7 +482,7 @@ kbdfont() {
             echo "setfont ${BUILTFONT}" 
             BUILTFONT="ter-v${FONTSIZE}${FONTTYPE}.psf.gz"
             setfont "/usr/share/kbd/consolefonts/${BUILTFONT}"            
-            ;;
+            ;; 
     esac
 
     case $3 in 
@@ -816,15 +632,16 @@ if [ ! -z "$DISPLAY" ]; then
     # PS1 =>
     #simple_and_functional  # simple prompt with all information necessary
     #fancy_bash_prompt      # fancy bash prompt 
-    #useful_shell           # two line bash prompt with much information
+    #complicated_shell      # two line bash prompt with much information
     #nice_shell_artix       # simple shell i use (artix)
     #nice_shell_void        # simple shell i use (void)
-    #arch_iso               # prompt based on artix live iso
-    #artix_iso              # prompt based on artix live iso
-    #gentoo_iso             # prompt based on gentoo live iso
+    starship_prompt        # default starship prompt
+    #default_arch_iso       # prompt based on artix live iso
+    #default_artix_iso      # prompt based on artix live iso
+    #default_gentoo_iso     # prompt based on gentoo live iso
     #general_iso            # prompt based on mostly all linux distros defaults
     #default_shell          # default bash prompt
-    simplistica            # simple, kinda like those zsh prompts or something
+    #simplistica            # simple, kinda like those zsh prompts or something
     #powerliney             # powerline based bash prompt
 
     # PS2 =>
@@ -847,11 +664,15 @@ if [ ! -z "$DISPLAY" ]; then
     #screenfetch
     #fastfetch
     #hyprfetch
-    pokemon-colorscripts --no-title -r 
-
+    #pokemon-colorscripts --no-title -r 
+    ~/.bin/colorscripts/colorwheel 
 else 
-    artix_iso              # prompt based on artix live iso
+    ################################
+    #
+    # Select your Prompt! (tty only)
+    #
+    ################################
+    default_artix_iso      # prompt based on artix live iso
     nice_arrow             # simple fat blue arrow 
 fi
 
-### EOF ###

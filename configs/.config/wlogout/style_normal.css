@@ -68,37 +68,37 @@ button:hover#reboot {
 }
 
 #lock {
-    background-image: image(url("$HOME/.config/wlogout/icons/lock_#ebbcba.png"), url("/usr/share/wlogout/icons/lock.png"), url("~/.config/wlogout/icons/lock_white.png"));
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
     border-radius: 30px 0px 0px 0px;
     margin : 0px 0px 0px 0px;
 }
 
 #logout {
-    background-image: image(url("$HOME/.config/wlogout/icons/logout_#ebbcba.png"), url("/usr/share/wlogout/icons/logout.png"), url("~/.config/wlogout/icons/logout_white.png"));
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
     border-radius: 0px 0px 0px 0px;
     margin : 0px 0px 0px 0px;
 }
 
 #suspend {
-    background-image: image(url("$HOME/.config/wlogout/icons/suspend_#ebbcba.png"), url("/usr/share/wlogout/icons/suspend.png"), url("~/.config/wlogout/icons/suspend_white.png"));
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
     border-radius: 0px 30px 0px 0px;
     margin : 0px 0px 0px 0px;
 }
 
 #shutdown {
-    background-image: image(url("$HOME/.config/wlogout/icons/shutdown_#ebbcba.png"), url("/usr/share/wlogout/icons/shutdown.png"), url("~/.config/wlogout/icons/shutdown_white.png"));
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
     border-radius: 0px 0px 0px 0px;
     margin : 0px 0px 0px 0px;
 }
 
 #hibernate {
-    background-image: image(url("$HOME/.config/wlogout/icons/hibernate_#ebbcba.png"), url("/usr/share/wlogout/icons/hibernate.png"), url("~/.config/wlogout/icons/hibernate_white.png"));
+    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"));
     border-radius: 0px 0px 0px 30px;
     margin : 0px 0px 0px 0px;
 }
 
 #reboot {
-    background-image: image(url("$HOME/.config/wlogout/icons/reboot_#ebbcba.png"), url("/usr/share/wlogout/icons/reboot.png"), url("$HOME/.config/wlogout/icons/reboot_white.png"));
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
     border-radius: 0px 0px 30px 0px;
     margin : 0px 0px 0px 0px;
 }

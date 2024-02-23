@@ -6,6 +6,7 @@ CURRENT_BG_FILE="${SWWW_DIR}/current/name"
 CURRENT_THEME_FILE="${SWWW_DIR}/current/theme"
 CURRENT_BG="$(cat "$CURRENT_BG_FILE")"
 CURRENT_THEME="$(cat "$CURRENT_BG_FILE")"
+CURRENT_RICE="$(cat "${SWWW_DIR}/current/rice")"
 
 case "$1" in
     "dawn")
@@ -42,7 +43,7 @@ case "$1" in
         ;;
     "gruvbox-light")
         export THEME_TYPE_SHORT="gruvlight"
-        export CURRENT_BG="gruvbox-light-fighterjet.png"
+        export CURRENT_BG="gruvbox-light-mountains.png"
         export CURRENT_THEME="gruvbox-light"
         export LIGHT="light"
         echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
@@ -161,11 +162,11 @@ set_bg() {
 
     echo $CURRENT_BG
 
-    cp -vf ~/.config/swww/walls/$CURRENT_BG /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
-    swww img "$HOME/.config/swww/walls/$CURRENT_BG" \
+    cp -vf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+    swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
         --transition-bezier .6,.94,.86,.23\
         --transition-type "${TRANSITION_TYPE}" \
-        --transition-duration 1 \
+        --transition-duration 0.7 \
         --transition-fps 144 \
         --invert-y \
         --transition-pos "2502, 1410"
@@ -270,6 +271,8 @@ colorize_waybar() {
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/righty/style.css
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/polybar-top/style.css
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/polybar-bottom/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/floaty-top/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/floaty-bottom/style.css
 }
 
 colorize_wlogout() {

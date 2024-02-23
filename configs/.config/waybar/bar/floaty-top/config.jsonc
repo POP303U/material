@@ -1,0 +1,179 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "margin": "10 190 0 190",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 40,
+    "modules-left": [
+        "hyprland/workspaces",
+        "network",
+        "custom/weather",
+    ],
+    
+    "modules-center": [
+        "clock",
+    ],
+
+    "modules-right": [
+        "disk",
+        "memory",
+        "cpu",
+        "pulseaudio",
+        "pulseaudio#microphone",
+        "tray",
+    ],
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "on-click": "activate",
+        "format": "{icon}",
+        "urgent": " ",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "9": "",
+            "10": "",
+        },
+
+        "persistent-workspaces": {
+            "1": [],
+        }
+    },
+
+    
+    "hyprland/window": {
+        "max-length": 80,
+        "seperate-outputs": true,
+    },
+
+    "custom/weather" : {
+        //shows the current weather and forecast
+        "tooltip" : true,
+        "format" : "{}",
+        "interval" : 30,
+        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "return-type" : "json"
+    },
+
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": {
+            "capslock": " Caps: {icon}",                                                                                                                                                       
+            "numlock": " Num: {icon} "
+        },
+        "format-icons": {
+            "locked": " ",
+            "unlocked": " "
+        }
+    }, 
+
+    "user": {
+        "format": " {user} (up {work_H}h ↑) ",
+        "interval": 60,
+        "height": 30,
+        "width": 30,
+        "icon": false,
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+
+    "clock": {
+        "format": "{: %I:%M %p   %a, %b %e}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "󱛟 {used}",
+        "path": "/"
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": " {used}GiB",
+        "max-length": 10
+    },
+
+    "cpu": {
+        "interval": 1,
+        "format": "󰻠 {}%",
+        "max-length": 10
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-muted": " Muted",
+        "on-click": "pamixer -t",
+        "on-click-right": "pavucontrol",
+        "on-scroll-up": "pamixer -i 5",
+        "on-scroll-down": "pamixer -d 5",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": " Muted",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "scroll-step": 5
+    },
+
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "{ipaddr}/{cidr}",
+        "tooltip-format": "{essid} - {ifname} via {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
+    },
+
+    "bluetooth": {
+        "format": " {status}",
+        "format-disabled": "", // an empty format will hide the module
+        "format-connected": " {num_connections}",
+        "tooltip-format": "{device_alias}",
+        "tooltip-format-connected": " {device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}"
+    },
+
+    "battery": {
+        "interval": 10,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+}

@@ -7,7 +7,7 @@ function run_submenu() {
 
 
 SUBMENU_TYPE="${1}"
-SUBMENU=$(dir -1 /home/${USER}/.config/wofi/manager/submenus/${SUBMENU_TYPE} | wofi -p "hypr-dots settings menu" --dmenu -i) 
+SUBMENU=$(dir -1 /home/${USER}/.config/wofi/manager/submenus/${SUBMENU_TYPE} | wofi -p "material settings menu" --dmenu -i) 
 MENU_FILE="/home/${USER}/.config/wofi/manager/submenus/${SUBMENU_TYPE}/${SUBMENU}"
 MENU_NAME="$(cat "$MENU_FILE")"
 
