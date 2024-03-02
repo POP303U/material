@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|rounding =.*|rounding = 25| ' ~/.config/hypr/decoration.conf

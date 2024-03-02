@@ -74,7 +74,7 @@
     },
 
     "custom/arch_logo": {
-        "on-click": "~/.config/hypr/scripts/system_upgrade",
+        "on-click": "~/.config/hypr/scripts/system-upgrade",
         "format" : "󰣇",
     },
 

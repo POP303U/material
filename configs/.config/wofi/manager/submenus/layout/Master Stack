@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|layout =.*|layout = master|' ~/.config/hypr/hyprland.conf

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "any" > $HOME/.config/swww/current/transition

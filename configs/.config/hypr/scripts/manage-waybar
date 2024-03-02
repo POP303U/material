@@ -1,8 +1,8 @@
 #!/bin/sh
 
 WAYBAR_DIR="/home/${USER}/.config/waybar"
-CURRENT_STYLE="$(cat "${WAYBAR_DIR}/current/rice")"
-CURRENT_NAME="$(cat "${WAYBAR_DIR}/rices/${CURRENT_STYLE}")"
+CURRENT_STYLE="$(head -n 1 "${WAYBAR_DIR}/current/rice")"
+CURRENT_NAME="$(grep "name" "${WAYBAR_DIR}/rices/${CURRENT_STYLE}" | awk -F '=' '{print $2}' | xargs)"
 CURRENT_WAYBAR_CALL="waybar -c $HOME/.config/waybar/bar/${CURRENT_NAME}/config.jsonc -s $HOME/.config/waybar/bar/${CURRENT_NAME}/style.css"
 
 # Check if waybar is turned off

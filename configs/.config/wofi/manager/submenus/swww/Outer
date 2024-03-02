@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "outer" > $HOME/.config/swww/current/transition

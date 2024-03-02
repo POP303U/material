@@ -7,6 +7,7 @@ TRANSITION_TYPE="$(cat "${CONF_DIR}/swww/current/transition")"
 CURSOR="$(grep "Gtk/CursorThemeName" "${CONF_DIR}/xsettingsd/xsettingsd.conf" | awk '{print $2}' | tr -d =\"= )"
 WALLPAPER="$(cat "${CONF_DIR}/swww/current/name")"
 WLOGOUT_THEME="$(grep -m 1 "=" "${CONF_DIR}/hypr/scripts/manage-wlogout" | tail -n 1 | awk -F '=' '{print $2}' | tr -d =\"=)"
+HYPR_ROUNDING="$(grep -m 1 "rounding" "${CONF_DIR}/hypr/decoration.conf" | awk '{print $3}')"
 GTK_THEME="$(grep -m 1 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 GTK_FONT="$(grep -m 3 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 GTK_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
@@ -23,18 +24,18 @@ WHITE_='\033[01;37m'   # White
 BOLD__='\033[1m'       # Bold
 RESET_='\033[00m'      # Reset
 
-echo -e "${RESET_}
-${PURPLE}       .              
-${PURPLE}      / \                           __                     __
-${PURPLE}     /   \         _______  _______/ /____  ____ ___  ____/ /
-${PURPLE}    /^.   \      /  ___/ / / / ___/ __/ _ \/ __ \`__ \/ __  / 
-${PURPLE}   /  .-.  \     (__  ) /_/ (__  ) /_/  __/ / / / / / /_/ /  
-${CYAN__}  /  (   ) _\   /____/\__, /____/\__/\___/_/ /_/ /_/\__,_/   
-${CYAN__} / _.~   ~._^\       /____/                                  
+echo -e "${PURPLE}       .  
+${PURPLE}      / \                           __            _       __ 
+${PURPLE}     /   \         ____ ___  ____ _/ /____  _____(_)___ _/ /  
+${PURPLE}    /^.   \       / __ '__ \/ __ '/ __/ _ \/ ___/ / __ '/ / 
+${CYAN__}   /  .-.  \     / / / / / / /_/ / /_/  __/ /  / / /_/ / /  
+${CYAN__}  /  (   ) _\   /_/ /_/ /_/\__,_/\__/\___/_/  /_/\__,_/_/  
+${CYAN__} / _.~   ~._^\ 
 ${CYAN__}/.^         ^.\ 
-${WHITE_} 
-${WHITE_} "
+"
 
+echo -e "${RED___} ${RESET_} マテリアルデザイン"
+echo -e "${GREEN_}┌──────────────────────────────────────────┐\n${RESET}"
 echo -e "${RED___}▉▉  |${RESET_} System Theme${BLACK_} ....... ${RESET_}${BOLD__}${THEME_RICE}"
 echo -e "${RED___}  ▉▉|${RESET_} Waybar Theme${BLACK_} ....... ${RESET_}${BOLD__}${WAYBAR_RICE}"
 echo -e "${WHITE_}▉▉  |${RESET_} Cursor${BLACK_} ............. ${RESET_}${BOLD__}${CURSOR}"
@@ -45,4 +46,5 @@ echo -e "${YELLOW}▉▉  |${RESET_} Qt5 Theme${BLACK_} .......... ${RESET_}${BO
 echo -e "${YELLOW}  ▉▉|${RESET_} GTK Font${BLACK_} ........... ${RESET_}${BOLD__}${GTK_FONT}"
 echo -e "${PURPLE}▉▉  |${RESET_} Swww Transition${BLACK_} .... ${RESET_}${BOLD__}${TRANSITION_TYPE}"
 echo -e "${PURPLE}  ▉▉|${RESET_} Wlogout Theme${BLACK_} ...... ${RESET_}${BOLD__}${WLOGOUT_THEME}"
-echo 
+echo -e ""
+echo -e "${GREEN_}└──────────────────────────────────────────┘"

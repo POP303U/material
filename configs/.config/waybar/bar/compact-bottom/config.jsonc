@@ -7,13 +7,6 @@
     "gtk-layer-shell": true,
     "height": 30,
     "modules-left": [
-        "custom/arch_logo",
-        "hyprland/workspaces",
-        "clock",
-        "keyboard-state",
-    ],
-
-    "modules-right": [
         "custom/weather", 
         "disk",
         "memory",
@@ -22,7 +15,16 @@
         "network",
         "pulseaudio",
         "pulseaudio#microphone",
+    ],
+
+    "modules-center": [
+        "clock",
+    ],
+
+    "modules-right": [
         "tray",
+        "hyprland/workspaces",
+        "custom/arch_logo",
     ],
 
     "hyprland/workspaces": {
@@ -64,7 +66,7 @@
     },
 
     "custom/arch_logo": {
-        "on-click": "~/.config/hypr/scripts/system_upgrade",
+        "on-click": "~/.config/hypr/scripts/system-upgrade",
         "format" : "󰣇",
     },
 

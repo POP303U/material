@@ -1,27 +1,9 @@
 #!/bin/sh
 set -euo pipefail
 
-case "$1" in
-    "theme")
-        ARG1="theme"
-        PROOMPT="Select your preferred theme"
-        ;;
-    "-")
-        echo "Ignoring \$2 arg, using \$3 is now undefined behavior"
-        PROOMPT="Select your preferred rice"
-        ARG1="-"
-        ;;
-    *)
-        echo "Unsupported operation: $2"
-        exit 1
-        ARG1=""
-        ;;
-esac
-
-
 function change_rice() {
 	CHANGE_RICE="/home/${USER}/.config/swww/scripts/change_theme"
-	$CHANGE_RICE $RICE_NAME "$ARG1"
+	$CHANGE_RICE $RICE_NAME
 }
 
 function create_name() {
@@ -35,7 +17,9 @@ function create_name() {
 	echo "$RICE_FULL_NAME" > $NAME_FILE
 }
 
-RICE_FULL_NAME=$(dir -1 /home/${USER}/.config/swww/rices | wofi -p "${PROOMPT}" --dmenu -i) 
+# use --cache-file /dev/null to use predefined order
+RICE_SEL_NAME=$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/swww/rices/#entries# | wofi -p "~ Material rice selector ~" --cache-file /dev/null --dmenu -i) 
+RICE_FULL_NAME="$(echo $RICE_SEL_NAME | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
 RICE_FILE="/home/${USER}/.config/swww/rices/${RICE_FULL_NAME}"
 RICE_NAME="$(cat "$RICE_FILE")"
 

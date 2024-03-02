@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "fade" > $HOME/.config/swww/current/transition

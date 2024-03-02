@@ -1,1 +1,2 @@
-polybar-bottom
+name=polybar-bottom
+blurls=false

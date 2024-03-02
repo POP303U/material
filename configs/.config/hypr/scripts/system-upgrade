@@ -28,7 +28,7 @@ ${WHITE} ${RED}Warning!
 ${WHITE} Arch Linux is a rolling release distro and updates 
 ${WHITE} may bring breaking changes to packages / system.
 ${WHITE} It is ${RED}strongly ${WHITE}recommended to take a backup with timeshift before 
-${WHITE} continuing! Don't complain if something broke and you didn't take a backup!
+${WHITE} continuing! Don\`t complain if something broke and you did\`nt take a backup!
 ${WHITE}
 ${CYAN}<=====>
 ${WHITE}

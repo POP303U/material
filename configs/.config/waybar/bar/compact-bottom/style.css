@@ -80,7 +80,6 @@ tooltip {
 
 #tray {
     border-radius: 10px;
-    margin-right: 10px;
 }
 
 #workspaces {
@@ -124,6 +123,7 @@ tooltip {
     color: @foam;
     border-radius: 10px 0px 0px 10px;
     border-left: 0px;
+    margin-left: 10px;
     border-right: 0px;
 }
 
@@ -176,6 +176,6 @@ tooltip {
 #custom-arch_logo {
     color: @foam;
     border-radius: 10px;
-    margin-right: 0px;
+    margin-right: 10px;
     margin-left: 10px;
 }

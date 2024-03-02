@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "random" > $HOME/.config/swww/current/transition

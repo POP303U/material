@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "wipe" > $HOME/.config/swww/current/transition

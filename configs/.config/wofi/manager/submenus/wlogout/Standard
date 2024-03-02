@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|STYLE=".*|STYLE="normal"|' $HOME/.config/hypr/scripts/manage-wlogout

@@ -33,7 +33,7 @@ case "$1" in
         ~/.config/wofi/scripts/wofi-waybar-selector
         ;;
     "cliphist")
-        cliphist list | wofi --dmenu | cliphist decode | wl-copy
+        cliphist list | wofi --prompt "~ Material clipboard selection ~" --dmenu -i | cliphist decode | wl-copy
         ;;
     *)
         echo "Invalid choice $1"

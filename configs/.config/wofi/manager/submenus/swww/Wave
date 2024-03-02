@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "wave" > $HOME/.config/swww/current/transition

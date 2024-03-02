@@ -114,20 +114,6 @@ case "$1" in
         ;;
 esac
 
-case "$2" in
-    "theme")
-        export THEME_FLAG="true"
-        echo "Ignoring wallpaper changes"
-        ;;
-    "-")
-        echo "Ignoring \$2 arg, using \$3 is now undefined behavior"
-        ;;
-    *)
-        echo "Unsupported operation: $2"
-        exit 1
-            ;;
-esac
-
 create_name() {
 	export NAME_FILE="$SWWW_DIR/current/name"
 	if [[ ! -f "$NAME_FILE" ]]; then
@@ -273,6 +259,8 @@ colorize_waybar() {
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/polybar-bottom/style.css
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/floaty-top/style.css
     sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/floaty-bottom/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/blur-top/style.css
+    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/blur-bottom/style.css
 }
 
 colorize_wlogout() {
@@ -304,15 +292,15 @@ change_theme() {
     set_gtk &
 
     # background / transparency rules
-    if [[ "$THEME_FLAG" != "true" ]]; then set_bg; fi
+    set_bg 
     kitty_trans
 
     # reload
     reload_configs
 }
 
-if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <theme> <bg>"
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <theme>"
     exit 1
 fi
 

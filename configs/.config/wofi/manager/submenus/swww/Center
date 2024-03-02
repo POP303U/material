@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "center" > $HOME/.config/swww/current/transition

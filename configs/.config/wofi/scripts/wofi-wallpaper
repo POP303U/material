@@ -2,7 +2,7 @@
 set -euo pipefail
 
 function create_name() {
-	NAME_FILE="$WALLPAPER_PATH/current/name"
+	NAME_FILE="$SWWW_DIR/current/name"
 	if [[ ! -f "$NAME_FILE" ]]; then
 		touch "$NAME_FILE"
 	fi
@@ -19,9 +19,9 @@ function reload_hypr() {
     fi
 }
 
-WALLPAPER_PATH="/home/${USER}/.config/swww"
+SWWW_DIR="/home/${USER}/.config/swww"
 CURRENT_RICE="$(cat /home/${USER}/.config/swww/current/rice)"
-WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls/${CURRENT_RICE} | wofi -p "wallpaper" --dmenu -i)
+WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls/${CURRENT_RICE} | wofi -p "~ Material wallpaper selector ~" --dmenu -i)
 WALLPAPER="/home/${USER}/.config/swww/walls/${CURRENT_RICE}/${WALLPAPER_NAME}"
 
 if [[ ! -f "$WALLPAPER" ]]; then
