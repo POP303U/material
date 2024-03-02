@@ -1,7 +1,7 @@
 
-Welcome to hypr-dots!
+Welcome to material!
 
- * Repository: https://github.com/POP303U/hypr-dots
+ * Repository: https://github.com/POP303U/material
  * Hyprland: https://hyprland.org
  * Wayland: https://wayland.freedesktop.org
 
@@ -12,5 +12,3 @@ Welcome to hypr-dots!
   :: If you want to use sddm run the installer again and
      check the sddm option.
      
-~ hypr-dots ~
-
