@@ -1,0 +1,4 @@
+#!/bin/sh
+
+wofi -c ~/.config/wofi/config_run
+
