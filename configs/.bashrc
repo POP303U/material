@@ -140,6 +140,18 @@ alias boot="sudo bootctl status | grep Product"
 alias xd="ls -1 /usr/share/xsessions"
 alias xdw="ls -1 /usr/share/wayland-sessions"
 
+# permissions
+alias prm-folder-fix="chmod 0755 $1"
+alias prm-exe="chmod u+x $1"
+
+# cargo aliases
+alias cb="cargo build "
+alias ci="cargo install --path ."
+alias cl="cargo clean "
+alias cn="cargo new "
+alias ct="cargo test "
+alias cr="cargo run "
+
 # list users
 alias userlist="cut -d: -f1 /etc/passwd | sort"
 
@@ -224,12 +236,14 @@ alias dv-keyd='cd /etc/keyd/ && ${SUDO} ${EDITOR} /etc/keyd/default_shell.conf'
 
 # Conditional ls ((stupidly nested) not anymore!)
 if [ -e "$HOME/.cargo/bin/eza" ]; then
-    alias ls='eza --icons --colour=always --binary --header'
-    alias la='eza --all --icons --long --colour=always --binary --header'
-    alias ll='eza --icons --long --colour=always --binary --header'
+    alias ls='eza             --icons        --colour=always --binary --header'
+    alias la='eza --all --all --icons --long --colour=always --binary --header'
+    alias ll='eza --all       --icons --long --colour=always --binary --header'
+    alias l.='eza             --icons --long --colour=always --binary --header'
 else
-    alias ll='ls -l'
-    alias la='ls -la'
+    alias la='ls -laH'
+    alias ll='ls -lA'
+    alias l.='ls -l'
 fi
 
 ################################
