@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "source = ~/.config/hypr/animations/speedy.conf" > ~/.config/hypr/animations.conf

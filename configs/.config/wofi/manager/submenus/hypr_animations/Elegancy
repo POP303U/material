@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "source = ~/.config/hypr/animations/elegancy.conf" > ~/.config/hypr/animations.conf
+
