@@ -31,7 +31,7 @@ HISTCONTROL=ignoreboth
 ################################################################################
 
 export PROMPT_COMMAND=shortened_pwd # store current shortened path in $CURRENT_PATH
-export QT_QPA_PLATFORMTHEME=gnome
+export QT_QPA_PLATFORMTHEME=qt5ct
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/.config/emacs/bin
 export PATH=$PATH:~/.config/wofi/scripts
