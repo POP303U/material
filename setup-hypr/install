@@ -37,7 +37,7 @@ BASE_PACKAGES=(
 "blueman"
 "networkmanager"
 "network-manager-applet"
-"dracula-icons-git"
+"tela-circle-icon-theme-dracula"
 "bibata-cursor-theme-bin"
 "xdg-desktop-portal-hyprland"
 )
