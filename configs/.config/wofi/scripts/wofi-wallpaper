@@ -1,26 +1,8 @@
 #!/bin/sh
-set -euo pipefail
-
-function create_name() {
-	NAME_FILE="$SWWW_DIR/current/name"
-	if [[ ! -f "$NAME_FILE" ]]; then
-		touch "$NAME_FILE"
-	fi
-
-	# empty the file for new text
-	echo -n > $NAME_FILE
-	echo "$WALLPAPER_NAME" > $NAME_FILE
-}
-
-function reload_hypr() { 
-    WAYBAR_RICE="$(cat "$HOME/.config/waybar/current/rice")"
-    if [[ "$WAYBAR_RICE" == "Tower-Left" || "$WAYBAR_RICE" == "Tower-Right" ]]; then
-        touch ~/.config/hypr/hyprland.conf 
-    fi
-}
+set -euox pipefail
 
 SWWW_DIR="/home/${USER}/.config/swww"
-CURRENT_RICE="$(cat /home/${USER}/.config/swww/current/rice)"
+CURRENT_RICE="$(awk '/rice-current/ {print $NF}' /home/${USER}/.config/material/config)"
 WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls/${CURRENT_RICE} | wofi -p "~ Material wallpaper selector ~" --dmenu -i)
 WALLPAPER="/home/${USER}/.config/swww/walls/${CURRENT_RICE}/${WALLPAPER_NAME}"
 
@@ -29,21 +11,18 @@ if [[ ! -f "$WALLPAPER" ]]; then
     exit 1
 fi
 
-create_name
+TRANSITION_TYPE="$(awk '/rice-transition/ {print $NF}' ~/.config/material/config)"
+sed -i 's|wallpaper-current.*|wallpaper-current = '$WALLPAPER_NAME'|' ~/.config/material/config
 
-TRANSITION_TYPE="$(cat "$HOME/.config/swww/current/transition")"
-
-cp -vf ~/.config/swww/walls/$WALLPAPER_NAME /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
-swww img "/home/${USER}/.config/swww/walls/$WALLPAPER_NAME" \
-    \
-    \
+# Set sddm wallpaper too  
+cp -vf $WALLPAPER /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+swww img $WALLPAPER \
     --transition-bezier .6,.94,.86,.23\
     --transition-type "${TRANSITION_TYPE}" \
     --transition-duration 1 \
     --transition-fps 144 \
     --invert-y \
-    --transition-pos "2555, 1434" \
+    --transition-pos "2555, 1434" 
 
 reload_hypr
-
 # Options up here ^

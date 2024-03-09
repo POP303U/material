@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euox pipefail
 
 EMOJI="$(sed '1,/^### DATA ###$/d' $0 | wofi -p "emoji" --show dmenu -i | cut -d ' ' -f 1 | tr -d '\n')"
 wtype "$EMOJI"; wl-copy "$EMOJI"

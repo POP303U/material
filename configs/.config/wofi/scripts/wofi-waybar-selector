@@ -1,51 +1,21 @@
 #!/bin/sh
-set -euo pipefail
 
-function set_hypr_blurls() {
-    sed -i 's|.*blurls = way.*|blurls = waybar|' ~/.config/hypr/decoration.conf
-}
+set -euox pipefail
 
-function unset_hypr_blurls() {
-    sed -i 's|.*blurls = way.*|#blurls = waybar|' ~/.config/hypr/decoration.conf
-}
-
-function reload_waybar() {
-	# waybar reloads every time hyprland is modified
-	touch "$HOME/.config/hypr/hyprland.conf"
-}
-
-function create_name() {
-	NAME_FILE="/home/${USER}/.config/waybar/current/name"
-	NAME_FULL_FILE="/home/${USER}/.config/waybar/current/rice"
-	if [[ ! -f "$NAME_FILE" ]]; then
-		touch "$NAME_FILE"
-	fi
-
-	# empty the file for new text
-	echo -n > $NAME_FILE
-	echo "$BAR_NAME" > $NAME_FILE
-	echo "$BAR_FULL_NAME" > $NAME_FULL_FILE
+function change_bar() {
+	CHANGE_BAR="/home/${USER}/.config/hypr/scripts/set-waybar"
+	$CHANGE_BAR $BAR_NAME
 }
 
 # use --cache-file /dev/null to use predefined order
 SELECTION="$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/waybar/rices/#entries# | wofi -p "~ Material bar changer ~" --dmenu --cache-file /dev/null -i)"
 BAR_FULL_NAME="$(echo $SELECTION | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
 BAR_FILE="/home/${USER}/.config/waybar/rices/${BAR_FULL_NAME}"
-BAR_NAME="$(grep "name" "$BAR_FILE" | awk -F '=' '{print $2}')"
+BAR_NAME="$(grep "name" "$BAR_FILE" | awk -F '=' '{print $2}')" # eg: Blur-Top
 
 if [[ ! -f "$BAR_FILE" ]]; then
     echo "Error: Rice file with the name '$RICE_FULL_NAME' not found in the specified directory."
     exit 1
 fi
 
-create_name
-
-BLUR_FLAG="$(grep "blurls" "$BAR_FILE" | awk -F '=' '{print $2}' | xargs)"
-
-if [[ "$BLUR_FLAG" == "true" ]]; then
-    set_hypr_blurls 
-else 
-    unset_hypr_blurls
-fi
-
-reload_waybar
+change_bar

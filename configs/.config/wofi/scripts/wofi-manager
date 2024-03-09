@@ -1,5 +1,5 @@
 #!/bin/sh
-set -euo pipefail
+set -euox pipefail
 
 function run_submenu() {
     "$MENU_SCRIPT"
