@@ -2,3 +2,4 @@
 configs_bak/
 .config_backup/
 configs_backup/
+configs/.config/material/backups/

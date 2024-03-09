@@ -1,0 +1,45 @@
+#=============================================
+#                    _            _       _ 
+#    _ __ ___   __ _| |_ ___ _ __(_) __ _| |
+#   | '_ ` _ \ / _` | __/ _ \ '__| |/ _` | |
+#   | | | | | | (_| | ||  __/ |  | | (_| | |
+#   |_| |_| |_|\__,_|\__\___|_|  |_|\__,_|_|
+#
+#==============================================
+
+# This is the material config file, it's not made to be edited by humans but
+# is still very friendly to use, just don't change the keywords or introduce
+# duplicates (also not in form of comments) so your rice won't blow up (BOOOOM!),
+# seriously changing `wlogout~theme` to `(random garbage)` will
+# make it disfunctional!!!!!
+# Warning! Comments after statements will be overwritten when values are modified!
+
+# BAR -
+blur-state = on 
+bar-state = on
+bar-current = Floaty-Top
+
+# ANIMATIONS -
+animations-state = on
+animations-current = Speedy
+
+# RICE -
+wallpaper-current = spring_bloom.jpg
+rice-current = Titanium-Mono
+rice-transition = wave
+
+# WLOGOUT -
+wlogout-theme = normal
+
+# HYPRLAND -
+corner-rounding = 10
+tiling-layout = master
+gaps-in = 5
+gaps-out = 15
+border-size = 3
+
+# BLUR -
+blur-size = 4
+blur-passes = 4
+
+#configver:1.0

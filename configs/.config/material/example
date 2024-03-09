@@ -1,0 +1,50 @@
+#=============================================
+#                    _            _       _ 
+#    _ __ ___   __ _| |_ ___ _ __(_) __ _| |
+#   | '_ ` _ \ / _` | __/ _ \ '__| |/ _` | |
+#   | | | | | | (_| | ||  __/ |  | | (_| | |
+#   |_| |_| |_|\__,_|\__\___|_|  |_|\__,_|_|
+#
+#==============================================
+
+# This is the material config file, it's not made to be edited by humans but
+# is still very friendly to use, just don't change the keywords or introduce
+# duplicates (also not in form of comments) so your rice won't blow up (BOOOOM!),
+# seriously changing `wlogout~theme` to `(random garbage)` will
+# make it disfunctional!!!!!
+# Warning! Comments after statements will be overwritten when values are modified!
+# Warning! Actual config files should not have the keywords littered around the file (even in comments, things will break!)
+
+###########################################################
+# DONT USE THIS AS AN ACTUAL CONFIG FILE, THIS WILL BREAK #
+###########################################################
+
+# BAR -
+blur-state = on # Options: on / off, bars not made for blur will look wrong
+bar-state = on # Options: on / off, set if bar is visible or not, overrides `bar-current`
+bar-current = Floaty-Top # Options: <bar name> Set the current bar, bars can be found in ~/.config/waybar/bar
+
+# ANIMATIONS -
+animations-state = on # Options: on / off, set if animations are enabled, overrides `animations-current`
+animations-current = Speedy # Options: <animation name> Set the animation of windows e.g fading, spawning of windows, workspace switches
+
+# RICE -
+wallpaper-current = spring_bloom.jpg # Options: <bg name>, set the current background, has to be same folder as `rice-current` ~/.config/swww/rices/walls/<rice name>
+rice-current = Titanium-Mono # Options: <rice name>, set the current rice, rices are found in ~/.config/swww/rices
+rice-transition = wave # Options: <transition name>, set the transition when changing the rice, transitions are found in ~/.config/wofi/manager/submenus/swww_transition_type
+
+# WLOGOUT -
+wlogout-theme = normal # Options: <wlogout theme>, change the logout screen theme, theme names are in ~/.config/hypr/scripts/manage-wlogout
+
+# HYPRLAND -
+corner-rounding = 10 # Options: integer, change the rounding of corners of windows
+tiling-layout = master # Options: master / dwindle, change the tiling behaviour of windows
+gaps-in = 5 # Options: integer, change the gaps between windows
+gaps-out = 15 # Options: integer, change the gaps outside of windows
+border-size = 3 # Options: integer, change the border thickness of windows, 0 disables borders
+
+# BLUR -
+blur-size = 4 # Options: integer, change the blur level of transparent windows
+blur-passes = 4 # Options: integer, set how many times blur will be passed into the algorithm (dual-kawase), higher means more blur
+
+#configver:1.0
