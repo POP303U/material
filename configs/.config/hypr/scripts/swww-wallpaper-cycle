@@ -1,18 +1,15 @@
 #!/bin/sh
 
-CURRENT_RICE="$(cat "$HOME/.config/swww/current/rice")"
-CURRENT_WALLPAPER="$(cat "$HOME/.config/swww/current/name")"
+set -euox pipefail
+
+CURRENT_RICE="$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)"
+CURRENT_WALLPAPER="$(awk '/wallpaper-current/ {print $NF}' $HOME/.config/material/config)"
+CURRENT_BAR="$(awk '/bar-current/ {print $NF}' $HOME/.config/material/config)"
 RICE_DIR="$HOME/.config/swww/walls/$CURRENT_RICE/"
 mapfile -t WALLPAPERS < <(dir -1 "$RICE_DIR")
 
 function reload_and_save() {
-	NAME_FILE="$HOME/.config/swww/current/name"
-    CURRENT_BAR="$(cat $HOME/.config/waybar/current/name)"
-	if [[ ! -f "$NAME_FILE" ]]; then
-		touch "$NAME_FILE"
-	fi
-
-	echo "$NEXT_ELEMENT" > $NAME_FILE
+    sed -i 's|wallpaper-current.*|wallpaper-current = '$NEXT_ELEMENT'|' ~/.config/material/config
 
     # Only reload waybar if transparency is present
     if [[ "$CURRENT_BAR" == "lefty" || "$CURRENT_BAR" == "righty" ]]; then touch ~/.config/hypr/hyprland.conf; fi
@@ -23,6 +20,7 @@ function get_resolution() {
 }
 
 function apply_wall() {
+    # patch into sddm
     cp -vf $RICE_DIR/$NEXT_ELEMENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
     swww img "$RICE_DIR/$NEXT_ELEMENT" \
         --transition-bezier .43,1.19,1,.4 \

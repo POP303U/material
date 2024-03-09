@@ -1,14 +1,11 @@
 #!/bin/sh
 
-WAYBAR_DIR="/home/${USER}/.config/waybar"
-CURRENT_STYLE="$(head -n 1 "${WAYBAR_DIR}/current/rice")"
-CURRENT_NAME="$(grep "name" "${WAYBAR_DIR}/rices/${CURRENT_STYLE}" | awk -F '=' '{print $2}' | xargs)"
-CURRENT_WAYBAR_CALL="waybar -c $HOME/.config/waybar/bar/${CURRENT_NAME}/config.jsonc -s $HOME/.config/waybar/bar/${CURRENT_NAME}/style.css"
+BAR_CURRENT="$(awk '/bar-current/ {print $NF}' $HOME/.config/material/config)"
+BAR_STATE="$(awk '/bar-state/ {print $NF}' $HOME/.config/material/config)"
+CURRENT_WAYBAR_CALL="waybar -c $HOME/.config/waybar/bar/${BAR_CURRENT}/config.jsonc -s $HOME/.config/waybar/bar/${BAR_CURRENT}/style.css"
 
-# Check if waybar is turned off
-WAYBAR_STATUS_FILE="/home/${USER}/.config/swww/current/waybar_status"
-WAYBAR_STATUS="$(cat $WAYBAR_STATUS_FILE)"
-[[ "$WAYBAR_STATUS" == "off" ]] && exit 128
+# Check if waybar is turned off and exit
+[[ "$BAR_STATE" == "off" ]] && exit 128
 
 if pgrep -x "waybar" >/dev/null; then
     pkill -x "waybar"

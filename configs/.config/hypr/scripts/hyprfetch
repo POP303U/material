@@ -1,13 +1,12 @@
 #!/bin/sh
 
 CONF_DIR="/home/${USER}/.config"
-THEME_RICE="$(cat "${CONF_DIR}/swww/current/rice")"
-WAYBAR_RICE="$(cat "${CONF_DIR}/waybar/current/rice")"
-TRANSITION_TYPE="$(cat "${CONF_DIR}/swww/current/transition")"
+THEME_RICE="$(awk '/rice-current/ {print $NF}' "${CONF_DIR}/material/config")"
+WAYBAR_RICE="$(awk '/bar-current/ {print $NF}' "${CONF_DIR}/material/config")"
+TRANSITION_TYPE="$(awk '/rice-transition/ {print $NF}' "${CONF_DIR}/material/config")"
 CURSOR="$(grep "Gtk/CursorThemeName" "${CONF_DIR}/xsettingsd/xsettingsd.conf" | awk '{print $2}' | tr -d =\"= )"
-WALLPAPER="$(cat "${CONF_DIR}/swww/current/name")"
-WLOGOUT_THEME="$(grep -m 1 "=" "${CONF_DIR}/hypr/scripts/manage-wlogout" | tail -n 1 | awk -F '=' '{print $2}' | tr -d =\"=)"
-HYPR_ROUNDING="$(grep -m 1 "rounding" "${CONF_DIR}/hypr/decoration.conf" | awk '{print $3}')"
+WALLPAPER="$(awk '/wallpaper-current/ {print $NF}' "${CONF_DIR}/material/config")"
+WLOGOUT_THEME="$(awk '/wlogout-theme/ {print $NF}' "${CONF_DIR}/material/config")"
 GTK_THEME="$(grep -m 1 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 GTK_FONT="$(grep -m 3 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 GTK_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
