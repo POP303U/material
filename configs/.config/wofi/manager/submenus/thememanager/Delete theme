@@ -1,0 +1,6 @@
+#!/bin/sh
+
+THEME=$(dir -1 $HOME/.config/material/themes | wofi --dmenu -i -p "~ Delete your preferred theme ~")
+CHOICE=$(dir -1 $HOME/.config/wofi/manager/submenus/thememanager/confirm | wofi --dmenu -i -p "Theme '$THEME' will be deleted permantly, are you sure?")
+
+[[ "$CHOICE" == "Yes" ]] && rm -f $HOME/.config/material/themes/$THEME

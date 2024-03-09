@@ -1,0 +1,6 @@
+#!/bin/sh
+
+NAME=$(dir -1 $HOME/.config/material/themes | wofi --dmenu -i -p "Enter name for your saved theme")
+CHOICE=$(dir -1 $HOME/.config/wofi/manager/submenus/thememanager/confirm | wofi --dmenu -i -p "Save current theme with name: '$NAME'")
+
+[[ "$CHOICE" == "Yes" ]] && cp $HOME/.config/material/config $HOME/.config/material/themes/$NAME

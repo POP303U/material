@@ -1,0 +1,4 @@
+#!/bin/sh
+
+THEME=$(dir -1 $HOME/.config/material/themes | wofi --dmenu -i -p "~ Load your preferred theme ~")
+~/.config/hypr/scripts/load-config-material ~/.config/material/themes/$THEME 
