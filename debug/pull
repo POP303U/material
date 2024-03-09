@@ -21,6 +21,8 @@ cp -rvf ~/.config/kitty          ../configs/.config/
 cp -rvf ~/.config/cava           ../configs/.config/
 cp -rvf ~/.config/btop           ../configs/.config/
 cp -rvf ~/.config/qt5ct          ../configs/.config/
+cp -rvf ~/.config/qt6ct          ../configs/.config/
+cp -rvf ~/.config/material       ../configs/.config/
 cp -rvf ~/.config/xsettingsd     ../configs/.config/
 cp -rvf /etc/issue               ../configs/etc/
 cp -rvf /etc/motd                ../configs/etc/
