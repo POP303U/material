@@ -1,3 +1,3 @@
 #!/bin/sh
 
-~/.config/wofi/scripts/wofi-manager "blur"
+~/.config/wofi/scripts/wofi-manager "hypr_blur"
