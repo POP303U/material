@@ -1,5 +1,7 @@
 #!/bin/bash
 
+### Wrapper for launching most available taskmanager
+
 # List of task managers in preferred order
 PROGRAMS=("top" "htop" "btop")
 
@@ -30,4 +32,3 @@ fi
 # Run the last found task PROGRAM
 echo "Launching $LAST_FOUND."
 kitty "$LAST_FOUND"
-
