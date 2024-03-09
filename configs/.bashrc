@@ -47,7 +47,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PROJECTS="/mnt/sdc1/Projects/"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export GRC="$(which grc)"
+export GRC="$(command -v grc)"
 
 # get list of packages that needs this package
 function_depends() {
@@ -81,7 +81,7 @@ alias v='nvim'
 alias btw='clear -T $TERM; neofetch' # i use arch btw 
 
 # coloring with grc + make commands defaults better
-alias colourify="$GRC -es"
+alias colourify="$([[ $GRC != "" ]] && $GRC -es)"
 alias blkid='colourify blkid'
 alias configure='colourify ./configure'
 alias df='colourify df'
@@ -215,6 +215,7 @@ alias v-hypr-binds='cd ~/.config/emacs && ${EDITOR} ~/config.org'
 alias v-waybar='cd ~/.config/waybar && ${EDITOR} ~/.config/waybar/config.jsonc'
 alias v-autoclicker='cd ~/.config/autoclicker && ${EDITOR} ~/.config/autoclicker/clicker_start'
 alias v-wlogout='cd ~/.config/wlogout && ${EDITOR} ~/.config/wlogout/style.css '
+alias v-material='cd ~/.config/material && ${EDITOR} ~/.config/material/config'
 alias v-wofi='cd ~/.config/wofi && ${EDITOR} ~/.config/wofi/style.css'
 alias v-swww='cd ~/.config/swww/scripts && ${EDITOR} ~/.config/swww/scripts/change_wallpaper'
 alias v-sway='cd ~/.config/sway && ${EDITOR} ~/.config/sway/config'
@@ -647,7 +648,7 @@ if [ ! -z "$DISPLAY" ]; then
     #simple_and_functional  # simple prompt with all information necessary
     #fancy_bash_prompt      # fancy bash prompt 
     #complicated_shell      # two line bash prompt with much information
-    #nice_shell_artix       # simple shell i use (artix)
+    nice_shell_artix       # simple shell i use (artix)
     #nice_shell_void        # simple shell i use (void)
     starship_prompt        # default starship prompt
     #default_arch_iso       # prompt based on artix live iso
@@ -689,4 +690,3 @@ else
     default_artix_iso      # prompt based on artix live iso
     nice_arrow             # simple fat blue arrow 
 fi
-
