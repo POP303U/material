@@ -1,11 +1,11 @@
 {
     "layer": "top",
-    "position": "top",
+    "position": "bottom",
     "mod": "dock",
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "height": 50,
+    "height": 40,
     "modules-left": [
         "clock",
         "custom/weather", 
