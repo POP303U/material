@@ -1,12 +1,13 @@
 #!/bin/sh
 
-WAYBAR_STATUS_FILE="/home/${USER}/.config/swww/current/waybar_status"
-WAYBAR_STATUS="$(cat $WAYBAR_STATUS_FILE)"
+set -euox pipefail
 
-if [[ "$WAYBAR_STATUS" == "on" ]]; then
-    echo "off" > $WAYBAR_STATUS_FILE
-    pkill waybar
+BAR_STATE="$(awk '/bar-state/ {print $NF}' $HOME/.config/material/config)"
+
+if [[ "$BAR_STATE" == "on" ]]; then
+    sed -i 's|bar-state.*|bar-state = off|' ~/.config/material/config
+    pkill -9 waybar
 else 
-    echo "on" > $WAYBAR_STATUS_FILE
+    sed -i 's|bar-state.*|bar-state = on|' ~/.config/material/config
     ~/.config/hypr/scripts/manage-waybar
 fi
