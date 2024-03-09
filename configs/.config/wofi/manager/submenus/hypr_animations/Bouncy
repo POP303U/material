@@ -1,3 +1,4 @@
 #!/bin/sh
 
-echo "source = ~/.config/hypr/animations/bouncy.conf" > ~/.config/hypr/animations.conf
+sed -i 's|source.*|source = ~/.config/hypr/animations/Bouncy.conf|' ~/.config/hypr/animations.conf
+sed -i 's|animations-current.*|animations-current = Bouncy|' ~/.config/material/config

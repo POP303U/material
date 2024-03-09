@@ -1,4 +1,4 @@
 #!/bin/sh
 
-echo "source = ~/.config/hypr/animations/elegancy.conf" > ~/.config/hypr/animations.conf
-
+sed -i 's|source.*|source = ~/.config/hypr/animations/Elegancy.conf|' ~/.config/hypr/animations.conf
+sed -i 's|animations-current.*|animations-current = Elegancy|' ~/.config/material/config

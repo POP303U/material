@@ -1,3 +1,4 @@
 #!/bin/sh
 
-echo "source = ~/.config/hypr/animations/swiftly.conf" > ~/.config/hypr/animations.conf
+sed -i 's|source.*|source = ~/.config/hypr/animations/Swiftly.conf|' ~/.config/hypr/animations.conf
+sed -i 's|animations-current.*|animations-current = Swiftly|' ~/.config/material/config
