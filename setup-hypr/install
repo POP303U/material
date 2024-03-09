@@ -43,23 +43,22 @@ BASE_PACKAGES=(
 )
 
 MINIMAL_PACKAGES=(
-"p7zip" 
+"neovim"
 "unrar"
-"thunar"
+"p7zip" 
 "tar"
-"rsync"
+"thunar"
+"grc"
 "git"
 "fzf"
 "exfat-utils"
 "fuse-exfat"
 "ntfs-3g"
-"less"
 "neofetch"
 "pfetch"
 "btop"
 "curl"
 "wget"
-"neovim"
 )
 
 EXTENDED_PACKAGES=(
