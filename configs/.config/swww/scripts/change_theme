@@ -1,93 +1,68 @@
 #!/bin/bash
 
-SWWW_DIR="/home/${USER}/.config/swww"
-CURRENT_GTK_FILE="${SWWW_DIR}/current/gtk"
-CURRENT_BG_FILE="${SWWW_DIR}/current/name"
-CURRENT_THEME_FILE="${SWWW_DIR}/current/theme"
-CURRENT_BG="$(cat "$CURRENT_BG_FILE")"
-CURRENT_THEME="$(cat "$CURRENT_BG_FILE")"
-CURRENT_RICE="$(cat "${SWWW_DIR}/current/rice")"
+CURRENT_WALLPAPER=$(awk '/wallpaper-current/ {print $NF}' "$HOME/.config/material/config")
+CURRENT_RICE=$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")
 
 case "$1" in
-    "dawn")
+    "Rose-Pine-Dawn")
         export THEME_TYPE_SHORT="dawn"
         export CURRENT_BG="dawn-abstract_moon.png"
-        export CURRENT_THEME="rose-pine-dawn"
-        export LIGHT="light"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="rose-pine-dawn"
+        export MODE="light"
         ;;
-    "moon")
+    "Rose-Pine-Moon")
         export THEME_TYPE_SHORT="moon"
         export CURRENT_BG="moon-leafy.png"
-        export CURRENT_THEME="rose-pine-moon"
-        export LIGHT="dark"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="rose-pine-moon"
+        export MODE="dark"
         ;;
-    "pine")
+    "Rose-Pine")
         export THEME_TYPE_SHORT="main"
         export CURRENT_BG="pine-anime_city.png"
-        export CURRENT_THEME="rose-pine"
-        export LIGHT="dark"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="rose-pine"
+        export MODE="dark"
         ;;
-    "gruvbox-dark")
+    "Gruvbox-Dark")
         export THEME_TYPE_SHORT="gruvdark"
         export CURRENT_BG="gruvbox-astro.jpg"
-        export CURRENT_THEME="gruvbox-dark"
-        export LIGHT="dark"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="gruvbox-dark"
+        export MODE="dark"
         ;;
-    "gruvbox-light")
+    "Gruvbox-Light")
         export THEME_TYPE_SHORT="gruvlight"
         export CURRENT_BG="gruvbox-light-mountains.png"
-        export CURRENT_THEME="gruvbox-light"
-        export LIGHT="light"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="gruvbox-light"
+        export MODE="light"
         ;;
-    "catppuccin-mocha")
+    "Catppuccin-Mocha")
         export THEME_TYPE_SHORT="catppuccin-mocha"
         export CURRENT_BG="mocha-cat-leaves.png"
-        export CURRENT_THEME="catppuccin-mocha"
-        export LIGHT="dark"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="catppuccin-mocha"
+        export MODE="dark"
         ;;
-    "catppuccin-latte")
+    "Catppuccin-Latte")
         export THEME_TYPE_SHORT="catppuccin-latte"
         export CURRENT_BG="latte-cloud.png"
-        export CURRENT_THEME="catppuccin-latte"
-        export LIGHT="light"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="catppuccin-latte"
+        export MODE="light"
         ;;
-    "titanium-mono")
+    "Titanium-Mono")
         export THEME_TYPE_SHORT="titanium-mono"
         export CURRENT_BG="titanium-mono-gojo.png"
-        export CURRENT_THEME="titanium-mono"
-        export LIGHT="dark"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="titanium-mono"
+        export MODE="dark"
         ;;
-    "solarized-dark")
+    "Solarized-Dark")
         export THEME_TYPE_SHORT="solarized"
         export CURRENT_BG="solarized-dark-construction.png"
-        export CURRENT_THEME="solarized-dark"
-        export LIGHT="dark"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="solarized-dark"
+        export MODE="dark"
         ;;
-    "solarized-light")
+    "Solarized-Light")
         export THEME_TYPE_SHORT="solarized"
         export CURRENT_BG="solarized-light-post-modern.png"
-        export CURRENT_THEME="solarized-light"
-        export LIGHT="light"
-        echo "$CURRENT_BG" > "$CURRENT_BG_FILE"
-        echo "$CURRENT_THEME" > "$CURRENT_THEME_FILE"
+        export CURRENT_WALLPAPER="solarized-light"
+        export MODE="light"
         ;;
     "-h")
         echo "Usage: change_theme [THEME] [FLAGS]"
@@ -114,39 +89,25 @@ case "$1" in
         ;;
 esac
 
-create_name() {
-	export NAME_FILE="$SWWW_DIR/current/name"
-	if [[ ! -f "$NAME_FILE" ]]; then
-		touch "$NAME_FILE"
-	fi
-
-	# empty the file for new text
-	echo -n > $NAME_FILE
-	echo "$CURRENT_BG" > $NAME_FILE
-}
-
 set_gtk() {
-    if [[ "$LIGHT" == "dark" ]]; then THEME="Adwaita-dark"; CURSOR="Bibata-Modern-Classic"; fi
-    if [[ "$LIGHT" == "light" ]]; then THEME="Adwaita"; CURSOR="Bibata-Modern-Ice"; fi
+    if [[ "$MODE" == "dark" ]]; then THEME="Adwaita-dark"; CURSOR="Bibata-Modern-Classic"; fi
+    if [[ "$MODE" == "light" ]]; then THEME="Adwaita"; CURSOR="Bibata-Modern-Ice"; fi
 
     sed -i 's|^gtk-theme-name.*|gtk-theme-name='${THEME}'|' ~/.config/gtk-3.0/settings.ini
-    #sed -i 's|^gtk-cursor-theme-name.*|gtk-cursor-theme-name='${CURSOR}'|' ~/.config/gtk-3.0/settings.ini
 
     sleep .2
     ~/.config/hypr/scripts/import-gsettings
 }
 
 set_bg() {
-    local TRANSITION_TYPE="$(cat "$HOME/.config/swww/current/transition")"
-
-    create_name
+    TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
 
     # Check if the program is running
     if pgrep "swww-deamon" >/dev/null; then
         swww init
     fi
 
-    echo $CURRENT_BG
+    sed -i 's|wallpaper-current.*|wallpaper-current = '$(basename ${CURRENT_BG})'|' ~/.config/material/config
 
     cp -vf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
     swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
@@ -159,7 +120,7 @@ set_bg() {
 }
 
 kitty_trans() {
-    local RULE="$(sed -n '1p' $HOME/.config/kitty/rules/${LIGHT})"
+    local RULE="$(sed -n '1p' $HOME/.config/kitty/rules/${MODE})"
     sed -i 's|^background_opacity.*|'"${RULE}"'|' $HOME/.config/kitty/kitty.conf
 }
 
@@ -176,29 +137,29 @@ reload_configs() {
 }
 
 colorize_wofi() {
-    sed -i -e '/@define-color base/s: .*;: base '"$(awk '/@define-color base/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color surface/s: .*;: surface '"$(awk '/@define-color surface/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color overlay/s: .*;: overlay '"$(awk '/@define-color overlay/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color muted/s: .*;: muted '"$(awk '/@define-color muted/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color subtle/s: .*;: subtle '"$(awk '/@define-color subtle/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color text/s: .*;: text '"$(awk '/@define-color text/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color love/s: .*;: love '"$(awk '/@define-color love/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color gold/s: .*;: gold '"$(awk '/@define-color gold/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color rose/s: .*;: rose '"$(awk '/@define-color rose/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color pine/s: .*;: pine '"$(awk '/@define-color pine/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color foam/s: .*;: foam '"$(awk '/@define-color foam/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':' \
-        -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_THEME}.css)"':'  ~/.config/wofi/style.css
+    sed -i -e '/@define-color base/s: .*;: base '"$(awk '/@define-color base/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color surface/s: .*;: surface '"$(awk '/@define-color surface/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color overlay/s: .*;: overlay '"$(awk '/@define-color overlay/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color muted/s: .*;: muted '"$(awk '/@define-color muted/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color subtle/s: .*;: subtle '"$(awk '/@define-color subtle/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color text/s: .*;: text '"$(awk '/@define-color text/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color love/s: .*;: love '"$(awk '/@define-color love/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color gold/s: .*;: gold '"$(awk '/@define-color gold/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color rose/s: .*;: rose '"$(awk '/@define-color rose/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color pine/s: .*;: pine '"$(awk '/@define-color pine/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color foam/s: .*;: foam '"$(awk '/@define-color foam/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
+        -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':'  ~/.config/wofi/style.css
 }
 
 colorize_cava() {
-    local GR_1="$(sed -n '1p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_2="$(sed -n '2p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_3="$(sed -n '3p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_4="$(sed -n '4p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_5="$(sed -n '5p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_6="$(sed -n '6p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_7="$(sed -n '7p' $HOME/.config/cava/themes/${CURRENT_THEME})"
-    local GR_8="$(sed -n '8p' $HOME/.config/cava/themes/${CURRENT_THEME})"
+    local GR_1="$(sed -n '1p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
+    local GR_2="$(sed -n '2p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
+    local GR_3="$(sed -n '3p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
+    local GR_4="$(sed -n '4p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
+    local GR_5="$(sed -n '5p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
+    local GR_6="$(sed -n '6p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
+    local GR_7="$(sed -n '7p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
+    local GR_8="$(sed -n '8p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
     # ^ im am so sorry
 
     sed -i 's|^gradient_color_1.*|'"${GR_1}"'|' $HOME/.config/cava/config
@@ -209,10 +170,11 @@ colorize_cava() {
     sed -i 's|^gradient_color_6.*|'"${GR_6}"'|' $HOME/.config/cava/config
     sed -i 's|^gradient_color_7.*|'"${GR_7}"'|' $HOME/.config/cava/config
     sed -i 's|^gradient_color_8.*|'"${GR_8}"'|' $HOME/.config/cava/config
+    # ^ im am so sorry as well... (when this this disgusting code end????????)
 }
 
 colorize_kitty() {
-    local KITTY_THEME="$CURRENT_THEME"
+    local KITTY_THEME="$CURRENT_WALLPAPER"
     if [[ "$THEME_TYPE_SHORT" == "gruvdark" ]]; then KITTY_THEME="gruvbox-dark"; fi
     if [[ "$THEME_TYPE_SHORT" == "gruvlight" ]]; then KITTY_THEME="gruvbox-light"; fi
 
@@ -220,57 +182,49 @@ colorize_kitty() {
 }
 
 colorize_tmux() {
-    if [[ "$LIGHT" == "light" ]]; then TMUX_THEME="white"; fi
-    if [[ "$LIGHT" == "dark" ]]; then TMUX_THEME="black"; fi
+    if [[ "$MODE" == "light" ]]; then TMUX_THEME="white"; fi
+    if [[ "$MODE" == "dark" ]]; then TMUX_THEME="black"; fi
     sed -i 's|^set -g status-bg.*|set -g status-bg '${TMUX_THEME}'|' $HOME/.tmux.conf
     #sed -i 's|^set -g @rose_pine_variant.*|set -g @rose_pine_variant "'${THEME_TYPE_SHORT}'" # Options are "main", "moon" or "dawn"|' $HOME/.tmux.conf
 }
 
 colorize_nvim() {
-    local NVIM_THEME="$CURRENT_THEME"
-    if [[ "$CURRENT_THEME" == "titanium-mono" ]]; then NVIM_THEME="monochrome"; fi
-    if [[ "$CURRENT_THEME" == "gruvbox-dark"  || "$CURRENT_THEME" == "gruvbox-light" ]]; then NVIM_THEME="gruvbox"; fi
-    if [[ "$CURRENT_THEME" == "solarized-dark" ]]; then NVIM_THEME="solarized"; fi
-    if [[ "$CURRENT_THEME" == "solarized-light" ]]; then NVIM_THEME="solarized"; fi
+    local NVIM_THEME="$CURRENT_WALLPAPER"
+    if [[ "$CURRENT_WALLPAPER" == "titanium-mono" ]]; then NVIM_THEME="monochrome"; fi
+    if [[ "$CURRENT_WALLPAPER" == "gruvbox-dark"  || "$CURRENT_WALLPAPER" == "gruvbox-light" ]]; then NVIM_THEME="gruvbox"; fi
+    if [[ "$CURRENT_WALLPAPER" == "solarized-dark" ]]; then NVIM_THEME="solarized"; fi
+    if [[ "$CURRENT_WALLPAPER" == "solarized-light" ]]; then NVIM_THEME="solarized"; fi
     sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${NVIM_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
-    sed -i 's|^vim.opt.*|vim.opt.background = "'${LIGHT}'"|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+    sed -i 's|^vim.opt.*|vim.opt.background = "'${MODE}'"|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
     # I love hacky solutions :)
 }
 
 colorize_dunst() {
-    local BG="$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
-    local FG="$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
-    local BR="$(sed -n '3p' $HOME/.config/dunst/themes/${CURRENT_THEME})"
+    local BG="$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_WALLPAPER})"
+    local FG="$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_WALLPAPER})"
+    local BR="$(sed -n '3p' $HOME/.config/dunst/themes/${CURRENT_WALLPAPER})"
     sed -i 's|background.*|'"${BG}"'|' $HOME/.config/dunst/dunstrc
     sed -i 's|foreground.*|'"${FG}"'|' $HOME/.config/dunst/dunstrc
     sed -i 's|frame_color.*|'"${BR}"'|' $HOME/.config/dunst/dunstrc
 }
 
 colorize_waybar() {
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/bottom/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/top/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/compact-bottom/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/compact-top/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/colorful-bottom/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/colorful-top/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/lefty/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/righty/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/polybar-top/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/polybar-bottom/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/floaty-top/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/floaty-bottom/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/blur-top/style.css
-    sed -i 's|^@import.*|@import "../../themes/'${CURRENT_THEME}'.css";|' $HOME/.config/waybar/bar/blur-bottom/style.css
+    WAYBAR_DIR="$HOME/.config/waybar/bar"
+    ENTRIES=($(dir -1 $WAYBAR_DIR))
+
+    for ENTRY in "${ENTRIES[@]}"; do
+        sed -i 's|^@import.*|@import "../../themes/'${CURRENT_WALLPAPER}'.css";|' $HOME/.config/waybar/bar/${ENTRY}/style.css
+    done
 }
 
 colorize_wlogout() {
-    sed -i 's|^@import.*|@import "themes/'${CURRENT_THEME}'.css";|' $HOME/.config/wlogout/style_compact.css
-    sed -i 's|^@import.*|@import "themes/'${CURRENT_THEME}'.css";|' $HOME/.config/wlogout/style_normal.css
+    sed -i 's|^@import.*|@import "themes/'${CURRENT_WALLPAPER}'.css";|' $HOME/.config/wlogout/style_compact.css
+    sed -i 's|^@import.*|@import "themes/'${CURRENT_WALLPAPER}'.css";|' $HOME/.config/wlogout/style_normal.css
 }
 
 colorize_hypr() {
-    local GRAD_COL="$(sed -n '1p' $HOME/.config/hypr/themes/${CURRENT_THEME})"
-    local SHAD_COL="$(sed -n '2p' $HOME/.config/hypr/themes/${CURRENT_THEME})"
+    local GRAD_COL="$(sed -n '1p' $HOME/.config/hypr/themes/${CURRENT_WALLPAPER})"
+    local SHAD_COL="$(sed -n '2p' $HOME/.config/hypr/themes/${CURRENT_WALLPAPER})"
     sed -i 's|^$grad_col.*|'"${GRAD_COL}"'|' $HOME/.config/hypr/hyprland.conf
     sed -i 's|^$shad_col.*|'"${SHAD_COL}"'|' $HOME/.config/hypr/hyprland.conf
     sed -i 's|^$grad_col.*|'"${GRAD_COL}"'|' $HOME/.config/hypr/decoration.conf
@@ -299,9 +253,5 @@ change_theme() {
     reload_configs
 }
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <theme>"
-    exit 1
-fi
-
+export CURRENT_BG=${2:-$CURRENT_BG} # make manual wallpapers possible
 change_theme
