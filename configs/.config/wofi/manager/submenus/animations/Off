@@ -1,3 +1,0 @@
-#!/bin/sh
-
-sed -i 's|enabled =.*|enabled = no|' ~/.config/hypr/animations.conf
