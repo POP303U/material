@@ -1,0 +1,35 @@
+#!/bin/sh
+
+set -euox pipefail
+
+BAR_NAME=${1:-"Polybar-Top"}
+FLAG=${2:-""} # magic
+
+function set_hypr_blurls() {
+    sed -i 's|.*blurls = way.*|blurls = waybar|' ~/.config/hypr/decoration.conf
+}
+
+function unset_hypr_blurls() {
+    sed -i 's|.*blurls = way.*|#blurls = waybar|' ~/.config/hypr/decoration.conf
+}
+
+function reload_waybar() {
+	# waybar reloads every time hyprland is modified
+    echo "[warn] material_call has been called"
+	touch "$HOME/.config/hypr/hyprland.conf"
+}
+
+function save_config() {
+    sed -i 's|bar-current.*|bar-current = '${BAR_NAME}'|' ~/.config/material/config
+}
+
+# Check if bar specifies blur
+BLUR_FLAG="$(grep "blurls" "$HOME/.config/waybar/rices/$BAR_NAME" | awk -F '=' '{print $2}' | xargs)"
+if [[ "$BLUR_FLAG" == "true" ]]; then
+    set_hypr_blurls 
+else 
+    unset_hypr_blurls
+fi
+
+save_config
+[[ "$FLAG" == "material_call" ]] || reload_waybar # material_call is used tell if it has been called from load-config-material
