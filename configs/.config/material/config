@@ -15,7 +15,7 @@
 # Warning! Comments after statements will be overwritten when values are modified!
 
 # BAR -
-blur-state = on 
+blur-state = off
 bar-state = on
 bar-current = Polybar-Top
 
@@ -30,6 +30,7 @@ rice-transition = wave
 
 # WLOGOUT -
 wlogout-theme = normal
+wlogout-keybinds-show = off
 
 # HYPRLAND -
 corner-rounding = 10
@@ -42,4 +43,4 @@ border-size = 3
 blur-size = 4
 blur-passes = 2
 
-#configver:1.0
+#configver:1.1
