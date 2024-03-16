@@ -8,6 +8,7 @@ mkdir -pv ../configs/.icons/default
 cp -rvf ~/.config/autoclicker    ../configs/.config/
 cp -rvf ~/.config/swaylock       ../configs/.config/
 cp -rvf ~/.config/wlogout        ../configs/.config/
+cp -rvf ~/.config/fuzzel         ../configs/.config/
 cp -rvf ~/.config/gtk-3.0        ../configs/.config/
 cp -rvf ~/.config/swww           ../configs/.config/
 cp -rvf ~/.config/swaylock       ../configs/.config/
