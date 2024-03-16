@@ -6,7 +6,9 @@ set -euo pipefail
 
 sources_file="$HOME/.config/wofi/scripts/wofi-websearch-sources"
 prompt="-p Search:"
-launcher="wofi --dmenu"
+#launcher="wofi --dmenu"
+launcher="fuzzel --dmenu"
+
 
 se_data="$( 
     awk -F'"' '

@@ -1,13 +1,16 @@
 #!/bin/sh
 set -euox pipefail
 
+#LAUNCHER="wofi --cache-file /dev/null"
+LAUNCHER="fuzzel"
+
 function change_rice() {
 	CHANGE_RICE="/home/${USER}/.config/swww/scripts/change_theme"
 	$CHANGE_RICE $RICE_FULL_NAME
 }
 
 # use --cache-file /dev/null to use predefined order
-RICE_SEL_NAME=$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/swww/rices/#entries# | wofi -p "~ Material rice selector ~" --cache-file /dev/null --dmenu -i) 
+RICE_SEL_NAME=$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/swww/rices/#entries# | $LAUNCHER --dmenu -i "~ Material rice selector ~" ) 
 RICE_FULL_NAME="$(echo $RICE_SEL_NAME | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
 RICE_FILE="/home/${USER}/.config/swww/rices/${RICE_FULL_NAME}"
 
@@ -17,5 +20,4 @@ if [[ ! -f "$RICE_FILE" ]]; then
 fi
 
 # save the config
-sed -i 's|rice-current.*|rice-current = '${RICE_FULL_NAME}'|' ~/.config/material/config
 change_rice

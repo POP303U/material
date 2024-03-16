@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euox pipefail
 
-EMOJI="$(sed '1,/^### DATA ###$/d' $0 | wofi -p "emoji" --show dmenu -i | cut -d ' ' -f 1 | tr -d '\n')"
+#LAUNCHER="wofi"
+LAUNCHER="fuzzel"
+
+EMOJI="$(sed '1,/^### DATA ###$/d' $0 | $LAUNCHER --dmenu -p "emoji" -i | cut -d ' ' -f 1 | tr -d '\n')"
 wtype "$EMOJI"; wl-copy "$EMOJI"
 exit
 

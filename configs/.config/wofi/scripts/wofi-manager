@@ -1,6 +1,9 @@
 #!/bin/sh
 set -euox pipefail
 
+#LAUNCHER="wofi --cache-file /dev/null"
+LAUNCHER="fuzzel"
+
 function run_submenu() {
     "$MENU_SCRIPT"
 }
@@ -9,7 +12,7 @@ MENU_PATH="/home/${USER}/.config/wofi/manager/submenus"
 SUBMENU_TYPE="${1:-"main"}"
 
 # use --cache-file /dev/null to use predefined order
-SUBMENU="$(sed '/^### ENTRIES ###$/d' ${MENU_PATH}/${SUBMENU_TYPE}/#entries# | wofi --cache-file /dev/null --dmenu -p "~ Material settings ~" -i)"
+SUBMENU="$(sed '/^### ENTRIES ###$/d' ${MENU_PATH}/${SUBMENU_TYPE}/#entries# | $LAUNCHER --dmenu -p "~ Material settings ~" -i)"
 MENU_NAME="$(echo $SUBMENU | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
 MENU_SCRIPT="$MENU_PATH/$SUBMENU_TYPE/$MENU_NAME"
 

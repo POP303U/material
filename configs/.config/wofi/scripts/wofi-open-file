@@ -7,7 +7,8 @@ set -euox pipefail
 # search root
 root_path=$HOME
 
-launcher="wofi --dmenu"
+#launcher="wofi --dmenu"
+launcher="fuzzel --dmenu"
 
 prompt="-p Folder"
 

@@ -4,7 +4,8 @@ set -euox pipefail
 # Credits to: https://github.com/debxp/dmenu-scripts/blob/master/dmenu-kill-process
 # Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
 
-launcher="wofi --dmenu"
+#launcher="wofi --dmenu"
+launcher="fuzzel --dmenu"
 prompt="-p Manual:"
 
 # terminal to open manual

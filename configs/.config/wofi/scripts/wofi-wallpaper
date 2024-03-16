@@ -1,9 +1,17 @@
 #!/bin/sh
 set -euox pipefail
 
+#LAUNCHER="wofi --cache-file /dev/null"
+LAUNCHER="fuzzel"
+
+function change_wallpaper() {
+	CHANGE_WALLPAPER="/home/${USER}/.config/swww/scripts/change_wallpaper"
+	$CHANGE_WALLPAPER $WALLPAPER
+}
+
 SWWW_DIR="/home/${USER}/.config/swww"
 CURRENT_RICE="$(awk '/rice-current/ {print $NF}' /home/${USER}/.config/material/config)"
-WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls/${CURRENT_RICE} | wofi -p "~ Material wallpaper selector ~" --dmenu -i)
+WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls/${CURRENT_RICE} | $LAUNCHER --dmenu -p "~ Material wallpaper selector ~" -i)
 WALLPAPER="/home/${USER}/.config/swww/walls/${CURRENT_RICE}/${WALLPAPER_NAME}"
 
 if [[ ! -f "$WALLPAPER" ]]; then
@@ -11,18 +19,4 @@ if [[ ! -f "$WALLPAPER" ]]; then
     exit 1
 fi
 
-TRANSITION_TYPE="$(awk '/rice-transition/ {print $NF}' ~/.config/material/config)"
-sed -i 's|wallpaper-current.*|wallpaper-current = '$WALLPAPER_NAME'|' ~/.config/material/config
-
-# Set sddm wallpaper too  
-cp -vf $WALLPAPER /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
-swww img $WALLPAPER \
-    --transition-bezier .6,.94,.86,.23\
-    --transition-type "${TRANSITION_TYPE}" \
-    --transition-duration 1 \
-    --transition-fps 144 \
-    --invert-y \
-    --transition-pos "2555, 1434" 
-
-reload_hypr
-# Options up here ^
+change_wallpaper

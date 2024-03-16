@@ -2,13 +2,16 @@
 
 set -euox pipefail
 
+#LAUNCHER="wofi --cache-file /dev/null"
+LAUNCHER="fuzzel"
+
 function change_bar() {
 	CHANGE_BAR="/home/${USER}/.config/hypr/scripts/set-waybar"
 	$CHANGE_BAR $BAR_NAME
 }
 
 # use --cache-file /dev/null to use predefined order
-SELECTION="$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/waybar/rices/#entries# | wofi -p "~ Material bar changer ~" --dmenu --cache-file /dev/null -i)"
+SELECTION="$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/waybar/rices/#entries# | $LAUNCHER --dmenu -p "~ Material bar changer ~" -i)"
 BAR_FULL_NAME="$(echo $SELECTION | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
 BAR_FILE="/home/${USER}/.config/waybar/rices/${BAR_FULL_NAME}"
 BAR_NAME="$(grep "name" "$BAR_FILE" | awk -F '=' '{print $2}')" # eg: Blur-Top

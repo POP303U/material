@@ -1,4 +1,6 @@
 #!/bin/sh
 
-wofi -c ~/.config/wofi/config_run
+LAUNCHER="wofi"
+#LAUNCHER="fuzzel"
 
+$LAUNCHER -c ~/.config/wofi/config_run
