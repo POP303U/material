@@ -47,6 +47,12 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PROJECTS="/mnt/sdc1/Projects/"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export LESS_TERMCAP_md=$'\e[01;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[01;32m' 
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[45;93m' 
+export LESS_TERMCAP_se=$'\e[0m'
 export GRC="$(command -v grc)"
 
 # get list of packages that needs this package
@@ -81,7 +87,7 @@ alias v='nvim'
 alias btw='clear -T $TERM; neofetch' # i use arch btw 
 
 # coloring with grc + make commands defaults better
-alias colourify="$([[ $GRC != "" ]] && $GRC -es)"
+alias colourify="$([[ $GRC != "" ]] && echo "grc -es")"
 alias blkid='colourify blkid'
 alias configure='colourify ./configure'
 alias df='colourify df'
@@ -211,11 +217,12 @@ alias v-dunst='cd ~/.config/dunst && ${EDITOR} ~/.config/dunst/dunstrc'
 alias v-bashrc='cd ~ && ${EDITOR} ~/.bashrc'
 alias v-emacs='cd ~/.config/emacs && ${EDITOR} ~/.config/emacs/config.org'
 alias v-hypr='cd ~/.config/hypr && ${EDITOR} ~/.config/hypr/hyprland.conf'
-alias v-hypr-binds='cd ~/.config/emacs && ${EDITOR} ~/config.org'
+alias v-fuzzel='cd ~/.config/fuzzel && ${EDITOR} ~/.config/fuzzel/fuzzel.ini'
 alias v-waybar='cd ~/.config/waybar && ${EDITOR} ~/.config/waybar/config.jsonc'
 alias v-autoclicker='cd ~/.config/autoclicker && ${EDITOR} ~/.config/autoclicker/clicker_start'
 alias v-wlogout='cd ~/.config/wlogout && ${EDITOR} ~/.config/wlogout/style.css '
 alias v-material='cd ~/.config/material && ${EDITOR} ~/.config/material/config'
+alias v-Kvantum='cd ~/.config/Kvantum && ${EDITOR} ~/.config/Kvantum/kvantum.kvconfig'
 alias v-wofi='cd ~/.config/wofi && ${EDITOR} ~/.config/wofi/style.css'
 alias v-swww='cd ~/.config/swww/scripts && ${EDITOR} ~/.config/swww/scripts/change_wallpaper'
 alias v-sway='cd ~/.config/sway && ${EDITOR} ~/.config/sway/config'
@@ -412,12 +419,16 @@ hg() {
     history | grep "$1";
 }
 
+matrix() {
+    tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"
+}
+
 duhk() {
-    colourify du -h --max-depth=1 | colourify sort -hk 1,1
+    du -h --max-depth=1 | sort -hk 1,1
 }
 
 bf() {
-    colourify du -h -x -s -- * | colourify sort -r -h | head -20;
+    du -h -x -s -- * | sort -r -h | head -20;
 }
 
 fman() {
@@ -433,8 +444,17 @@ pc() {
     fi
 }
 
+calc() {
+    awk "BEGIN { print $* }"
+    
+}
+
 die() {
-    colourify pkill -SIGKILL $1
+    pkill -SIGKILL $1
+}
+
+translate() {  
+    wget -qO- "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$1&langpair=$2|${3:-en}" |  sed 's/.*"translatedText":"\([^"]*\)".*}/\1/' 
 }
 
 kbdfont() {
