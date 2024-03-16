@@ -243,7 +243,7 @@ alias dv-hostname='cd /etc/ && ${SUDO} ${EDITOR} /etc/hostname'
 alias dv-keyd='cd /etc/keyd/ && ${SUDO} ${EDITOR} /etc/keyd/default_shell.conf'
 
 # Conditional ls ((stupidly nested) not anymore!)
-if [ -e "$HOME/.cargo/bin/eza" ]; then
+if [[ -e "$HOME/.cargo/bin/eza" || -f "/usr/bin/eza" ]]; then
     alias ls='eza             --icons        --colour=always --binary --header'
     alias la='eza --all --all --icons --long --colour=always --binary --header'
     alias ll='eza --all       --icons --long --colour=always --binary --header'
