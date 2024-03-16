@@ -28,7 +28,7 @@ function get_resolution() {
 
 function apply_wall() {
     # patch into sddm
-    ln -sf $RICE_DIR/$NEXT_ELEMENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+    cp -vfr $RICE_DIR/$NEXT_ELEMENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
     swww img "$RICE_DIR/$NEXT_ELEMENT" \
         --transition-bezier .43,1.19,1,.4 \
         --transition-type "$TRANSITION" \

@@ -66,7 +66,7 @@ TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/co
 sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
 
 # you need dynamic `rose-pine-sddm` for this to work, check the installer for this option
-ln -sf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+cp -vrf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
     --transition-bezier .6,.94,.86,.23     \
     --transition-type "${TRANSITION_TYPE}" \

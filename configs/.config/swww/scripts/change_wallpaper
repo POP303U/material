@@ -6,7 +6,7 @@ TRANSITION_TYPE="$(awk '/rice-transition/ {print $NF}' ~/.config/material/config
 sed -i 's|wallpaper-current.*|wallpaper-current = '$(basename $1)'|' ~/.config/material/config
 
 # Set sddm wallpaper too  
-ln -sf ${1} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+cp -vrf ${1} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 swww img ${1} \
     --transition-bezier .6,.94,.86,.23\
     --transition-type "${TRANSITION_TYPE}" \
