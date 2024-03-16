@@ -1,16 +1,24 @@
 #!/bin/sh
 
+export OBLIGATORY_FUNNY_MESSAGES_THAT_ARE_ABSOLUTELY_NOT_NEEDED_AND_SELF_EXPLANATORY=(
+"You can switch wallpapers with Win+<-/->"
+"'wahhhh he copied hyprdots'"
+)
+
 CONF_DIR="/home/${USER}/.config"
 THEME_RICE="$(awk '/rice-current/ {print $NF}' "${CONF_DIR}/material/config")"
 WAYBAR_RICE="$(awk '/bar-current/ {print $NF}' "${CONF_DIR}/material/config")"
 TRANSITION_TYPE="$(awk '/rice-transition/ {print $NF}' "${CONF_DIR}/material/config")"
 CURSOR="$(grep "Gtk/CursorThemeName" "${CONF_DIR}/xsettingsd/xsettingsd.conf" | awk '{print $2}' | tr -d =\"= )"
 WALLPAPER="$(awk '/wallpaper-current/ {print $NF}' "${CONF_DIR}/material/config")"
+THEMEMANAGER_THEME="$(awk '/config-current/ {print $NF}' "${CONF_DIR}/material/config")"
+HYPR_ANIMATIONS=$(grep 'source' "${CONF_DIR}/hypr/animations.conf" | awk -F '=' '{print $2}' | xargs basename )
 WLOGOUT_THEME="$(awk '/wlogout-theme/ {print $NF}' "${CONF_DIR}/material/config")"
 GTK_THEME="$(grep -m 1 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 GTK_FONT="$(grep -m 3 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 GTK_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
-QT_THEME="$(grep -m 3 "=" "${CONF_DIR}/qt5ct/qt5ct.conf" | tail -n 1 | awk -F '=' '{print $2}')"
+QT5_THEME="$(grep -m 3 "=" "${CONF_DIR}/qt5ct/qt5ct.conf" | tail -n 1 | awk -F '=' '{print $2}')"
+QT6_THEME="$(grep -m 3 "=" "${CONF_DIR}/qt6ct/qt6ct.conf" | tail -n 1 | awk -F '=' '{print $2}')"
 
 BLACK_='\033[01;30m'   # Black
 RED___='\033[01;31m'   # Red
@@ -41,9 +49,11 @@ echo -e "${WHITE_}▉▉  |${RESET_} Cursor${BLACK_} ............. ${RESET_}${BO
 echo -e "${WHITE_}  ▉▉|${RESET_} Wallpaper${BLACK_} .......... ${RESET_}${BOLD__}${WALLPAPER}"
 echo -e "${BLUE__}▉▉  |${RESET_} GTK Theme${BLACK_} .......... ${RESET_}${BOLD__}${GTK_THEME}"
 echo -e "${BLUE__}  ▉▉|${RESET_} GTK Icons${BLACK_} .......... ${RESET_}${BOLD__}${GTK_ICONS}"
-echo -e "${YELLOW}▉▉  |${RESET_} Qt5 Theme${BLACK_} .......... ${RESET_}${BOLD__}${QT_THEME}"
+echo -e "${YELLOW}▉▉  |${RESET_} Qt6 Theme${BLACK_} .......... ${RESET_}${BOLD__}${QT6_THEME}"
 echo -e "${YELLOW}  ▉▉|${RESET_} GTK Font${BLACK_} ........... ${RESET_}${BOLD__}${GTK_FONT}"
 echo -e "${PURPLE}▉▉  |${RESET_} Swww Transition${BLACK_} .... ${RESET_}${BOLD__}${TRANSITION_TYPE}"
 echo -e "${PURPLE}  ▉▉|${RESET_} Wlogout Theme${BLACK_} ...... ${RESET_}${BOLD__}${WLOGOUT_THEME}"
+echo -e "${CYAN__}▉▉  |${RESET_} Hypr Animations${BLACK_} .... ${RESET_}${BOLD__}${HYPR_ANIMATIONS}"
+echo -e "${CYAN__}  ▉▉|${RESET_} Thememanager Theme${BLACK_} . ${RESET_}${BOLD__}${THEMEMANAGER_THEME}"
 echo -e ""
 echo -e "${GREEN_}└──────────────────────────────────────────┘"
