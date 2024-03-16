@@ -29,8 +29,8 @@ cp -rvf /etc/issue               ../configs/etc/
 cp -rvf /etc/motd                ../configs/etc/
 cp -rvf ~/.bashrc                ../configs/
 cp -rvf ~/.gtkrc-2.0             ../configs/
-cp -rvf ~/.icons/default/index.theme ../configs/.icons/default/
-cp -rvf ~/.tmux.conf             ../configs/
-cp -rvf ~/.bin ../configs/
-cp -rvf ~/.themes                ../configs/.config/
+cp -rvf ~/.icons/default/index.theme         ../configs/.icons/default/
+cp -rvf ~/.tmux.conf                         ../configs/
+cp -rvf ~/.bin                               ../configs/
+cp -rvf ~/.themes                            ../configs/
 # nice

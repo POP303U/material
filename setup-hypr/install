@@ -220,33 +220,25 @@ copy_config() {
         fi
     done
 
-    rm -rf ~/.tmux.conf;          cp -r    ../configs/.tmux.conf            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
-    rm -rf ~/.bashrc;             cp -r    ../configs/.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
-    rm -rf ~/.gtkrc-2.0;          cp -r    ../configs/.gtkrc-2.0            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied gtkrc-2.0 to ~/.gtkrc-2.0"
-    rm -rf ~/.icons;              cp -r    ../configs/.icons                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
-    rm -rf ~/.bin;              cp -r    ../configs/.bin ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
+    rm -rf ~/.tmux.conf;           cp -r    ../configs/.tmux.conf            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
+    rm -rf ~/.bashrc;              cp -r    ../configs/.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
+    rm -rf ~/.gtkrc-2.0;           cp -r    ../configs/.gtkrc-2.0            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied gtkrc-2.0 to ~/.gtkrc-2.0"
+    rm -rf ~/.themes;              cp -r    ../configs/.themes               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .themes to ~/.themes "
+    rm -rf ~/.icons;               cp -r    ../configs/.icons                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
+    rm -rf ~/.bin;                 cp -r    ../configs/.bin                  ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
 
     # Set some files as exacutable 
     chmod +x ~/.config/hypr/scripts/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
     chmod +x ~/.config/swww/scripts/init_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/config/swww/scripts/init_wallpaper' is executable: .wxr-xr-x "
     chmod +x ~/.config/swww/scripts/change_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/.config/swww/scripts/change_wallpaper' is executable: .wxr-xr-x "
     chmod +x ~/.config/waybar/scripts/waybar-wttr.py && echo -e "[${BLUE}ok${RESET}] '~/.config/waybar/scripts/waybar-wttr.py' is executable: .wxr-xr-x "
+    chmod -R +x ~/.config/hypr/scripts
+    chmod -R +x ~/.config/swww/scripts
+    chmod -R +x ~/.config/wofi/manager
 
     # Clean out other portals
     echo -e "[${PURPLE}info${RESET}] Cleaning out conflicting xdg portals..."
     $AUR_HELPER -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null 2>&1
-}
-
-install_doas() {
-    echo -e "[${PURPLE}info${RESET}] Installing opendoas..."
-    sudo pacman -S opendoas --noconfirm
-    sudo chown -c root:root /etc/doas.conf
-    sudo chmod -c 0400 /etc/doas.conf
-    sudo rm -f /etc/doas.conf
-    echo "permit :wheel 
-    permit nopass '$(whoami)'
-    " | sudo tee -a /etc/doas.conf
-    echo -e "[${BLUE}ok${RESET}] Successfully installed opendoas..."
 }
 
 enable_sddm_quest() {
