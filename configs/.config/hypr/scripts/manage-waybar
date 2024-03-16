@@ -10,7 +10,6 @@ CURRENT_WAYBAR_CALL="waybar -c $HOME/.config/waybar/bar/${BAR_CURRENT}/config.js
 if pgrep -x "waybar" >/dev/null; then
     pkill -x "waybar"
     $CURRENT_WAYBAR_CALL
-    exit 0
 else 
     $CURRENT_WAYBAR_CALL
 fi

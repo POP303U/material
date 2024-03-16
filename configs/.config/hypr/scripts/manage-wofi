@@ -1,14 +1,17 @@
 #!/usr/bin/env sh
 
+#LAUNCHER="wofi"
+LAUNCHER="fuzzel"
+
 # Check if wofi is already running
-if pgrep -x "wofi" >/dev/null; then
-    pkill -x "wofi"
+if pgrep -x "$LAUNCHER" >/dev/null; then
+    pkill -x "$LAUNCHER"
     exit 0
 fi
 
 case "$1" in
     "wofi")
-        wofi
+        $LAUNCHER
         ;;
     "wallpaper")
         ~/.config/wofi/scripts/wofi-wallpaper
@@ -20,7 +23,7 @@ case "$1" in
         ~/.config/wofi/scripts/wofi-rice-selector -
         ;;
 
-    ### WARNING: Will be deprecated, some pywal thingy will replace it
+    ### WARNING: Will be deprecated, breaks a LOT of shit
     "theme")
         ~/.config/wofi/scripts/wofi-rice-selector theme         
         ;;
@@ -33,10 +36,10 @@ case "$1" in
         ~/.config/wofi/scripts/wofi-waybar-selector
         ;;
     "cliphist")
-        cliphist list | wofi --prompt "~ Material clipboard selection ~" --dmenu -i | cliphist decode | wl-copy
+        cliphist list | $LAUNCHER --dmenu -p "~ Material clipboard selection ~" -i | cliphist decode | wl-copy
         ;;
     *)
         echo "Invalid choice $1"
-        pkill -x "wofi"
+        pkill -x "$LAUNCHER"
         ;;
 esac
