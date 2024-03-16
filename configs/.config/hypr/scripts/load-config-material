@@ -19,27 +19,27 @@ GAPS_IN=$(awk '/gaps-in/ {print $NF}' $SEL_CONFIG)
 GAPS_OUT=$(awk '/gaps-out/ {print $NF}' $SEL_CONFIG)
 BORDER_SIZE=$(awk '/border-size/ {print $NF}' $SEL_CONFIG)
 
-sed -i 's|rounding.*|rounding = '$CORNER_ROUNDING'|' "$HYPR_PATH/decoration.conf"
-sed -i 's|^layout.*|layout = '$TILING_LAYOUT'|' "$HYPR_PATH/hyprland.conf"
-sed -i 's|^gaps_in.*|gaps_in = '$GAPS_IN'|' "$HYPR_PATH/hyprland.conf"
-sed -i 's|^gaps_out.*|gaps_out = '$GAPS_OUT'|' "$HYPR_PATH/hyprland.conf"
-sed -i 's|^border_size.*|border_size = '$BORDER_SIZE'|' "$HYPR_PATH/hyprland.conf"
+sed -i 's|rounding =.*|rounding = '$CORNER_ROUNDING'|' "$HYPR_PATH/decoration.conf"
+sed -i 's|layout =.*|layout = '$TILING_LAYOUT'|' "$HYPR_PATH/hyprland.conf"
+sed -i 's|gaps_in =.*|gaps_in = '$GAPS_IN'|' "$HYPR_PATH/hyprland.conf"
+sed -i 's|gaps_out =.*|gaps_out = '$GAPS_OUT'|' "$HYPR_PATH/hyprland.conf"
+sed -i 's|border_size =.*|border_size = '$BORDER_SIZE'|' "$HYPR_PATH/hyprland.conf"
 
 ## decoration.conf
 BLUR_SIZE=$(awk '/blur-size/ {print $NF}' $SEL_CONFIG)
 BLUR_PASSES=$(awk '/blur-passes/ {print $NF}' $SEL_CONFIG)
 BLUR_STATE=$(awk '/blur-state/ {print $NF}' $SEL_CONFIG)
 
-sed -i 's|size.*|size = '$BLUR_SIZE'|' "$HYPR_PATH/decoration.conf"
-sed -i 's|passes.*|passes = '$BLUR_PASSES'|' "$HYPR_PATH/decoration.conf"
-[[ "$BLUR_STATE" == "on" ]] && sed -i 's|.*blurls = waybar|blurls = waybar|' "$HYPR_PATH/decoration.conf" || sed -i 's|blurls = waybar|#blurls = waybar|' "$HYPR_PATH/decoration.conf" 
+sed -i 's|size =.*|size = '$BLUR_SIZE'|' "$HYPR_PATH/decoration.conf"
+sed -i 's|passes =.*|passes = '$BLUR_PASSES'|' "$HYPR_PATH/decoration.conf"
+[[ "$BLUR_STATE" == "on" ]] && sed -i 's|layerrule = blur,waybar.*|layerrule = blur,waybar|' "$HYPR_PATH/decoration.conf" || sed -i 's|layerrule = blur,waybar.*|#layerrule = blur,waybar|' "$HYPR_PATH/decoration.conf" 
 
 ## animations.conf
 ANIMATIONS_STATE=$(awk '/animations-state/ {print $NF}' $SEL_CONFIG)
 ANIMATIONS_CURRENT=$(awk '/animations-current/ {print $NF}' $SEL_CONFIG)
 
-sed -i 's|source.*|source = ~/.config/hypr/animations/'$ANIMATIONS_CURRENT'.conf |' "$HYPR_PATH/animations.conf"
-sed -i 's|enabled.*|enabled = '$ANIMATIONS_STATE'|' "$HYPR_PATH/animations.conf"
+sed -i 's|source =.*|source = ~/.config/hypr/animations/'$ANIMATIONS_CURRENT'.conf |' "$HYPR_PATH/animations.conf"
+sed -i 's|enabled =.*|enabled = '$ANIMATIONS_STATE'|' "$HYPR_PATH/animations.conf"
 
 ### LOAD ALL NECESSARY CHANGES ###
 RICE_CURRENT=$(awk '/rice-current/ {print $NF}' $SEL_CONFIG)
