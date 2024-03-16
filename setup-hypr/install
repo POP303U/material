@@ -1,83 +1,122 @@
 #!/bin/sh
 
-# this is extremly bad
-# sooooo much bloat
 BASE_PACKAGES=(
+
+# audio stuff
+"pipewire"
+"pipewire-alsa"
+"pipewire-audio"
+"pipewire-jack"
+"pipewire-pulse"
+"gst-plugin-pipewire"
+"wireplumber"
+
+# Window manager stuff
 "hyprland"
+"hyprpicker"
+"cliphist"
 "kitty" 
 "waybar"
 "swaylock-effects"
-"wofi"
+"fuzzel"
+"wofi" # will be deprecated because it sucks
 "wlogout"
-"thunar"
-"tumbler"
-"wl-clipboard"
-"wlr-randr"
-"jq"
-"xdotool"
-"hyprpicker"
-"cliphist"
-"wofi-emoji"
-"ttf-jetbrains-mono-nerd"
-"ttf-cascadia-code-nerd"
-"pavucontrol"
-"noto-fonts-emoji"
-"polkit-gnome"
-"python-requests"
-"swww"
+
+# Screenshots
 "swappy"
 "grim"
 "slurp"
-"gvfs"
-"nwg-look"
+
+# File management
+"dolphin"
+"ark"
+"qt5-imageformats"
+"ffmpegthumbs"
+"kde-cli-tools"
+
+# CLI Tools
+"python-requests"
+"wl-clipboard"
+"wlr-randr"
+"xdotool"
 "pamixer"
-"pokemon-colorscripts-git"
+"gvfs"
+"jq"
+
+# Fonts 
+"ttf-jetbrains-mono-nerd"
+"ttf-cascadia-code-nerd"
+"noto-fonts-emoji"
+
+"polkit-gnome"
+"swww"
+
+# Theming
+"nwg-look"
+"qt5ct"
+"qt6ct"
+"qt5-wayland"
+"qt6-wayland"
+"kvantum"
+"kvantum-qt5"
+"dracula-icons-git"
+"bibata-cursor-theme-bin"
+
+# Networking
+"networkmanager"
+"network-manager-applet"
 "bluez"
 "bluez-utils"
 "blueman"
-"networkmanager"
-"network-manager-applet"
-"tela-circle-icon-theme-dracula"
-"bibata-cursor-theme-bin"
+
+# Streaming
 "xdg-desktop-portal-hyprland"
+
 )
 
 MINIMAL_PACKAGES=(
+# Audio
+"pavucontrol-qt"
+
+# Math
+"qalculate-qt"
+
+# Shell
+"pokemon-colorscripts-git"
+"fastfetch"
 "neovim"
-"unrar"
-"p7zip" 
-"tar"
-"thunar"
-"grc"
-"git"
-"fzf"
-"exfat-utils"
-"fuse-exfat"
-"ntfs-3g"
 "neofetch"
 "pfetch"
 "btop"
-"curl"
-"wget"
+"grc"
+"p7zip" 
+"unrar"
+"tar"
+
 )
 
 EXTENDED_PACKAGES=(
-"firefox"
-"vencord-desktop-bin"
+"nomacs"
+"gimp"
+"inkscape"
 "libreoffice-fresh"
+"vencord-desktop-bin"
 )
 
 TTY_PACKAGES=(
+# Just a font
 "terminus-font"
 )
 
 OPTIONAL_PACKAGES_RUST=(
+# eza replacement for ls, fd for find, bat for cat
 "eza"
 "fd"
 "bat"
 )
 
 SDDM_PACKAGES=(
+# Sddm and dependencies
 "sddm"
 "qt5-quickcontrols2" 
 "qt5-graphicaleffects" 
@@ -89,7 +128,6 @@ GAMING_PACKAGES=(
 "wine"
 "wine-mono"
 "wine-gecko"
-"vinegar"
 "bottles"
 "lutris"
 )
@@ -250,7 +288,7 @@ install_sddm() {
             # use sed for modifying the theme
             sudo sed -i 's|Current=.*|Current=rose-pine-sddm|' /etc/sddm.conf
             sudo sed -i 's|CursorSize=.*|CursorSize=24|' /etc/sddm.conf
-            sudo sed -i 's|CursorTheme=.*|CursorTheme=Bibata-Modern-Classic|' /etc/sddm.conf
+            sudo sed -i 's|CursorTheme=.*|CursorTheme=Bibata-Modern-Ice|' /etc/sddm.conf
             echo -e "[${BLUE}ok${RESET}] Installed custom adaptive sddm theme"
 
             # time to get hacky, dont want to create extra repo so here we areee
@@ -399,8 +437,8 @@ get_options() {
 
     ${WHITE_BOLD}Tip: See installed packages at the top of the script${RESET}
     ${CYAN}1${RESET}. Base     (${RED}not recommended${RESET}) (only what's needed to run, you will experience issues)
-    ${CYAN}2${RESET}. Minimal  (${GREEN}recommended${RESET})     (all needed dependencies, incl. filebrowser, shell tools)
-    ${CYAN}3${RESET}. Extended (extra packages, like browser, office suite and vencord)
+    ${CYAN}2${RESET}. Minimal  (${GREEN}recommended${RESET})     (all needed dependencies, incl. filebrowser, shell scripts)
+    ${CYAN}3${RESET}. Extended (extra packages, like browser, calculator, office suite and vencord)
     ${CYAN}4${RESET}. Gaming   (wine, steam, bottles and everything for gaming ready)
     "
     read -n1 -rep "(1/2/3/4) $: " STAGE
