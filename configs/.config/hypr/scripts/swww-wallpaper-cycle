@@ -2,10 +2,17 @@
 
 set -euox pipefail
 
+# lock instance
+
+LOCKFILE="/tmp/material$(id -u)swww-wallpaper-cycle.lock"
+[ -e "$LOCKFILE" ] && echo "An instance of the script is already running" && exit 1
+touch "${LOCKFILE}"
+trap 'rm -f ${LOCKFILE}' EXIT
+
 CURRENT_RICE="$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)"
 CURRENT_WALLPAPER="$(awk '/wallpaper-current/ {print $NF}' $HOME/.config/material/config)"
 CURRENT_BAR="$(awk '/bar-current/ {print $NF}' $HOME/.config/material/config)"
-RICE_DIR="$HOME/.config/swww/walls/$CURRENT_RICE/"
+RICE_DIR="$HOME/.config/swww/walls/$CURRENT_RICE"
 mapfile -t WALLPAPERS < <(dir -1 "$RICE_DIR")
 
 function reload_and_save() {
@@ -21,7 +28,7 @@ function get_resolution() {
 
 function apply_wall() {
     # patch into sddm
-    cp -vf $RICE_DIR/$NEXT_ELEMENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+    ln -sf $RICE_DIR/$NEXT_ELEMENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
     swww img "$RICE_DIR/$NEXT_ELEMENT" \
         --transition-bezier .43,1.19,1,.4 \
         --transition-type "$TRANSITION" \
