@@ -30,6 +30,7 @@ rice-transition = top
 
 # WLOGOUT -
 wlogout-theme = compact
+wlogout-keybinds-show = off
 
 # HYPRLAND -
 corner-rounding = 20
@@ -42,4 +43,4 @@ border-size = 0
 blur-size = 4
 blur-passes = 2
 
-#configver:1.0
+#configver:1.1

@@ -17,22 +17,23 @@
 # BAR -
 blur-state = on 
 bar-state = on
-bar-current = Compact-Top
+bar-current = Bubbles-Top
 
 # ANIMATIONS -
 animations-state = on
-animations-current = Bouncy
+animations-current = Swiftly
 
 # RICE -
-wallpaper-current = gruvbox-astro.jpg
-rice-current = Gruvbox-Dark
+wallpaper-current = dawn-abstract_moon.png
+rice-current = Rose-Pine-Dawn
 rice-transition = wave
 
 # WLOGOUT -
 wlogout-theme = compact
+wlogout-keybinds-show = on
 
 # HYPRLAND -
-corner-rounding = 0
+corner-rounding = 20
 tiling-layout = master
 gaps-in = 5
 gaps-out = 15
@@ -40,6 +41,6 @@ border-size = 3
 
 # BLUR -
 blur-size = 4
-blur-passes = 2
+blur-passes = 4
 
-#configver:1.0
+#configver:1.1

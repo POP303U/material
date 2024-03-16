@@ -17,15 +17,15 @@
 # BAR -
 blur-state = on 
 bar-state = on
-bar-current = Floaty-Top
+bar-current = Polybar-Top
 
 # ANIMATIONS -
 animations-state = on
-animations-current = Speedy
+animations-current = Swiftly
 
 # RICE -
-wallpaper-current = spring_bloom.jpg
-rice-current = Titanium-Mono
+wallpaper-current = pine-anime_city.png
+rice-current = Rose-Pine
 rice-transition = wave
 
 # WLOGOUT -
@@ -41,6 +41,6 @@ border-size = 3
 
 # BLUR -
 blur-size = 4
-blur-passes = 4
+blur-passes = 2
 
 #configver:1.1

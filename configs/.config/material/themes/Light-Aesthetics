@@ -17,23 +17,23 @@
 # BAR -
 blur-state = on 
 bar-state = on
-bar-current = Floaty-Top
+bar-current = Blur-Bottom
 
 # ANIMATIONS -
 animations-state = on
-animations-current = Speedy
+animations-current = Swiftly
 
 # RICE -
-wallpaper-current = spring_bloom.jpg
-rice-current = Titanium-Mono
+wallpaper-current = waifu_jasmin.jpg
+rice-current = Catppuccin-Latte
 rice-transition = wave
 
 # WLOGOUT -
-wlogout-theme = normal
+wlogout-theme = compact
 wlogout-keybinds-show = off
 
 # HYPRLAND -
-corner-rounding = 10
+corner-rounding = 20
 tiling-layout = master
 gaps-in = 5
 gaps-out = 15
