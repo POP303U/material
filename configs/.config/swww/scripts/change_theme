@@ -1,87 +1,51 @@
 #!/bin/bash
 
-CURRENT_WALLPAPER=$(awk '/wallpaper-current/ {print $NF}' "$HOME/.config/material/config")
-CURRENT_RICE=$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")
+set -x
 
 case "$1" in
     "Rose-Pine-Dawn")
-        export THEME_TYPE_SHORT="dawn"
         export CURRENT_BG="dawn-abstract_moon.png"
-        export CURRENT_WALLPAPER="rose-pine-dawn"
         export MODE="light"
         ;;
     "Rose-Pine-Moon")
-        export THEME_TYPE_SHORT="moon"
         export CURRENT_BG="moon-leafy.png"
-        export CURRENT_WALLPAPER="rose-pine-moon"
         export MODE="dark"
         ;;
     "Rose-Pine")
-        export THEME_TYPE_SHORT="main"
         export CURRENT_BG="pine-anime_city.png"
-        export CURRENT_WALLPAPER="rose-pine"
         export MODE="dark"
         ;;
     "Gruvbox-Dark")
-        export THEME_TYPE_SHORT="gruvdark"
         export CURRENT_BG="gruvbox-astro.jpg"
-        export CURRENT_WALLPAPER="gruvbox-dark"
         export MODE="dark"
         ;;
     "Gruvbox-Light")
-        export THEME_TYPE_SHORT="gruvlight"
         export CURRENT_BG="gruvbox-light-mountains.png"
-        export CURRENT_WALLPAPER="gruvbox-light"
         export MODE="light"
         ;;
     "Catppuccin-Mocha")
-        export THEME_TYPE_SHORT="catppuccin-mocha"
         export CURRENT_BG="mocha-cat-leaves.png"
-        export CURRENT_WALLPAPER="catppuccin-mocha"
         export MODE="dark"
         ;;
     "Catppuccin-Latte")
-        export THEME_TYPE_SHORT="catppuccin-latte"
         export CURRENT_BG="latte-cloud.png"
-        export CURRENT_WALLPAPER="catppuccin-latte"
         export MODE="light"
         ;;
     "Titanium-Mono")
-        export THEME_TYPE_SHORT="titanium-mono"
         export CURRENT_BG="titanium-mono-gojo.png"
-        export CURRENT_WALLPAPER="titanium-mono"
         export MODE="dark"
         ;;
     "Solarized-Dark")
-        export THEME_TYPE_SHORT="solarized"
         export CURRENT_BG="solarized-dark-construction.png"
-        export CURRENT_WALLPAPER="solarized-dark"
         export MODE="dark"
         ;;
     "Solarized-Light")
-        export THEME_TYPE_SHORT="solarized"
         export CURRENT_BG="solarized-light-post-modern.png"
-        export CURRENT_WALLPAPER="solarized-light"
         export MODE="light"
         ;;
-    "-h")
-        echo "Usage: change_theme [THEME] [FLAGS]"
-        echo "Change hypr-dots rice or colorscheme"
-        echo ""
-        echo "[THEME]"
-        echo "solarized-light:  set theme to Solarized (light version)"
-        echo "solarized-dark:   set theme to Solarized (dark version)"
-        echo "gruvbox-light:    set theme to Gruvbox   (light version)"
-        echo "gruvbox-dark:     set theme to Gruvbox   (dark version)"
-        echo "titanium-mono:    set theme to Titanium Mono"
-        echo "pine:             set theme to Rose Piné"
-        echo "dawn:             set theme to Rose Piné Dawn"
-        echo "moon:             set theme to Rose Piné Moon"
-        echo ""
-        echo "[FLAGS]"
-        echo "theme:        ignore wallpaper changes"
-        echo "-:            also set wallpaper with script"
-        exit 0
+    "Nord")
+        export CURRENT_BG="lake.png"
+        export MODE="dark"
         ;;
     *)
         echo "Unsupported operation: $1"
@@ -89,169 +53,93 @@ case "$1" in
         ;;
 esac
 
-set_gtk() {
-    if [[ "$MODE" == "dark" ]]; then THEME="Adwaita-dark"; CURSOR="Bibata-Modern-Classic"; fi
-    if [[ "$MODE" == "light" ]]; then THEME="Adwaita"; CURSOR="Bibata-Modern-Ice"; fi
+sed -i 's|^rice-current.*|rice-current = '${1}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
+CURRENT_RICE=$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")
+CURRENT_BG=${2:-$CURRENT_BG} # make manual wallpapers possible
 
-    sed -i 's|^gtk-theme-name.*|gtk-theme-name='${THEME}'|' ~/.config/gtk-3.0/settings.ini
+# Gtk
+sed -i 's|^gtk-theme-name.*|gtk-theme-name='${CURRENT_RICE}'|' ~/.config/gtk-3.0/settings.ini
+~/.config/hypr/scripts/import-gsettings
 
-    sleep .2
-    ~/.config/hypr/scripts/import-gsettings
-}
+# Swww
+TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
+sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
 
-set_bg() {
-    TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
+# you need dynamic `rose-pine-sddm` for this to work, check the installer for this option
+ln -sf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
+    --transition-bezier .6,.94,.86,.23     \
+    --transition-type "${TRANSITION_TYPE}" \
+    --transition-duration 0.7              \
+    --transition-fps 144                   \
+    --invert-y                             \
+    --transition-pos "2502, 1410"
 
-    # Check if the program is running
-    if pgrep "swww-deamon" >/dev/null; then
-        swww init
-    fi
 
-    sed -i 's|wallpaper-current.*|wallpaper-current = '$(basename ${CURRENT_BG})'|' ~/.config/material/config
+# Wofi
+sed -i -e '/@define-color base/s: .*;: base '"$(awk '/@define-color base/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color surface/s: .*;: surface '"$(awk '/@define-color surface/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color overlay/s: .*;: overlay '"$(awk '/@define-color overlay/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color muted/s: .*;: muted '"$(awk '/@define-color muted/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color subtle/s: .*;: subtle '"$(awk '/@define-color subtle/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color text/s: .*;: text '"$(awk '/@define-color text/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color love/s: .*;: love '"$(awk '/@define-color love/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color gold/s: .*;: gold '"$(awk '/@define-color gold/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color rose/s: .*;: rose '"$(awk '/@define-color rose/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color pine/s: .*;: pine '"$(awk '/@define-color pine/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color foam/s: .*;: foam '"$(awk '/@define-color foam/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
+    -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':'  ~/.config/wofi/style.css
 
-    cp -vf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
-    swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
-        --transition-bezier .6,.94,.86,.23\
-        --transition-type "${TRANSITION_TYPE}" \
-        --transition-duration 0.7 \
-        --transition-fps 144 \
-        --invert-y \
-        --transition-pos "2502, 1410"
-}
+# Tmux
+sed -i 's|^set -g status-bg.*|set -g status-bg '$([[ "$MODE" == "light" ]] && echo "white" || echo "black" )'|' $HOME/.tmux.conf
 
-kitty_trans() {
-    local RULE="$(sed -n '1p' $HOME/.config/kitty/rules/${MODE})"
-    sed -i 's|^background_opacity.*|'"${RULE}"'|' $HOME/.config/kitty/kitty.conf
-}
+# Neovim
+_NVIM_THEME="$CURRENT_RICE"
+[[ "$CURRENT_RICE" == "Titanium-Mono" ]]                                            && _NVIM_THEME="monochrome"
+[[ "$CURRENT_RICE" == "Gruvbox-Dark"  || "$CURRENT_RICE" == "Gruvbox-Light" ]]      && _NVIM_THEME="gruvbox"
+[[ "$CURRENT_RICE" == "Solarized-Dark" || "$CURRENT_RICE" == "Solarized-Light" ]]   && _NVIM_THEME="solarized"  
+[[ "$CURRENT_RICE" == "Nord" ]]                                                     && _NVIM_THEME="nord"
+NVIM_THEME=$(echo $_NVIM_THEME | tr '[:upper:]' '[:lower:]')
 
-reload_configs() {
-    touch ~/.config/hypr/hyprland.conf
-    pkill -9 dunst
-    dunst & disown
+sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${NVIM_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+sed -i 's|^vim.opt.*|vim.opt.background = "'${MODE}'"|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
+# works only with my neovim dotfiles: https://github.com/POP303U/kickstart-nvim and these plugins:
+#    'rose-pine/neovim',
+#    'shaunsingh/solarized.nvim',
+#    'catppuccin/nvim',
+#    'fxn/vim-monochrome',
+#    'shaunsingh/nord.nvim',
+#    'ellisonleao/gruvbox.nvim',
 
-    # kitty kitty kitty
-    sleep 1
-    kill -SIGUSR1 $(pidof kitty)
+# Dunst
+sed -i 's|background.*|'"$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_RICE})"'|' $HOME/.config/dunst/dunstrc
+sed -i 's|foreground.*|'"$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_RICE})"'|' $HOME/.config/dunst/dunstrc
+sed -i 's|frame_color.*|'"$(sed -n '3p' $HOME/.config/dunst/themes/${CURRENT_RICE})"'|' $HOME/.config/dunst/dunstrc
+kill -SIGTERM $(pidof dunst); dunst & disown # reload
 
-    sleep .6
-}
+# Cava
+for ((I=1; I<8; I++)); do
+    sed -i 's|^gradient_color_'$I'.*|'"$(sed -n ''$I'p' $HOME/.config/cava/themes/${CURRENT_RICE})"'|' ~/.config/cava/config
+done
+kill -SIGUSR2 $(pidof cava)
 
-colorize_wofi() {
-    sed -i -e '/@define-color base/s: .*;: base '"$(awk '/@define-color base/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color surface/s: .*;: surface '"$(awk '/@define-color surface/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color overlay/s: .*;: overlay '"$(awk '/@define-color overlay/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color muted/s: .*;: muted '"$(awk '/@define-color muted/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color subtle/s: .*;: subtle '"$(awk '/@define-color subtle/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color text/s: .*;: text '"$(awk '/@define-color text/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color love/s: .*;: love '"$(awk '/@define-color love/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color gold/s: .*;: gold '"$(awk '/@define-color gold/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color rose/s: .*;: rose '"$(awk '/@define-color rose/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color pine/s: .*;: pine '"$(awk '/@define-color pine/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color foam/s: .*;: foam '"$(awk '/@define-color foam/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':' \
-        -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_WALLPAPER}.css)"':'  ~/.config/wofi/style.css
-}
+# Kvantum
+kvantummanager --set ${CURRENT_RICE}
 
-colorize_cava() {
-    local GR_1="$(sed -n '1p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
-    local GR_2="$(sed -n '2p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
-    local GR_3="$(sed -n '3p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
-    local GR_4="$(sed -n '4p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
-    local GR_5="$(sed -n '5p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
-    local GR_6="$(sed -n '6p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
-    local GR_7="$(sed -n '7p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
-    local GR_8="$(sed -n '8p' $HOME/.config/cava/themes/${CURRENT_WALLPAPER})"
-    # ^ im am so sorry
+# Kitty
+ln -sf ~/.config/kitty/themes/${CURRENT_RICE}.conf ~/.config/kitty/themes/theme.conf 
+kill -SIGUSR1 $(pidof kitty) # reload
 
-    sed -i 's|^gradient_color_1.*|'"${GR_1}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_2.*|'"${GR_2}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_3.*|'"${GR_3}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_4.*|'"${GR_4}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_5.*|'"${GR_5}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_6.*|'"${GR_6}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_7.*|'"${GR_7}"'|' $HOME/.config/cava/config
-    sed -i 's|^gradient_color_8.*|'"${GR_8}"'|' $HOME/.config/cava/config
-    # ^ im am so sorry as well... (when this this disgusting code end????????)
-}
+# Waybar
+ln -sf ~/.config/waybar/themes/${CURRENT_RICE}.css ~/.config/waybar/themes/theme.css
+~/.config/hypr/scripts/manage-waybar &
 
-colorize_kitty() {
-    local KITTY_THEME="$CURRENT_WALLPAPER"
-    if [[ "$THEME_TYPE_SHORT" == "gruvdark" ]]; then KITTY_THEME="gruvbox-dark"; fi
-    if [[ "$THEME_TYPE_SHORT" == "gruvlight" ]]; then KITTY_THEME="gruvbox-light"; fi
+# Wlogout
+ln -sf ~/.config/wlogout/themes/${CURRENT_RICE}.css ~/.config/wlogout/themes/theme.css
 
-    sed -i 's|^incl.*|include ./'${KITTY_THEME}'.conf|' $HOME/.config/kitty/kitty.conf
-}
+# Fuzzel
+ln -sf $HOME/.config/fuzzel/themes/${CURRENT_RICE}.ini $HOME/.config/fuzzel/fuzzel.ini
 
-colorize_tmux() {
-    if [[ "$MODE" == "light" ]]; then TMUX_THEME="white"; fi
-    if [[ "$MODE" == "dark" ]]; then TMUX_THEME="black"; fi
-    sed -i 's|^set -g status-bg.*|set -g status-bg '${TMUX_THEME}'|' $HOME/.tmux.conf
-    #sed -i 's|^set -g @rose_pine_variant.*|set -g @rose_pine_variant "'${THEME_TYPE_SHORT}'" # Options are "main", "moon" or "dawn"|' $HOME/.tmux.conf
-}
-
-colorize_nvim() {
-    local NVIM_THEME="$CURRENT_WALLPAPER"
-    if [[ "$CURRENT_WALLPAPER" == "titanium-mono" ]]; then NVIM_THEME="monochrome"; fi
-    if [[ "$CURRENT_WALLPAPER" == "gruvbox-dark"  || "$CURRENT_WALLPAPER" == "gruvbox-light" ]]; then NVIM_THEME="gruvbox"; fi
-    if [[ "$CURRENT_WALLPAPER" == "solarized-dark" ]]; then NVIM_THEME="solarized"; fi
-    if [[ "$CURRENT_WALLPAPER" == "solarized-light" ]]; then NVIM_THEME="solarized"; fi
-    sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${NVIM_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
-    sed -i 's|^vim.opt.*|vim.opt.background = "'${MODE}'"|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
-    # I love hacky solutions :)
-}
-
-colorize_dunst() {
-    local BG="$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_WALLPAPER})"
-    local FG="$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_WALLPAPER})"
-    local BR="$(sed -n '3p' $HOME/.config/dunst/themes/${CURRENT_WALLPAPER})"
-    sed -i 's|background.*|'"${BG}"'|' $HOME/.config/dunst/dunstrc
-    sed -i 's|foreground.*|'"${FG}"'|' $HOME/.config/dunst/dunstrc
-    sed -i 's|frame_color.*|'"${BR}"'|' $HOME/.config/dunst/dunstrc
-}
-
-colorize_waybar() {
-    WAYBAR_DIR="$HOME/.config/waybar/bar"
-    ENTRIES=($(dir -1 $WAYBAR_DIR))
-
-    for ENTRY in "${ENTRIES[@]}"; do
-        sed -i 's|^@import.*|@import "../../themes/'${CURRENT_WALLPAPER}'.css";|' $HOME/.config/waybar/bar/${ENTRY}/style.css
-    done
-}
-
-colorize_wlogout() {
-    sed -i 's|^@import.*|@import "themes/'${CURRENT_WALLPAPER}'.css";|' $HOME/.config/wlogout/style_compact.css
-    sed -i 's|^@import.*|@import "themes/'${CURRENT_WALLPAPER}'.css";|' $HOME/.config/wlogout/style_normal.css
-}
-
-colorize_hypr() {
-    local GRAD_COL="$(sed -n '1p' $HOME/.config/hypr/themes/${CURRENT_WALLPAPER})"
-    local SHAD_COL="$(sed -n '2p' $HOME/.config/hypr/themes/${CURRENT_WALLPAPER})"
-    sed -i 's|^$grad_col.*|'"${GRAD_COL}"'|' $HOME/.config/hypr/hyprland.conf
-    sed -i 's|^$shad_col.*|'"${SHAD_COL}"'|' $HOME/.config/hypr/hyprland.conf
-    sed -i 's|^$grad_col.*|'"${GRAD_COL}"'|' $HOME/.config/hypr/decoration.conf
-    sed -i 's|^$shad_col.*|'"${SHAD_COL}"'|' $HOME/.config/hypr/decoration.conf
-}
-
-change_theme() {
-    # apps
-    colorize_waybar
-    colorize_wlogout
-    colorize_wofi
-    colorize_tmux
-    colorize_nvim
-    colorize_dunst
-    colorize_kitty
-    colorize_cava
-    #colorize_sddm
-    colorize_hypr
-    set_gtk &
-
-    # background / transparency rules
-    set_bg 
-    kitty_trans
-
-    # reload
-    reload_configs
-}
-
-export CURRENT_BG=${2:-$CURRENT_BG} # make manual wallpapers possible
-change_theme
+# Hyprland
+ln -sf ~/.config/hypr/themes/${CURRENT_RICE}.conf ~/.config/hypr/themes/theme.conf 
+hyprctl reload

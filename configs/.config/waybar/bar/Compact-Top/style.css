@@ -6,10 +6,10 @@
     min-height: 0;
 }
 
-@import "../../themes/rose-pine.css";
+@import "../../themes/theme.css";
 
 window#waybar {
-    background: @base;
+    background: @surface;
 }
 
 tooltip {
@@ -21,9 +21,12 @@ tooltip {
 }
 
 #workspaces button {
+    all: initial;
     padding: 5px;
-    color: @workspace-button-inactive;
+    padding-right: 8px;
+    padding-left: 8px;
     margin-right: 5px;
+    color: @workspace-button-inactive;
     transition: all 0.2s ease-in-out;
     border-radius: 10px;
 }
@@ -52,6 +55,8 @@ tooltip {
 
 #custom-weather,
 #custom-arch_logo,
+#custom-bg_switcher,
+#custom-power_button,
 #keyboard-state,
 #clock,
 #battery,
@@ -65,13 +70,12 @@ tooltip {
 #workspaces,
 #tray,
 #backlight {
-    background: @surface;
+    color: @base;
     opacity: 9.9;
     padding: 0px 10px;
     margin: 0px 0px;
     margin-bottom: 5px;
     margin-top: 5px;
-    border: 1px solid @base;
 }
 
 #backlight {
@@ -79,11 +83,12 @@ tooltip {
 }
 
 #tray {
+    background-color: @base;
     border-radius: 10px;
-    margin-right: 10px;
 }
 
 #workspaces {
+    background-color: @base;
     border-radius: 10px;
     margin-left: 10px;
     padding-right: 0px;
@@ -91,29 +96,15 @@ tooltip {
 }
 
 #keyboard-state {
-    color: @rose;
+    background-color: @rose;
     border-radius: 10px;
     margin-left: 10px;
     padding-right: 0px;
     padding-left: 5px;
 }
 
-#custom-bg_switcher {
-    color: @iris;
-    border-radius: 10px 0px 0px 10px;
-    border-left: 0px;
-    border-right: 0px;
-}
-
-#custom-power_button {
-    color: @love;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
-    border-left: 0px;
-}
-
 #clock {
-    color: @foam;
+    background-color: @foam;
     border-radius: 10px 10px 10px 10px;
     border-right: 0px;
     margin-left: 10px;
@@ -121,52 +112,59 @@ tooltip {
 
 
 #custom-weather {
-    color: @foam;
+    background-color: @foam;
     border-radius: 10px 0px 0px 10px;
     border-left: 0px;
+    margin-left: 10px;
     border-right: 0px;
 }
 
 #disk {
-    color: @love;
-    border-radius: 0px 0px 0px 0px;
+    background-color: @love;
+    border-radius: 10px 0px 0px 10px;
     border-left: 0px;
+    margin-left: 10px;
     border-right: 0px;
 }
 
 #memory {
-    color: @foam;
+    background-color: @pine;
     border-radius: 0px 0px 0px 0px;
     border-left: 0px;
     border-right: 0px;
+    border-radius: 10px;
 }
 
 #cpu {
-    color: @iris;
+    background-color: @iris;
     border-left: 0px;
     border-right: 0px;
 }
 
 #battery {
-    color: @battery;
+    background-color: @battery;
     border-right: 0px;
     border-left: 0px;
 }
 
 #network {
-    color: @gold;
+    background-color: @rose;
     border-left: 0px;
     border-right: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
 }
 
 #pulseaudio {
-    color: @rose;
+    background-color: @gold;
     border-left: 0px;
     border-right: 0px;
+    border-radius: 10px 0px 0px 10px;
 }
 
 #pulseaudio.microphone {
-    color: @love;
+    background-color: @gold;
     border-left: 0px;
     border-right: 0px;
     border-radius: 0px 10px 10px 0px;
@@ -174,8 +172,21 @@ tooltip {
 }
 
 #custom-arch_logo {
-    color: @foam;
+    background-color: @iris;
     border-radius: 10px;
-    margin-right: 0px;
-    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 0px 10px 10px 0px;
 }
+
+#custom-bg_switcher {
+    background-color: @iris;
+    border-radius: 10px 0px 0px 10px;
+    margin-left: 10px;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-power_button {
+    background-color: @iris;
+}
+

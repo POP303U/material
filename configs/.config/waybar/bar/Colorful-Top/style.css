@@ -6,7 +6,7 @@
     min-height: 0;
 }
 
-@import "../../themes/rose-pine.css";
+@import "../../themes/theme.css";
 
 window#waybar {
     background: @bar-bg;
@@ -25,9 +25,12 @@ tooltip {
 }
 
 #workspaces button {
+    all: initial;
     padding: 5px;
-    color: @workspace-button-inactive;
+    padding-right: 8px;
+    padding-left: 8px;
     margin-right: 5px;
+    color: @workspace-button-inactive;
     transition: all 0.3s ease-in-out;
     border-radius: 10px;
 }

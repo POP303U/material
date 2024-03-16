@@ -7,13 +7,11 @@
     "gtk-layer-shell": true,
     "height": 30,
     "modules-left": [
+        "network",
         "pulseaudio",
         "pulseaudio#microphone",
-        "network",
         "custom/weather", 
-        "disk",
         "memory",
-        "cpu",
         "battery",
     ],
 
@@ -24,6 +22,8 @@
     "modules-right": [
         "tray",
         "hyprland/workspaces",
+        "custom/bg_switcher",
+        "custom/power_button", 
         "custom/arch_logo",
     ],
 
@@ -71,13 +71,13 @@
     },
 
     "custom/power_button" : {
-        "on-click": "~/.config/hypr/scripts/wlogout",
+        "on-click": "~/.config/hypr/scripts/manage-wlogout",
         "format" : "",
     },
 
     "custom/bg_switcher" : {
-        "on-click": "wofi-wallpaper",
-        "format" : "󱨀",
+        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "format" : "",
     },
 
 
@@ -117,7 +117,8 @@
     },
 
     "clock": {
-        "format": "{: %I:%M %p   %a, %b %e}",
+        "format": "{: %I:%M}",
+        "format-alt": "{: %I:%M %p   %a, %b %e}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
@@ -129,7 +130,8 @@
 
     "memory": {
         "interval": 30,
-        "format": " {used}GiB",
+        "format": " {percentage}%",
+        "format-alt": " {free}GiB",
         "max-length": 10
     },
 

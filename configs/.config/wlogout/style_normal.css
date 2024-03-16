@@ -3,7 +3,7 @@
     font-size: 18px;
 }
 
-@import "themes/rose-pine.css";
+@import "themes/theme.css";
 
 window {
     background-color: rgba(0,0,0,.7);

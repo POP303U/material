@@ -8,8 +8,9 @@
     "height": 40,
     "modules-left": [
         "clock",
-        "custom/weather", 
-        "keyboard-state",
+        "disk",
+        "memory",
+        "cpu",
     ],
     // "user",
 
@@ -18,13 +19,11 @@
     ],
 
     "modules-right": [
-        "disk",
-        "memory",
-        "cpu",
         "battery",
         "network",
         "pulseaudio",
         "pulseaudio#microphone",
+        "custom/weather", 
         "tray",
         "custom/bg_switcher",
         "custom/power_button", 
@@ -76,13 +75,13 @@
     },
 
     "custom/power_button" : {
-        "on-click": "~/.config/hypr/scripts/wlogout",
+        "on-click": "~/.config/hypr/scripts/manage-wlogout",
         "format" : "",
     },
 
     "custom/bg_switcher" : {
-        "on-click": "wofi-wallpaper",
-        "format" : "󱨀",
+        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "format" : "",
     },
 
 
