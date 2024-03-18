@@ -45,5 +45,6 @@ sed -i 's|enabled =.*|enabled = '$ANIMATIONS_STATE'|' "$HYPR_PATH/animations.con
 RICE_CURRENT=$(awk '/rice-current/ {print $NF}' $SEL_CONFIG)
 WAYBAR_CURRENT=$(awk '/bar-current/ {print $NF}' $SEL_CONFIG)
 WALLPAPER_CURRENT=$(awk '/wallpaper-current/ {print $NF}' $SEL_CONFIG)
+
 ~/.config/swww/scripts/change_theme $RICE_CURRENT $WALLPAPER_CURRENT
-~/.config/hypr/scripts/set-waybar $WAYBAR_CURRENT "material_call" # call with magic string to tell we are not reloading
+hyprctl reload

@@ -15,12 +15,6 @@ function unset_hypr_blurls() {
     sed -i 's|^blur-state.*|blur-state = off|' ~/.config/material/config
 }
 
-function reload_waybar() {
-	# waybar reloads every time hyprland is modified
-    echo "[warn] material_call has been called"
-	~/.config/hypr/scripts/manage-waybar
-}
-
 function save_config() {
     sed -i 's|^bar-current.*|bar-current = '${BAR_NAME}'|' ~/.config/material/config
 }
@@ -31,4 +25,4 @@ save_config
 BLUR_FLAG="$(grep "blurls" "$HOME/.config/waybar/rices/$BAR_NAME" | awk -F '=' '{print $2}' | xargs)"
 [[ "$BLUR_FLAG" == "true" ]] && set_hypr_blurls || unset_hypr_blurls
 
-[[ "$FLAG" == "material_call" ]] || reload_waybar # material_call is used tell if it has been called from load-config-material, removing this statement makes the bar duplicate???
+~/.config/hypr/scripts/manage-waybar >/dev/null 2>&1 &
