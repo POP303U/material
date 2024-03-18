@@ -190,6 +190,12 @@ alias dunst-lorem='notify-send "Discord (193)" "Hello i guys i may be stupid aaa
 
 alias keysoup='sudo systemctl restart keyd && sudo systemctl enable keyd && sudo systemctl start keyd'    
 
+# Always mkdir a path (this doesn't inhibit functionality to make a single dir)
+alias mkdir='mkdir -p'
+
+# Fixes "Error opening terminal: xterm-kitty" when using the default kitty term to open some programs through ssh
+alias ssh='kitten ssh'
+
 # fuzzy finding with neovim
 alias dv='${SUDO} nvim'
 alias vf='${EDITOR} $(fzf)'
