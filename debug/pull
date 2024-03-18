@@ -2,7 +2,6 @@
 
 rm -r ../configs/.config # really fucking dangerous operation
 mkdir -pv ../configs/.config
-mkdir -pv ../configs/.config/etc
 mkdir -pv ../configs/.icons/default
     
 cp -rvf ~/.config/autoclicker    ../configs/.config/
