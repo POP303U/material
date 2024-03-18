@@ -1,10 +1,5 @@
 #!/bin/sh
 
-export OBLIGATORY_FUNNY_MESSAGES_THAT_ARE_ABSOLUTELY_NOT_NEEDED_AND_SELF_EXPLANATORY=(
-"You can switch wallpapers with Win+<-/->"
-"'wahhhh he copied hyprdots'"
-)
-
 CONF_DIR="/home/${USER}/.config"
 THEME_RICE="$(awk '/rice-current/ {print $NF}' "${CONF_DIR}/material/config")"
 WAYBAR_RICE="$(awk '/bar-current/ {print $NF}' "${CONF_DIR}/material/config")"
