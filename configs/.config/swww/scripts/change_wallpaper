@@ -1,7 +1,7 @@
 #!/bin/sh
 set -euox pipefail
 
-RESOLUTION="$(wlr-randr | grep current | awk '{print $1}' | tr =x= ,)"
+RESOLUTION=$(echo "$(hyprctl -j monitors | jq .[].width),$(hyprctl -j monitors | jq .[].height)" )
 TRANSITION_TYPE="$(awk '/rice-transition/ {print $NF}' ~/.config/material/config)"
 sed -i 's|wallpaper-current.*|wallpaper-current = '$(basename $1)'|' ~/.config/material/config
 

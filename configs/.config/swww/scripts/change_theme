@@ -4,7 +4,7 @@ set -x
 
 case "$1" in
     "Rose-Pine-Dawn")
-        export CURRENT_BG="dawn-abstract_moon.png"
+        export CURRENT_BG="material_pastel_1.jpg"
         export MODE="light"
         ;;
     "Rose-Pine-Moon")
@@ -16,7 +16,7 @@ case "$1" in
         export MODE="dark"
         ;;
     "Gruvbox-Dark")
-        export CURRENT_BG="gruvbox-astro.jpg"
+        export CURRENT_BG="gruvbox-garden.png"
         export MODE="dark"
         ;;
     "Gruvbox-Light")
@@ -24,7 +24,7 @@ case "$1" in
         export MODE="light"
         ;;
     "Catppuccin-Mocha")
-        export CURRENT_BG="mocha-cat-leaves.png"
+        export CURRENT_BG="rain_world1.png"
         export MODE="dark"
         ;;
     "Catppuccin-Latte")
@@ -44,7 +44,7 @@ case "$1" in
         export MODE="light"
         ;;
     "Nord")
-        export CURRENT_BG="lake.png"
+        export CURRENT_BG="misty-mountain.jpg"
         export MODE="dark"
         ;;
     *)
@@ -55,11 +55,8 @@ esac
 
 sed -i 's|^rice-current.*|rice-current = '${1}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
 CURRENT_RICE=$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")
+CURRENT_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 CURRENT_BG=${2:-$CURRENT_BG} # make manual wallpapers possible
-
-# Gtk
-sed -i 's|^gtk-theme-name.*|gtk-theme-name='${CURRENT_RICE}'|' ~/.config/gtk-3.0/settings.ini
-~/.config/hypr/scripts/import-gsettings
 
 # Swww
 TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
@@ -126,6 +123,20 @@ kill -SIGUSR2 $(pidof cava)
 # Kvantum
 kvantummanager --set ${CURRENT_RICE}
 
+# qt5ct 
+sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt5ct/colors/${CURRENT_RICE}.conf|" $HOME/.config/qt5ct/qt5ct.conf
+
+# qt6ct
+sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt6ct/colors/${CURRENT_RICE}.conf|" $HOME/.config/qt6ct/qt6ct.conf
+
+# gtk3
+sed -i 's|^gtk-theme-name.*|gtk-theme-name='${CURRENT_RICE}'|' ~/.config/gtk-3.0/settings.ini
+~/.config/hypr/scripts/import-gsettings
+
+# flatpak gtk
+flatpak --user override --env=GTK_THEME="${CURRENT_RICE}" # flatpak gtk is not intended to work
+flatpak --user override --env=ICON_THEME="${CURRENT_ICONS}"
+
 # Kitty
 ln -sf ~/.config/kitty/themes/${CURRENT_RICE}.conf ~/.config/kitty/themes/theme.conf 
 kill -SIGUSR1 $(pidof kitty) # reload
@@ -139,6 +150,13 @@ ln -sf ~/.config/wlogout/themes/${CURRENT_RICE}.css ~/.config/wlogout/themes/the
 
 # Fuzzel
 ln -sf $HOME/.config/fuzzel/themes/${CURRENT_RICE}.ini $HOME/.config/fuzzel/fuzzel.ini
+
+# Dolphin (just reloading)
+ACTIVE_WORKSPACE=$(hyprctl -j activeworkspace | jq '.id')
+if [ "$(hyprctl -j clients | jq --arg wid "$ACTIVE_WORKSPACE" '.[] | select(.workspace.id == ($wid | tonumber)) | select(.class == "org.kde.dolphin") | .mapped')" == "true" ] ; then
+    pkill -x dolphin
+    dolphin &
+fi
 
 # Hyprland
 ln -sf ~/.config/hypr/themes/${CURRENT_RICE}.conf ~/.config/hypr/themes/theme.conf 

@@ -7,9 +7,25 @@ CURRENT_WAYBAR_CALL="waybar -c $HOME/.config/waybar/bar/${BAR_CURRENT}/config.js
 # Check if waybar is turned off and exit
 [[ "$BAR_STATE" == "off" ]] && exit 128
 
+# both functions are extremely hacky and finicky, please don't touch this config setting.
+function set_hypr_blurls() {
+    sed -i 's|    #layerrule = blur,waybar.*|    layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+    sed -i 's|^blur-state.*|blur-state = on|' ~/.config/material/config
+}
+
+function unset_hypr_blurls() {
+    sed -i 's|    layerrule = blur,waybar.*|    #layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+    sed -i 's|^blur-state.*|blur-state = off|' ~/.config/material/config
+}
+
+BLUR_FLAG="$(grep "blurls" "$HOME/.config/waybar/rices/$BAR_CURRENT" | awk -F '=' '{print $2}' | xargs)"
+[[ "$BLUR_FLAG" == "true" ]] && set_hypr_blurls || unset_hypr_blurls
+
 if pgrep -x "waybar" >/dev/null; then
     pkill -x "waybar"
     $CURRENT_WAYBAR_CALL
 else 
     $CURRENT_WAYBAR_CALL
 fi
+
+hyprctl reload
