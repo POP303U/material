@@ -1,0 +1,70 @@
+#!/bin/sh
+
+set -euo pipefail
+
+# lock instance
+
+LOCKFILE="/tmp/material$(id -u)waybar-cycle.lock"
+[ -e "$LOCKFILE" ] && echo "An instance of the script is already running" && exit 1
+touch "${LOCKFILE}"
+trap 'rm -f ${LOCKFILE}' EXIT
+
+CURRENT_WAYBAR="$(awk '/bar-current/ {print $NF}' $HOME/.config/material/config)"
+RICE_DIR="$HOME/.config/waybar/bar"
+mapfile -t WAYBAR_ARRAY < <(dir -1 "$RICE_DIR")
+
+function reload_and_save() {
+    # long if statement to check if blur is present in the bar, if it is set it, if not unset
+    [[ "$(cat "$HOME/.config/waybar/bar/$NEXT_BAR" | grep blurls | awk -F '=' '{print $2}')" == "true" ]] && sed -i 's|blur-state.*|blur-state = on|' ~/.config/material/config || sed -i 's|blur-state.*|blur-state = off|' ~/.config/material/config
+    sed -i 's|bar-current.*|bar-current = '$NEXT_BAR'|' ~/.config/material/config
+    echo $NEXT_BAR
+    echo $CURRENT_WAYBAR
+    echo $RICE_DIR
+    killall waybar && ~/.config/hypr/scripts/manage-waybar & >/dev/null 2>&1
+    hyprctl reload
+}
+
+function select_waybar() {
+    # Find the INDEX of the search string in the array
+    local INDEX=-1
+    local MODE=$1
+    for ((i=0; i<${#WAYBAR_ARRAY[@]}; i++)); do
+        if [ "${WAYBAR_ARRAY[i]}" == "$CURRENT_WAYBAR" ]; then
+            INDEX=$i
+            echo "${WAYBAR_ARRAY[i]}"
+            break
+        fi
+    done
+
+    if [ "$INDEX" -ge 0 ]; then
+        case "$MODE" in 
+            -n)
+                NEXT_INDEX=$(( (INDEX + 1) % ${#WAYBAR_ARRAY[@]} ))
+                NEXT_BAR="${WAYBAR_ARRAY[NEXT_INDEX]}"
+                ;;
+            -p)
+                NEXT_INDEX=$(( (INDEX - 1 + ${#WAYBAR_ARRAY[@]}) % ${#WAYBAR_ARRAY[@]} ))
+                NEXT_BAR="${WAYBAR_ARRAY[NEXT_INDEX]}"
+                ;;
+        esac
+    fi
+}
+
+function main() {
+    case "$1" in
+        -n)
+            select_waybar "$1"
+            ;;
+        -p)
+            select_waybar "$1"
+            ;;
+        *)
+            echo "Invalid option: $1"
+            exit 1
+            ;;
+    esac
+
+    reload_and_save
+}
+
+main "$1"
