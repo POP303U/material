@@ -455,6 +455,11 @@ calc() {
     
 }
 
+fix-pacman() {
+    sudo rm -R /var/lib/pacman/sync
+    sudo pacman -Sy
+}
+
 die() {
     pkill -SIGKILL $1
 }
