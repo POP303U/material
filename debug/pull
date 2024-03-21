@@ -1,6 +1,7 @@
 #!/bin/sh
 
 rm -r ../configs/.config # really fucking dangerous operation
+mkdir -pv ../configs/etc
 mkdir -pv ../configs/.config
 mkdir -pv ../configs/.icons/default
     
