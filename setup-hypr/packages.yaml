@@ -28,7 +28,6 @@ base_packages:
 
   -- File management --
   dolphin
-  ark
   qt5-imageformats
   ffmpegthumbs
   kde-cli-tools
@@ -71,8 +70,14 @@ minimal_packages:
   -- Audio --
   pavucontrol-qt
 
-  -- Math --
-  qalculate-qt
+  -- Extra Applications for other rices --
+  fuzzel
+  rofi-lbonn-wayland-git
+  firefox
+  thunar
+
+  foot
+  alacritty
 
   -- Shell --
   pokemon-colorscripts-git
@@ -87,10 +92,27 @@ minimal_packages:
   tar
 
 extended_packages:
+  -- Math --
+  qalculate-qt
+
+  -- Image viewing and editing --
   nomacs
+  vlc
+  mpv
   gimp
   inkscape
+
+  -- Archiving --
+  ark
+
+  -- Word processing --
   libreoffice-fresh
+  ttf-dejavu
+  ttf-droid
+  ttf-bitstream-vera
+  adobe-source-pro-fonts
+
+  -- Discord --
   vencord-desktop-bin
 
 gaming_packages:
