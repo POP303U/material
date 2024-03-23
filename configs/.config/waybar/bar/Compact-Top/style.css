@@ -113,9 +113,9 @@ tooltip {
 
 #custom-weather {
     background-color: @foam;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 10px;
     border-left: 0px;
-    margin-left: 10px;
+    margin-right: 10px;
     border-right: 0px;
 }
 
