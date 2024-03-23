@@ -1,0 +1,57 @@
+* {
+    background-image: none;
+    font-size: 20px;
+}
+
+@import "../../themes/theme.css";
+
+window {
+    background-color: rgba(0,0,0,.7);
+}
+
+button {
+    color: @text;
+    background-color: @main-bg;
+    outline-style: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 23%;
+    border-color: @wb-hvr-bg;
+    border-width: 5px;
+}
+
+button:focus {
+    background-color: @bg-tr;
+    background-size: 31%;
+    border-color: @wb-act-bg;
+}
+
+button:hover {
+    background-color: @bg-tr;
+    background-size: 31%;
+    border-color: @wb-act-bg;
+}
+
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+    margin-top: 10px;
+    margin-left: 10px;
+}
