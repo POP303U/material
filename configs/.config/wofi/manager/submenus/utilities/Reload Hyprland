@@ -1,4 +1,3 @@
 #!/bin/sh
 
-~/.config/hypr/scripts/manage-waybar
-hyprctl reload
+~/.config/hypr/scripts/load-config-material

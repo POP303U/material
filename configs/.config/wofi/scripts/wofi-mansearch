@@ -5,8 +5,9 @@ set -euox pipefail
 # Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
 
 #launcher="wofi --dmenu"
-launcher="fuzzel --dmenu"
-prompt="-p Manual:"
+launcher=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
+[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
+prompt="-p Manual: "
 
 # terminal to open manual
 terminal="kitty"

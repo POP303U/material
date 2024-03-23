@@ -4,23 +4,22 @@ set -euox pipefail
 # Credits to: https://github.com/debxp/dmenu-scripts/blob/master/dmenu-kill-process
 # Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
 
+script_path="$HOME/.config/wofi/scripts"
+launcher="$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)"
+[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
+
 # Check if wofi is already running
-if pgrep -x "wofi" >/dev/null; then
-    pkill -x "wofi"
+if pgrep -x "$launcher" >/dev/null; then
+    pkill -x "$launcher"
     exit 0
 fi
-
-script_path="$HOME/.config/wofi/scripts"
-
-#launcher="wofi --dmenu"
-launcher="fuzzel --dmenu"
 
 # list only executable non-binary files
 run_wofi="$(find $script_path/wofi-* -maxdepth 1 -type f -executable \
           -exec grep -Iq . {} \; -print \
           | sed 's|^'$script_path/'||' \
           | sort \
-          | $launcher -i --prompt "~ Material scripts ~")"
+          | $launcher -i -p "~ Material scripts ~ ")"
 
 eval "$script_path/$run_wofi"
 

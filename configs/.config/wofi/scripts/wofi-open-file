@@ -7,10 +7,10 @@ set -euox pipefail
 # search root
 root_path=$HOME
 
-#launcher="wofi --dmenu"
-launcher="fuzzel --dmenu"
+launcher="$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)"
+[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
 
-prompt="-p Folder"
+prompt="-p Folder: "
 
 file_path="$(find $root_path -maxdepth 5 -type d \( ! -regex '.*/\..*' \) | \
              sed 's|^'$root_path/'||' | sort | \

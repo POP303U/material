@@ -5,10 +5,9 @@ set -euo pipefail
 # Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
 
 sources_file="$HOME/.config/wofi/scripts/wofi-websearch-sources"
-prompt="-p Search:"
-#launcher="wofi --dmenu"
-launcher="fuzzel --dmenu"
-
+prompt="-p Search: "
+launcher="$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)"
+[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
 
 se_data="$( 
     awk -F'"' '

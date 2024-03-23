@@ -6,10 +6,10 @@ set -euox pipefail
 
 prompt="-p Path:"
 root_path="$HOME"
-#launcher="wofi --dmenu"
-launcher="fuzzel --dmenu"
-#file_manager="thunar"
-file_manager="dolphin"
+launcher="$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)"
+file_manager="$(awk -F '=' '/material-explorer/ {print $2}' $HOME/.config/material/config)"
+
+[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
 
 find_path="$(find $root_path -maxdepth 3 -type d | \
              sed 's|^'$root_path/'||' | \
