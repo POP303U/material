@@ -1,4 +1,5 @@
 @define-color text #575279;
+@define-color bg-tr rgba(230, 233, 239, 1);
 
 @define-color main-bg #e6e9ef;
 @define-color main-fg #d7827e;
