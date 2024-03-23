@@ -156,8 +156,13 @@ check_wifi() {
 }
 
 # Usage: copy_config
-# Description: Copies config to your users home folder
+# Description: Copies config to your users home folder and sets all permissions + symlinks
 copy_config() {
+    # Fixing colors with wofi by symlinking to pywal path
+    RICE_CURRENT=$(awk '/rice-current/ {print $NF}' ../configs/.config/material/config)
+    mkdir $HOME/.cache/wal
+    ln -sf $HOME/.config/wofi/themes/$RICE_CURRENT $HOME/.cache/wal/colors 
+
     echo -e "[${PURPLE}info${RESET}] Copying configs..."
 
     rm -rf ../configs_backup
@@ -221,6 +226,6 @@ install_custom_sddm() {
 
     # making sure sddm uses the correct background
     RICE_CURRENT=$(awk '/rice-current/ {print $NF}' ../configs/.config/material/config)
-    WAYBAR_CURRENT=$(awk '/wallpaper-current/ {print $NF}' ../configs/.config/material/config)
-    sudo cp ../configs/.config/swww/walls/$RICE_CURRENT/$CURRENT_BG /usr/share/sddm/themes/rose-pine-sddm/Backgrounds 
+    WALLPAPER_CURRENT=$(awk '/wallpaper-current/ {print $NF}' ../configs/.config/material/config)
+    sudo cp ../configs/.config/swww/walls/$RICE_CURRENT/$WALLPAPER_CURRENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 }
