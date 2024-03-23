@@ -134,7 +134,7 @@ sed -i 's|^gtk-theme-name.*|gtk-theme-name='${CURRENT_RICE}'|' ~/.config/gtk-3.0
 ~/.config/hypr/scripts/import-gsettings
 
 # flatpak gtk
-flatpak --user override --env=GTK_THEME="${CURRENT_RICE}" # flatpak gtk is not intended to work
+flatpak --user override --env=GTK_THEME="${CURRENT_RICE}" # flatpak gtk is not intended to work, and very hacky not all apps will work with this
 flatpak --user override --env=ICON_THEME="${CURRENT_ICONS}"
 
 # Kitty
@@ -150,6 +150,9 @@ ln -sf ~/.config/wlogout/themes/${CURRENT_RICE}.css ~/.config/wlogout/themes/the
 
 # Fuzzel
 ln -sf $HOME/.config/fuzzel/themes/${CURRENT_RICE}.ini $HOME/.config/fuzzel/fuzzel.ini
+
+# Rofi
+ln -sf $HOME/.config/rofi/themes/${CURRENT_RICE}.rasi $HOME/.config/rofi/themes/theme.rasi
 
 # Dolphin (just reloading)
 ACTIVE_WORKSPACE=$(hyprctl -j activeworkspace | jq '.id')
