@@ -1,0 +1,72 @@
+#!/bin/sh
+
+set -euo pipefail
+
+# lock instance
+
+LOCKFILE="/tmp/material$(id -u)rice-cycle.lock"
+[ -e "$LOCKFILE" ] && echo "An instance of the script is already running" && exit 1
+touch "${LOCKFILE}"
+trap 'rm -f ${LOCKFILE}' EXIT
+
+
+CHANGE_RICE="/home/${USER}/.config/swww/scripts/change_theme"
+CURRENT_RICE="$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)"
+RICE_DIR="$HOME/.config/swww/walls"
+mapfile -t RICE_ARRAY < <(dir -1 "$RICE_DIR")
+
+function reload_and_save() {
+    # long if statement to check if blur is present in the bar, if it is set it, if not unset
+    [[ "$(cat "$HOME/.config/waybar/bar/$NEXT_RICE" | grep blurls | awk -F '=' '{print $2}')" == "true" ]] && sed -i 's|blur-state.*|blur-state = on|' ~/.config/material/config || sed -i 's|blur-state.*|blur-state = off|' ~/.config/material/config
+    sed -i 's|bar-current.*|bar-current = '$NEXT_RICE'|' ~/.config/material/config
+    echo $NEXT_RICE
+    echo $CURRENT_RICE
+    echo $RICE_DIR
+    killall waybar && ~/.config/hypr/scripts/manage-waybar & >/dev/null 2>&1
+    hyprctl reload
+}
+
+function select_rice() {
+    # Find the INDEX of the search string in the array
+    local INDEX=-1
+    local MODE=$1
+    for ((i=0; i<${#RICE_ARRAY[@]}; i++)); do
+        if [ "${RICE_ARRAY[i]}" == "$CURRENT_RICE" ]; then
+            INDEX=$i
+            echo "${RICE_ARRAY[i]}"
+            break
+        fi
+    done
+
+    if [ "$INDEX" -ge 0 ]; then
+        case "$MODE" in 
+            -n)
+                NEXT_INDEX=$(( (INDEX + 1) % ${#RICE_ARRAY[@]} ))
+                NEXT_RICE="${RICE_ARRAY[NEXT_INDEX]}"
+                ;;
+            -p)
+                NEXT_INDEX=$(( (INDEX - 1 + ${#RICE_ARRAY[@]}) % ${#RICE_ARRAY[@]} ))
+                NEXT_RICE="${RICE_ARRAY[NEXT_INDEX]}"
+                ;;
+        esac
+    fi
+}
+
+function main() {
+    case "$1" in
+        -n)
+            select_rice "$1"
+            ;;
+        -p)
+            select_rice "$1"
+            ;;
+        *)
+            echo "Invalid option: $1"
+            exit 1
+            ;;
+    esac
+
+    $CHANGE_RICE $NEXT_RICE
+}
+
+main "$1"

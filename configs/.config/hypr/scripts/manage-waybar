@@ -1,31 +1,34 @@
 #!/bin/sh
 
-BAR_CURRENT="$(awk '/bar-current/ {print $NF}' $HOME/.config/material/config)"
+set -euox pipefail
+
 BAR_STATE="$(awk '/bar-state/ {print $NF}' $HOME/.config/material/config)"
-CURRENT_WAYBAR_CALL="waybar -c $HOME/.config/waybar/bar/${BAR_CURRENT}/config.jsonc -s $HOME/.config/waybar/bar/${BAR_CURRENT}/style.css"
 
 # Check if waybar is turned off and exit
 [[ "$BAR_STATE" == "off" ]] && exit 128
 
-# both functions are extremely hacky and finicky, please don't touch this config setting.
-function set_hypr_blurls() {
-    sed -i 's|    #layerrule = blur,waybar.*|    layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
-    sed -i 's|^blur-state.*|blur-state = on|' ~/.config/material/config
-}
-
-function unset_hypr_blurls() {
-    sed -i 's|    layerrule = blur,waybar.*|    #layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
-    sed -i 's|^blur-state.*|blur-state = off|' ~/.config/material/config
-}
-
+BAR_CURRENT="$(awk '/bar-current/ {print $NF}' $HOME/.config/material/config)"
+BLUR_CURRENT=$(grep "layerrule" ~/.config/hypr/decoration.conf | xargs)
 BLUR_FLAG="$(grep "blurls" "$HOME/.config/waybar/rices/$BAR_CURRENT" | awk -F '=' '{print $2}' | xargs)"
-[[ "$BLUR_FLAG" == "true" ]] && set_hypr_blurls || unset_hypr_blurls
+WAYBAR="waybar -c $HOME/.config/waybar/bar/${BAR_CURRENT}/config.jsonc -s $HOME/.config/waybar/bar/${BAR_CURRENT}/style.css"
+
+# Checking if blur needs to enabled and checking if we have to modify decoration.conf pretty simple
+if [[ $BLUR_CURRENT =~ ^\s*# ]]; then
+    if [[ $BLUR_FLAG == "true" ]]; then
+        sed -i 's|.*layerrule = blur,waybar.*|    layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+    fi
+else
+    if [[ $BLUR_FLAG == "false" ]]; then
+        sed -i 's|.*layerrule = blur,waybar.*|    #layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+    fi
+    echo "There is no # at the beginning of the statement, not modifying blur"
+fi
 
 if pgrep -x "waybar" >/dev/null; then
     pkill -x "waybar"
-    $CURRENT_WAYBAR_CALL
+    $WAYBAR >/dev/null 2>&1 &
 else 
-    $CURRENT_WAYBAR_CALL
+    $WAYBAR >/dev/null 2>&1 &
 fi
 
 hyprctl reload

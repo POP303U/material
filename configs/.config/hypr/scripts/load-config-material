@@ -32,7 +32,6 @@ BLUR_STATE=$(awk '/blur-state/ {print $NF}' $SEL_CONFIG)
 
 sed -i 's|size =.*|size = '$BLUR_SIZE'|' "$HYPR_PATH/decoration.conf"
 sed -i 's|passes =.*|passes = '$BLUR_PASSES'|' "$HYPR_PATH/decoration.conf"
-[[ "$BLUR_STATE" == "on" ]] && sed -i 's|layerrule = blur,waybar.*|layerrule = blur,waybar|' "$HYPR_PATH/decoration.conf" || sed -i 's|layerrule = blur,waybar.*|#layerrule = blur,waybar|' "$HYPR_PATH/decoration.conf" 
 
 ## animations.conf
 ANIMATIONS_STATE=$(awk '/animations-state/ {print $NF}' $SEL_CONFIG)
@@ -46,5 +45,19 @@ RICE_CURRENT=$(awk '/rice-current/ {print $NF}' $SEL_CONFIG)
 WAYBAR_CURRENT=$(awk '/bar-current/ {print $NF}' $SEL_CONFIG)
 WALLPAPER_CURRENT=$(awk '/wallpaper-current/ {print $NF}' $SEL_CONFIG)
 
+BLUR_FLAG="$(grep "blurls" "$HOME/.config/waybar/rices/$WAYBAR_CURRENT" | awk -F '=' '{print $2}' | xargs)"
+BLUR_CURRENT=$(grep "layerrule" ~/.config/hypr/decoration.conf | xargs)
+
+# Checking if blur needs to enabled and checking if we have to modify decoration.conf pretty simple
+if [[ $BLUR_CURRENT =~ ^\s*# ]]; then
+    if [[ $BLUR_FLAG == "true" ]]; then
+        sed -i 's|.*layerrule = blur,waybar.*|    layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+    fi
+else
+    if [[ $BLUR_FLAG == "false" ]]; then
+        sed -i 's|.*layerrule = blur,waybar.*|    #layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+    fi
+    echo "There is no # at the beginning of the statement, not modifying blur"
+fi
+
 ~/.config/swww/scripts/change_theme $RICE_CURRENT $WALLPAPER_CURRENT
-hyprctl reload

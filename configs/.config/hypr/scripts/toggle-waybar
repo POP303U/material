@@ -9,5 +9,5 @@ if [[ "$BAR_STATE" == "on" ]]; then
     pkill -9 waybar
 else 
     sed -i 's|bar-state.*|bar-state = on|' ~/.config/material/config
-    ~/.config/hypr/scripts/manage-waybar
+    ~/.config/hypr/scripts/manage-waybar &
 fi

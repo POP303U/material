@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Set up a log file for debugging
+
+echo '' > /tmp/material-logging
+
+echo "--------------------------------------------
+   Material Log File
+--------------------------------------------
+
+:: Current config:
+$(cat $HOME/.config/material/config)
+
+:: Start of logs $(date)
+[$(dirname "$(realpath "$0")")::log] logging started..." > /tmp/material-logfile

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -euox pipefail
+
+case $1 in
+    explorer|e)
+        MATERIAL_EXPLORER="$(awk -F '=' '/material-explorer/ {print $2}' $HOME/.config/material/config)"
+        $MATERIAL_EXPLORER
+        ;;
+    documentation|d)
+        MATERIAL_DOCUMENTATION="$(awk -F '=' '/material-documentation/ {print $2}' $HOME/.config/material/config)"
+        $MATERIAL_DOCUMENTATION
+        ;;
+    terminal|t)
+        MATERIAL_TERMINAL="$(awk -F '=' '/material-terminal/ {print $2}' $HOME/.config/material/config)"
+        $MATERIAL_TERMINAL        
+        ;;
+    browser|b)
+        MATERIAL_BROWSER="$(awk -F '=' '/material-browser/ {print $2}' $HOME/.config/material/config)"
+        $MATERIAL_BROWSER
+        ;;
+    *)
+        echo "Provide an correct argument <explorer, browser, terminal, browser>"
+        exit 1
+        ;;
+esac

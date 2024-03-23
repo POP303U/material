@@ -15,25 +15,33 @@ STYLE="$(awk '/wlogout-theme/ {print $NF}' $HOME/.config/material/config)"
 STYLE="${1:-$STYLE}"
 
 case $STYLE in 
-    "compact")
+    # ensure compatibility with old versions by using or statements
+    compact|Compact)
         wlogout \
             $SHOW_KEYBINDS \
             -b 2                                                   \
             -L 500                                                 \
             -R 500                                                 \
-            --css      "$HOME/.config/wlogout/style_compact.css"   \
-            --layout   "$HOME/.config/wlogout/layout_compact.json" \
+            --css      "$HOME/.config/wlogout/logout/$STYLE/style_compact.css"   \
+            --layout   "$HOME/.config/wlogout/logout/$STYLE/layout_compact.json" \
             --protocol layer-shell
         ;;
-    "normal")
+    normal|Normal)
         wlogout \
             $SHOW_KEYBINDS \
-            --css      "$HOME/.config/wlogout/style_normal.css"   \
-            --layout   "$HOME/.config/wlogout/layout_normal.json" \
+            --css      "$HOME/.config/wlogout/logout/$STYLE/style_normal.css"   \
+            --layout   "$HOME/.config/wlogout/logout/$STYLE/layout_normal.json" \
             --protocol layer-shell
         ;;
-    "towers")
-        echo "not yet"
+    blocks|Blocks)
+        wlogout \
+            $SHOW_KEYBINDS \
+            -b 2                                                   \
+            -L 500                                                 \
+            -R 500                                                 \
+            --css      "$HOME/.config/wlogout/logout/$STYLE/style_blocks.css"   \
+            --layout   "$HOME/.config/wlogout/logout/$STYLE/layout_blocks.json" \
+            --protocol layer-shell
         ;;
     *)
         echo "no valid style named: $STYLE found"

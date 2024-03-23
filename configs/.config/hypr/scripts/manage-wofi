@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
 
-#LAUNCHER="wofi"
-LAUNCHER="fuzzel"
+set -x
+
+LAUNCHER=$(awk '/material-launcher/ {print $NF}' $HOME/.config/material/config)
+UNPATCHED_LAUNCHER=$(awk '/material-launcher/ {print $NF}' $HOME/.config/material/config)
+[[ "$(echo $LAUNCHER | xargs)" == "dmenu" ]] && LAUNCHER="dmenu_run" # patch dmenu
 
 # Check if wofi is already running
 if pgrep -x "$LAUNCHER" >/dev/null; then
@@ -11,7 +14,22 @@ fi
 
 case "$1" in
     "wofi")
-        $LAUNCHER
+        # check for runlevel, binaries, desktop entries, all
+        RUNLEVEL=$(awk '/launcher-runlevel/ {print $NF}' $HOME/.config/material/config | xargs)
+
+        # patch rofi before running
+        [[ "$(echo $LAUNCHER | xargs)" == "rofi" ]] && LAUNCHER="rofi -modi drun -show drun" # patch rofi
+
+        # run type of prompt depending on config option
+        [[ $RUNLEVEL == "desktop" ]] && $LAUNCHER &
+        [[ $RUNLEVEL == "binaries" ]] && $HOME/.config/wofi/scripts/wofi-binlaunch &
+        [[ $RUNLEVEL == "all" ]] && $HOME/.config/wofi/scripts/wofi-alllaunch &
+
+        # resorting to default desktop entries if config reading failed
+        if [[ "$RUNLEVEL" != "desktop" && "$RUNLEVEL" != "all" && "$RUNLEVEL" != "binaries" ]]; then
+            $LAUNCHER 
+            echo "[$(dirname "$(realpath "$0")")::warn] invalid config key found in ´launcher-runlevel´ with value ´$RUNLEVEL´, using default..." >> /tmp/material-logfile
+        fi
         ;;
     "wallpaper")
         ~/.config/wofi/scripts/wofi-wallpaper
@@ -20,23 +38,17 @@ case "$1" in
         ~/.config/wofi/scripts/wofi-emoji
         ;;
     "rice")
-        ~/.config/wofi/scripts/wofi-rice-selector -
+        ~/.config/wofi/scripts/wofi-rice-selector
         ;;
-
-    ### WARNING: Will be deprecated, breaks a LOT of shit
-    "theme")
-        ~/.config/wofi/scripts/wofi-rice-selector theme         
-        ;;
-    ###
-    
     "manager")
-        ~/.config/wofi/scripts/wofi-manager "main"
+        ~/.config/wofi/scripts/wofi-manager
         ;;
     "waybar")
         ~/.config/wofi/scripts/wofi-waybar-selector
         ;;
     "cliphist")
-        cliphist list | $LAUNCHER --dmenu -p "~ Material clipboard selection ~" -i | cliphist decode | wl-copy
+        [[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || LAUNCHER="$LAUNCHER --dmenu" # patch for rofi
+        cliphist list | $LAUNCHER -p "~ Material clipboard selection ~ " -i | cliphist decode | wl-copy
         ;;
     *)
         echo "Invalid choice $1"
