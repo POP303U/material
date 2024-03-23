@@ -24,18 +24,14 @@ if [ $? -ne 0 ]; then
 else
     echo -e "[${BLUE}ok${RESET}] Found internet connection" 
     configure_pacman
+    fix_groups
     install_yay
 
     source ./install_get_options
 fi
 
-if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then 
-    echo -e "${RED}Choose a valid option${RESET}"
-else 
-    install_yay 
-    stage_1
-fi
-
+### These are functions used in the script, 
+# See the bottom of the file for the call into `stage_1`
 enable_sddm_quest() {
     if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" || $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
 
@@ -59,7 +55,7 @@ enable_sddm_quest() {
 install_sddm() {
     if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
         echo -e "[${PURPLE}info${RESET}] Installing sddm packages"
-        for PACKAGE in ${BASE_PACKAGES[@]}; do
+        for PACKAGE in ${SDDM_PACKAGES[@]}; do
             install_packages $PACKAGE yay
         done
 
@@ -70,16 +66,6 @@ install_sddm() {
         fi
     else
         echo -e "[${PURPLE}info${RESET}] Skipping sddm packages"
-    fi
-}
-
-install_and_apply_tty() {
-    if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" || $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]]; then
-        for PACKAGE in ${TTY_PACKAGES[@]}; do
-            install_packages $PACKAGE yay
-        done
-        
-        set_tty_font
     fi
 }
 
@@ -96,9 +82,15 @@ stage_1() {
 
     echo -e "[${PURPLE}info${RESET}] Starting Services..."
     start_services
-    fix_groups
     install_sddm
-    install_and_apply_tty
+
+    if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" || $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]]; then
+        for PACKAGE in ${TTY_PACKAGES[@]}; do
+            install_packages $PACKAGE yay
+        done
+        
+        set_tty_font
+    fi
 
     if [[ $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" || $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" ]]; then
         for PACKAGE in ${OPTIONAL_PACKAGES_RUST[@]}; do

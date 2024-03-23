@@ -26,6 +26,11 @@ ${CYAN}4${RESET}. Gaming   (wine, steam, bottles and everything for gaming ready
 "
 read -n1 -rep "(1/2/3/4) $: " STAGE
 
+if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then 
+    echo -e "${RED}Choose a valid option${RESET}"
+    exit 1
+fi
+
 echo -e "
 ${GREEN}   _____     __    __         
 ${GREEN}  / ___/____/ /___/ /___ ___  
