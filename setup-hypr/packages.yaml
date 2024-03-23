@@ -1,0 +1,119 @@
+base_packages:
+  -- Audio Server + Recording --
+  pipewire
+  pipewire-alsa
+  pipewire-audio
+  pipewire-jack
+  pipewire-pulse
+  gst-plugin-pipewire
+  wireplumber
+
+  -- Window manager stuff --
+  hyprland
+  hyprpicker
+  cliphist
+  kitty 
+  waybar
+  swaylock-effects
+  polkit-gnome
+  swww
+  fuzzel
+  wofi 
+  wlogout
+
+  -- Screenshots --
+  swappy
+  grim
+  slurp
+
+  -- File management --
+  dolphin
+  ark
+  qt5-imageformats
+  ffmpegthumbs
+  kde-cli-tools
+
+  -- CLI Tools --
+  python-requests
+  wl-clipboard
+  xdotool
+  pamixer
+  gvfs
+  jq
+
+  -- Fonts --
+  ttf-jetbrains-mono-nerd
+  ttf-cascadia-code-nerd
+  noto-fonts-emoji
+
+  -- Theming --
+  nwg-look
+  qt5ct
+  qt6ct
+  qt5-wayland
+  qt6-wayland
+  kvantum
+  kvantum-qt5
+  dracula-icons-git
+  bibata-cursor-theme-bin
+
+  -- Networking --
+  networkmanager
+  network-manager-applet
+  bluez
+  bluez-utils
+  blueman
+
+  -- Streaming --
+  xdg-desktop-portal-hyprland
+
+minimal_packages:
+  -- Audio --
+  pavucontrol-qt
+
+  -- Math --
+  qalculate-qt
+
+  -- Shell --
+  pokemon-colorscripts-git
+  fastfetch
+  neovim
+  neofetch
+  pfetch
+  btop
+  grc
+  p7zip 
+  unrar
+  tar
+
+extended_packages:
+  nomacs
+  gimp
+  inkscape
+  libreoffice-fresh
+  vencord-desktop-bin
+
+gaming_packages:
+  steam
+  wine
+  wine-mono
+  wine-gecko
+  bottles
+  lutris
+
+sddm_packages:
+  -- sddm and dependencies --
+  sddm
+  qt5-quickcontrols2
+  qt5-graphicaleffects
+  qt5-svg
+
+optional_packages_rust:
+  -- eza replacement for ls, fd for find, bat for cat --
+  eza
+  fd
+  bat
+
+tty_packages:
+  -- just a font --
+  terminus-font

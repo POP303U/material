@@ -1,0 +1,500 @@
+#!/bin/sh
+
+BASE_PACKAGES=(
+
+# audio stuff
+"pipewire"
+"pipewire-alsa"
+"pipewire-audio"
+"pipewire-jack"
+"pipewire-pulse"
+"gst-plugin-pipewire"
+"wireplumber"
+
+# Window manager stuff
+"hyprland"
+"hyprpicker"
+"cliphist"
+"kitty" 
+"waybar"
+"swaylock-effects"
+"fuzzel"
+"wofi" # will be deprecated because it sucks
+"wlogout"
+
+# Screenshots
+"swappy"
+"grim"
+"slurp"
+
+# File management
+"dolphin"
+"ark"
+"qt5-imageformats"
+"ffmpegthumbs"
+"kde-cli-tools"
+
+# CLI Tools
+"python-requests"
+"wl-clipboard"
+"wlr-randr"
+"xdotool"
+"pamixer"
+"gvfs"
+"jq"
+
+# Fonts 
+"ttf-jetbrains-mono-nerd"
+"ttf-cascadia-code-nerd"
+"noto-fonts-emoji"
+
+"polkit-gnome"
+"swww"
+
+# Theming
+"nwg-look"
+"qt5ct"
+"qt6ct"
+"qt5-wayland"
+"qt6-wayland"
+"kvantum"
+"kvantum-qt5"
+"dracula-icons-git"
+"bibata-cursor-theme-bin"
+
+# Networking
+"networkmanager"
+"network-manager-applet"
+"bluez"
+"bluez-utils"
+"blueman"
+
+# Streaming
+"xdg-desktop-portal-hyprland"
+
+)
+
+MINIMAL_PACKAGES=(
+# Audio
+"pavucontrol-qt"
+
+# Math
+"qalculate-qt"
+
+# Shell
+"pokemon-colorscripts-git"
+"fastfetch"
+"neovim"
+"neofetch"
+"pfetch"
+"btop"
+"grc"
+"p7zip" 
+"unrar"
+"tar"
+
+)
+
+EXTENDED_PACKAGES=(
+"nomacs"
+"gimp"
+"inkscape"
+"libreoffice-fresh"
+"vencord-desktop-bin"
+)
+
+TTY_PACKAGES=(
+# Just a font
+"terminus-font"
+)
+
+OPTIONAL_PACKAGES_RUST=(
+# eza replacement for ls, fd for find, bat for cat
+"eza"
+"fd"
+"bat"
+)
+
+SDDM_PACKAGES=(
+# Sddm and dependencies
+"sddm"
+"qt5-quickcontrols2" 
+"qt5-graphicaleffects" 
+"qt5-svg"
+)
+
+GAMING_PACKAGES=(
+"steam"
+"wine"
+"wine-mono"
+"wine-gecko"
+"bottles"
+"lutris"
+)
+
+# Define colors to be used in the script
+BLUE='\033[1;34m'
+RED='\033[1;31m'
+CYAN='\033[01;36m'
+YELLOW='\033[01;33m'
+WHITE_BOLD="\033[1;38;5;15m"
+GREEN="\033[01;32m"
+RESET='\033[0m'
+PURPLE='\033[01;35m'
+WHITE='\033[01;37m'
+
+install_yay() {
+    YAY_EXISTS=/sbin/yay
+
+    # initialize [multilib] if not enables
+    echo -e "[${PURPLE}info${RESET}] Enabling multilib"
+    sudo sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman\.d\/mirrorlist/c\[multilib]\nInclude = /etc/pacman.d/mirrorlist' /etc/pacman.conf
+    echo -e "[${PURPLE}info${RESET}] Syncing multilib repositories"
+    sudo pacman -Syy --noconfirm >/dev/null 2>&1
+
+    if [ -f "$YAY_EXISTS" ]; then
+        AUR_HELPER=yay
+        echo -e "[${PURPLE}info${RESET}] Yay was detected, using yay..."
+    else
+        echo -e "[${PURPLE}info${RESET}] Performing full system sync"
+        sudo pacman -Syu >/dev/null 2>&1 
+
+        # install yay
+        sudo pacman -S --needed base-devel --noconfirm >/dev/null 2>&1
+
+        git clone https://aur.archlinux.org/yay.git >/dev/null 2>&1
+        echo -e "[${BLUE}ok${RESET}] Cloned yay from the AUR"
+
+        cd yay
+        echo -e "[${PURPLE}info${RESET}] Installing yay..."
+        makepkg -si --noconfirm && echo -e "[${BLUE}ok${RESET}] Building yay from the AUR"
+
+        echo -e "[${PURPLE}info${RESET}] Removing temporary files..."
+        cd ..
+        rm -rf yay
+
+        AUR_HELPER=yay
+    fi
+}
+
+fix_groups() {
+    sudo usermod -aG input $USER
+}
+
+start_wireless() {
+    # Start the bluetooth service
+    echo -e "[${PURPLE}info${RESET}] Starting the Bluetooth Service..."
+    sudo systemctl enable --now bluetooth.service >/dev/null 2>&1
+
+    sleep 2
+
+    ### Disable wifi powersave mode ###
+    echo -e "[${PURPLE}info${RESET}] Disabling wifi powersave..." 
+
+    LOC="/etc/NetworkManager/conf.d/wifi-powersave.conf"
+    echo -e "[${PURPLE}info${RESET}] The following has been added to $LOC.\n"
+    echo -e "[connection]\nwifi.powersave = 2\n" | sudo tee -a $LOC
+
+    echo -e "[${PURPLE}info${RESET}] Restarting NetworkManager service..."
+    sudo systemctl restart NetworkManager
+    echo -e "[${PURPLE}info${RESET}] Waiting for Internet to reconnect..."
+    sleep 5
+}
+
+copy_config() {
+    echo -e "[${PURPLE}info${RESET}] Copying configs..."
+
+    rm -rf ../configs_backup
+    mkdir ../configs_backup # create backup dir
+
+    for CONFIG in ../configs/.config/*; do
+        CONFIG_NAME=$(basename "$CONFIG")
+    	cp -r ~/.config/$CONFIG_NAME ../configs_backup # backup important
+
+        if [ ! -f "$CONFIG" ]; then
+            if cp -r "$CONFIG" ~/.config; then
+                echo -e "[${BLUE}ok${RESET}] Copied $CONFIG_NAME to ~/.config/$CONFIG_NAME"
+            else
+                echo -e "[${RED}fail${RESET}] Copied $CONFIG_NAME to ~/.config/$CONFIG_NAME"
+            fi	
+        fi
+    done
+
+    rm -rf ~/.tmux.conf;           cp -r    ../configs/.tmux.conf            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
+    rm -rf ~/.bashrc;              cp -r    ../configs/.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
+    rm -rf ~/.gtkrc-2.0;           cp -r    ../configs/.gtkrc-2.0            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied gtkrc-2.0 to ~/.gtkrc-2.0"
+    rm -rf ~/.themes;              cp -r    ../configs/.themes               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .themes to ~/.themes "
+    rm -rf ~/.icons;               cp -r    ../configs/.icons                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
+    rm -rf ~/.bin;                 cp -r    ../configs/.bin                  ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
+
+    # Set some files as exacutable 
+    chmod +x ~/.config/hypr/scripts/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
+    chmod +x ~/.config/swww/scripts/init_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/config/swww/scripts/init_wallpaper' is executable: .wxr-xr-x "
+    chmod +x ~/.config/swww/scripts/change_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/.config/swww/scripts/change_wallpaper' is executable: .wxr-xr-x "
+    chmod +x ~/.config/waybar/scripts/waybar-wttr.py && echo -e "[${BLUE}ok${RESET}] '~/.config/waybar/scripts/waybar-wttr.py' is executable: .wxr-xr-x "
+    chmod -R +x ~/.config/hypr/scripts
+    chmod -R +x ~/.config/swww/scripts
+    chmod -R +x ~/.config/wofi/manager
+
+    # Clean out other portals
+    echo -e "[${PURPLE}info${RESET}] Cleaning out conflicting xdg portals..."
+    $AUR_HELPER -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null 2>&1
+}
+
+enable_sddm_quest() {
+    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" || $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
+
+        echo -e "\n${WHITE_BOLD}Do you want to enable sddm now? (y/n)${RESET}"
+        read -n1 -rep "$: " SDDM_ENABLE
+
+        if [[ $SDDM_ENABLE == "y" || $SDDM_ENABLE == "Y" || $SDDM_ENABLE == "" ]]; then
+            echo -e "[${BLUE}ok${RESET}] Enabled sddm successfully"
+            sudo systemctl enable sddm.service
+            sudo systemctl start sddm.service
+        else
+            echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
+            echo -e "[${PURPLE}info${RESET}] You can enable sddm manually with:"
+            echo -e "[${PURPLE}info${RESET}] 'sudo systemctl enable sddm.service'"
+        fi
+    else 
+        echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
+    fi 
+}
+
+install_sddm() {
+    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
+        echo -e "[${PURPLE}info${RESET}] Installing sddm packages"
+        for PACKAGE in "${SDDM_PACKAGES[@]}"; do
+            if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+                echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+            else
+                echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+            fi
+        done
+
+        if [[ $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
+            sudo rm -rf /usr/share/sddm/themes/rose-pine-sddm
+            git clone https://github.com/POP303U/rose-pine-sddm ~/rose-pine-sddm >/dev/null 2>&1
+            sudo mv ~/rose-pine-sddm /usr/share/sddm/themes/
+            sudo cp /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf
+            # use sed for modifying the theme
+            sudo sed -i 's|Current=.*|Current=rose-pine-sddm|' /etc/sddm.conf
+            sudo sed -i 's|CursorSize=.*|CursorSize=24|' /etc/sddm.conf
+            sudo sed -i 's|CursorTheme=.*|CursorTheme=Bibata-Modern-Ice|' /etc/sddm.conf
+            echo -e "[${BLUE}ok${RESET}] Installed custom adaptive sddm theme"
+
+            # time to get hacky, dont want to create extra repo so here we areee
+            sed -i 's|Background="Backgrounds/cat_leaves.png"|Background="Backgrounds/current"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
+            sed -i 's|PartialBlur="false"|PartialBlur="true"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
+            sed -i 's|BlueRadius="0"|BlurRadius="15"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
+
+            # why
+            CURRENT_BG="$(cat ../configs/.config/swww/current/name)"
+            sudo cp ../configs/.config/swww/walls/Rose-Pine/$CURRENT_BG /usr/share/sddm/themes/rose-pine-sddm/Backgrounds 
+        else 
+            echo -e "[${PURPLE}info${RESET}] Skipping custom sddm theme"
+        fi
+    else
+        echo -e "[${PURPLE}info${RESET}] Skipping sddm packages"
+    fi
+}
+
+install_and_apply_tty() {
+    if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" || $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]]; then
+
+        for PACKAGE in "${TTY_PACKAGES[@]}"; do
+            if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+                echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+            else
+                echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+            fi
+        done
+
+        
+        echo -e "[${PURPLE}info${RESET}] The following has been added to /etc/vconsole.conf"
+        echo -e '\nFONT=ter-v28b\n' | sudo tee -a /etc/vconsole.conf
+        sudo rm -f /etc/issue ; sudo cp -r ../configs/etc/issue /etc && echo -e "[${BLUE}ok${RESET}] Copied issue to /etc/issue"
+        sudo rm -f /etc/motd ; sudo cp -r ../configs/etc/motd /etc && echo -e "[${BLUE}ok${RESET}] Copied motd to /etc/motd"
+    fi
+}
+
+stage_1() {
+    echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
+
+    echo -e "[${PURPLE}info${RESET}] Installing base packages"
+    for PACKAGE in "${BASE_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done
+
+    echo -e "[${PURPLE}info${RESET}] Copying config files..."
+    copy_config 
+    start_wireless
+    fix_groups
+    install_sddm
+    install_and_apply_tty
+
+    if [[ $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" || $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" ]]; then
+        for PACKAGE in "${OPTIONAL_PACKAGES_RUST[@]}"; do
+            if $AUR_HELPER -S --noconfirm "$PACKAGE" >/dev/null 2>&1; then
+                echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+            else
+                echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+            fi
+        done
+    fi
+
+    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
+    if [ $STAGE -gt 1 ]; then 
+        echo -e "[${PURPLE}info${RESET}] Entering stage 2"
+        stage_2
+    else 
+        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+        enable_sddm_quest
+    fi
+}
+
+stage_2() {
+    echo -e "Executing Stage 2"
+
+    echo -e "[${PURPLE}info${RESET}] Installing minimal packages"
+    for PACKAGE in "${MINIMAL_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done
+   
+    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
+    if [ $STAGE -gt 2 ]; then 
+        echo -e "[${PURPLE}info${RESET}] Entering stage 3"
+        stage_3
+    else 
+        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+        enable_sddm_quest
+    fi
+}
+
+stage_3() {
+    echo -e "[${PURPLE}info${RESET}] Executing Stage 3"
+
+    echo -e "[${PURPLE}info${RESET}]Installing extended packages..."
+    for PACKAGE in "${EXTENDED_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done
+    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
+    if [ $STAGE -gt 3 ]; then 
+        echo -e "[${PURPLE}info${RESET}] Entering stage 4"
+        stage_4
+    else 
+        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
+        enable_sddm_quest
+    fi
+}
+
+stage_4() {
+    echo -e "[${PURPLE}info${RESET}] Executing Stage 4"
+
+    echo -e "[${PURPLE}info${RESET}] Installing gaming packages"
+     for PACKAGE in "${GAMING_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done   
+    echo -e "Stage-${STAGE} installation finished!"
+    enable_sddm_quest
+}
+
+get_options() {
+    # https://patorjk.com/software/taag/#p=display&f=Slant&t=Hyprland
+    echo -e "
+    ${GREEN}    __  __                 __                __
+    ${GREEN}   / / / /_  ______  _____/ /___ _____  ____/ /
+    ${GREEN}  / /_/ / / / / __ \/ ___/ / __ '/ __ \/ __  / 
+    ${GREEN} / __  / /_/ / /_/ / /  / / /_/ / / / / /_/ /  
+    ${GREEN}/_/ /_/\__, / .___/_/  /_/\__,_/_/ /_/\__,_/   
+    ${GREEN}      /____/_/                                 ${RESET}
+
+    # ${YELLOW}Easy Hyprland installer${RESET} #
+
+    ${WHITE_BOLD}Tip: See installed packages at the top of the script${RESET}
+    ${CYAN}1${RESET}. Base     (${RED}not recommended${RESET}) (only what's needed to run, you will experience issues)
+    ${CYAN}2${RESET}. Minimal  (${GREEN}recommended${RESET})     (all needed dependencies, incl. filebrowser, shell scripts)
+    ${CYAN}3${RESET}. Extended (extra packages, like browser, calculator, office suite and vencord)
+    ${CYAN}4${RESET}. Gaming   (wine, steam, bottles and everything for gaming ready)
+    "
+    read -n1 -rep "(1/2/3/4) $: " STAGE
+
+    echo -e "
+    ${GREEN}   _____     __    __         
+    ${GREEN}  / ___/____/ /___/ /___ ___  
+    ${GREEN}  \__ \/ __  / __  / __ '__ \ 
+    ${GREEN} ___/ / /_/ / /_/ / / / / / / 
+    ${GREEN}/____/\__,_/\__,_/_/ /_/ /_/  ${RESET}
+    "
+    echo -e "\n${WHITE_BOLD}Install sddm? ${RESET}"
+    read -n1 -rep "(y/n) $: " SDDM_INSTALL
+
+    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
+        echo -e "${WHITE_BOLD}\nInstall custom adaptive sddm? [https://github.com/POP303U/rose-pine-sddm]${RESET}"
+        read -n1 -rep "(y/n) $: " SDDM_CUSTOM_INSTALL
+    fi
+
+    echo -e "
+    ${GREEN}    ____             __ 
+    ${GREEN}   / __ \__  _______/ /_
+    ${GREEN}  / /_/ / / / / ___/ __/
+    ${GREEN} / _, _/ /_/ (__  ) /_  
+    ${GREEN}/_/ |_|\__,_/____/\__/  ${RESET}
+    "
+    echo -e "${WHITE_BOLD}Install beautiful ls/cat/find -> eza/bat/fd? ${RESET}"
+    echo -e "${WHITE_BOLD}Preview: ${RESET}"
+    echo -e "---------------------------------------------------
+    [4mPermissions[0m  [4mSize[0m [4mUser[0m [4mDate Modified[0m [4mName[0m
+    [1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m      [1;90m-[0m [1;33mpops[0m [34m 3 Feb 15:02[0m  [1;34mconfigs[0m
+    [1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m      [1;90m-[0m [1;33mpops[0m [34m 3 Feb 13:40[0m  [1;34mconfigs_backup[0m
+    [1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m      [1;90m-[0m [1;33mpops[0m [34m25 Jan 16:20[0m  [1;34mdebug[0m
+    .[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [1;32m1.0Ki[0m [1;33mpops[0m [34m30 Dec  2023[0m  LICENSE
+    .[1;33mr[31mw[90m-[0m[33mr[1;90m--[0m[33mr[1;90m--[0m  [1;32m2.2Ki[0m [1;33mpops[0m [34m20 Jan 15:56[0m  [1;4;33mREADME.md[0m
+    [1;34md[33mr[31mw[32mx[0m[33mr[1;90m-[0m[32mx[33mr[1;90m-[0m[32mx[0m      [1;90m-[0m [1;33mpops[0m [34m 3 Feb 15:16[0m  [1;34msetup-hypr[0m
+    ---------------------------------------------------"
+    read -n1 -rep "(y/n) $: " OPTIONAL_DEPS_RUST
+
+    echo -e "
+    ${GREEN}   __  __       
+    ${GREEN}  / /_/ /___  __
+    ${GREEN} / __/ __/ / / /
+    ${GREEN}/ /_/ /_/ /_/ / 
+    ${GREEN}\__/\__/\__, /  
+    ${GREEN}       /____/    ${RESET}
+    "
+    echo -e "\n${WHITE_BOLD}Install tty login? ${RESET}"
+    read -n1 -rep "(y/n) $: " TTY_INSTALL
+}
+
+# check for internet
+if ping -w 1 x.org >/dev/null 2>&1; then
+    echo -e "[${BLUE}ok${RESET}] Found internet connection" 
+else 
+    echo -e "[${RED}fail${RESET}] Internet connection required, please connect to a network!"
+    exit 1
+fi
+
+get_options
+
+if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then 
+    echo -e "${RED}Choose a valid option${RESET}"
+else 
+    install_yay 
+    stage_1
+fi
