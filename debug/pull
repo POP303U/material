@@ -4,6 +4,8 @@ rm -r ../configs/.config # really fucking dangerous operation
 mkdir -pv ../configs/etc
 mkdir -pv ../configs/.config
 mkdir -pv ../configs/.icons/default
+mkdir -pv ../configs/.local/share
+mkdir -pv ../configs/.local/share/kxmlgui5
     
 cp -rvf ~/.config/autoclicker    ../configs/.config/
 cp -rvf ~/.config/swaylock       ../configs/.config/
@@ -29,6 +31,10 @@ cp -rvf ~/.config/xsettingsd     ../configs/.config/
 cp -rvf /etc/issue               ../configs/etc/
 cp -rvf /etc/motd                ../configs/etc/
 cp -rvf ~/.bashrc                ../configs/
+
+cp -rvf ~/.local/share/dolphin/ ../configs/.local/share/
+cp -rvf ~/.local/share/kxmlgui5/dolphin/ ../configs/.local/share/kxmlgui5/
+
 cp -rvf ~/.gtkrc-2.0             ../configs/
 cp -rvf ~/.icons/default/index.theme         ../configs/.icons/default/
 cp -rvf ~/.tmux.conf                         ../configs/
