@@ -1,0 +1,29 @@
+#!/bin/sh
+
+source ./functions
+if [ $? -ne 0 ]; then
+    echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
+    exit 1
+fi
+
+ARCHIVE_DIR="../archives"
+
+extract_fonts() {
+    mkdir -pv $HOME/.local/share/fonts
+    for FONT in $(ls -1 $ARCHIVE_DIR/Font_*); do
+        sudo tar -xf $ARCHIVE_DIR/$FONT -C $HOME/.local/share/fonts
+    done
+
+    fc-cache -rf
+}
+
+extract_gtk() {
+    mkdir -pv $HOME/.themes
+    for THEME in $(ls -1 $ARCHIVE_DIR/Gtk_*); do
+        sudo tar -xf $ARCHIVE_DIR/$THEME -C $HOME/.themes
+    done
+}
+
+# Extract gtk themes and fonts into correct directories
+extract_fonts
+extract_gtk

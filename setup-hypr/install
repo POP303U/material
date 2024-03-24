@@ -155,3 +155,8 @@ stage_4() {
     echo -e "Stage-${STAGE} installation finished!"
     enable_sddm_quest
 }
+
+stage_1
+
+# Extract gtk themes and fonts into correct directories
+source ./install_archives

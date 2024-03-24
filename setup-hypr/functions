@@ -155,6 +155,13 @@ check_wifi() {
     fi
 }
 
+# Usage: extract_tar_gz "filepath"
+# Description: Extracts an tar.gz file 
+extract_tar_gz() {
+    local FILE=$1
+    tar -xzf $FILE
+}
+
 # Usage: copy_config
 # Description: Copies config to your users home folder and sets all permissions + symlinks
 copy_config() {
