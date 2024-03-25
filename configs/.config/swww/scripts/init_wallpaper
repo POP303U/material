@@ -3,4 +3,9 @@
 CURRENT_RICE=$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)
 CURRENT_WALL=$(awk '/wallpaper-current/ {print $NF}' $HOME/.config/material/config)
 
-swww init && swww img "$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_WALL"
+swww query
+if [ $? -eq 1 ]; then
+    swww-daemon --format xrgb &
+fi
+
+swww img "$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_WALL"
