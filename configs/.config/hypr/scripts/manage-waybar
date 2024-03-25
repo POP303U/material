@@ -16,10 +16,12 @@ WAYBAR="waybar -c $HOME/.config/waybar/bar/${BAR_CURRENT}/config.jsonc -s $HOME/
 if [[ $BLUR_CURRENT =~ ^\s*# ]]; then
     if [[ $BLUR_FLAG == "true" ]]; then
         sed -i 's|.*layerrule = blur,waybar.*|    layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+        hyprctl reload
     fi
 else
     if [[ $BLUR_FLAG == "false" ]]; then
         sed -i 's|.*layerrule = blur,waybar.*|    #layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+        hyprctl reload
     fi
     echo "There is no # at the beginning of the statement, not modifying blur"
 fi
@@ -30,5 +32,3 @@ if pgrep -x "waybar" >/dev/null; then
 else 
     $WAYBAR #>/dev/null 2>&1 &
 fi
-
-hyprctl reload
