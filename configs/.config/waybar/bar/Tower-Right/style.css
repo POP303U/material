@@ -97,11 +97,6 @@ label:focus {
     background-color: #f53c3c;
 }
 
-#pulseaudio.muted {
-    background-color: #f7768e;
-    color: #282828;
-}
-
 #disk {
     background-color: @love;
 }
