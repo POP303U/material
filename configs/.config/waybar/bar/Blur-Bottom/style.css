@@ -15,9 +15,11 @@ window#waybar {
 tooltip {
     background: @surface;
     border-color: @base;
-    border-radius: 10px;
-    border-width: 2px;
     border-style: solid;
+    border-radius: 25px;
+    border-width: 2px;
+    padding: 100px;
+    margin: 100px;
 }
 
 #workspaces button {
@@ -53,8 +55,12 @@ tooltip {
     border-radius: 10px;
 }
 
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher,
 #custom-weather,
-#custom-arch_logo,
 #keyboard-state,
 #clock,
 #battery,
@@ -79,7 +85,6 @@ tooltip {
 
 #tray {
     border-radius: 10px;
-    margin-left: 10px;
 }
 
 #workspaces {
@@ -87,20 +92,6 @@ tooltip {
     margin-left: 10px;
     padding-right: 0px;
     padding-left: 0px;
-}
-
-#custom-bg_switcher {
-    color: @iris;
-    border-radius: 10px 0px 0px 10px;
-    border-left: 0px;
-    border-right: 0px;
-}
-
-#custom-power_button {
-    color: @love;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
-    border-left: 0px;
 }
 
 #clock {
@@ -144,9 +135,52 @@ tooltip {
     margin-right: 10px;
 }
 
-#custom-arch_logo {
-    color: @foam;
-    border-radius: 10px;
-    margin-right: 0px;
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+#custom-waybar_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 10px;
+    padding-right: 15px;
+}
+
+#custom-theme_settings {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 10px 0px 0px 10px;
     margin-left: 10px;
+    padding-left: 10px;
+}
+
+#custom-wall_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-theme_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-power_button {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
 }

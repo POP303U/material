@@ -16,14 +16,21 @@
     ],
 
     "modules-center": [
-        "hyprland/workspaces"
+        "hyprland/workspaces",
     ],
 
     "modules-right": [
+        "custom/theme_settings",
+        "custom/power_button", 
+        "custom/wall_switcher",
+        "custom/theme_switcher",
+        "custom/waybar_switcher",
+        "custom/seperator",
         "pulseaudio", 
         "pulseaudio#microphone",
         "clock", 
-        "tray"],
+        "tray",
+    ],
 
    "hyprland/workspaces": {
         "active-only":false,
@@ -66,6 +73,58 @@
         }
     },
 
+    "custom/waybar_switcher": {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   switch waybar",
+        "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/power_button" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   show logout",
+        "on-click": "~/.config/hypr/scripts/manage-wlogout",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/theme_settings" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   launch settings",
+        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click-right": "~/.config/hypr/scripts/system-upgrade",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/theme_switcher" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   change theme",
+        "on-click": "~/.config/hypr/scripts/rice-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/wall_switcher" : {
+        "rotate": 0,
+        "format": "󰋩{}",
+        "exec": "echo ; echo 󰋩  change wallpaper",
+        "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "interval": 86400,
+        "tooltip": true
+    },
+
     "keyboard-state": {
         "numlock": true,
         "capslock": true,
@@ -92,21 +151,14 @@
 
     "cpu": {
         "interval": 1,
-        "format": "󰻠 {}%",
+        "format": "󰻠 {usage}%",
         "max-length": 10
     },
 
     "memory": {
-        "format": " {}%" 
+        "format": "󰍛 {}%" 
     },
-    "temperature": {
-        // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
-    },
+
     "battery": {
         "states": {
             // "good": 95,
@@ -124,6 +176,11 @@
     "battery#bat2": {
         "bat": "BAT2"
     },
+
+    "custom/seperator" : {
+        "format" : " ",
+    },
+
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) ",
@@ -171,20 +228,13 @@
     },
 
     "custom/arch_logo": {
+        "rotate": 0,
+        "format" : "󰣇{}",
+        "exec": "echo ; echo 󰣇  update system",
         "on-click": "~/.config/hypr/scripts/system-upgrade",
-        "format" : "󰣇",
+        "interval": 86400,
+        "tooltip": true
     },
-
-    "custom/power_button" : {
-        "on-click": "~/.config/hypr/scripts/wlogout",
-        "format" : "",
-    },
-
-    "custom/bg_switcher" : {
-        "on-click": "wofi-wallpaper",
-        "format" : "󱨀",
-    },
-
 
     "disk": {
         "interval": 30,

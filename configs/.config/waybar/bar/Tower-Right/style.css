@@ -7,6 +7,13 @@
 
 @import "../../themes/theme.css";
 
+#tooltip {
+    background: @bar-tr;
+    border-color: @base;
+    border-width: 2px;
+    border-style: solid;
+}
+
 window#waybar {
     background: @bar-tr;
     border-radius: 20px;
@@ -25,18 +32,16 @@ window#waybar {
 #window,
 #tray,
 #backlight 
-#clock,
 #language,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
+#keyboard-state,
 #custom-weather,
 #custom-arch_logo,
-#keyboard-state,
-#network,
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher,
+#custom-seperator,
 #pulseaudio {
     background: @surface;
     color: @base;
@@ -92,12 +97,10 @@ label:focus {
     background-color: #f53c3c;
 }
 
-
 #pulseaudio.muted {
     background-color: #f7768e;
     color: #282828;
 }
-
 
 #disk {
     background-color: @love;
@@ -169,6 +172,36 @@ label:focus {
     background-color: @foam;
 }
 
-#custom-weather {
-    background-color: @pine;
+#custom-seperator {
+    background: @bar-tr;
+    opacity: 0.0;
+    margin: 0px;
+    padding: 0px;
+    border: 0px solid transparent;
+}
+
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher {
+    background: transparent;
+    color: @rose;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+#custom-waybar_switcher {
+    border-radius: 0px 0px 10px 10px;
+    padding-bottom: 10px;
+}
+
+#custom-theme_settings {
+    border-radius: 10px 10px 0px 0px;
+    padding-top: 8px;
 }

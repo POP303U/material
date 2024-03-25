@@ -50,10 +50,13 @@ tooltip {
     border-radius: 10px;
 }
 
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher,
 #custom-power_profile,
 #custom-weather,
-#custom-power_button,
-#custom-bg_switcher,
 #keyboard-state,
 #clock,
 #battery,
@@ -70,8 +73,6 @@ tooltip {
     background: @surface;
     opacity: 9.9;
     padding: 0px 10px;
-    margin: 0px 0px;
-    margin-bottom: 10px;
     border: 2px solid @base;
 }
 
@@ -81,7 +82,6 @@ tooltip {
 
 #tray {
     border-radius: 10px;
-    margin-right: 10px;
 }
 
 #workspaces {
@@ -97,20 +97,6 @@ tooltip {
     margin-left: 10px;
     padding-right: 0px;
     padding-left: 5px;
-}
-
-#custom-bg_switcher {
-    color: @iris;
-    border-radius: 10px 0px 0px 10px;
-    border-left: 0px;
-    border-right: 0px;
-}
-
-#custom-power_button {
-    color: @love;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
-    border-left: 0px;
 }
 
 #clock {
@@ -176,4 +162,54 @@ tooltip {
     border-radius: 10px 10px 10px 10px;
     border-right: 0px;
     margin-right: 10px;
+}
+
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+#custom-waybar_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 10px;
+    padding-right: 15px;
+}
+
+#custom-theme_settings {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 10px 0px 0px 10px;
+    margin-left: 10px;
+    padding-left: 10px;
+}
+
+#custom-wall_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-theme_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-power_button {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
 }

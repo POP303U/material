@@ -50,10 +50,13 @@ tooltip {
     transition: all 0.3s ease-in-out;
 }
 
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher, 
 #custom-power_profile,
 #custom-weather,
-#custom-power_button,
-#custom-bg_switcher,
 #keyboard-state,
 #clock,
 #battery,
@@ -114,3 +117,32 @@ tooltip {
 #custom-weather {
     color: @foam;
 }
+
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-top: 1px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 7px;
+    margin-left: 7px;
+}
+
+#custom-waybar_switcher {
+    background-color: @surface;
+    color: @rose;
+    margin-right: 5px;
+    padding-right: 10px;
+}
+
+#custom-theme_settings {
+    background-color: @surface;
+    color: @rose;
+    margin-left: 10px;
+    padding-left: 10px;
+}
+

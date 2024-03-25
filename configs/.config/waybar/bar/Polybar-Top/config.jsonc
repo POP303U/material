@@ -15,7 +15,13 @@
         "custom/weather",
     ],
     
-    "modules-center": [],
+    "modules-center": [
+        "custom/theme_settings",
+        "custom/power_button", 
+        "custom/wall_switcher",
+        "custom/theme_switcher",
+        "custom/waybar_switcher",
+    ],
 
     "modules-right": [
         "disk",
@@ -63,6 +69,58 @@
         "return-type" : "json"
     },
 
+    "custom/waybar_switcher": {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   switch waybar",
+        "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/power_button" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   show logout",
+        "on-click": "~/.config/hypr/scripts/manage-wlogout",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/theme_settings" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   launch settings",
+        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click-right": "~/.config/hypr/scripts/system-upgrade",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/theme_switcher" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   change theme",
+        "on-click": "~/.config/hypr/scripts/rice-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/wall_switcher" : {
+        "rotate": 0,
+        "format": "󰋩{}",
+        "exec": "echo ; echo 󰋩  change wallpaper",
+        "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "interval": 86400,
+        "tooltip": true
+    },
+
     "custom/seperator" : {
         "format" : "|",
     },
@@ -94,7 +152,8 @@
     },
 
     "clock": {
-        "format": "{: %I:%M %p   %a, %b %e}",
+        "format": " {:%I:%M %p}",
+        "format-alt": " {:%I:%M %p  󰃭 %a, %b %e}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
@@ -147,13 +206,16 @@
     },
 
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "  {signalStrength}%",
-        "format-ethernet": "{ipaddr}/{cidr}",
-        "tooltip-format": "{essid} - {ifname} via {gwaddr}",
-        "format-linked": "{ifname} (No IP)",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
+        "tooltip": true,
+        "format-wifi": " ",
+        "rotate": 0,
+        "format-ethernet": "󰈀 {ipaddr}",
+        "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "󰖪 ",
+        "tooltip-format-disconnected": "Disconnected",
+        "format-alt": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "interval": 2,
     },
 
     "bluetooth": {
