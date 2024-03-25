@@ -19,6 +19,10 @@ set -o vi
 shopt -s histappend
 shopt -s checkwinsize
 
+# Cycle through selections like zsh
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=-1
 HISTSIZE=~/.bash_history
@@ -31,7 +35,6 @@ HISTCONTROL=ignoreboth
 ################################################################################
 
 export PROMPT_COMMAND=shortened_pwd # store current shortened path in $CURRENT_PATH
-export QT_QPA_PLATFORMTHEME=qt5ct
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/.config/emacs/bin
 export PATH=$PATH:~/.config/wofi/scripts
@@ -465,6 +468,7 @@ fix-pacman() {
     sudo rm -R /var/lib/pacman/sync
     sudo rm -rf /var/lib/pacman/db.lck
     sudo pacman -Fy
+    sudo pacman -Sy
 }
 
 die() {
