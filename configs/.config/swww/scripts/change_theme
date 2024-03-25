@@ -58,35 +58,6 @@ CURRENT_RICE=$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")
 CURRENT_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 CURRENT_BG=${2:-$CURRENT_BG} # make manual wallpapers possible
 
-# Swww
-TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
-sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
-
-# you need dynamic `rose-pine-sddm` for this to work, check the installer for this option
-cp -vrf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
-swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
-    --transition-bezier .6,.94,.86,.23     \
-    --transition-type "${TRANSITION_TYPE}" \
-    --transition-duration 0.7              \
-    --transition-fps 144                   \
-    --invert-y                             \
-    --transition-pos "2502, 1410"
-
-
-# Wofi
-sed -i -e '/@define-color base/s: .*;: base '"$(awk '/@define-color base/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color surface/s: .*;: surface '"$(awk '/@define-color surface/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color overlay/s: .*;: overlay '"$(awk '/@define-color overlay/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color muted/s: .*;: muted '"$(awk '/@define-color muted/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color subtle/s: .*;: subtle '"$(awk '/@define-color subtle/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color text/s: .*;: text '"$(awk '/@define-color text/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color love/s: .*;: love '"$(awk '/@define-color love/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color gold/s: .*;: gold '"$(awk '/@define-color gold/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color rose/s: .*;: rose '"$(awk '/@define-color rose/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color pine/s: .*;: pine '"$(awk '/@define-color pine/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color foam/s: .*;: foam '"$(awk '/@define-color foam/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':' \
-    -e '/@define-color iris/s: .*;: iris '"$(awk '/@define-color iris/ {print $NF}' ~/.config/wofi/themes/${CURRENT_RICE}.css)"':'  ~/.config/wofi/style.css
-
 # Tmux
 sed -i 's|^set -g status-bg.*|set -g status-bg '$([[ "$MODE" == "light" ]] && echo "white" || echo "black" )'|' $HOME/.tmux.conf
 
@@ -154,6 +125,12 @@ ln -sf $HOME/.config/fuzzel/themes/${CURRENT_RICE}.ini $HOME/.config/fuzzel/fuzz
 # Rofi
 ln -sf $HOME/.config/rofi/themes/${CURRENT_RICE}.rasi $HOME/.config/rofi/themes/theme.rasi
 
+# Wofi (hacky symlink to pywal path but who cares)
+ln -sf $HOME/.config/wofi/themes/${CURRENT_RICE} $HOME/.cache/wal/colors 
+
+# Hyprland
+ln -sf ~/.config/hypr/themes/${CURRENT_RICE}.conf ~/.config/hypr/themes/theme.conf 
+
 # Dolphin (just reloading)
 ACTIVE_WORKSPACE=$(hyprctl -j activeworkspace | jq '.id')
 if [ "$(hyprctl -j clients | jq --arg wid "$ACTIVE_WORKSPACE" '.[] | select(.workspace.id == ($wid | tonumber)) | select(.class == "org.kde.dolphin") | .mapped')" == "true" ] ; then
@@ -161,6 +138,19 @@ if [ "$(hyprctl -j clients | jq --arg wid "$ACTIVE_WORKSPACE" '.[] | select(.wor
     dolphin &
 fi
 
-# Hyprland
-ln -sf ~/.config/hypr/themes/${CURRENT_RICE}.conf ~/.config/hypr/themes/theme.conf 
+# Swww
+TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
+sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
+
+# you need dynamic `rose-pine-sddm` for this to work, check the installer for this option
+cp -vrf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
+    --transition-bezier .6,.94,.86,.23     \
+    --transition-type "${TRANSITION_TYPE}" \
+    --transition-duration 0.7              \
+    --transition-fps 144                   \
+    --invert-y                             \
+    --transition-pos "2502, 1410"
+
+# reload at the end
 hyprctl reload
