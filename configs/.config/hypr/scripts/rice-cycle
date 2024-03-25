@@ -22,8 +22,6 @@ function reload_and_save() {
     echo $NEXT_RICE
     echo $CURRENT_RICE
     echo $RICE_DIR
-    killall waybar && ~/.config/hypr/scripts/manage-waybar & >/dev/null 2>&1
-    hyprctl reload
 }
 
 function select_rice() {

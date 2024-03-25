@@ -47,12 +47,15 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PROJECTS="/mnt/sdc1/Projects/"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GREP_OPTIONS="--color=auto"
+export LS_OPTS='--color=auto'
 export LESS_TERMCAP_md=$'\e[01;31m'
 export LESS_TERMCAP_me=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[01;32m' 
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[45;93m' 
 export LESS_TERMCAP_se=$'\e[0m'
+
 export GRC="$(command -v grc)"
 
 # get list of packages that needs this package
@@ -130,6 +133,7 @@ alias getsebool='colourify getsebool'
 alias ifconfig='colourify ifconfig'
 alias sockstat='colourify sockstat'
 
+alias less='less --RAW-CONTROL-CHARS'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -255,9 +259,10 @@ if [[ -e "$HOME/.cargo/bin/eza" || -f "/usr/bin/eza" ]]; then
     alias ll='eza --all       --icons --long --colour=always --binary --header'
     alias l.='eza             --icons --long --colour=always --binary --header'
 else
-    alias la='ls -laH'
-    alias ll='ls -lA'
-    alias l.='ls -l'
+    alias ls='ls ${LS_OPTS}'
+    alias la='ls -laH ${LS_OPTS}'
+    alias ll='ls -lA ${LS_OPTS}'
+    alias l.='ls -l ${LS_OPTS}'
 fi
 
 ################################
@@ -456,8 +461,10 @@ calc() {
 }
 
 fix-pacman() {
+    echo "Don't run this while another pacman instance is running!! (Press Enter to continue)"; read _D_
     sudo rm -R /var/lib/pacman/sync
-    sudo pacman -Sy
+    sudo rm -rf /var/lib/pacman/db.lck
+    sudo pacman -Fy
 }
 
 die() {

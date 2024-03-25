@@ -19,7 +19,7 @@ function reload_and_save() {
     sed -i 's|wallpaper-current.*|wallpaper-current = '$NEXT_ELEMENT'|' ~/.config/material/config
 
     # Only reload waybar if transparency is present
-    if [[ "$CURRENT_BAR" == "lefty" || "$CURRENT_BAR" == "righty" ]]; then touch ~/.config/hypr/hyprland.conf; fi
+    echo $CURRENT_BAR
 }
 
 function get_resolution() {

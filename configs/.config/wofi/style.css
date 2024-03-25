@@ -1,21 +1,8 @@
-@define-color base #191724;
-@define-color surface #1F1D2E;
-@define-color overlay #26233A;
-@define-color muted #6E6A86;
-@define-color subtle #908CAA;
-@define-color text #E0DEF4;
-@define-color love #EB6F92;
-@define-color gold #F6C177;
-@define-color rose #EBBCBA;
-@define-color pine #31748f;
-@define-color foam #9CCFD8;
-@define-color iris #C4A7E7;
-
 #window {
     margin: 0px;
-    border: 3px solid @rose;
+    border: 3px solid --wofi-color8;
     font-size: 15px;
-    background-color: @surface;
+    background-color: --wofi-color1;
     border-radius: 20px;
 }
 
@@ -29,24 +16,24 @@
     border: none;
     font: "JetbrainsMono Nerd Font";
     font-weight: bold;
-    background-color: @surface;
+    background-color: --wofi-color1;
    	outline: none;
     border-radius: 15px;
-    border: 4px solid @base;
+    border: 4px solid --wofi-color0;
     margin: 10px;
     margin-bottom: 2px;
 }
 
 #input:focus {
-    color: @text;
+    color: --wofi-color5;
 }
 
 #inner-box {
     margin: 4px;
-    border: 10px solid @surface;
-    color: @text;
+    border: 10px solid --wofi-color1;
+    color: --wofi-color5;
     font-weight: bold;
-    background-color: @surface;
+    background-color: --wofi-color1;
     border-radius: 15px;
 }
 
@@ -66,7 +53,7 @@
 }
 
 #text:selected {
-    color: @surface;
+    color: --wofi-color1;
     background-color: transparent;
     margin: 0px 0px;
     border: none;
@@ -84,7 +71,7 @@
     margin: 0px 0px;
     border: none;
     border-radius: 15px;
-    background: linear-gradient(90deg, @foam 0%,  @text 100%);
+    background: linear-gradient(90deg, --wofi-color10 0%,  --wofi-color5 100%);
 }
 
 #img {

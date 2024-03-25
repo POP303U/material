@@ -17,11 +17,7 @@ function reload_and_save() {
     # long if statement to check if blur is present in the bar, if it is set it, if not unset
     [[ "$(cat "$HOME/.config/waybar/bar/$NEXT_BAR" | grep blurls | awk -F '=' '{print $2}')" == "true" ]] && sed -i 's|blur-state.*|blur-state = on|' ~/.config/material/config || sed -i 's|blur-state.*|blur-state = off|' ~/.config/material/config
     sed -i 's|bar-current.*|bar-current = '$NEXT_BAR'|' ~/.config/material/config
-    echo $NEXT_BAR
-    echo $CURRENT_WAYBAR
-    echo $RICE_DIR
-    killall waybar && ~/.config/hypr/scripts/manage-waybar & >/dev/null 2>&1
-    hyprctl reload
+    ~/.config/hypr/scripts/manage-waybar & >/dev/null 2>&1
 }
 
 function select_waybar() {

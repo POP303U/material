@@ -5,11 +5,6 @@ set -euox pipefail
 LAUNCHER=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
 [[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || LAUNCHER="$LAUNCHER --dmenu" # patch for rofi
 
-function change_bar() {
-	CHANGE_BAR="/home/${USER}/.config/hypr/scripts/set-waybar"
-	$CHANGE_BAR $BAR_NAME
-}
-
 # use --cache-file /dev/null to use predefined order
 SELECTION="$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/waybar/rices/#entries# | $LAUNCHER -p "~ Material bar changer ~ " -i)"
 BAR_FULL_NAME="$(echo $SELECTION | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
@@ -21,4 +16,5 @@ if [[ ! -f "$BAR_FILE" ]]; then
     exit 1
 fi
 
-change_bar
+sed -i 's|^bar-current.*|bar-current = '$BAR_NAME'|' ~/.config/material/config
+$HOME/.config/hypr/scripts/manage-waybar
