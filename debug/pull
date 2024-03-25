@@ -7,7 +7,6 @@ mkdir -pv ../configs/.icons/default
 mkdir -pv ../configs/.local/share
 mkdir -pv ../configs/.local/share/kxmlgui5
     
-cp -rvf ~/.config/autoclicker    ../configs/.config/
 cp -rvf ~/.config/swaylock       ../configs/.config/
 cp -rvf ~/.config/wlogout        ../configs/.config/
 cp -rvf ~/.config/fuzzel         ../configs/.config/
@@ -39,5 +38,4 @@ cp -rvf ~/.gtkrc-2.0             ../configs/
 cp -rvf ~/.icons/default/index.theme         ../configs/.icons/default/
 cp -rvf ~/.tmux.conf                         ../configs/
 cp -rvf ~/.bin                               ../configs/
-cp -rvf ~/.themes                            ../configs/
 # nice
