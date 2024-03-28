@@ -31,6 +31,7 @@ rice-transition = grow
 # WLOGOUT -
 wlogout-theme = Normal
 wlogout-keybinds-show = on
+system-theme = light
 
 # HYPRLAND -
 corner-rounding = 20

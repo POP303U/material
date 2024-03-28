@@ -13,3 +13,5 @@ $(cat $HOME/.config/material/config)
 
 :: Start of logs $(date)
 [$(dirname "$(realpath "$0")")::log] logging started..." > /tmp/material-logfile
+
+mkdir -pv /tmp/material/null >> /tmp/material-logfile

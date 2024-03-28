@@ -1,0 +1,13 @@
+#!/bin/sh
+
+source ./functions
+if [ $? -ne 0 ]; then
+    echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
+    exit 1
+fi
+
+SEARCH_DIRECTORY_1="$HOME/.cache/mozilla/firefox"
+SEARCH_DIRECTORY_2="$HOME/.mozilla/firefox"
+
+echo "script unfinished"
+exit 1

@@ -6,6 +6,14 @@ TRANSITION_TYPE="$(awk '/rice-transition/ {print $NF}' ~/.config/material/config
 sed -i 's|wallpaper-current.*|wallpaper-current = '$(basename $1)'|' ~/.config/material/config
 
 # Set sddm wallpaper too  
+$HOME/.config/hypr/scripts/blur-wallpaper $1 & # generated blurred background
+
+PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
+if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
+    $HOME/.config/swww/scripts/change_theme_perltone
+    exit 0
+fi
+
 cp -vrf ${1} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 swww img ${1} \
     --transition-bezier .6,.94,.86,.23\

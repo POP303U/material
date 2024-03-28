@@ -17,7 +17,7 @@
 # BAR -
 blur-state = off
 bar-state = on
-bar-current = Compact-Bottom
+bar-current = Blur-Bottom
 
 # ANIMATIONS -
 animations-state = on
@@ -29,8 +29,9 @@ rice-current = Rose-Pine
 rice-transition = wave
 
 # WLOGOUT -
-wlogout-theme = Normal
+wlogout-theme = Compact
 wlogout-keybinds-show = off
+system-theme = dark
 
 # HYPRLAND -
 corner-rounding = 10

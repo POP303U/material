@@ -79,6 +79,7 @@ stage_1() {
 
     echo -e "[${PURPLE}info${RESET}] Copying config files..."
     copy_config 
+    set_hypr_modkey $MODKEY # change to user preferred modkey
 
     echo -e "[${PURPLE}info${RESET}] Starting Services..."
     start_services

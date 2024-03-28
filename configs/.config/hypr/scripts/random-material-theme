@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# Generate a random material config file
+set -euo pipefail
+
+TEMPLATE="$HOME/.config/material/templates/material.template"
+THEME_PATH="$HOME/.config/material/themes"
+RANDOM_THEME="random_theme.$RANDOM"
+
+cp $TEMPLATE $THEME_PATH/$RANDOM_THEME
+
+### Temporary variables
+_MATERIAL_BARS=$(dir -1 $HOME/.config/waybar/bar | sort --sort=random | sed '/#/d')
+_MATERIAL_RICES=$(dir -1 $HOME/.config/swww/rices | sort --sort=random | sed '/#/d')
+_MATERIAL_RICES_ONE=$(echo $_MATERIAL_RICES | sed 's| .*| |' | xargs)
+_MATERIAL_WALLPAPERS=$(dir -1 $HOME/.config/swww/walls/$_MATERIAL_RICES_ONE | sort --sort=random)
+_MATERIAL_WLOGOUT=$(dir -1 $HOME/.config/wlogout/logout | sort --sort=random)
+_HYPR_ANIMATIONS=$(dir -1 $HOME/.config/hypr/animations | sort --sort=random)
+_MATERIAL_ANIMATIONS=$(dir -1 $HOME/.config/wofi/manager/submenus/swww_transition_type | sort --sort=random)
+
+### Below is every config key randomly generated in order of the default config (except for BAR_CURRENT)
+BAR_CURRENT=$(echo $_MATERIAL_BARS | sed 's| .*| |' | xargs)
+BLUR_STATE=$(awk -F '=' '/blurls/ {print $2}' $HOME/.config/waybar/rices/$BAR_CURRENT)
+BAR_STATE="on" # TODO: Make it random
+
+ANIMATIONS_STATE="on" # TODO: Make it random
+NIMATIONS_CURRENT=$(echo $_HYPR_ANIMATIONS | awk -F '.' '{print $1}') 
+
+RICE_CURRENT=$(echo $_MATERIAL_RICES | sed 's| .*| |' | xargs)
+WALLPAPER_CURRENT=$(echo $_MATERIAL_WALLPAPERS | sed 's| .*| |' | xargs)
+RICE_TRANSITION=$( [[ $(echo $_MATERIAL_ANIMATIONS | sed 's| .*| |' | xargs) == "#entries#" ]] && echo "Wave" || echo $(echo $_MATERIAL_ANIMATIONS | sed 's| .*| |'))
+
+WLOGOUT_THEME=$(echo $_MATERIAL_WLOGOUT | sed 's| .*| |' | xargs)
+WLOGOUT_KEYBINDS_SHOW="on" # TODO: Make it random
+
+### Insert all variables to the random theme
+sed -i 's|blur-state.*|blur-state = '$BLUR_STATE'|' $THEME_PATH/$RANDOM_THEME
+sed -i 's|bar-state.*|bar-state = '$BAR_STATE'|' $THEME_PATH/$RANDOM_THEME
+sed -i 's|bar-current.*|bar-current= '$BAR_CURRENT'|' $THEME_PATH/$RANDOM_THEME
+
+sed -i 's|animations-state.*|animations-state = '$ANIMATIONS_STATE'|' $THEME_PATH/$RANDOM_THEME
+sed -i 's|animations-current.*|animations-current = '$ANIMATIONS_CURRENT'|' $THEME_PATH/$RANDOM_THEME
+
+sed -i 's|wallpaper-current.*|wallpaper-current = '$WALLPAPER_CURRENT'|' $THEME_PATH/$RANDOM_THEME
+sed -i 's|rice-current.*|rice-current = '$RICE_CURRENT'|' $THEME_PATH/$RANDOM_THEME
+sed -i 's|rice-transition.*|rice-transition = '${RICE_TRANSITION,,}'|' $THEME_PATH/$RANDOM_THEME
+
+sed -i 's|wlogout-theme.*|wlogout-theme = '$WLOGOUT_THEME'|' $THEME_PATH/$RANDOM_THEME
+sed -i 's|wlogout-keybindings-show.*|wlogout-keybindings-show = '$WLOGOUT_KEYBINDS_SHOW'|' $THEME_PATH/$RANDOM_THEME
+
+echo "---- Settings generated -----"
+echo $BLUR_STATE
+echo $BAR_STATE
+echo $BAR_CURRENT
+
+echo $ANIMATIONS_STATE
+echo $ANIMATIONS_CURRENT
+
+echo $WALLPAPER_CURRENT
+echo $RICE_CURRENT
+echo $RICE_TRANSITION
+
+echo $WLOGOUT_THEME
+echo $WLOGOUT_KEYBINDS_SHOW 
+echo "---- You can find the theme in '$THEME_PATH/$RANDOM_THEME' -----"
+
+echo "Who knows? maybe you'll like it!"

@@ -130,6 +130,8 @@ tooltip {
     padding-right: 0px;
     margin-right: 7px;
     margin-left: 7px;
+    border-top: 3px solid @base;
+    border-bottom: 3px solid @base;
 }
 
 #custom-waybar_switcher {

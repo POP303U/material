@@ -1,0 +1,32 @@
+{
+    "hex": {      
+                  // -- Hex values for colors -- //
+        "base": "#191724",                   // Dark background color, Border color
+        "surface": "#1f1d2e",                // Surface color for applications
+        "overlay": "#26233a",                // Brighter color than surface for selected entries
+        "muted": "#6e6a86",                  // For disabled entries
+        "subtle": "#908caa",                 // For selected entries
+        "white": "#e0def4",                  // White color
+        "red": "#eb6f92",                    // Red color
+        "yellow": "#f6c177",                 // Yellow color
+        "cyan": "#ebbcba",                   // Cyan color
+        "green": "#31748f",                  // Green color
+        "blue": "#9ccfd8",                   // Blue color
+        "magenta": "#c4a7e7",                // Magenta color
+        "battery": "#90EE90",                // Color of battery module in waybar
+        "workspace_inactive": "#313244",     // Background color of inactive workspace in waybar
+        "workspace_active": "#a6adc8",       // Background color of active workspace in waybar
+
+                  // -- Miscellaneous values -- //
+        // These colors should be manually adjusted so your terminal colors don't look horrible
+        "background": "#191724",             // Should be inherited from hex.base
+        "foreground": "#e8e5ec",             // Should be inherited from hex.white
+        "cursor": "#6e6a86"                  // Should be inherited from hex.muted
+    },
+
+    "rgba": {     
+                  // -- Rgba values for colors -- //
+        "transparent": "rgba(0, 0, 0, 0)",   // Placeholder for transparency, should be left alone
+        "base": "rgba(25, 23, 36, 0.6)",     // Color for transparent waybars, make sure alpha is set to be transparent
+    }
+}

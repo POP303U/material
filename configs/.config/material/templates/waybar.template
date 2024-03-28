@@ -1,0 +1,19 @@
+@define-color bar-bg rgba(0,0,0,0);
+@define-color bar-tr <material.hex.base-transparent>;
+
+@define-color base #<material.hex.base>;
+@define-color surface #<material.hex.surface>;
+@define-color overlay #<material.hex.overlay>;
+@define-color muted #<material.hex.muted>;
+@define-color subtle #<material.hex.subtle>;
+@define-color text #<material.hex.white>;
+@define-color love #<material.hex.color3>;
+@define-color gold #<material.hex.color4>;
+@define-color rose #<material.hex.color5>;
+@define-color pine #<material.hex.color6>;
+@define-color foam #<material.hex.color5>;
+@define-color iris #<material.hex.color0>;
+
+@define-color battery #<material.hex.color1>;
+@define-color workspace-button-inactive #<material.hex.color2>;
+@define-color workspace-button-active #<material.hex.white>;

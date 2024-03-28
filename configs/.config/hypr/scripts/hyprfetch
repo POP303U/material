@@ -13,7 +13,7 @@ GTK_THEME="$(grep -m 1 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk 
 GTK_FONT="$(grep -m 3 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 GTK_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 QT5_THEME="$(grep -m 3 "=" "${CONF_DIR}/qt5ct/qt5ct.conf" | tail -n 1 | awk -F '=' '{print $2}')"
-QT6_THEME="$(grep -m 3 "=" "${CONF_DIR}/qt6ct/qt6ct.conf" | tail -n 1 | awk -F '=' '{print $2}')"
+QT6_THEME="$(grep -m 2 "=" "${CONF_DIR}/Kvantum/kvantum.kvconfig" | tail -n 1 | awk -F '=' '{print $2}')"
 
 BLACK_='\033[01;30m'   # Black
 RED___='\033[01;31m'   # Red
@@ -43,8 +43,8 @@ echo -e "${RED___}  ▉▉|${RESET_} Waybar Theme${BLACK_} ....... ${RESET_}${BO
 echo -e "${WHITE_}▉▉  |${RESET_} Cursor${BLACK_} ............. ${RESET_}${BOLD__}${CURSOR}"
 echo -e "${WHITE_}  ▉▉|${RESET_} Wallpaper${BLACK_} .......... ${RESET_}${BOLD__}${WALLPAPER}"
 echo -e "${BLUE__}▉▉  |${RESET_} GTK Theme${BLACK_} .......... ${RESET_}${BOLD__}${GTK_THEME}"
-echo -e "${BLUE__}  ▉▉|${RESET_} GTK Icons${BLACK_} .......... ${RESET_}${BOLD__}${GTK_ICONS}"
-echo -e "${YELLOW}▉▉  |${RESET_} Qt6 Theme${BLACK_} .......... ${RESET_}${BOLD__}${QT6_THEME}"
+echo -e "${BLUE__}  ▉▉|${RESET_} Kvantum Theme${BLACK_} ...... ${RESET_}${BOLD__}${QT6_THEME}"
+echo -e "${YELLOW}▉▉  |${RESET_} Icon Theme${BLACK_} ......... ${RESET_}${BOLD__}${GTK_ICONS}"
 echo -e "${YELLOW}  ▉▉|${RESET_} GTK Font${BLACK_} ........... ${RESET_}${BOLD__}${GTK_FONT}"
 echo -e "${PURPLE}▉▉  |${RESET_} Swww Transition${BLACK_} .... ${RESET_}${BOLD__}${TRANSITION_TYPE}"
 echo -e "${PURPLE}  ▉▉|${RESET_} Wlogout Theme${BLACK_} ...... ${RESET_}${BOLD__}${WLOGOUT_THEME}"

@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+set -x 
 # Check if wlogout is already running
 if pgrep -x "wlogout" >/dev/null; then
     pkill -x "wlogout"
@@ -12,38 +13,56 @@ STYLE="$(awk '/wlogout-theme/ {print $NF}' $HOME/.config/material/config)"
 ### END
 
 # Add support for passing in arguments
+cd /tmp/material/null
 STYLE="${1:-$STYLE}"
+WLOGOUT_LAYOUT="$HOME/.config/wlogout/logout/$STYLE/layout.json"
+WLOGOUT_TEMPLATE="$HOME/.config/wlogout/logout/$STYLE/style.css"
+BUTTON_COLOR="$(awk '/system-theme/ {print $NF}' $HOME/.config/material/config | xargs)"
 
-case $STYLE in 
-    # ensure compatibility with old versions by using or statements
-    compact|Compact)
-        wlogout \
-            $SHOW_KEYBINDS \
-            -b 2                                                   \
-            -L 500                                                 \
-            -R 500                                                 \
-            --css      "$HOME/.config/wlogout/logout/$STYLE/style_compact.css"   \
-            --layout   "$HOME/.config/wlogout/logout/$STYLE/layout_compact.json" \
-            --protocol layer-shell
-        ;;
-    normal|Normal)
-        wlogout \
-            $SHOW_KEYBINDS \
-            --css      "$HOME/.config/wlogout/logout/$STYLE/style_normal.css"   \
-            --layout   "$HOME/.config/wlogout/logout/$STYLE/layout_normal.json" \
-            --protocol layer-shell
-        ;;
-    blocks|Blocks)
-        wlogout \
-            $SHOW_KEYBINDS \
-            -b 2                                                   \
-            -L 500                                                 \
-            -R 500                                                 \
-            --css      "$HOME/.config/wlogout/logout/$STYLE/style_blocks.css"   \
-            --layout   "$HOME/.config/wlogout/logout/$STYLE/layout_blocks.json" \
-            --protocol layer-shell
+# Reverse the button colors
+if [[ "$(echo $BUTTON_COLOR | xargs)" == "dark" ]]; then
+    export BUTTON_COLOR="light"
+else
+    export BUTTON_COLOR="dark"
+fi
+
+# detect monitor res
+X_RESOLUTION=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .width')
+Y_RESOLUTION=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .height')
+SCALING_FACTOR=$(hyprctl -j monitors | jq '.[] | select (.focused == true) | .scale' | sed 's/\.//')
+
+# scale font size
+export FONT_SIZE=$(( Y_RESOLUTION * 2 / 100 ))
+
+# Debugging: ignore
+echo $WLOGOUT_STYLE > /tmp/material/$(id -u)wlogout_style.css
+echo $WLOGOUT_TEMPLATE > /tmp/material/$(id -u)wlogout_template.css
+echo $WLOGOUT_LAYOUT > /tmp/material/$(id -u)wlogout_layout.css
+
+# Variables for wlogout
+export X_MARGIN=$(( X_RESOLUTION * 35 / SCALING_FACTOR ))
+export Y_MARGIN=$(( Y_RESOLUTION * 25 / SCALING_FACTOR ))
+export X_HOVER=$(( X_RESOLUTION * 32 / SCALING_FACTOR ))
+export Y_HOVER=$(( Y_RESOLUTION * 20 / SCALING_FACTOR )) 
+export X_HOVER_OLD=$(( X_RESOLUTION * 32 / SCALING_FACTOR / 100))
+export Y_HOVER_OLD=$(( Y_RESOLUTION * 20 / SCALING_FACTOR / 100)) 
+export CORNER_ROUNDING="$(awk '/corner-rounding/ {print $NF}' $HOME/.config/material/config)"
+
+ARGS=" -c 0 -r 0 -m 0" # Settings margins to 0 and letting style.css handle it
+case "$STYLE" in
+    Compact|Blocks)
+        BUTTON_NUM="-b 2"
         ;;
     *)
-        echo "no valid style named: $STYLE found"
+        export X_MARGIN=$(( X_RESOLUTION * 27 / SCALING_FACTOR ))
+        export Y_MARGIN=$(( Y_RESOLUTION * 17 / SCALING_FACTOR ))
+        export X_HOVER=$(( X_RESOLUTION * 24 / SCALING_FACTOR ))
+        export Y_HOVER=$(( Y_RESOLUTION * 14 / SCALING_FACTOR )) 
+        BUTTON_NUM="-b 3"
         ;;
 esac
+
+# Substitute variables at the end
+WLOGOUT_STYLE=$(envsubst < $WLOGOUT_TEMPLATE)
+
+wlogout $SHOW_KEYBINDS $BUTTON_NUM $ARGS --css <(echo $WLOGOUT_STYLE) -l $WLOGOUT_LAYOUT --protocol layer-shell

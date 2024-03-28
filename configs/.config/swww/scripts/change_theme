@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 case "$1" in
     "Rose-Pine-Dawn")
         export CURRENT_BG="material_pastel_1.jpg"
@@ -53,10 +51,22 @@ case "$1" in
         ;;
 esac
 
-sed -i 's|^rice-current.*|rice-current = '${1}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
+# Set variables for script
+CURRENT_BG=${2:-$CURRENT_BG} # make manual wallpapers possible
 CURRENT_RICE=$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")
 CURRENT_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
-CURRENT_BG=${2:-$CURRENT_BG} # make manual wallpapers possible
+sed -i 's|^rice-current.*|rice-current = '${1}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
+sed -i 's|^system-theme.*|system-theme = '${MODE}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
+sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
+
+PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
+if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
+    $HOME/.config/swww/scripts/change_theme_perltone
+    exit 0
+fi
+
+# Generated blurred background first since it takes a while
+$HOME/.config/hypr/scripts/blur-wallpaper "$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_BG" &
 
 # Tmux
 sed -i 's|^set -g status-bg.*|set -g status-bg '$([[ "$MODE" == "light" ]] && echo "white" || echo "black" )'|' $HOME/.tmux.conf
@@ -114,10 +124,7 @@ kill -SIGUSR1 $(pidof kitty) # reload
 
 # Waybar
 ln -sf ~/.config/waybar/themes/${CURRENT_RICE}.css ~/.config/waybar/themes/theme.css
-~/.config/hypr/scripts/manage-waybar &
-
-# Wlogout
-ln -sf ~/.config/wlogout/themes/${CURRENT_RICE}.css ~/.config/wlogout/themes/theme.css
+~/.config/hypr/scripts/manage-waybar & # reload
 
 # Fuzzel
 ln -sf $HOME/.config/fuzzel/themes/${CURRENT_RICE}.ini $HOME/.config/fuzzel/fuzzel.ini
@@ -140,7 +147,6 @@ fi
 
 # Swww
 TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
-sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
 
 # you need dynamic `rose-pine-sddm` for this to work, check the installer for this option
 cp -vrf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
@@ -151,6 +157,3 @@ swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
     --transition-fps 144                   \
     --invert-y                             \
     --transition-pos "2502, 1410"
-
-# reload at the end
-hyprctl reload

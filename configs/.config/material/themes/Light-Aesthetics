@@ -31,6 +31,7 @@ rice-transition = wave
 # WLOGOUT -
 wlogout-theme = Compact
 wlogout-keybinds-show = off
+system-theme = light
 
 # HYPRLAND -
 corner-rounding = 20

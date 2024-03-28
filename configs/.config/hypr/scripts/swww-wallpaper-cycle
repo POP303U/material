@@ -20,6 +20,12 @@ function reload_and_save() {
 
     # Only reload waybar if transparency is present
     echo $CURRENT_BAR
+
+    PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
+    if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
+        $HOME/.config/swww/scripts/change_theme_perltone
+        exit 0
+    fi
 }
 
 function get_resolution() {
@@ -28,6 +34,7 @@ function get_resolution() {
 
 function apply_wall() {
     # patch into sddm
+    $HOME/.config/hypr/scripts/blur-wallpaper "$RICE_DIR/$NEXT_ELEMENT" & # generate blurred background
     cp -vfr $RICE_DIR/$NEXT_ELEMENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
     swww img "$RICE_DIR/$NEXT_ELEMENT" \
         --transition-bezier .43,1.19,1,.4 \

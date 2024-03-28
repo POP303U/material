@@ -44,6 +44,26 @@ get_yaml_packages() {
     done < "$YAML_FILE"
 }
 
+# Usage: set_hypr_modkey
+# Description: Modifies the hyprland.conf $mod based on $1 (MOD4/MOD1)
+set_hypr_modkey() {
+    local MODKEY=$1
+    
+    sed -i 's|$mod.*|$mod = '$MODKEY' # written by material installer|' $HOME/.config/hypr/hyprland.conf
+}
+
+# Usage: package_installed "package_name" 
+# Description: Return 0 if package is installed 1 otherwise
+package_installed() {
+    local PACKAGE=$1
+
+    if pacman -Qi "$PACKAGE" &> /dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # Usage: install_packages "bash_array" "aur_helper"
 # Description: Installs packages provided in an bash array
 install_packages() {
@@ -51,7 +71,13 @@ install_packages() {
     local AUR_HELPER="$2"
 
     for PACKAGE in "${PACKAGES[@]}"; do
-        if $AUR_HELPER -S --noconfirm "$PACKAGE" --noconfirm >/dev/null 2>&1; then
+        # check if package is installed and skip it if it is
+        package_installed "$PACKAGE"
+        if [ $? -eq 0 ]; then
+            continue
+        fi
+
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" >/dev/null 2>&1; then
             echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
         else
             echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
@@ -191,7 +217,6 @@ copy_config() {
     rm -rf ~/.tmux.conf;           cp -r    ../configs/.tmux.conf            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
     rm -rf ~/.bashrc;              cp -r    ../configs/.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
     rm -rf ~/.gtkrc-2.0;           cp -r    ../configs/.gtkrc-2.0            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied gtkrc-2.0 to ~/.gtkrc-2.0"
-    rm -rf ~/.themes;              cp -r    ../configs/.themes               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .themes to ~/.themes "
     rm -rf ~/.local;               cp -r    ../configs/.local                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .local to ~/.local"
     rm -rf ~/.icons;               cp -r    ../configs/.icons                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
     rm -rf ~/.bin;                 cp -r    ../configs/.bin                  ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"

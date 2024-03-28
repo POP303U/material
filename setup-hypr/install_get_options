@@ -7,11 +7,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# https://patorjk.com/software/taag/#p=display&f=Slant&t=Hyprland
+# Reproducing:
+# - https://patorjk.com/software/taag/#p=display&f=Slant&t=Hyprland
+# - echo "Hyprland" | figlet -f slant
 echo -e "
 ${GREEN}    __  __                 __                __
 ${GREEN}   / / / /_  ______  _____/ /___ _____  ____/ /
-${GREEN}  / /_/ / / / / __ \/ ___/ / __ '/ __ \/ __  / 
+${GREEN}  / /_/ / / / / __ \/ ___/ / __ \`/ __ \/ __  / 
 ${GREEN} / __  / /_/ / /_/ / /  / / /_/ / / / / /_/ /  
 ${GREEN}/_/ /_/\__, / .___/_/  /_/\__,_/_/ /_/\__,_/   
 ${GREEN}      /____/_/                                 ${RESET}
@@ -31,10 +33,46 @@ if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then
     exit 1
 fi
 
+echo -e " 
+${GREEN}    __  ___          ___ _____              
+${GREEN}   /  |/  /___  ____/ (_) __(_)__  _____         
+${GREEN}  / /|_/ / __ \\/ __  / / /_/ / _ \\/ ___/       
+${GREEN} / /  / / /_/ / /_/ / / __/ /  __/ /                     
+${GREEN}/_/  /_/\____/\__,_/_/_/ /_/\___/_/                      ${RESET} 
+
+${WHITE_BOLD}What Modifier do you want to use in Hyprland?${RESET}
+${CYAN}1${RESET}. Alt -> (personally more ${GREEN}comfortable${RESET}, but ${RED}may interfere with some apps${RESET}, namely emacs)
+${CYAN}2${RESET}. Win -> (${RED}harder to reach${RESET} than Alt, but ${GREEN}doesn't interfere with apps${RESET})
+"
+read -n1 -rep "(1/2) $: " MODKEY
+
+if [[ $MODKEY -lt 1 || $MODKEY -gt 2 ]]; then 
+    echo -e "${RED}Choose a valid option${RESET}"
+    exit 1
+fi
+
+[[ "$MODKEY" == "1" ]] && MODKEY="MOD1" # Alt
+[[ "$MODKEY" == "2" ]] && MODKEY="MOD4" # Win
+
+#echo -e "
+#${GREEN}    __ __                                
+#${GREEN}   / //_/__  __  ______ ___  ____ _____  
+#${GREEN}  / ,< / _ \/ / / / __ \`__ \/ __ \`/ __ \ 
+#${GREEN} / /| /  __/ /_/ / / / / / / /_/ / /_/ / 
+#${GREEN}/_/ |_\___/\__, /_/ /_/ /_/\__,_/ .___/  
+#${GREEN}          /____/               /_/       ${RESET}
+#
+#${WHITE_BOLD}Choose a keyboard layout:${RESET}
+#${CYAN}1${RESET}. de
+#${CYAN}2${RESET}. en
+#"
+#
+#read -n1 -rep "(Enter name of language) $: " KEYMAP
+#
 echo -e "
 ${GREEN}   _____     __    __         
 ${GREEN}  / ___/____/ /___/ /___ ___  
-${GREEN}  \__ \/ __  / __  / __ '__ \ 
+${GREEN}  \__ \/ __  / __  / __ \`__ \ 
 ${GREEN} ___/ / /_/ / /_/ / / / / / / 
 ${GREEN}/____/\__,_/\__,_/_/ /_/ /_/  ${RESET}
 "
