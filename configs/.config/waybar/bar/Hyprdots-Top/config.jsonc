@@ -1,0 +1,258 @@
+//   --// Modified hyprdots waybar to work with material dotfiles //--   //
+
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "height": 0,
+    "gtk-layer-shell": true,
+
+    "modules-left": [
+        "custom/l_end",
+        "custom/power",
+        "custom/settings",
+        "custom/wbar",
+        "custom/theme",
+        "custom/wallchange",
+        "custom/r_end",
+        "custom/l_end",
+        "wlr/taskbar",
+        "custom/r_end",
+    ],
+    
+	"modules-center": [
+        "custom/padd",
+        "custom/l_end",
+        "clock",
+        "custom/r_end",
+        "custom/padd"
+    ],
+
+	"modules-right": [
+        "custom/padd",
+        "custom/l_end",
+        "tray",
+        "battery",
+        "custom/r_end",
+        "custom/l_end",
+        "backlight",
+        "network",
+        "bluetooth",
+        "pulseaudio",
+        "pulseaudio#microphone",
+        "custom/keybindhint",
+        "custom/r_end",
+    ],
+
+
+    "custom/power": {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   show logout",
+        "on-click": "~/.config/hypr/scripts/manage-wlogout",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/settings": {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   launch settings",
+        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click-right": "~/.config/hypr/scripts/system-upgrade",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/wbar": {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   switch waybar",
+        "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/theme": {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   change theme",
+        "on-click": "~/.config/hypr/scripts/rice-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/wallchange": {
+        "rotate": 0,
+        "format": "󰋩{}",
+        "exec": "echo ; echo 󰋩  change wallpaper",
+        "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+	"wlr/taskbar": {
+		"format": "{icon}",
+		"rotate": 0,
+		"icon-size": 18,
+		"icon-theme": "Dracula",
+        "spacing": 0,
+		"tooltip-format": "{title}",
+		"on-click": "activate",
+		"on-click-middle": "close",
+		"ignore-list": [
+			"Alacritty"
+		],
+		"app_ids-mapping": {
+			"firefoxdeveloperedition": "firefox-developer-edition"
+		}
+	},
+
+    "clock": {
+        "format": " {:%I:%M %p}",
+        "format-alt": " {:%I:%M %p  󰃭 %a, %b %e}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "rotate": 0,
+        "spacing": 5
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "rotate": 0,
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "rotate": 0,
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "on-scroll-up": "brightnessctl set 1%+",
+        "on-scroll-down": "brightnessctl set 1%-",
+        "min-length": 6
+    },
+
+    "network": {
+        "tooltip": true,
+        "format-wifi": " ",
+        "rotate": 0,
+        "format-ethernet": "󰈀 ",
+        "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "󰖪 ",
+        "tooltip-format-disconnected": "Disconnected",
+        "format-alt": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "interval": 2,
+    },
+
+    "bluetooth": {
+        "format": "",
+        "rotate": 0,
+        "format-disabled": "",
+        "format-connected": " {num_connections}",
+        "format-connected-battery": "{icon} {num_connections}",
+        // "format-connected-battery": "{icon} {device_alias}-{device_battery_percentage}%",
+        "format-icons": ["󰥇", "󰤾", "󰤿", "󰥀", "󰥁", "󰥂", "󰥃", "󰥄", "󰥅", "󰥆", "󰥈"],
+        // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device If this config option is not defined or none of the devices in the list are connected, it will fall back to showing the last connected device.
+        "tooltip-format": "{controller_alias}\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{icon} {device_battery_percentage}%"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}",
+        "tooltip": false,
+        "format-muted": " Muted",
+        "on-click": "pamixer -t",
+        "on-click-right": "~/.config/hypr/scripts/audiomixer-launch",
+        "on-scroll-up": "pamixer -i 5",
+        "on-scroll-down": "pamixer -d 5",
+        "tooltip-format": "{icon} {desc} // {volume}%",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": "",
+        "format-source-muted": "",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
+        "scroll-step": 5
+    },
+
+// modules for padding //
+
+    "custom/l_end": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/r_end": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/sl_end": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/sr_end": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/rl_end": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/rr_end": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padd": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    }
+}
