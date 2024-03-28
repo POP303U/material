@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|material-launcher =.*|material-launcher = wofi| ' ~/.config/material/config

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|material-launcher =.*|material-launcher = fuzzel| ' ~/.config/material/config
