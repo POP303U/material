@@ -1,0 +1,60 @@
+* {
+    background-image: none;
+    font-size: ${FONT_SIZE};
+    font-family: MapleMono;
+}
+
+@import "${HOME}/.config/waybar/themes/theme.css";
+
+window {
+    background-color: rgba(0,0,0,.7);
+}
+
+button {
+    color: @text;
+    background-color: @surface;
+    outline-style: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 23%;
+    border-color: @base;
+    border-width: 5px;
+}
+
+button:focus {
+    background-size: 31%;
+    border-color: @rose;
+}
+
+button:hover {
+    background-size: 31%;
+    border-color: @iris;
+}
+
+#suspend {
+    background-image: image(url("${HOME}/.config/wlogout/icons/suspend_${BUTTON_COLOR}.png"));
+    margin : ${Y_MARGIN}px 0px 0px ${X_MARGIN}px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+#logout {
+    background-image: image(url("${HOME}/.config/wlogout/icons/logout_${BUTTON_COLOR}.png"));
+    margin : 0px 0px ${Y_MARGIN}px ${X_MARGIN}px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+#shutdown {
+    background-image: image(url("${HOME}/.config/wlogout/icons/shutdown_${BUTTON_COLOR}.png"));
+    margin : ${Y_MARGIN}px ${X_MARGIN}px 0px 0px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+#reboot {
+    background-image: image(url("${HOME}/.config/wlogout/icons/reboot_${BUTTON_COLOR}.png"));
+    margin : 0px ${X_MARGIN}px ${Y_MARGIN}px 0px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
