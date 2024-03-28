@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Check if ImageMagick is installed
+if ! [ -x "$(command -v convert)" ]; then
+  echo 'Error: ImageMagick is not installed. Please install it to use this script.' >&2
+  exit 1
+fi
+
+# Assigning arguments to variables
+INPUT_IMAGE="$1"
+OUTPUT_IMAGE="${2:-$HOME/.config/swww/wallpaper.blur}"
+BLUR_FACTOR="${3:-10}"
+BLUR_PASSES="${4:-5}"
+
+# Check if input image exists
+if ! [ -f "$INPUT_IMAGE" ]; then
+  echo "Error: Input image '$INPUT_IMAGE' not found."
+  exit 1
+fi
+
+# Remove unneeded old image
+[ -f "$OUTPUT_IMAGE" ] && rm -f "$OUTPUT_IMAGE"
+
+# Applying blur using ImageMagick
+convert "$INPUT_IMAGE" -blur ${BLUR_FACTOR}x${BLUR_PASSES} "$OUTPUT_IMAGE"
+
+echo "Image blurred successfully. Output saved as $OUTPUT_IMAGE"
