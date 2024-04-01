@@ -18,7 +18,7 @@ case "$1" in
         RUNLEVEL=$(awk '/launcher-runlevel/ {print $NF}' $HOME/.config/material/config | xargs)
 
         # patch rofi before running
-        [[ "$(echo $LAUNCHER | xargs)" == "rofi" ]] && LAUNCHER="rofi -modi drun -show drun" # patch rofi
+        [[ "$(echo $LAUNCHER | xargs)" == "rofi" ]] && LAUNCHER="rofi -show drun" # patch rofi
 
         # run type of prompt depending on config option
         [[ $RUNLEVEL == "desktop" ]] && $LAUNCHER &

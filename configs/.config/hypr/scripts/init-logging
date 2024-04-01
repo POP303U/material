@@ -14,4 +14,7 @@ $(cat $HOME/.config/material/config)
 :: Start of logs $(date)
 [$(dirname "$(realpath "$0")")::log] logging started..." > /tmp/material-logfile
 
+# Patch wofi background-image path (using envsubst everywhere is not a good idea)
+sed -i 's/\/home\/[^\/]*\//\/home\/'${USER}'\//g' ~/.config/wofi/style.css
+
 mkdir -pv /tmp/material/null >> /tmp/material-logfile

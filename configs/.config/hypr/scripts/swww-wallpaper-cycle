@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -euox pipefail
+set -euo pipefail
 
 # lock instance
 
@@ -34,7 +34,6 @@ function get_resolution() {
 
 function apply_wall() {
     # patch into sddm
-    $HOME/.config/hypr/scripts/blur-wallpaper "$RICE_DIR/$NEXT_ELEMENT" & # generate blurred background
     cp -vfr $RICE_DIR/$NEXT_ELEMENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
     swww img "$RICE_DIR/$NEXT_ELEMENT" \
         --transition-bezier .43,1.19,1,.4 \
@@ -43,6 +42,10 @@ function apply_wall() {
         --transition-fps 144 \
         --invert-y \
         --transition-pos "${RESOLUTION}"
+
+    # generate blurred wallpapers
+    $HOME/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$NEXT_ELEMENT" &
+    wait 
 }
 
 function select_wall() {
