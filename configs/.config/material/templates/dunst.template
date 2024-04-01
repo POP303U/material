@@ -1,0 +1,3 @@
+background = "#<material.hex.darkest>"
+foreground = "#<material.hex.white>"
+frame_color = "#<material.hex.color2>"

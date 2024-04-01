@@ -1,0 +1,23 @@
+[colors]
+alpha = 0.7
+
+foreground=<material.hex.white>
+background=<material.hex.surface>
+
+regular0=<material.hex.color0>
+regular1=<material.hex.color1>
+regular2=<material.hex.color2>
+regular3=<material.hex.color3>
+regular4=<material.hex.color4>
+regular5=<material.hex.color5>
+regular6=<material.hex.color6>
+regular7=<material.hex.color7>
+
+bright0=<material.hex.color0>
+bright1=<material.hex.color1>
+bright2=<material.hex.color2>
+bright3=<material.hex.color3>
+bright4=<material.hex.color4>
+bright5=<material.hex.color5>
+bright6=<material.hex.color6>
+bright7=<material.hex.color7>

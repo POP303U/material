@@ -1,0 +1,24 @@
+* {
+	bg: #<material.hex.base>;
+	cur: #<material.hex.color2>;
+	fgd: #<material.hex.white>;
+	cmt: #928374;
+	cya: #<material.hex.color0>;
+	grn: #<material.hex.color1>;
+	ora: #<material.hex.color2>;
+	pur: #<material.hex.color3>;
+	red: #<material.hex.color4>;
+	yel: #<material.hex.color5>;
+
+	foreground: @fgd;
+	background: @bg;
+	active-background: @cur;
+	urgent-background: @red;
+
+	selected-background: @active-background;
+	selected-urgent-background: @urgent-background;
+	selected-active-background: @active-background;
+	separatorcolor: @active-background;
+	bordercolor: @ora;
+    background-color: transparent;
+}

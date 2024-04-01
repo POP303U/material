@@ -1,0 +1,20 @@
+[colors]
+background=<material.hex.base>ff # surface
+text=<material.hex.white>ff # text 
+match=<material.hex.color2>ff # rose
+selection=<material.hex.overlay>ff # overlay
+selection-match=<material.hex.color3>ff # love
+selection-text=<material.hex.white>ff
+border=<material.hex.color2>ff # rose
+
+[main]
+font=JetbrainsMonoNerdFont:size=14
+terminal=kitty
+icon-theme=Dracula
+width=80
+lines=20
+prompt="󰣇  "
+
+[border]
+width=3
+radius=15
