@@ -1,0 +1,108 @@
+#!/bin/sh
+
+CURRENT_RICE=$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)
+CURRENT_BG=$(awk '/wallpaper-current/ {print $NF}' $HOME/.config/material/config)
+
+MATERIAL="$HOME/.config/material"   
+WALLPAPER="$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_BG"
+PERLTONE="$HOME/.config/hypr/scripts/perltone"
+PERLTONE_TEMPLATE="$HOME/.config/hypr/scripts/perltone-template"
+COLOR_SCHEME="--${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $2}')}" # make manual wallpapers possible
+COLOR_PALETTE="${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $4}')}" # make manual wallpapers possible
+
+# Generate colors
+~/.config/hypr/scripts/perltone $COLOR_SCHEME -v -f "$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_BG" > $HOME/.config/material/colors/colors
+if [ $? -eq 1 ]; then
+    echo "Error: Perltone couldn't generate colors."
+    exit 1
+fi
+
+# Generated blurred background first since it takes a while
+~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$CURRENT_BG" &
+
+# Generate all colors using perltone-template
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/dunst.template $HOME/.config/dunst/themes/Perltone
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/hypr.template $HOME/.config/hypr/themes/Perltone.conf
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/fuzzel.template $HOME/.config/fuzzel/themes/Perltone.ini
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/rofi.template $HOME/.config/rofi/themes/Perltone.rasi
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/wofi.template $HOME/.config/wofi/themes/Perltone
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/kitty.template $HOME/.config/kitty/themes/Perltone.conf
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/foot.template $HOME/.config/foot/themes/Perltone.ini
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/waybar.template $HOME/.config/waybar/themes/Perltone.css
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/qt5ct.template $HOME/.config/qt5ct/colors/Perltone.conf
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/qt6ct.template $HOME/.config/qt6ct/colors/Perltone.conf
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/tty.template $HOME/.bin/colors/Perltone && chmod +x $HOME/.bin/colors/Perltone
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/cava.template $HOME/.config/cava/themes/Perltone
+
+# tty 
+$HOME/.bin/colors/Perltone
+
+# Tmux (just uses tty colors)
+sed -i 's|^set -g status-bg.*|set -g status-bg '$([[ "$MODE" == "light" ]] && echo "white" || echo "black" )'|' $HOME/.tmux.conf
+
+# Cava
+for ((I=1; I<=8; I++)); do
+    sed -i 's|^gradient_color_'$I'.*|'"$(sed -n ''$I'p' $HOME/.config/cava/themes/Perltone)"'|' ~/.config/cava/config
+done
+pkill -SIGUSR2 cava
+
+# Dunst
+sed -i 's|background.*|'"$(sed -n '1p' $HOME/.config/dunst/themes/Perltone)"'|' $HOME/.config/dunst/dunstrc
+sed -i 's|foreground.*|'"$(sed -n '2p' $HOME/.config/dunst/themes/Perltone)"'|' $HOME/.config/dunst/dunstrc
+sed -i 's|frame_color.*|'"$(sed -n '3p' $HOME/.config/dunst/themes/Perltone)"'|' $HOME/.config/dunst/dunstrc
+
+# qt5ct 
+sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt5ct/colors/Perltone.conf|" $HOME/.config/qt5ct/qt5ct.conf
+
+# qt6ct
+sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt6ct/colors/Perltone.conf|" $HOME/.config/qt6ct/qt6ct.conf
+
+# Hyprland
+ln -sf ~/.config/hypr/themes/Perltone.conf ~/.config/hypr/themes/theme.conf 
+
+# Fuzzel
+ln -sf $HOME/.config/fuzzel/themes/Perltone.ini $HOME/.config/fuzzel/fuzzel.ini
+
+# Rofi
+ln -sf $HOME/.config/rofi/themes/Perltone.rasi $HOME/.config/rofi/themes/theme.rasi
+
+# Wofi (hacky symlink to pywal path but who cares)
+ln -sf $HOME/.config/wofi/themes/Perltone $HOME/.cache/wal/colors 
+
+# Kitty
+ln -sf ~/.config/kitty/themes/Perltone.conf ~/.config/kitty/themes/theme.conf 
+pkill -SIGUSR1 kitty # reload
+
+# Kitty
+ln -sf ~/.config/foot/themes/Perltone.ini ~/.config/foot/themes/theme.ini
+
+# Waybar
+ln -sf ~/.config/waybar/themes/Perltone.css ~/.config/waybar/themes/theme.css
+~/.config/hypr/scripts/manage-waybar & # reload
+
+# Dolphin (just reloading)
+ACTIVE_WORKSPACE=$(hyprctl -j activeworkspace | jq '.id')
+if [ "$(hyprctl -j clients | jq --arg wid "$ACTIVE_WORKSPACE" '.[] | select(.workspace.id == ($wid | tonumber)) | select(.class == "org.kde.dolphin") | .mapped')" == "true" ] ; then
+    pkill -x dolphin
+    dolphin &
+fi
+
+# Swww
+# you need dynamic `rose-pine-sddm` for this to work, check the installer for this option
+TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
+CURRENT_RICE=$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")
+
+sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
+cp -vrf $WALLPAPER /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+
+swww img "$WALLPAPER" \
+    --transition-bezier .6,.94,.86,.23     \
+    --transition-type "${TRANSITION_TYPE}" \
+    --transition-duration 0.7              \
+    --transition-fps 144                   \
+    --invert-y                             \
+    --transition-pos "2502, 1410"
+
+sleep 2
+pkill -x dunst
+dunst & disown # reload
