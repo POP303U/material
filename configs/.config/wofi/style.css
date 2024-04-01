@@ -39,7 +39,7 @@
 
 #outer-box {
     margin: 5px;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.2);
     color: transparent;
     margin: 20px;
     border-radius: 15px;
@@ -53,6 +53,10 @@
     padding-right: 2px;
     border-radius: 15px;
     margin-bottom: 15px;
+}
+
+#text {
+    color: #fafafa;
 }
 
 #text:selected {
@@ -81,7 +85,8 @@
     margin: 0px 0px;
     border: none;
     border-radius: 15px;
-    background: linear-gradient(90deg, --wofi-color9 0%,  --wofi-color5 100%);
+    background: linear-gradient(90deg, --wofi-color10 0%,  #ffffff 100%);
+    color: --wofi-color5;
 }
 
 #img {
