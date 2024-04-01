@@ -1,72 +1,29 @@
-#!/bin/bash
+#!/bin/sh
 
-case "$1" in
-    "Rose-Pine-Dawn")
-        export CURRENT_BG="material_pastel_1.jpg"
-        export MODE="light"
-        ;;
-    "Rose-Pine-Moon")
-        export CURRENT_BG="moon-leafy.png"
-        export MODE="dark"
-        ;;
-    "Rose-Pine")
-        export CURRENT_BG="pine-anime_city.png"
-        export MODE="dark"
-        ;;
-    "Gruvbox-Dark")
-        export CURRENT_BG="gruvbox-garden.png"
-        export MODE="dark"
-        ;;
-    "Gruvbox-Light")
-        export CURRENT_BG="gruvbox-light-mountains.png"
-        export MODE="light"
-        ;;
-    "Catppuccin-Mocha")
-        export CURRENT_BG="rain_world1.png"
-        export MODE="dark"
-        ;;
-    "Catppuccin-Latte")
-        export CURRENT_BG="latte-cloud.png"
-        export MODE="light"
-        ;;
-    "Titanium-Mono")
-        export CURRENT_BG="titanium-mono-gojo.png"
-        export MODE="dark"
-        ;;
-    "Solarized-Dark")
-        export CURRENT_BG="solarized-dark-construction.png"
-        export MODE="dark"
-        ;;
-    "Solarized-Light")
-        export CURRENT_BG="solarized-light-post-modern.png"
-        export MODE="light"
-        ;;
-    "Nord")
-        export CURRENT_BG="misty-mountain.jpg"
-        export MODE="dark"
-        ;;
-    *)
-        echo "Unsupported operation: $1"
-        exit 1
-        ;;
-esac
-
-# Set variables for script
-CURRENT_BG=${2:-$CURRENT_BG} # make manual wallpapers possible
-CURRENT_RICE=$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")
+# Set variables for script through rice configs
+CURRENT_RICE=${1:-$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")}
+CURRENT_BG=${2:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $3}')} # make manual wallpapers possible
+MODE=${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $2}')} # make manual wallpapers possible
 CURRENT_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
 sed -i 's|^rice-current.*|rice-current = '${1}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
 sed -i 's|^system-theme.*|system-theme = '${MODE}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
 sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
 
+# Launch into perltone if enabled
 PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
 if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
-    $HOME/.config/swww/scripts/change_theme_perltone
+
+    WARNING_STATUS=$(awk '/perltone-warn-on-mono/ {print $NF}' $HOME/.config/material/config | xargs)
+    if [[ "$WARNING_STATUS" == "on" && "$COLOR_PALETTE" == "mono" ]]; then 
+        dunstify "Material" "Warning! Perltone on monochrome themes may not look good, consider disabling Perltone for them." --timeout=7001
+    fi
+
+    $HOME/.config/swww/scripts/change_theme_perltone &
     exit 0
 fi
 
 # Generated blurred background first since it takes a while
-$HOME/.config/hypr/scripts/blur-wallpaper "$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_BG" &
+$HOME/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$CURRENT_BG" &
 
 # Tmux
 sed -i 's|^set -g status-bg.*|set -g status-bg '$([[ "$MODE" == "light" ]] && echo "white" || echo "black" )'|' $HOME/.tmux.conf
@@ -93,13 +50,14 @@ sed -i 's|^vim.opt.*|vim.opt.background = "'${MODE}'"|' $HOME/.config/nvim/lua/c
 sed -i 's|background.*|'"$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_RICE})"'|' $HOME/.config/dunst/dunstrc
 sed -i 's|foreground.*|'"$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_RICE})"'|' $HOME/.config/dunst/dunstrc
 sed -i 's|frame_color.*|'"$(sed -n '3p' $HOME/.config/dunst/themes/${CURRENT_RICE})"'|' $HOME/.config/dunst/dunstrc
-kill -SIGTERM $(pidof dunst); dunst & disown # reload
+pkill -x dunst
+dunst & disown # reload
 
 # Cava
 for ((I=1; I<8; I++)); do
     sed -i 's|^gradient_color_'$I'.*|'"$(sed -n ''$I'p' $HOME/.config/cava/themes/${CURRENT_RICE})"'|' ~/.config/cava/config
 done
-kill -SIGUSR2 $(pidof cava)
+pkill -SIGUSR2 cava
 
 # Kvantum
 kvantummanager --set ${CURRENT_RICE}
@@ -120,7 +78,7 @@ flatpak --user override --env=ICON_THEME="${CURRENT_ICONS}"
 
 # Kitty
 ln -sf ~/.config/kitty/themes/${CURRENT_RICE}.conf ~/.config/kitty/themes/theme.conf 
-kill -SIGUSR1 $(pidof kitty) # reload
+pkill -SIGUSR1 kitty # reload
 
 # Waybar
 ln -sf ~/.config/waybar/themes/${CURRENT_RICE}.css ~/.config/waybar/themes/theme.css

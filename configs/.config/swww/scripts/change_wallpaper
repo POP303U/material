@@ -1,21 +1,25 @@
 #!/bin/sh
-set -euox pipefail
+set -euo pipefail
 
 RESOLUTION=$(echo "$(hyprctl -j monitors | jq .[].width),$(hyprctl -j monitors | jq .[].height)" )
 TRANSITION_TYPE="$(awk '/rice-transition/ {print $NF}' ~/.config/material/config)"
-sed -i 's|wallpaper-current.*|wallpaper-current = '$(basename $1)'|' ~/.config/material/config
 
 # Set sddm wallpaper too  
-$HOME/.config/hypr/scripts/blur-wallpaper $1 & # generated blurred background
+CURRENT_RICE=$1
+WALLPAPER=$2
+WALLPAPER_PATH="$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER"
 
+sed -i 's|wallpaper-current.*|wallpaper-current = '$WALLPAPER'|' ~/.config/material/config
 PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
 if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
-    $HOME/.config/swww/scripts/change_theme_perltone
+    $HOME/.config/swww/scripts/change_theme_perltone 
     exit 0
+else
+    $HOME/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$WALLPAPER" &
 fi
 
-cp -vrf ${1} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
-swww img ${1} \
+cp -vrf ${WALLPAPER_PATH} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
+swww img ${WALLPAPER_PATH} \
     --transition-bezier .6,.94,.86,.23\
     --transition-type "${TRANSITION_TYPE}" \
     --transition-duration 1 \
