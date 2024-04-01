@@ -1,0 +1,504 @@
+#!/usr/bin/perl
+
+use warnings;
+use Getopt::Long;
+use File::Basename;
+use File::Path qw(make_path);
+
+# Check if ImageMagick is installed
+if (!`which magick`) {
+    print "Error: ImageMagick is not installed. Please install it to use this script.\n";
+    exit 1
+}
+
+# Define options
+my $pastel;
+my $vibrant;
+my $stale;
+my $light;
+my $dark;
+my $fast;
+my $slow;
+my $ultraspeed;
+my $nuclear;
+
+# Parse command line options
+GetOptions(
+    "p|pastel"  => \$pastel,
+    "b|stale" => \$stale,
+    "v|vibrant" => \$vibrant,
+    "l|light" => \$light,
+    "d|dark" => \$dark,
+    "f|fast" => \$fast,
+    "s|slow" => \$slow,
+    "u|ultraspeed" => \$ultraspeed,
+    "n|nuclear" => \$nuclear,
+) or die("Error in command line arguments\n");
+
+# Check if an image file is provided and provide help
+if (@ARGV != 1) {
+    show_help();
+}
+
+
+# Check if the provided file exists
+my $image_file = $ARGV[0];
+if (!-f $image_file) {
+    print "Error: File '$image_file' not found.\n";
+    exit 1;
+}
+
+# Make cache directory if it doesn't exist
+if (!-e "$ENV{HOME}/.cache/material/perltone") {
+    system("mkdir -pv \$HOME/.cache/material/perltone");
+}
+
+# // Variables here // #
+my $background_cv_threshold = 40; # Threshold for maximum color brightness and luminance on backgrounds
+my $saturation_threshold = 0.4;
+my $brightness_threshold = 100;
+my $max_background_luminance = 1; # Maximum luminance allowed for the colors
+my $lighten_colors_fact = 0.12;
+my $image_resize_fact= 25;
+
+my $material_cache_image = fileparse($image_file);
+my $material_cache_theme = (fileparse(dirname($image_file)))[0];
+my $cache_dir = "$ENV{HOME}/.cache/material/perltone";
+
+my $image_colors = 4;
+my $image_fuzz = 70;
+my $cache_image = fileparse($image_file);
+
+my $image_raw = "$ENV{HOME}/.cache/material/perltone/$cache_image";
+
+### Evaluate cli arguments
+my $options = "";
+if ($dark) {
+    $options = "-modulate 150,110,100" if $pastel;
+    $options = "-modulate 100,100,100" if $stale;
+    $options = "-modulate 115,140,100" if $vibrant;
+} else {
+    $options = "-modulate 75,75,100" if $pastel;
+    $options = "-modulate 85,80,100" if $stale;
+    $options = "-modulate 75,110,90" if $vibrant;
+}
+
+### Extract 8 dominant colors
+my $raw_colors;
+
+# (not recommended)
+# extremly fast calculation of colors, lower color accuracy / smaller palette
+$raw_colors = `magick $image_file $options -resize 5% -depth 4 -kmeans 4 -unique-colors txt:- | grep -Po "(?<=#)[0-9a-fA-F]{6}"` if $ultraspeed;
+
+# (recommended)
+# fast calculation of colors, lower color accuracy / smaller palette
+$raw_colors = `magick $image_file $options -resize 25% -depth 8 -kmeans 8 +dither -unique-colors txt:- | grep -Po "(?<=#)[0-9a-fA-F]{6}" | cut --bytes=1-6` if $fast;
+
+# (recommended) `if you have fast pc`
+# slow calculation of colors, higher color accuracy / bigger palette
+$raw_colors = `magick $image_file -kmeans 8 -unique-colors txt:- | grep -Po "(?<=#)[0-9a-fA-F]{6}"` if $slow;
+
+if (!$raw_colors) {
+    print "Please provide an image backend\n";
+    show_help();
+}
+
+# Adjust luminance for colors that are too dark or too bright
+my @adjusted_colors = split('\n', $raw_colors);
+foreach my $color (@raw_colors) {
+    if ($dark) {
+        my ($r, $g, $b) = map { hex } $color =~ /(..)(..)(..)/;
+        my $luminance = (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
+
+        if (not $nuclear) {
+            if ($luminance < 0.2) {
+                my $adjusted_luminance = 0.2;  # Minimum luminance threshold
+                my $adjusted_r = int($r * $adjusted_luminance / $luminance);
+                my $adjusted_g = int($g * $adjusted_luminance / $luminance);
+                my $adjusted_b = int($b * $adjusted_luminance / $luminance);
+                $color = sprintf("%02X%02X%02X", $adjusted_r, $adjusted_g, $adjusted_b);
+            } elsif ($luminance > $max_background_luminance) {
+                my $adjusted_luminance = $max_background_luminance;  # Maximum luminance threshold
+                my $adjusted_r = int($r * $adjusted_luminance / $luminance);
+                my $adjusted_g = int($g * $adjusted_luminance / $luminance);
+                my $adjusted_b = int($b * $adjusted_luminance / $luminance);
+                $color = sprintf("%02X%02X%02X", $adjusted_r, $adjusted_g, $adjusted_b);
+            }
+
+            # Loop until the color isn't too dark
+            do {
+                $color = adjust_color_brightness($color, 0.01, 'brighten');
+            } until(is_color_bright($color, 60));
+        }
+
+        push @adjusted_colors, $color;
+        last if scalar @adjusted_colors >= 8;
+    } elsif ($light) {
+        my ($r, $g, $b) = map { hex } $color =~ /(..)(..)(..)/;
+        my $luminance = (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
+
+        if (not $nuclear) {
+            if ($luminance < 0.2) {
+                my $adjusted_luminance = 0.2;  # Minimum luminance threshold
+                my $adjusted_r = int($r * $adjusted_luminance / $luminance / 10);
+                my $adjusted_g = int($g * $adjusted_luminance / $luminance / 10);
+                my $adjusted_b = int($b * $adjusted_luminance / $luminance / 10);
+                $color = sprintf("%02X%02X%02X", $adjusted_r, $adjusted_g, $adjusted_b);
+            } elsif ($luminance > $max_background_luminance) {
+                my $adjusted_luminance = $max_background_luminance;  # Maximum luminance threshold
+                my $adjusted_r = int($r * $adjusted_luminance / $luminance);
+                my $adjusted_g = int($g * $adjusted_luminance / $luminance);
+                my $adjusted_b = int($b * $adjusted_luminance / $luminance);
+                $color = sprintf("%02X%02X%02X", $adjusted_r, $adjusted_g, $adjusted_b);
+            }
+
+            # Loop until the color isn't too bright
+            do {
+                $color = adjust_color_brightness($color, 0.99, 'darken');
+            } until(!is_color_bright($color, 160));
+
+            # Loop until the color isn't dark bright
+            do {
+                $color = adjust_color_brightness($color, 0.03, 'brighten');
+            } until(is_color_bright($color, 100));
+        }
+        
+        push @adjusted_colors, $color;
+        last if scalar @adjusted_colors >= 8;
+    }
+}
+
+# If the number of adjusted colors is less than 8, generate new colors based on existing ones
+my $most_vibrant = $raw_colors[0]; # default value
+for (my $i = 0; $i < scalar @adjusted_colors; $i++) {
+    if (is_color_vibrant($adjusted_colors[$i])) {
+        $most_vibrant = $adjusted_colors[$i];
+    }
+}
+
+while (scalar @adjusted_colors < 8) {
+    my $gradient_ref = generate_gradient($most_vibrant, 16);
+    for (my $i = 0; $i < scalar @$gradient_ref - 1; $i++) {
+        push @adjusted_colors, $gradient_ref->[$i];
+    }
+    push @adjusted_colors, $most_vibrant;
+}
+
+# Choose a primary color
+my $main_color;
+foreach my $color (@adjusted_colors) {
+    if (is_color_vibrant($color, $saturation_threshold, $brightness_threshold)) {
+        $main_color = $color;
+    }
+    last if $main_color;
+}
+
+# Adjust background color to be dark enough
+my $background_color = $adjusted_colors[0];
+if (is_color_vibrant($background_color, 0.3, 0.4) and not $nuclear) {
+    print STDERR "Background color $background_color is too vibrant... adjusting: \n";
+
+    do {
+        $background_color = adjust_color_brightness($background_color, 0.9, 'darken');
+        print STDERR "Too vibrant for a background... trying again.\n";
+    } until(!is_color_bright($background_color, $background_cv_threshold) and not is_color_vibrant($background_cv_threshold, 38, 0.4));
+
+    print STDERR "Found suitable background color: $background_color\n";
+} else {
+    print STDERR "Background color is already suitable.\n";
+}
+
+# Loop through each color and compare with every other color
+my $threshold = 50;  # Adjust threshold based on your needs
+for (my $i = 0; $i < scalar @adjusted_colors; $i++) {
+        my $color1 = $adjusted_colors[$i];
+
+        if (are_colors_similar($color1, $base, $threshold)) {
+            print STDERR "Colors $color1 and $base are similar.\n";
+            $adjusted_colors[$i] = adjust_color_brightness($color1, 0.37, 'brighten');
+
+            my $brightness_comparison = compare_brightness($color1, $base);
+            if ($brightness_comparison > 0) {
+                print STDERR "$color1 is darker than $base.\n";
+
+            } elsif ($brightness_comparison < 0) {
+                print STDERR "$base is darker than $color1.\n";
+                print STDERR "Updated colors: @adjusted_colors\n"; 
+
+            } else {
+                print STDERR "Both colors have the same brightness.\n";
+            }
+        } else {
+            print STDERR "Colors $color1 and $background_color are not similar.\n";
+    }
+}
+
+### Here happens the seperation between the themes
+my $darkest = operate_hex_values(adjust_color_brightness($background_color, 0.8, 'darken'), 2.7, '/'); # stacking function calls for dayssss 
+my $base = adjust_color_brightness($background_color, 0.8, 'darken');
+my $overlay = adjust_color_brightness($background_color, 0.2, 'brighten');
+my $muted = adjust_color_brightness($background_color, 0.4, 'brighten');
+my $disabled_border = adjust_color_brightness($adjusted_colors[2], 0.9, 'darken');
+my $subtle = adjust_color_brightness($background_color, 0.4, 'brighten');
+my $_bar_tr = adjust_color_brightness($darkest, 0.04, 'brighten');
+my $bar_tr = hex_to_rgba($_bar_tr, 0.7);
+
+if ($light) {
+    # Generate transparent base color
+    $darkest = operate_hex_values(rgb_negative($background_color), 2.7, '*'); # stacking function calls for dayssss 
+    $base = adjust_color_brightness($background_color, 0.8, 'brighten');
+    $overlay = adjust_color_brightness($background_color, 0.02, 'brighten');
+    $muted = adjust_color_brightness($background_color, 0.04, 'brighten');
+    $disabled_border = adjust_color_brightness($adjusted_colors[2], 0.6, 'darken');
+    $subtle = adjust_color_brightness($background_color, 0.04, 'brighten');
+    $_bar_tr = adjust_color_brightness($darkest, 0.95, 'brighten');
+    $bar_tr = hex_to_rgba($_bar_tr, 0.27);
+}
+
+# Choose foreground color
+my $foreground_color = rgb_negative($darkest);
+
+# Output background and foreground colors
+print "disabled-border=$disabled_border\n";
+print "darkest=$darkest\n";
+print "base-transparent=$bar_tr\n";
+print "base=$base\n";
+print "surface=$_bar_tr\n"; # background
+print "overlay=$overlay\n"; # background
+print "muted=$muted\n"; # foreground
+print "subtle=$subtle\n"; # foreground
+print "white=$foreground_color\n"; # foreground
+
+# Generate color palette
+for (my $i = 0; $i <= 7; $i++) {
+    my $_i_ = adjust_color_brightness($adjusted_colors[$i], 0.2, 'brighten');
+    print "color$i=$_i_\n"; # color0 - color7
+}
+
+# Generate gradient colors
+my $gradient_ref = generate_gradient($adjusted_colors[2], 14);
+for (my $i = 0; $i < scalar @$gradient_ref; $i++) {
+        print "gradient$i=$gradient_ref->[$i]\n";
+}
+
+sub hex_to_rgba {
+    my ($color, $_opacity) = @_; 
+    my ($r, $g, $b) = map { hex } $color =~ /(..)(..)(..)/;
+    my $opacity = "$_opacity";
+    return sprintf "rgba($r, $g, $b, $opacity)";
+}
+
+# Function to adjust color brightness (darken or brighten)
+sub adjust_color_brightness {
+    my ($color, $percentage, $operation) = @_;
+    my ($r, $g, $b) = map { hex } $color =~ /(..)(..)(..)/;
+    if ($operation eq 'darken') {
+        $r = int($r * $percentage);
+        $g = int($g * $percentage);
+        $b = int($b * $percentage);
+    } elsif ($operation eq 'brighten') {
+        $r = int($r + (255 - $r) * $percentage);
+        $g = int($g + (255 - $g) * $percentage);
+        $b = int($b + (255 - $b) * $percentage);
+    }
+    return sprintf("%02X%02X%02X", $r, $g, $b);
+}
+
+# Multiplies on hex values (with)out checks.. 
+sub operate_hex_values {
+    my ($color, $percentage, $operation) = @_;
+    my ($r, $g, $b) = map { hex } $color =~ /(..)(..)(..)/;
+    if ($operation eq '/') {
+        $r = int($r / $percentage);
+        $g = int($g / $percentage);
+        $b = int($b / $percentage);
+    } elsif ($operation eq '*') {
+        $r = int($r * $percentage);
+        $g = int($g * $percentage);
+        $b = int($b * $percentage);
+    }
+
+    # Guardrails so no overflow happens after 255
+    $r = 255 if $r > 255;
+    $g = 255 if $g > 255;
+    $b = 255 if $b > 255;
+
+    return sprintf("%02X%02X%02X", $r, $g, $b);
+}
+
+# Function to generate a gradient of 8 colors based on a given hex color
+sub generate_gradient {
+    my ($base_color, $steps) = @_;
+
+    # Convert hex color to RGB components
+    my ($r, $g, $b) = ($base_color =~ /(..)(..)(..)/);
+
+    # Calculate step size for gradient
+    my $step = 255 / $steps;
+
+    # Generate gradient colors
+    my @gradient_colors;
+    for (my $i = 0; $i < 8; $i++) {
+        my $new_r = sprintf("%02X", min(hex($r) + $step * $i, 255));
+        my $new_g = sprintf("%02X", min(hex($g) + $step * $i, 255));
+        my $new_b = sprintf("%02X", min(hex($b) + $step * $i, 255));
+
+        my $color = "$new_r$new_g$new_b";
+        push @gradient_colors, $color;
+    }
+
+    return \@gradient_colors;
+}
+
+# Usage: min($a, $b)
+# Description: Function to get minimum of two values
+sub min {
+    my ($a, $b) = @_;
+    return $a < $b ? $a : $b;
+}
+
+# Usage: min($a, $b)
+# Description: Function to get maximum of two values
+sub max {
+    my ($a, $b) = @_;
+    return $a > $b ? $a : $b;
+}
+
+# Usage: is_similar_color($color1, $color2)
+# Description: Function to check if two colors are similar (within a certain threshold)
+sub is_similar_color {
+  my ($color1, $color2) = @_;
+  my ($r1, $g1, $b1) = map { hex } $color1 =~ /(..)(..)(..)/;
+  my ($r2, $g2, $b2) = map { hex } $color2 =~ /(..)(..)(..)/;
+  
+  my $threshold = 30; # Adjust the threshold as needed
+  
+  return abs($r1 - $r2) < $threshold && abs($g1 - $g2) < $threshold && abs($b1 - $b2) < $threshold;
+}
+
+# Usage: rgb_negative($hex_color)
+# Description: Returns the negative hex color given: #00ffff -> #ff0000
+sub rgb_negative {
+    my ($hex_color) = @_;
+    my $r = substr($hex_color, 0, 2);
+    my $g = substr($hex_color, 2, 2);
+    my $b = substr($hex_color, 4, 2);
+
+    my $r16 = hex($r);
+    my $g16 = hex($g);
+    my $b16 = hex($b);
+
+    $r = sprintf("%02X", 255 - $r16);
+    $g = sprintf("%02X", 255 - $g16);
+    $b = sprintf("%02X", 255 - $b16);
+
+    return $r . $g . $b;
+}
+
+# Usage: rgb_negative($hex_color, $threshold)
+# Description: Returns true if $hex_color's brightness is above the threshold
+sub is_color_bright {
+    my ($hex_color, $threshold) = @_;
+    my ($r, $g, $b) = unpack("C*", pack("H*", $hex_color));
+
+    # Calculate brightness
+    my $brightness = ($r * 299 + $g * 587 + $b * 114) / 1000;
+
+    # Check if brightness is above threshold
+    return $brightness > $threshold;
+}
+
+sub is_color_not_too_bright {
+    my ($hex_color, $threshold) = @_;
+    my ($r, $g, $b) = unpack("C*", pack("H*", $hex_color));
+
+    # Calculate brightness
+    my $brightness = ($r * 299 + $g * 587 + $b * 114) / 1000;
+
+    # Check if brightness is below threshold
+    return $brightness < $threshold;
+}
+
+sub is_color_vibrant {
+    my ($hex_color, $saturation_threshold, $brightness_threshold) = @_;
+
+    # Remove '#' if present
+    $hex_color =~ s/^#//;
+
+    # Convert hex color to RGB components
+    my ($r, $g, $b) = unpack("C*", pack("H*", $hex_color));
+
+    # Calculate brightness
+    my $brightness = ($r * 299 + $g * 587 + $b * 114) / 1000;
+
+    # Calculate saturation
+    my $min = min($r, $g, $b) / 255;
+    my $max = max($r, $g, $b) / 255;
+    my $delta = $max - $min;
+    my $saturation = $max == 0 ? 0 : $delta / $max;
+
+    # Check if color is vibrant (has high saturation and brightness)
+    return $saturation > $saturation_threshold && $brightness > $brightness_threshold;
+}
+
+sub show_help {
+    print "\nUsage: $0 <image_file>\n------------------------------------------------------------\n";
+    print "| Options:  \n";
+    print "| (Optional) Palette Type:   [-s|--stale]  \n";
+    print "|                            [-p|--pastel]    \n";
+    print "|                            [-v|--vibrant]\n";
+    print "|\n";
+    print "| (Optional) Theme Type:     [-l|--light] \n";
+    print "|                            [-d|--dark]\n";
+    print "|\n";
+    print "| (Mandatory) Color Backend: [-f|--fast] \n";
+    print "|                            [-s|--slow]\n";
+    print "|                            [-u|--ultraspeed]\n";
+    print "|     \n";
+    print "------------------------------------------------------------\n";
+    exit 1;
+}
+
+# Function to convert hex color to RGB
+sub hex_to_rgb {
+    my ($hex) = @_;
+    $hex =~ s/^#//;
+    return map { hex($_) } $hex =~ /(..)/g;
+}
+
+# Function to calculate color difference using Euclidean distance
+sub color_difference {
+    my ($r1, $g1, $b1, $r2, $g2, $b2) = @_;
+    return sqrt(($r2 - $r1) ** 2 + ($g2 - $g1) ** 2 + ($b2 - $b1) ** 2);
+}
+
+# Function to calculate brightness
+sub calculate_brightness {
+    my ($r, $g, $b) = @_;
+    return ($r * 299 + $g * 587 + $b * 114) / 1000;
+}
+
+# Function to determine if colors are similar
+sub are_colors_similar {
+    my ($color1, $color2, $threshold) = @_;
+
+    my ($r1, $g1, $b1) = hex_to_rgb($color1);
+    my ($r2, $g2, $b2) = hex_to_rgb($color2);
+
+    my $difference = color_difference($r1, $g1, $b1, $r2, $g2, $b2);
+
+    return $difference <= $threshold;
+}
+
+# Function to compare brightness of two colors
+sub compare_brightness {
+    my ($color1, $color2) = @_;
+
+    my ($r1, $g1, $b1) = hex_to_rgb($color1);
+    my ($r2, $g2, $b2) = hex_to_rgb($color2);
+
+    my $brightness1 = calculate_brightness($r1, $g1, $b1);
+    my $brightness2 = calculate_brightness($r2, $g2, $b2);
+
+    return $brightness1 <=> $brightness2;
+}

@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Check if ImageMagick is installed
+if ! [ -x "$(command -v convert)" ]; then
+  echo 'Error: ImageMagick is not installed. Please install it to use this script.' >&2
+  exit 1
+fi
+
+# Assigning arguments to variables
+CURRENT_RICE="$1"
+WALLPAPER="$2"
+WALLPAPER_PATH="$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER"
+
+CACHE_DIR="$HOME/.cache/material"
+
+if [ ! -e "$CACHE_DIR/$CURRENT_RICE" ]; then
+    mkdir "$CACHE_DIR/$CURRENT_RICE"
+fi
+
+# Check if input image exists
+if ! [ -f "$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER" ]; then
+  echo "Error: Input image '$WALLPAPER' not found."
+  exit 1
+fi
+
+# Generate modified wallpapers, if they don't exist
+if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}" ]; then
+    convert -strip "$WALLPAPER_PATH"[0] -thumbnail 500x500^ -gravity center -extent 500x500 "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}" &
+fi
+
+if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" ]; then
+    convert -strip -blur 0x3 -resize 2000 -gravity center -extent 2000 -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" &
+fi
+
+if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" ]; then
+    convert -strip -blur 0x3 -resize 2000 gravity center -extent 2000 -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" &
+fi
+
+if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" ]; then
+    convert -strip -blur 0x3 -thumbnail 500x500^ -gravity center "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" &
+fi
+
+
+wait
+
+# Symlink to default directory
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}" "${HOME}/.config/swww/wallpaper"
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" "${HOME}/.config/swww/wallpaper.blur"
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" "${HOME}/.config/swww/wallpaper.rofi"
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" "${HOME}/.config/swww/wallpaper.wofi"

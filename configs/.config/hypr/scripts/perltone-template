@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+# Check for correct number of arguments
+if (@ARGV != 3) {
+    die "Usage: $0 <input_file> <template_file> <output_file>\n";
+}
+
+# Get input, template, and output file names from command-line arguments
+my $input_file = $ARGV[0];
+my $template_file = $ARGV[1];
+my $output_file = $ARGV[2];
+
+# Open the input file and read colors
+open(my $input_fh, '<', $input_file) or die "Cannot open input file: $!";
+my %colors;
+while (my $line = <$input_fh>) {
+    chomp $line;
+    my ($key, $value) = split /=/, $line;
+    $colors{$key} = $value;
+}
+close($input_fh);
+
+# Open the template file for reading
+open(my $template_fh, '<', $template_file) or die "Cannot open template file: $!";
+my @lines = <$template_fh>;
+close($template_fh);
+
+# Modify the lines to insert the colors
+for (@lines) {
+    while (my ($key, $value) = each %colors) {
+        s/<material\.hex\.$key>/$value/g;
+    }
+}
+
+# Write the modified lines to the output file
+open(my $output_fh, '>', $output_file) or die "Cannot open output file: $!";
+print $output_fh @lines;
+close($output_fh);
+
+print "Colors inserted into $template_file and written to $output_file successfully.\n";
