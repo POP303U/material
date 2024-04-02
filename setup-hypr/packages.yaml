@@ -17,7 +17,6 @@ base_packages:
   swaylock-effects
   polkit-gnome
   swww
-  fuzzel
   wofi 
   wlogout
 
@@ -73,9 +72,10 @@ minimal_packages:
   -- Extra Applications for other rices --
   fuzzel
   rofi-lbonn-wayland-git
-  firefox
+  fuzzel
   thunar
 
+  -- Terminal --
   foot
   alacritty
 
@@ -87,13 +87,11 @@ minimal_packages:
   pfetch
   btop
   grc
-  p7zip 
-  unrar
-  tar
 
 extended_packages:
   -- Math --
   qalculate-qt
+  firefox
 
   -- Image viewing and editing --
   nomacs
@@ -103,6 +101,9 @@ extended_packages:
   inkscape
 
   -- Archiving --
+  p7zip 
+  unrar
+  tar
   ark
 
   -- Word processing --
