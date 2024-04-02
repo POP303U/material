@@ -11,8 +11,10 @@ sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/ma
 
 # Launch into perltone if enabled
 PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
-if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
+PERLTONE_OVERRIDE=${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $5}')} # make manual wallpapers possible
 
+if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" || "$(echo $PERLTONE_OVERRIDE | xargs)" == "perltone=force" ]]; then
+    sed -i 's|^perltone-status.*|perltone-status = on|' ~/.config/material/config # set forced perltone on before continuing
     WARNING_STATUS=$(awk '/perltone-warn-on-mono/ {print $NF}' $HOME/.config/material/config | xargs)
     if [[ "$WARNING_STATUS" == "on" && "$COLOR_PALETTE" == "mono" ]]; then 
         dunstify "Material" "Warning! Perltone on monochrome themes may not look good, consider disabling Perltone for them." --timeout=7001
