@@ -1,5 +1,5 @@
 [colors]
-background=<material.hex.base>ff # surface
+background=<material.hex.darkest>D0 # surface
 text=<material.hex.white>ff # text 
 match=<material.hex.color2>ff # rose
 selection=<material.hex.overlay>ff # overlay

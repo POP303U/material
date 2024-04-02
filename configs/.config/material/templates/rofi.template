@@ -1,5 +1,5 @@
 * {
-	bg: #<material.hex.base>;
+	bg: #<material.hex.darkest>;
 	cur: #<material.hex.color2>;
 	fgd: #<material.hex.white>;
 	cmt: #928374;
