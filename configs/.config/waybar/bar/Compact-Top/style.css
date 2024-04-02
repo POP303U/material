@@ -23,16 +23,17 @@ tooltip {
 #workspaces button {
     all: initial;
     padding: 5px;
-    padding-right: 8px;
-    padding-left: 8px;
-    margin-right: 5px;
+    padding-left: 10px;
+    padding-right: 12px;
     color: @workspace-button-inactive;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.25s ease-in-out;
     border-radius: 10px;
 }
 
 #workspaces button.active {
-    color: @workspace-button-active
+    color: @base;
+    background: @foam;
+    min-width: 30px;
 }
 
 #workspaces button.focused {
@@ -46,11 +47,12 @@ tooltip {
 }
 
 #workspaces button:hover {
-    background: @base;
-    color: @subtle;
+    background: @pine;
+    color: @base;
     border-radius: 10px;
     transition: all 0.2s ease-in-out;
     border-radius: 10px;
+    min-width: 30px;
 }
 
 #custom-weather,

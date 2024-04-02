@@ -126,20 +126,22 @@ label:focus {
     font-style: normal;
     opacity: 0.8;
     font-size: 16px;
-    color: @foam7;
+    color: @text;
 }
 
 #workspaces button {
-  color: @foam;
+  background-color: transparent;
+  color: @text;
   transition: all 0.3s ease-in-out;
   opacity: 0.4;
 }
 
 #workspaces button.active {
-  background-color: @muted;
+  background-color: @foam;
   opacity: 0.9;
-  margin: 8px;
   border-radius: 5px;
+  margin-bottom: 11px;
+  margin-top: 11px;
 }
 
 #workspaces button:hover {

@@ -194,7 +194,7 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
+        "format": "{icon} {volume}",
         "tooltip": false,
         "format-muted": " Mute",
         "on-click": "pamixer -t",
@@ -216,7 +216,7 @@
 
     "pulseaudio#microphone": {
         "format": "{format_source}",
-        "format-source": " {volume}%",
+        "format-source": " {volume}",
         "format-source-muted": " Mute",
         "on-click": "pamixer --default-source -t",
         "on-scroll-up": "pamixer --default-source -i 5",

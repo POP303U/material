@@ -36,11 +36,11 @@
         "format": "{icon}",
         "urgent": " ",
         "format-icons": {
-            "1": "",
+            "1": "﬏",
             "2": "󰈹",
-            "3": "󰓓",
-            "4": "󰙯",
-            "5": "󰇄",
+            "3": "󰺵",
+            "4": "",
+            "5": "",
         },
 
         "persistent-workspaces": {
@@ -117,15 +117,6 @@
         "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
         "interval": 86400,
         "tooltip": true
-    },
-
-    "custom/weather" : {
-        //shows the current weather and forecast
-        "tooltip" : true,
-        "format" : "{}",
-        "interval" : 30,
-        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
-        "return-type" : "json"
     },
 
     "keyboard-state": {

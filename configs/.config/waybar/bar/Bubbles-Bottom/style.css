@@ -10,6 +10,8 @@
 
 window#waybar {
     background: @bar-bg;
+    transition-property: background-color;
+    transition-duration: .5s;
 }
 
 tooltip {
@@ -20,35 +22,42 @@ tooltip {
     border-style: solid;
 }
 
+#workspaces {
+    background: @workspacesbackground1;
+    padding: 0px 1px;
+    border-radius: 10px;
+    border: 0px;
+    font-weight: bold;
+    font-style: normal;
+    opacity: 0.8;
+    font-size: 16px;
+    color: @textcolor1;
+}
+
 #workspaces button {
-    all: initial;
-    padding: 5px;
-    padding-right: 10px;
-    margin-right: 5px;
-    color: @workspace-button-inactive;
+    border-radius: 15px;
+    color: @text;
+    background-color: @workspacesbackground2;
     transition: all 0.3s ease-in-out;
+    opacity: 0.4;
 }
 
 #workspaces button.active {
-    color: @workspace-button-active;
-}
-
-#workspaces button.focused {
-    color: @workspace-button-active;
-    border-radius: 10px;
-}
-
-#workspaces button.urgent {
-    background: @love;
-    border-radius: 10px;
+    color: @surface;
+    background: @foam;
+    border-radius: 15px;
+    min-width: 40px;
+    transition: all 0.3s ease-in-out;
+    opacity: 1.0;
 }
 
 #workspaces button:hover {
-    background: @base;
-    color: @subtle;
-    transition: all 0.3s ease-in-out;
-    border-radius: 10px;
+    color: @text;
+    background: @workspacesbackground2;
+    border-radius: 15px;
+    opacity: 0.7;
 }
+
 
 #custom-waybar_switcher,
 #custom-theme_settings,
@@ -82,13 +91,6 @@ tooltip {
 
 #tray {
     border-radius: 10px;
-}
-
-#workspaces {
-    border-radius: 10px;
-    margin-left: 10px;
-    padding-right: 0px;
-    padding-left: 5px;
 }
 
 #keyboard-state {
