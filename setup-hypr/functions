@@ -254,7 +254,7 @@ install_custom_sddm() {
     # time to get hacky, dont want to create extra repo so here we areee
     sed -i 's|Background="Backgrounds/cat_leaves.png"|Background="Backgrounds/current"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
     sed -i 's|PartialBlur="false"|PartialBlur="true"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
-    sed -i 's|BlueRadius="0"|BlurRadius="15"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
+    sed -i 's|BlueRadius="0"|BlurRadius="35"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
 
     # making sure sddm uses the correct background
     RICE_CURRENT=$(awk '/rice-current/ {print $NF}' ../configs/.config/material/config)
