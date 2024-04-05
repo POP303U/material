@@ -1,0 +1,3 @@
+#!/bin/sh
+
+~/.config/wofi/scripts/wofi-manager "customize_perltone/perltone_modulations"
