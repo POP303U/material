@@ -37,7 +37,7 @@ echo -e '${YELLOW}Enter sudo password to take backup and update... ${RESET}'
 TIMESHIFT_STATUS='$(pacman -Si | grep timeshift | xargs)'
 [[ $TIMESHIFT_STATUS == "" ]] || sudo pacman -S timeshift
 
-sudo timeshift --create --comments 'after update: pacman -Syyu with material' --tags W
+sudo timeshift --create --comments 'after update: pacman -Syyu with material' --tags D
 sudo pacman -Syyu
 "
 
