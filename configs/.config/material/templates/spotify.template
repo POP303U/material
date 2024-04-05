@@ -1,0 +1,21 @@
+[Perltone]
+text               = <material.hex.text6>
+subtext            = <material.hex.text4>
+nav-active-text    = <material.hex.color1>
+main               = <material.hex.darkest>
+sidebar            = <material.hex.base>
+player             = <material.hex.subtle>
+card               = <material.hex.surface>
+shadow             = <material.hex.darkest>
+main-secondary     = <material.hex.darkest>
+button             = <material.hex.surface>
+button-secondary   = <material.hex.color2>
+button-active      = <material.hex.color3>
+button-disabled    = <material.hex.color5>
+nav-active         = <material.hex.color3>
+play-button        = <material.hex.white>
+tab-active         = <material.hex.color4>
+notification       = <material.hex.color0>
+notification-error = <material.hex.color7>
+playback-bar       = <material.hex.color2>
+misc               = <material.hex.surface>

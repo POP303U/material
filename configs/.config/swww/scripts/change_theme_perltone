@@ -13,8 +13,11 @@ COLOR_PALETTE="${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{pr
 COLOR_MODULATION="--$(awk '/perltone-colors/ {print $NF}' $HOME/.config/material/config)"
 PERLTONE_BACKEND="--$(awk '/perltone-backend/ {print $NF}' $HOME/.config/material/config)"
 
+# Ignore: Debugging
+echo -e "DEBUG:\n----------------------\n\nCURRENT_RICE: $CURRENT_RICE\nCURRENT_BG: $CURRENT_BG\nWALLPAPER: $WALLPAPER\nCOLOR_SCHEME: $COLOR_SCHEME\nPERLTONE_BACKEND: $PERLTONE_BACKEND\nCOLOR_MODULATION: $COLOR_MODULATION\n\n----------------------"
+
 # Generate colors
-~/.config/hypr/scripts/perltone $COLOR_SCHEME $COLOR_MODULATION $PERLTONE_BACKEND "$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_BG" > $HOME/.config/material/colors/colors
+~/.config/hypr/scripts/perltone $WALLPAPER $COLOR_SCHEME $COLOR_MODULATION $PERLTONE_BACKEND > $HOME/.config/material/colors/colors
 if [ $? -eq 1 ]; then
     echo "Error: Perltone couldn't generate colors."
     exit 1
@@ -38,6 +41,9 @@ $PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/tty.template $HOM
 $PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/cava.template $HOME/.config/cava/themes/Perltone
 $PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/perltone-kvconfig.template $HOME/.config/Kvantum/Perltone/Perltone.kvconfig
 $PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/perltone-svg.template $HOME/.config/Kvantum/Perltone/Perltone.svg
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/spotify.template $HOME/.config/spicetify/Themes/Perltone/color.ini
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/sddm.template /usr/share/sddm/themes/rose-pine-sddm/theme.conf
+$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/discord.template $HOME/.config/vesktop/themes/Perltone.css
 
 # tty 
 $HOME/.bin/colors/Perltone
@@ -76,6 +82,9 @@ ln -sf $HOME/.config/rofi/themes/Perltone.rasi $HOME/.config/rofi/themes/theme.r
 
 # Wofi (hacky symlink to pywal path but who cares)
 ln -sf $HOME/.config/wofi/themes/Perltone $HOME/.cache/wal/colors 
+
+# Spotify (spicetify)
+spicetify apply
 
 # Kitty
 ln -sf ~/.config/kitty/themes/Perltone.conf ~/.config/kitty/themes/theme.conf 

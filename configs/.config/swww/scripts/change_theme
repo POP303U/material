@@ -21,7 +21,7 @@ if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" || "$(echo $PERLTONE_OVERRIDE |
     fi
 
     $HOME/.config/swww/scripts/change_theme_perltone &
-    exit 0
+    exit 127
 fi
 
 # Generated blurred background first since it takes a while
