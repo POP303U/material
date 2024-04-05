@@ -40,7 +40,6 @@ if (@ARGV != 1) {
     show_help();
 }
 
-
 # Check if the provided file exists
 my $image_file = $ARGV[0];
 if (!-f $image_file) {
@@ -74,8 +73,8 @@ my $image_raw = "$ENV{HOME}/.cache/material/perltone/$cache_image";
 ### Evaluate cli arguments
 my $options = "";
 if ($dark) {
-    $options = "-modulate 150,110,100" if $pastel;
-    $options = "-modulate 100,100,100" if $stale;
+    $options = "-modulate 150,130,100" if $pastel;
+    $options = "-modulate 95,80,94" if $stale;
     $options = "-modulate 115,140,100" if $vibrant;
 } else {
     $options = "-modulate 75,75,100" if $pastel;
@@ -88,7 +87,7 @@ my $raw_colors;
 
 # (not recommended)
 # extremly fast calculation of colors, lower color accuracy / smaller palette
-$raw_colors = `magick $image_file $options -resize 5% -depth 4 -kmeans 4 -unique-colors txt:- | grep -Po "(?<=#)[0-9a-fA-F]{6}"` if $ultraspeed;
+$raw_colors = `magick $image_file $options -resize 15% -depth 4 -kmeans 4 -unique-colors txt:- | grep -Po "(?<=#)[0-9a-fA-F]{6}"` if $ultraspeed;
 
 # (recommended)
 # fast calculation of colors, lower color accuracy / smaller palette
@@ -258,28 +257,39 @@ if ($light) {
 # Choose foreground color
 my $foreground_color = rgb_negative($darkest);
 
-# Output background and foreground colors
-print "disabled-border=$disabled_border\n";
-print "darkest=$darkest\n";
-print "base-transparent=$bar_tr\n";
-print "base=$base\n";
-print "surface=$_bar_tr\n"; # background
-print "overlay=$overlay\n"; # background
-print "muted=$muted\n"; # foreground
-print "subtle=$subtle\n"; # foreground
-print "white=$foreground_color\n"; # foreground
+my @output_array;
+
+# Push output strings to the array
+push @output_array, "disabled-border=$disabled_border\n";
+push @output_array, "darkest=$darkest\n";
+push @output_array, "base-transparent=$bar_tr\n";
+push @output_array, "base=$base\n";
+push @output_array, "surface=$_bar_tr\n"; # background
+push @output_array, "overlay=$overlay\n"; # background
+push @output_array, "muted=$muted\n"; # foreground
+push @output_array, "subtle=$subtle\n"; # foreground
+push @output_array, "white=$foreground_color\n"; # foreground
 
 # Generate color palette
 for (my $i = 0; $i <= 7; $i++) {
     my $_i_ = adjust_color_brightness($adjusted_colors[$i], 0.2, 'brighten');
-    print "color$i=$_i_\n"; # color0 - color7
+    push @output_array, "color$i=$_i_\n"; # color0 - color7
 }
 
 # Generate gradient colors
 my $gradient_ref = generate_gradient($adjusted_colors[2], 14);
 for (my $i = 0; $i < scalar @$gradient_ref; $i++) {
-        print "gradient$i=$gradient_ref->[$i]\n";
+    push @output_array, "gradient$i=$gradient_ref->[$i]\n";
 }
+
+# Generate bright text colors
+my $gradient_text = generate_gradient(adjust_color_brightness(@$gradient_ref[4], 0.35, 'brighten'), 44);
+for (my $i = 0; $i < scalar @$gradient_text; $i++) {
+    push @output_array, "text$i=$gradient_text->[$i]\n";
+}
+
+# Print the entire array, this can be redirected by the user with shellutils
+print @output_array;
 
 sub hex_to_rgba {
     my ($color, $_opacity) = @_; 
