@@ -1,19 +1,25 @@
 [colors]
 background=<material.hex.darkest>D0 # surface
-text=<material.hex.white>ff # text 
+text=<material.hex.text4>ff # text 
 match=<material.hex.color2>ff # rose
 selection=<material.hex.overlay>ff # overlay
 selection-match=<material.hex.color3>ff # love
-selection-text=<material.hex.white>ff
+selection-text=<material.hex.text4>ff
 border=<material.hex.color2>ff # rose
 
 [main]
 font=JetbrainsMonoNerdFont:size=14
-terminal=kitty
+fields=filename,name,generic,categories
 icon-theme=Dracula
+terminal=kitty
 width=80
 lines=20
 prompt="󰣇  "
+password-character = "雷"
+horizontal-pad = 40
+vertical-pad = 15
+inner-pad = 10
+image-size-ratio = 0.32
 
 [border]
 width=3
