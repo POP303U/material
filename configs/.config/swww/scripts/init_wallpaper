@@ -5,7 +5,10 @@ CURRENT_WALL=$(awk '/wallpaper-current/ {print $NF}' $HOME/.config/material/conf
 
 swww query
 if [ $? -eq 1 ]; then
-    swww-daemon --format xrgb &
+    swww-daemon --format xrgb
+
+   [ $? -ne 0 ] && swww init
 fi
 
-swww img "$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_WALL"
+wait
+swww restore
