@@ -1,7 +1,7 @@
 * {
 	bg: #<material.hex.darkest>;
 	cur: #<material.hex.color2>;
-	fgd: #<material.hex.white>;
+	fgd: #<material.hex.text4>;
 	cmt: #928374;
 	cya: #<material.hex.color0>;
 	grn: #<material.hex.color1>;

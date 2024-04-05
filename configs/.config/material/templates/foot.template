@@ -1,7 +1,7 @@
 [colors]
 alpha = 0.7
 
-foreground=<material.hex.white>
+foreground=<material.hex.text4>
 background=<material.hex.surface>
 
 regular0=<material.hex.color0>
