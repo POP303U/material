@@ -1,0 +1,6 @@
+@define-color border #<material.hex.base>;
+@define-color surface #<material.hex.surface>;
+@define-color text #<material.hex.white>;
+
+@define-color color-focus #<material.hex.gradient1>;
+@define-color color-hover #<material.hex.gradient4>;
