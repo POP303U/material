@@ -70,9 +70,16 @@ sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt5ct/colors/${C
 # qt6ct
 sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt6ct/colors/${CURRENT_RICE}.conf|" $HOME/.config/qt6ct/qt6ct.conf
 
+# gtk4
+rm -rf ~/.config/gtk-4.0
+ln -s ~/.themes/${CURRENT_RICE}/gtk-4.0 ~/.config/gtk-4.0
+
 # gtk3
 sed -i 's|^gtk-theme-name.*|gtk-theme-name='${CURRENT_RICE}'|' ~/.config/gtk-3.0/settings.ini
 ~/.config/hypr/scripts/import-gsettings
+
+# gtk2
+ln -sf ~/.themes/${CURRENT_RICE}/gtk-2.0/gtkrc ~/.config/swww/gtkrc
 
 # flatpak gtk
 flatpak --user override --env=GTK_THEME="${CURRENT_RICE}" # flatpak gtk is not intended to work, and very hacky not all apps will work with this
@@ -81,6 +88,9 @@ flatpak --user override --env=ICON_THEME="${CURRENT_ICONS}"
 # Kitty
 ln -sf ~/.config/kitty/themes/${CURRENT_RICE}.conf ~/.config/kitty/themes/theme.conf 
 pkill -SIGUSR1 kitty # reload
+
+# Wlogout
+ln -sf ~/.config/wlogout/themes/${CURRENT_RICE}.css ~/.config/wlogout/themes/theme.css
 
 # Waybar
 ln -sf ~/.config/waybar/themes/${CURRENT_RICE}.css ~/.config/waybar/themes/theme.css
