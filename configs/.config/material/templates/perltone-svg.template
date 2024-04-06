@@ -1563,7 +1563,7 @@
     <path
        class="ColorScheme-Text"
        d="m 65.002415,432.02406 a 1,1 0 0 0 -0.70703,0.29297 l -2.29297,2.29297 -2.2832,-2.2832 a 1,1 0 0 0 -0.01,-0.01 1,1 0 0 0 -0.70117,-0.28906 l -0.01,0.0137 a 1,1 0 0 0 -1,1 1,1 0 0 0 0.29297,0.70703 l 2.29297,2.29297 -2.29297,2.29297 a 1,1 0 0 0 -0.28906,0.69922 1,1 0 0 0 1,1 1,1 0 0 0 0.70703,-0.29297 l 2.29297,-2.29297 2.2832,2.2832 a 1,1 0 0 0 0.7168,0.30274 1,1 0 0 0 1,-1 1,1 0 0 0 -0.29297,-0.70703 l -2.30078,-2.29883 2.2832,-2.2832 a 1,1 0 0 0 0.31055,-0.72071 1,1 0 0 0 -1,-1 z"
-       style="opacity:0.6;fill:#<material.hex.color1>;fill-opacity:1"
+       style="opacity:0.99;fill:#<material.hex.color1>;fill-opacity:1"
        id="path293"
        inkscape:connector-curvature="0" />
   </g>
@@ -1584,7 +1584,7 @@
        height="2"
        rx="0"
        ry="0"
-       style="opacity:0.6;fill:#282d43"
+       style="opacity:0.99;fill:#282d43"
        id="rect298" />
   </g>
   <g
@@ -1599,7 +1599,7 @@
        id="rect301" />
     <path
        d="m 97,432.03 v 2.9993 l -3,7e-4 v 2 l 3,-7e-4 v 3.0007 h 2 v -3.0007 l 3,7e-4 v -2 l -3,-7e-4 V 432.03 Z"
-       style="opacity:0.6;fill:#282d43"
+       style="opacity:0.99;fill:#282d43"
        id="path303"
        inkscape:connector-curvature="0" />
   </g>
@@ -1615,7 +1615,7 @@
        id="rect306" />
     <path
        d="m 116,432.0293 a 4,4 0 0 0 -4,4 4,4 0 0 0 4,4 4,4 0 0 0 4,-4 4,4 0 0 0 -4,-4 z m 0,2 a 2,2 0 0 1 2,2 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 z"
-       style="opacity:0.6;fill:#282d43"
+       style="opacity:0.99;fill:#282d43"
        id="path308"
        inkscape:connector-curvature="0" />
   </g>
@@ -6432,14 +6432,14 @@
   <path
      id="menu-normal"
      d="M 77.999999,336 H 88 v 10 H 77.999999 Z"
-     style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+     style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
   <g
      id="menu-normal-left"
      transform="matrix(2.6666666,0,0,0.20833333,-248.02666,189.38542)"
      style="opacity:1;fill:#0a1124;fill-opacity:1;stroke-width:1.34164">
     <path
        d="m 116.26,703.75 h 6 v 48 h -6 z"
-       style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1"
+       style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1"
        id="path59170" />
   </g>
   <g
@@ -6449,7 +6449,7 @@
     <path
        id="path3597"
        d="m 122.26,698.75 c -3.3229,10e-4 -5.9977,2.6768 -5.9977,6 h 6 z"
-       style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+       style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
   </g>
   <use
      id="menu-normal-top"
@@ -6551,7 +6551,7 @@
      transform="matrix(0.2,0,0,1,13.45,-559.4478)"
      id="menu-shadow-top">
     <g
-       style="opacity:0.6;fill:#0a1124;"
+       style="opacity:0.99;fill:#0a1124;"
        transform="matrix(1,0,0,1.5238096,-127.25,495.44779)"
        id="top">
       <path
@@ -6587,7 +6587,7 @@
       <path
          d="m 14.5,37.44 a 16,16 0 0 0 -15.9999999,16 H 14.5 Z"
          id="path4714-2"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
   </g>
   <g
@@ -6601,7 +6601,7 @@
       <path
          d="m 247,259 v 50 l -10.5,10e-6 v -50 z"
          id="path4396"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
     <g
        transform="matrix(1,0,0,-1,-167.2498,1190.5)"
@@ -6628,7 +6628,7 @@
       <path
          d="m 183,259 v 50 l 10.5,10e-6 v -50 z"
          id="path4418"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
     <g
        transform="rotate(180,173.38,595.23)"
@@ -6655,7 +6655,7 @@
       <path
          d="m 190,252.09144 h 50 v 10.5 h -50 z"
          id="path4382-9"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
     <g
        transform="rotate(90,-139.85,509.6)"
@@ -7134,7 +7134,7 @@
   <g
      id="scrollbarslider-focused-topleft"
      transform="translate(57.000001,-883)"
-     style="opacity:0.6;fill:#c50ed2;stroke-width:0.999792">
+     style="opacity:0.99;fill:#c50ed2;stroke-width:0.999792">
     <path
        id="path9539"
        d="m 155,1089 c -6.648,0 -12,5.3521 -12,12 h 12 z"
@@ -7149,7 +7149,7 @@
   <g
      id="scrollbarslider-focused-left"
      transform="matrix(1,0,0,1.3939394,57.000001,-1316.7273)"
-     style="opacity:0.6;fill:#c50ed2;stroke-width:0.999778">
+     style="opacity:0.99;fill:#c50ed2;stroke-width:0.999778">
     <path
        id="path9545"
        d="m 143,1101 v 16.5 h 12 V 1101 Z"
@@ -7164,7 +7164,7 @@
   <g
      id="scrollbarslider-focused-topright"
      transform="matrix(-1,0,0,1,367,-883)"
-     style="opacity:0.6;fill:#c50ed2;stroke-width:0.999792">
+     style="opacity:0.99;fill:#c50ed2;stroke-width:0.999792">
     <path
        id="path9551"
        d="m 155,1089 c -6.648,0 -12,5.3521 -12,12 h 12 z"
@@ -7179,7 +7179,7 @@
   <g
      id="scrollbarslider-focused-right"
      transform="matrix(-1,0,0,1.3939394,367,-1316.7273)"
-     style="opacity:0.6;fill:#c50ed2;stroke-width:0.999778">
+     style="opacity:0.99;fill:#c50ed2;stroke-width:0.999778">
     <path
        id="path9557"
        d="m 143,1101 v 16.5 h 12 V 1101 Z"
@@ -7194,7 +7194,7 @@
   <g
      id="scrollbarslider-focused-bottomleft"
      transform="matrix(1,0,0,-1,57,1342)"
-     style="opacity:0.6;fill:#c50ed2;stroke-width:0.999792">
+     style="opacity:0.99;fill:#c50ed2;stroke-width:0.999792">
     <path
        id="path9563"
        d="m 155,1089 c -6.648,0 -12,5.3521 -12,12 h 12 z"
@@ -7209,7 +7209,7 @@
   <g
      id="scrollbarslider-focused-bottomright"
      transform="rotate(180,183.5,671)"
-     style="opacity:0.6;fill:#c50ed2;stroke-width:0.999792">
+     style="opacity:0.99;fill:#c50ed2;stroke-width:0.999792">
     <path
        id="path9569"
        d="m 155,1089 c -6.648,0 -12,5.3521 -12,12 h 12 z"
@@ -7314,11 +7314,11 @@
   <path
      id="tooltip-normal"
      d="m 153,598.99999 h 10 v 10 h -10 z"
-     style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+     style="opacity:0.8;fill:#<material.hex.darkest>;fill-opacity:1" />
   <g
      id="tooltip-normal-left"
      transform="matrix(2.6666666,0,0,0.20833333,-173.02666,452.38541)"
-     style="opacity:0.6;fill:#0a1124;">
+     style="opacity:0.8;fill:#0a1124;">
     <path
        d="m 116.26,703.75 h 6 v 48 h -6 z"
        style="fill:#<material.hex.darkest>;fill-opacity:1;stroke-width:1.34164"
@@ -7327,7 +7327,7 @@
   <g
      id="tooltip-normal-topleft"
      transform="matrix(2.6666667,0,0,2.6666667,-173.0328,-1280.3333)"
-     style="opacity:0.6;fill:#0a1124;">
+     style="opacity:0.99;fill:#0a1124;">
     <path
        id="path3597-6"
        d="m 122.26,698.75 c -3.3229,10e-4 -5.9977,2.6768 -5.9977,6 h 6 z"
@@ -7398,7 +7398,7 @@
       <path
          d="m 190,252 h 50 v 10.5 h -50 z"
          id="path4382-5-2"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
     <g
        transform="matrix(0,-1,-1,0,369.75,1168.5)"
@@ -7428,7 +7428,7 @@
       <path
          d="m 14.5,37.44 a 16,16 0 0 0 -15.9999999,16 H 14.5 Z"
          id="path4714-2-9"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
   </g>
   <g
@@ -7441,7 +7441,7 @@
       <path
          d="m 247,259 v 50 l -10.5,10e-6 v -50 z"
          id="path4396-8"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
     <g
        transform="matrix(1,0,0,-1,-167.2498,1190.5)"
@@ -7467,7 +7467,7 @@
       <path
          d="m 183,259 v 50 l 10.5,10e-6 v -50 z"
          id="path4418-1"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
     <g
        transform="rotate(180,173.38,595.23)"
@@ -7494,7 +7494,7 @@
       <path
          d="m 190,252.09144 h 50 v 10.5 h -50 z"
          id="path4382-9-9"
-         style="opacity:0.6;fill:#<material.hex.darkest>;fill-opacity:1" />
+         style="opacity:0.99;fill:#<material.hex.darkest>;fill-opacity:1" />
     </g>
     <g
        transform="rotate(90,-139.85,509.6)"
