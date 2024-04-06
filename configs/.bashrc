@@ -724,6 +724,9 @@ if [ ! -z "$DISPLAY" ]; then
     #pokemon-colorscripts --no-title -r 
     ~/.bin/colorscripts/colorwheel 
 else 
+    # load colorscheme (tty only)
+    ~/.bin/colors/Perltone
+
     ################################
     #
     # Select your Prompt! (tty only)
@@ -731,9 +734,6 @@ else
     ################################
     default_artix_iso      # prompt based on artix live iso
     nice_arrow             # simple fat blue arrow 
-
-    # load colorscheme (tty only)
-    ~/.bin/colors/Perltone
 fi
 
 PATH="/home/pops/perl5/bin${PATH:+:${PATH}}"; export PATH;
