@@ -4,7 +4,7 @@
     font-family: MapleMono;
 }
 
-@import "${HOME}/.config/waybar/themes/theme.css";
+@import "${HOME}/.config/wlogout/themes/theme.css";
 
 window {
     background-color: rgba(0,0,0,.7);
@@ -26,12 +26,12 @@ button {
 }
 
 button:focus {
-    background-color: @rose;
+    background-color: @color-focus;
     background-size: 30%;
 }
 
 button:hover {
-    background-color: @iris;
+    background-color: @color-hover;
     background-size: 30%;
     border-radius: 30px;
     animation: gradient_f 20s ease-in infinite;

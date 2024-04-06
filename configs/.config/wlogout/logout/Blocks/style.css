@@ -4,7 +4,7 @@
     font-family: MapleMono;
 }
 
-@import "${HOME}/.config/waybar/themes/theme.css";
+@import "${HOME}/.config/wlogout/themes/theme.css";
 
 window {
     background-color: rgba(0,0,0,.7);
@@ -17,18 +17,18 @@ button {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 23%;
-    border-color: @base;
+    border-color: @border;
     border-width: 5px;
 }
 
 button:focus {
     background-size: 31%;
-    border-color: @rose;
+    border-color: @color-focus;
 }
 
 button:hover {
     background-size: 31%;
-    border-color: @iris;
+    border-color: @color-hover;
 }
 
 #suspend {

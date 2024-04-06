@@ -1,11 +1,5 @@
+@define-color surface #313244;
 @define-color text #cdd6f4;
-@define-color bg-tr rgba(17, 17, 27, 1);
 
-@define-color main-bg #313244;
-@define-color main-fg #d7827e;
-
-@define-color wb-act-bg #cba6f7;
-@define-color wb-act-fg #286983;
-
-@define-color wb-hvr-bg #f38ba8;
-@define-color wb-hvr-fg #b4637a;
+@define-color color-focus #cba6f7;
+@define-color color-hover #f38ba8;
