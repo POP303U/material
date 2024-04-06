@@ -5,7 +5,7 @@
 
 <p align="center">
     Default configuration when installed:
-    <img src="https://github.com/POP303U/hypr-dots/assets/115036828/7ef49c08-fcf1-4d50-b1a1-c8d6157f0f4c" alt="Material Bread logo">
+    <img src="https://github.com/POP303U/material/assets/115036828/32a208e7-8e3d-4ad1-86f9-43bf37d6ebbe" alt="Material Bread logo">
 </p>
 
 ## Installation
@@ -31,18 +31,18 @@ git pull
 ./install
 ```
 
-## Custom created themes with wofi-manager
+## Custom created themes with Thememanager
 
-* Nature
-![image](https://github.com/POP303U/hypr-dots/assets/115036828/f7c0ff01-accc-4cd9-8dbd-47d0830c6ce6)
+* Gruvbox-Picom
+![image](https://github.com/POP303U/material/assets/115036828/eeeda211-3d9e-48ee-8db9-235ab378b251)
 
-* Peace
-![image](https://github.com/POP303U/hypr-dots/assets/115036828/f4e4dc2e-260c-4cba-819f-943bd2756c73)
+* Material-Design
+![image](https://github.com/POP303U/material/assets/115036828/c43f64be-ee28-4872-bbdb-241ac26ae266)
 
-* The Seven Seas
-![image](https://github.com/POP303U/hypr-dots/assets/115036828/1609be17-4263-491e-9192-38bdc4faef80)
+* Frosty-Peaks (Uses Perltone for color generation)
+![image](https://github.com/POP303U/material/assets/115036828/be0ac226-d3b6-4d9a-bbe8-3a3916164a62)
 
-## Themes 
+## Themes (Currently outdated)
 * Catppuccin-Latte
 ![swappy-20240117_222742](https://github.com/POP303U/hypr-dots/assets/115036828/6ee5f780-da71-4541-8332-0aa64d4eab32)
 
@@ -76,23 +76,25 @@ git pull
 | Keys | Action |
 | :--  | :-- |
 | <kbd>Alt</kbd> + <kbd>Enter</kbd>| launch kitty terminal
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd>| launch brave 
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | launch thunar file manager  
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd>| launch firefox
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | launch dolphin
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Q</kbd>| quit active/focused window
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>| quit hyprland session
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd> | toggle window on focus to float
 | <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>L</kbd> | lock screen (swaylock)
-| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>R</kbd> | rice select menu (wofi)
-| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>C</kbd> | open clipboard history (wofi)
-| <kbd>Alt</kbd> + <kbd>D</kbd> | launch desktop applications (wofi)
-| <kbd>Alt</kbd> + <kbd>S</kbd> | launch material settings menu (wofi)
+| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>R</kbd> | rice select menu
+| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>C</kbd> | open clipboard history
+| <kbd>Alt</kbd> + <kbd>D</kbd> | launch desktop applications
+| <kbd>Alt</kbd> + <kbd>S</kbd> | launch material settings menu
 | <kbd>Alt</kbd> + <kbd>F12</kbd> | mute audio output (toggle)
 | <kbd>Alt</kbd> + <kbd>F11</kbd>| increase volume
 | <kbd>Alt</kbd> + <kbd>F10</kbd>| decrease volume
 | <kbd>Alt</kbd> + <kbd>F</kbd> | make current application fullscreen
 | <kbd>Alt</kbd> + <kbd>M</kbd> | launch logout menu (wlogout)
-| <kbd>Win</kbd> + <kbd>→</kbd> | next wallpaper
-| <kbd>Win</kbd> + <kbd>←</kbd> | previous wallpaper
+| <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>→</kbd> | next wallpaper
+| <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>←</kbd> | previous wallpaper
+| <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>↑</kbd> | next waybar style
+| <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>↓</kbd> | previous waybar style
 | <kbd>Shift</kbd> + <kbd>Print</kbd>  | select area for a screenshot
 | <kbd>Alt</kbd> + <kbd>P</kbd> | launch hex colorpicker (hyprpicker)
 | <kbd>Alt</kbd> + <kbd>RightClick</kbd> | resize the window
