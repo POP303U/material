@@ -734,6 +734,7 @@ else
     ################################
     default_artix_iso      # prompt based on artix live iso
     nice_arrow             # simple fat blue arrow 
+    ~/.bin/colorscripts/colorwheel 
 fi
 
 PATH="/home/pops/perl5/bin${PATH:+:${PATH}}"; export PATH;
