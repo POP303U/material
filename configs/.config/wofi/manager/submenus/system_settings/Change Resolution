@@ -3,6 +3,7 @@
 LAUNCHER=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
 [[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || LAUNCHER="$LAUNCHER --dmenu" # patch for rofi
 
+[ ! -e $HOME/.config/hypr/resolutions ] && $HOME/.config/hypr/scripts/generate-resolutions
 RESOLUTION=$(dir -1 $HOME/.config/hypr/resolutions | $LAUNCHER -i -p "~ Load your preferred resolution ~")
 
 [[ $RESOLUTION == "" ]] && exit 1
