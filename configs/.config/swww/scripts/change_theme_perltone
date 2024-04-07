@@ -26,24 +26,37 @@ fi
 # Generated blurred background first since it takes a while
 ~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$CURRENT_BG" &
 
-# Generate all colors using perltone-template
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/dunst.template $HOME/.config/dunst/themes/Perltone
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/hypr.template $HOME/.config/hypr/themes/Perltone.conf
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/fuzzel.template $HOME/.config/fuzzel/themes/Perltone.ini
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/rofi.template $HOME/.config/rofi/themes/Perltone.rasi
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/wofi.template $HOME/.config/wofi/themes/Perltone
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/kitty.template $HOME/.config/kitty/themes/Perltone.conf
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/foot.template $HOME/.config/foot/themes/Perltone.ini
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/waybar.template $HOME/.config/waybar/themes/Perltone.css
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/qt5ct.template $HOME/.config/qt5ct/colors/Perltone.conf
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/qt6ct.template $HOME/.config/qt6ct/colors/Perltone.conf
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/tty.template $HOME/.bin/colors/Perltone && chmod +x $HOME/.bin/colors/Perltone
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/cava.template $HOME/.config/cava/themes/Perltone
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/perltone-kvconfig.template $HOME/.config/Kvantum/Perltone/Perltone.kvconfig
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/perltone-svg.template $HOME/.config/Kvantum/Perltone/Perltone.svg
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/spotify.template $HOME/.config/spicetify/Themes/Perltone/color.ini
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/sddm.template /usr/share/sddm/themes/rose-pine-sddm/theme.conf
-$PERLTONE_TEMPLATE $MATERIAL/colors/colors $MATERIAL/templates/discord.template $HOME/.config/vesktop/themes/Perltone.css
+# Define the list of template files and their corresponding output paths
+# Formatting:     input.template       :      output.template
+TEMPLATES=(
+    "$MATERIAL/templates/dunst.template:$HOME/.config/dunst/themes/Perltone"
+    "$MATERIAL/templates/hypr.template:$HOME/.config/hypr/themes/Perltone.conf"
+    "$MATERIAL/templates/fuzzel.template:$HOME/.config/fuzzel/themes/Perltone.ini"
+    "$MATERIAL/templates/rofi.template:$HOME/.config/rofi/themes/Perltone.rasi"
+    "$MATERIAL/templates/wofi.template:$HOME/.config/wofi/themes/Perltone"
+    "$MATERIAL/templates/kitty.template:$HOME/.config/kitty/themes/Perltone.conf"
+    "$MATERIAL/templates/foot.template:$HOME/.config/foot/themes/Perltone.ini"
+    "$MATERIAL/templates/waybar.template:$HOME/.config/waybar/themes/Perltone.css"
+    "$MATERIAL/templates/wlogout.template:$HOME/.config/wlogout/themes/Perltone.css"
+    "$MATERIAL/templates/qt5ct.template:$HOME/.config/qt5ct/colors/Perltone.conf"
+    "$MATERIAL/templates/qt6ct.template:$HOME/.config/qt6ct/colors/Perltone.conf"
+    "$MATERIAL/templates/tty.template:$HOME/.bin/colors/Perltone"
+    "$MATERIAL/templates/cava.template:$HOME/.config/cava/themes/Perltone"
+    "$MATERIAL/templates/perltone-kvconfig.template:$HOME/.config/Kvantum/Perltone/Perltone.kvconfig"
+    "$MATERIAL/templates/perltone-svg.template:$HOME/.config/Kvantum/Perltone/Perltone.svg"
+    "$MATERIAL/templates/spotify.template:$HOME/.config/spicetify/Themes/Perltone/color.ini"
+    "$MATERIAL/templates/sddm.template:/usr/share/sddm/themes/rose-pine-sddm/theme.conf"
+    "$MATERIAL/templates/discord.template:$HOME/.config/vesktop/themes/Perltone.css"
+)
+
+# Iterate over the list and generate color themes
+for TEMPLATE in "${TEMPLATES[@]}"; do
+    IFS=':' read -r -a PATHS <<< "$TEMPLATE"
+    $PERLTONE_TEMPLATE "$MATERIAL/colors/colors" "${PATHS[0]}" "${PATHS[1]}"
+done
+
+# Make sure the script is executable
+chmod +x "$HOME/.bin/colors/Perltone"
 
 # tty 
 $HOME/.bin/colors/Perltone
@@ -92,6 +105,9 @@ pkill -SIGUSR1 kitty # reload
 
 # Kitty
 ln -sf ~/.config/foot/themes/Perltone.ini ~/.config/foot/themes/theme.ini
+
+# Wlogout
+ln -sf ~/.config/wlogout/themes/Perltone.css ~/.config/wlogout/themes/theme.css
 
 # Waybar
 ln -sf ~/.config/waybar/themes/Perltone.css ~/.config/waybar/themes/theme.css
