@@ -73,6 +73,7 @@ minimal_packages:
   fuzzel
   rofi-lbonn-wayland-git
   fuzzel
+  dunst
   thunar
 
   -- Terminal --
@@ -81,6 +82,8 @@ minimal_packages:
 
   -- Shell --
   pokemon-colorscripts-git
+  imagemagick
+  wlr-randr
   fastfetch
   neovim
   neofetch
