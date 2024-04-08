@@ -18,9 +18,9 @@ extract_fonts() {
 }
 
 extract_gtk() {
-    [ -e "$HOME/.themes" ] || mkdir -p $HOME/.themes
+    [ -e "$HOME/.local/share/themes" ] || mkdir -p $HOME/.local/share/themes
     for THEME in $(ls -1 $ARCHIVE_DIR/Gtk_*); do
-        sudo tar -xf $ARCHIVE_DIR/$THEME -C $HOME/.themes
+        sudo tar -xf $ARCHIVE_DIR/$THEME -C $HOME/.local/share/themes
     done
 }
 
