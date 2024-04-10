@@ -1,0 +1,26 @@
+#!/bin/sh
+
+source ./functions
+if [ $? -ne 0 ]; then
+    echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
+    exit 1
+fi
+
+# Define the source directory
+SOURCE_DIR="../configs/.config"
+
+# Iterate through all symlinks in the directory
+for SYMLINK in $(find "$SOURCE_DIR" -type l); do
+    TARGET=$(readlink -f "$SYMLINK")
+    
+    # Extract the path corresponding to the user from the TARGET
+    USER_PATH=$(echo "$TARGET" | grep -oE '/home/[^/]+')
+
+    # Replace the user path with the correct user's path
+    FIX_USER_PATH="/home/pops" # Change this to the correct user's path
+    NEW_TARGET="${TARGET/$USER_PATH/$FIX_USER_PATH}"
+    
+    # Update the SYMLINK
+    echo "Updating SYMLINK: $SYMLINK"
+    ln -sf "$NEW_TARGET" "$SYMLINK"
+done

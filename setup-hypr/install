@@ -160,4 +160,16 @@ stage_4() {
 stage_1
 
 # Extract gtk themes and fonts into correct directories
-source ./install_archives
+./install_archives
+
+# Fix wrong symlinks because they depend on the username
+./install_fix_symlinks
+
+# Ask to reboot
+echo -e "[${BLUE}ok${RESET}] Installation finished, please reboot to apply all changes" 
+echo -e "\n${WHITE_BOLD}Do you want to reboot now? (y/n)${RESET}"
+read -n1 -rep "$: " REBOOT_FLAG
+
+if [[ $REBOOT_FLAG == "y" || $REBOOT_FLAG == "Y" || $REBOOT_FLAG == "" ]]; then
+    systemctl reboot
+fi
