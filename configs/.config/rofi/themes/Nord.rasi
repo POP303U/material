@@ -1,0 +1,24 @@
+* {
+	bg: #2E3440;
+	cur: #3b4252;
+	fgd: #eceff4;
+	cmt: #928374;
+	cya: #8fbcbb;
+	grn: #5e81ac;
+	ora: #81a1c1;
+	pur: #8fbcbb;
+	red: #8fbcbb;
+	yel: #88c0d0;
+
+	foreground: @fgd;
+	background: @bg;
+	active-background: @cur;
+	urgent-background: @red;
+
+	selected-background: @active-background;
+	selected-urgent-background: @urgent-background;
+	selected-active-background: @active-background;
+	separatorcolor: @active-background;
+	bordercolor: @ora;
+    background-color: transparent;
+}
