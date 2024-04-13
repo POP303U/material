@@ -152,7 +152,8 @@
     "cpu": {
         "interval": 1,
         "format": "󰻠 {usage}%",
-        "max-length": 10
+        "max-length": 10,
+        "on-click": "~/.config/hypr/scripts/launch-taskmanager"
     },
 
     "memory": {
