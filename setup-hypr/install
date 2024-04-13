@@ -16,6 +16,15 @@ SDDM_PACKAGES=$(get_yaml_packages packages.yaml sddm_packages)
 OPTIONAL_PACKAGES_RUST=$(get_yaml_packages packages.yaml optional_packages_rust)
 TTY_PACKAGES=$(get_yaml_packages packages.yaml tty_packages)
 
+# Detect nvidia and install drivers
+if detect_nvidia; then
+    echo -e "[${PURPLE}info${RESET}] Found an nvidia card installing dkms to package list..."
+    ./install_nvidia
+    BASE_PACKAGES=(( BASE_PACKAGES + "nvidia-dkms" )) 
+else
+    echo -e "[${PURPLE}info${RESET}] No nvidia card detected skipping dkms..."
+fi
+
 # check for wifi and configure pacman + get options
 check_wifi
 if [ $? -ne 0 ]; then

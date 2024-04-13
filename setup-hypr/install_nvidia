@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# import functions
+source ./functions
+if [ $? -ne 0 ]; then
+    echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
+    exit 1
+fi
+
+### Make sure kernel modules work by installing headers for the kernel
+# Hacky way but ok (should move it to a file)
+if package_installed linux; then
+    install_packages linux-headers
+fi
+
+if package_installed linux-zen; then
+    install_packages linux-zen-headers
+fi
+
+if package_installed linux-lts; then
+    install_packages linux-lts-headers
+fi
+
+if package_installed linux-hardened; then
+    install_packages linux-hardened-headers
+fi
+
+# (Grub) Enable nvidia in kernel parameters
+if package_installed grub && [ -f /boot/grub/grub.cfg ]; then
+    if [ ! -f /etc/default/grub.bak ] && [ ! -f /boot/grub/grub.bak ]; then
+        sudo cp /etc/default/grub /etc/default/grub.bak
+        sudo cp /boot/grub/grub.cfg /boot/grub/grub.bak
+
+        LINE=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT=" "/etc/default/grub" | cut -d'"' -f2 | sed 's/\b nvidia_drm.modeset=.\b//g')
+        echo -e "[${PURPLE}info${RESET}] Grub detected adding nvidia_drm_modeset=1 to kernel parameters"
+        sudo sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/c\GRUB_CMDLINE_LINUX_DEFAULT=\"${LINE} nvidia_drm.modeset=1\"" /etc/default/grub
+        echo -e "[${BLUE}ok${RESET}] Configured grub kernel parameters"
+
+        sudo grub-mkconfig -o /boot/grub/grub.cfg
+    else
+        echo -e "[${PUPRLE}info${RESET}] grub is already configured"
+    fi
+else
+    echo -e "[${PUPRLE}info${RESET}] grub not detected. skipping..."
+fi
+
+# (systemd-boot) Enable nvidia in kernel parameters
+if package_installed systemd && [ $(bootctl status 2> /dev/null | awk '{if ($1 == "Product:") print $2}') == "systemd-boot" ]; then
+    echo -e "[${PURPLE}info${RESET}] systemd-boot detected adding nvidia_drm_modeset=1 to kernel parameters"
+    if [ $(ls -l /boot/loader/entries/*.conf.t2.bkp 2> /dev/null | wc -l) -ne $(ls -l /boot/loader/entries/*.conf 2> /dev/null | wc -l) ]; then
+        echo "nvidia detected, adding nvidia_drm.modeset=1 to boot option..."
+        find /boot/loader/entries/ -type f -name "*.conf" | while read ENTRY; do
+            sudo cp ${ENTRY} ${ENTRY}.bak
+            PARAM=$(grep -w "^options" ${ENTRY} | sed 's/\b quiet\b//g' | sed 's/\b splash\b//g' | sed 's/\b nvidia_drm.modeset=.\b//g')
+            sudo sed -i "/^options/c${PARAM} quiet splash nvidia_drm.modeset=1" ${ENTRY}
+        done
+    else
+        echo -e "[${PUPRLE}info${RESET}] systemd-boot is already configured"
+    fi
+else
+    echo -e "[${PUPRLE}info${RESET}] systemd-boot not detected. skipping..."
+fi
+
+# Enable early loading for nvidia (thanks to hyprdots)
+if [ `lspci -k | grep -A 2 -E "(VGA|3D)" | grep -i nvidia | wc -l` -gt 0 ] ; then
+    if [ `grep 'MODULES=' /etc/mkinitcpio.conf | grep nvidia | wc -l` -eq 0 ] ; then
+        sudo sed -i "/MODULES=/ s/)$/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/" /etc/mkinitcpio.conf
+        sudo mkinitcpio -P
+        if [ `grep 'options nvidia-drm modeset=1' /etc/modprobe.d/nvidia.conf | wc -l` -eq 0 ] ; then
+            echo 'options nvidia-drm modeset=1' | sudo tee -a /etc/modprobe.d/nvidia.conf
+        fi
+    fi
+fi
