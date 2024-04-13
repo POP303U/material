@@ -20,7 +20,7 @@ TTY_PACKAGES=$(get_yaml_packages packages.yaml tty_packages)
 if detect_nvidia; then
     echo -e "[${PURPLE}info${RESET}] Found an nvidia card installing dkms to package list..."
     ./install_nvidia
-    BASE_PACKAGES=(( BASE_PACKAGES + "nvidia-dkms" )) 
+    install_packages nvidia-dkms pacman
 else
     echo -e "[${PURPLE}info${RESET}] No nvidia card detected skipping dkms..."
 fi
