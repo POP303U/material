@@ -1,15 +1,15 @@
 #!/bin/bash
 
 ## Define colors to be used in the script
-BLUE='\033[1;34m'
-RED='\033[1;31m'
-CYAN='\033[01;36m'
-YELLOW='\033[01;33m'
-WHITE_BOLD="\033[1;38;5;15m"
-GREEN="\033[01;32m"
-RESET='\033[0m'
-PURPLE='\033[01;35m'
-WHITE='\033[01;37m'
+export BLUE='\033[1;34m'
+export RED='\033[1;31m'
+export CYAN='\033[01;36m'
+export YELLOW='\033[01;33m'
+export WHITE_BOLD="\033[1;38;5;15m"
+export GREEN="\033[01;32m"
+export RESET='\033[0m'
+export PURPLE='\033[01;35m'
+export WHITE='\033[01;37m'
 
 # Usage: get_yaml_packages "your_yaml_file.yaml" "base_packages"
 # Description: Returns package names from yaml block
@@ -235,6 +235,18 @@ copy_config() {
     # Clean out other portals
     echo -e "[${PURPLE}info${RESET}] Cleaning out conflicting xdg portals..."
     $AUR_HELPER -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null 2>&1
+}
+
+# Usage: detect_nvidia
+# Description: Detects if nvidia cards are present in the system, return 0 if one is found else 1
+detect_nvidia()
+{
+    GPU=$(lspci -k | grep -A 0 -E "(VGA|3D)" | awk -F 'controller: ' '{print $2}')
+    if [ $(lspci -k | grep -A 2 -E "(VGA|3D)" | grep -i nvidia | wc -l) -gt 0 ]; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 # Usage: copy_config
