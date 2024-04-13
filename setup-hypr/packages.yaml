@@ -39,9 +39,7 @@ base_packages:
   gvfs
   jq
 
-  -- Fonts --
-  ttf-jetbrains-mono-nerd
-  ttf-cascadia-code-nerd
+  -- Emoji --
   noto-fonts-emoji
 
   -- Theming --
