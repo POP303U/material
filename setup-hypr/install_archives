@@ -7,23 +7,17 @@ if [ $? -ne 0 ]; then
 fi
 
 ARCHIVE_DIR="../archives"
+extract_archive() {
+    local TYPE=$1
+    local DESTINATION=$2
+    [ -e "$DESTINATION" ] || mkdir -p $DESTINATION
 
-extract_fonts() {
-    [ -e "$HOME/.local/share/fonts" ] || mkdir -p $HOME/.local/share/fonts
-    for FONT in $(ls -1 $ARCHIVE_DIR/Font_*); do
-        sudo tar -xf $ARCHIVE_DIR/$FONT -C $HOME/.local/share/fonts
-    done
-
-    fc-cache -rf
-}
-
-extract_gtk() {
-    [ -e "$HOME/.local/share/themes" ] || mkdir -p $HOME/.local/share/themes
-    for THEME in $(ls -1 $ARCHIVE_DIR/Gtk_*); do
-        sudo tar -xf $ARCHIVE_DIR/$THEME -C $HOME/.local/share/themes
+    for THEME in $(ls -1 ${ARCHIVE_DIR}/${TYPE}_*); do
+        sudo tar -xf ${ARCHIVE_DIR}/${THEME} -C $DESTINATION
     done
 }
 
-# Extract gtk themes and fonts into correct directories
-extract_fonts
-extract_gtk
+# Extract archives using the functions above
+extract_archive "Font" "$HOME/.local/share/fonts" # Fonts
+extract_archive "Gtk" "$HOME/.local/share/themes" # Gtk themes
+extract_archive "Icon" "$HOME/.local/share/icons" # Icon themes
