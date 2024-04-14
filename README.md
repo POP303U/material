@@ -11,9 +11,9 @@
 ## Installation
 
 The installation script is made for Arch, but **could** work on some Arch based distros with **systemd**.
-It only currently works with AMD Cards with Nvidia support in the future.
+It only currently works with AMD Cards with experimental Nvidia support.
 
-After a minimal Arch install (with grub, systemd and pipewire), clone and execute -
+After a minimal Arch install clone and execute -
 
 ```sh
 sudo pacman -Syu git
