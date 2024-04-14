@@ -33,7 +33,7 @@ if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" ]; then
 fi
 
 if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" ]; then
-    convert -strip -blur 0x3 -resize 2000 gravity center -extent 2000 -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" &
+    convert -strip -blur 0x3 -resize 2000 -gravity center -extent 2000 -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" &
 fi
 
 if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" ]; then
