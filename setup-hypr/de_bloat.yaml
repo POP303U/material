@@ -1,0 +1,19 @@
+generic:
+  -- List of desktop entries that are unnecessary --
+  avahi-discover
+  nm-connection-editor
+  nm-applet
+
+qt:
+  -- You may want this if you're a developer --
+  designer
+  assistant
+  linguist
+  qdbusviewer
+  qvidcap
+  qv4l2
+
+rofi:
+  -- This isn't needed since you will be opening rofi with $mod+D --
+  rofi-theme-selector
+  rofi
