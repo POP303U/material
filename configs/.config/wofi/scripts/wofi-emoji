@@ -2,7 +2,7 @@
 set -euox pipefail
 
 LAUNCHER=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
-[[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || LAUNCHER="$LAUNCHER --dmenu" # patch for rofi
+[[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -config ~/.config/rofi/config_emoji.rasi -dmenu " || LAUNCHER="$LAUNCHER --dmenu" # patch for rofi
 
 EMOJI="$(sed '1,/^### DATA ###$/d' $0 | $LAUNCHER --dmenu -p "Select a emoji: " -i | cut -d ' ' -f 1 | tr -d '\n')"
 wtype "$EMOJI"; wl-copy "$EMOJI"
