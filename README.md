@@ -105,7 +105,6 @@ git pull
 | <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| resize currently focused window (1px)
 | <kbd>Alt</kbd> + <kbd>[0-9]</kbd> | switch to workspace [0-9]
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9]
-| <kbd>Alt</kbd> + <kbd>Alt</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9] (silently)
 | <kbd>Print</kbd> | take screenshot
 
 Vim Keybindings can be used instead of arrow bindings and are encouraged.
