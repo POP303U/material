@@ -22,7 +22,7 @@ get_yaml_packages() {
 
     # Read the YAML file LINE by LINE
     while IFS= read -r _LINE; do
-        LINE="$(echo $_LINE | xargs)" # remove spaces from line
+        LINE="$(echo $_LINE)" # remove spaces from line
         # Start capturing lines after the specified BLOCK
         if [[ $LINE == "$BLOCK:" ]]; then
             FLAG=1

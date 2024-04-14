@@ -114,3 +114,38 @@ ${GREEN}       /____/    ${RESET}
 "
 echo -e "\n${WHITE_BOLD}Install tty login? ${RESET}"
 read -n1 -rep "(y/n) $: " TTY_INSTALL
+
+echo -e "
+${GREEN}       __     __    __            __ 
+${GREEN}  ____/ /__  / /_  / /___  ____ _/ /_
+${GREEN} / __  / _ \/ __ \/ / __ \/ __ \`/ __/
+${GREEN}/ /_/ /  __/ /_/ / / /_/ / /_/ / /_  
+${GREEN}\__,_/\___/_.___/_/\____/\__,_/\__/  ${RESET}"
+
+echo -e "\n${WHITE_BOLD}Debloat desktop entries? ${RESET}"
+echo -e "This is only recommended if you don't use following applications:"
+
+# Reused lol
+GENERIC=($(get_yaml_packages de_bloat.yaml generic))
+for ENTRY in "${GENERIC[@]}"; do
+    echo -e "${CYAN}->${RESET} $ENTRY" 
+done
+
+echo -e ""
+read -n1 -rep "Remove these generic desktop entries? (y/n) $: " FLAG_REMOVE_GENERIC
+
+QT=($(get_yaml_packages de_bloat.yaml qt))
+for ENTRY in "${QT[@]}"; do
+    echo -e "${CYAN}->${RESET} $ENTRY" 
+done
+
+echo -e ""
+read -n1 -rep "Remove these qt desktop entries? (y/n) $: " FLAG_REMOVE_QT
+
+ROFI=($(get_yaml_packages de_bloat.yaml rofi))
+for ENTRY in "${ROFI[@]}"; do
+    echo -e "${CYAN}->${RESET} $ENTRY" 
+done
+
+echo -e ""
+read -n1 -rep "Remove these rofi desktop entries? (y/n) $: " FLAG_REMOVE_ROFI
