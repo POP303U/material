@@ -22,6 +22,8 @@ cd ~/material/setup-hypr
 ./install
 ```
 
+It is not recommended to mix and match this with other rices / distros since it will break 99.9% of the time because of package conflicts / clashing configuration paths.
+
 ### Updating
 To update material you will need to pull the latest changes from github and restore the configs by doing -
 
