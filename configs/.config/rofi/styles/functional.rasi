@@ -112,7 +112,7 @@ button selected {
 
 /* ---- Listview ---- */
 listview {
-    background-color:             rgba(0,0,0,0.4);
+    background-color:             @transparent-background;
     enabled:                      true;
     columns:                      3;
     lines:                        8;

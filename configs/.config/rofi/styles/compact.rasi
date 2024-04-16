@@ -113,7 +113,7 @@ button {
     cursor:                       pointer;
     border:                       0px;
     vertical-align:               0.50;
-    horizontal-align:             0.45;
+    horizontal-align:             0.40;
 }
 
 button selected {
@@ -123,7 +123,7 @@ button selected {
 
 /* ---- Listview ---- */
 listview {
-    background-color:             rgba(0,0,0,0.4);
+    background-color:             @transparent-background;
     enabled:                      true;
     columns:                      1;
     lines:                        8;

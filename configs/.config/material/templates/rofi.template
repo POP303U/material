@@ -14,6 +14,7 @@
 	background: @bg;
 	active-background: @cur;
 	urgent-background: @red;
+    transparent-background: <material.hex.base-transparent>;
 
 	selected-background: @active-background;
 	selected-urgent-background: @urgent-background;

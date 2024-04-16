@@ -122,7 +122,7 @@ button selected {
 
 /* ---- Listview ---- */
 listview {
-    background-color:             rgba(0,0,0,0.4);
+    background-color:             @transparent-background;
     enabled:                      true;
     margin:                       1em 0em 0em 0em;
     cycle:                        true;

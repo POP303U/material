@@ -43,37 +43,25 @@ mainbox {
     margin:                       0px;
     background-color:             @background;
     background-image:             url("~/.config/swww/wallpaper.rofi");
-    children:                     ["imagebox","listbox"];
-}
-
-/* ---- Imagebox ---- */
-imagebox {
-    padding:                      18px;
-    background-color:             transparent;
-    children:                     [ "inputbar", "dummy", "mode-switcher" ];
+    children:                     [ "listbox"];
 }
 
 /* ---- Listbox ---- */
 listbox {
     spacing:                     20px;
-    children:                    [ "message", "listview" ];
-}
-
-/* ---- Dummy ---- */
-dummy {
-    background-color:            transparent;
+    children:                    [ "inputbar", "message", "listview", "mode-switcher"];
 }
 
 /* ---- Inputbar ---- */
 inputbar {
     enabled:                      true;
     text-color:                   @foreground;
-    spacing:                      0.5em;
     padding:                      0.75em;
+    margin:                       0.5em 0.5em 0em 0.5em;
     border-radius:                15px;
     border-color:                 @foreground;
     background-color:             @background;
-    children:                     [ "textbox-prompt-colon", "entry" ];
+    children:                     [ "textbox-prompt-colon", "entry"];
 }
 
 textbox-prompt-colon {
@@ -96,20 +84,21 @@ entry {
 
 /* ---- Mode Switcher ---- */
 mode-switcher {
-    orientation:                  vertical;
+    orientation:                  horizontal;
     enabled:                      true;
     spacing:                      1em;
-    margin:                       0em 19em 0em 0em;
-    padding:                      20px;
+    margin:                       0em 0em 0em 0em;
+    padding:                      0em 0.5em 0.5em 0.5em;
     border-radius:                15px;
     text-color:                   @foreground;
-    background-color:             @background;
+    background-color:             transparent;
 }
 
 button {
     padding:                      15px 10px 15px 10px;
     border-radius:                15px;
     text-color:                   inherit;
+    background-color:             @background;
     cursor:                       pointer;
     border:                       0px;
     vertical-align:               0.50;
@@ -123,9 +112,9 @@ button selected {
 
 /* ---- Listview ---- */
 listview {
-    background-color:             rgba(0,0,0,0.4);
+    background-color:             @transparent-background;
     enabled:                      true;
-    columns:                      1;
+    columns:                      3;
     lines:                        8;
     cycle:                        true;
     dynamic:                      true;
@@ -134,9 +123,7 @@ listview {
     reverse:                      false;
     fixed-height:                 true;
     fixed-columns:                true;
-    spacing:                      0px;
-    padding:                      0.5em;
-    margin:                       0px;
+    padding:                      0.35em;
     border:                       0px;
     border-radius:                15px;
 }
