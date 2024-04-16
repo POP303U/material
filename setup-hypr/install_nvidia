@@ -47,7 +47,7 @@ fi
 # (systemd-boot) Enable nvidia in kernel parameters
 if package_installed systemd && [ $(bootctl status 2> /dev/null | awk '{if ($1 == "Product:") print $2}') == "systemd-boot" ]; then
     echo -e "[${PURPLE}info${RESET}] systemd-boot detected adding nvidia_drm_modeset=1 to kernel parameters"
-    if [ $(ls -l /boot/loader/entries/*.conf.t2.bkp 2> /dev/null | wc -l) -ne $(ls -l /boot/loader/entries/*.conf 2> /dev/null | wc -l) ]; then
+    if [ $(ls -l /boot/loader/entries/*.conf.bak 2> /dev/null | wc -l) -ne $(ls -l /boot/loader/entries/*.conf 2> /dev/null | wc -l) ]; then
         echo "nvidia detected, adding nvidia_drm.modeset=1 to boot option..."
         find /boot/loader/entries/ -type f -name "*.conf" | while read ENTRY; do
             sudo cp ${ENTRY} ${ENTRY}.bak
