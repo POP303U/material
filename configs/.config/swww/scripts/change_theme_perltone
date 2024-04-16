@@ -97,7 +97,7 @@ ln -sf $HOME/.config/rofi/themes/Perltone.rasi $HOME/.config/rofi/themes/theme.r
 ln -sf $HOME/.config/wofi/themes/Perltone $HOME/.cache/wal/colors 
 
 # Spotify (spicetify)
-spicetify apply
+spicetify apply &
 
 # Kitty
 ln -sf ~/.config/kitty/themes/Perltone.conf ~/.config/kitty/themes/theme.conf 
