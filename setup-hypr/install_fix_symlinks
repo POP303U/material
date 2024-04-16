@@ -17,7 +17,7 @@ for SYMLINK in $(find "$SOURCE_DIR" -type l); do
     USER_PATH=$(echo "$TARGET" | grep -oE '/home/[^/]+')
 
     # Replace the user path with the correct user's path
-    FIX_USER_PATH="/home/pops" # Change this to the correct user's path
+    FIX_USER_PATH="/home/$USER" # Change this to the correct user's path
     NEW_TARGET="${TARGET/$USER_PATH/$FIX_USER_PATH}"
     
     # Update the SYMLINK
