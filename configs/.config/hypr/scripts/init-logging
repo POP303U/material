@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # Set up a log file for debugging
-
-echo '' > /tmp/material-logging
+mkdir -pv /tmp/material/null 
 
 echo "--------------------------------------------
    Material Log File
@@ -12,9 +11,11 @@ echo "--------------------------------------------
 $(cat $HOME/.config/material/config)
 
 :: Start of logs $(date)
-[$(dirname "$(realpath "$0")")::log] logging started..." > /tmp/material-logfile
+[$(dirname "$(realpath "$0")")::log] logging started..." > "/tmp/material/$(id -u)material-logfile.log"
 
 # Patch wofi background-image path (using envsubst everywhere is not a good idea)
 sed -i 's/\/home\/[^\/]*\//\/home\/'${USER}'\//g' ~/.config/wofi/style.css
 
-mkdir -pv /tmp/material/null >> /tmp/material-logfile
+CURRENT_SESSION="$(id -u)$DISPLAY$DESKTOP_SESSION$RANDOM$RANDOM$RANDOM"
+touch "/tmp/material/$CURRENT_SESSION.session"
+echo "Session started at: $(date)" >> "/tmp/material/$CURRENT_SESSION.session"

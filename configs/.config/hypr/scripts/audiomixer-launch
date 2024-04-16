@@ -1,9 +1,14 @@
 #!/bin/bash
 
 ### Wrapper for launching most available audiomixer
+ERROR_MSG="Couldn't find a suitable audiomixer... please install one of the following programs: \n      - pavucontrol\n     - pavucontrol-qt\n      - alsamixer\n"
 
 # List of mixers in preferred order
-PROGRAMS=("pavucontrol" "pavucontrol-qt")
+PROGRAMS=(
+    "alsamixer"
+    "pavucontrol"
+    "pavucontrol-qt"
+)
 
 # Variable to store the last found task PROGRAM
 LAST_FOUND=""
@@ -23,11 +28,16 @@ for PROGRAM in "${PROGRAMS[@]}"; do
     fi
 done
 
-# If no task PROGRAM was found, exit with an error
+# If no task PROGRAM was found, exit with an error and log it
 if [ -z "$LAST_FOUND" ]; then
-    echo "None of the task managers are installed. Exiting."
+    echo "$ERROR_MSG" >> /tmp/material/$(id -u)audiomixer-launch.log
     exit 1
 fi
 
 # Run the last found task PROGRAM
-$PROGRAM
+if [[ "$LAST_FOUND" == "alsamixer" ]]; then
+    kitty $LAST_FOUND &
+    exit 0
+fi
+
+$LAST_FOUND

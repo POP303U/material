@@ -28,7 +28,7 @@ case "$1" in
         # resorting to default desktop entries if config reading failed
         if [[ "$RUNLEVEL" != "desktop" && "$RUNLEVEL" != "all" && "$RUNLEVEL" != "binaries" ]]; then
             $LAUNCHER 
-            echo "[$(dirname "$(realpath "$0")")::warn] invalid config key found in ´launcher-runlevel´ with value ´$RUNLEVEL´, using default..." >> /tmp/material-logfile
+            echo "[$(dirname "$(realpath "$0")")::warn] invalid config key found in ´launcher-runlevel´ with value ´$RUNLEVEL´, using default..." >> "/tmp/material/$(id -u)material-logfile.log"
         fi
         ;;
     "wallpaper")
