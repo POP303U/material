@@ -4,17 +4,16 @@ rm -r ../configs/.config # really fucking dangerous operation
 mkdir -pv ../configs/etc
 mkdir -pv ../configs/.config
 mkdir -pv ../configs/.icons/default
-mkdir -pv ../configs/.local/share
-mkdir -pv ../configs/.local/share/kxmlgui5
     
 cp -rvf ~/.config/swaylock       ../configs/.config/
 cp -rvf ~/.config/wlogout        ../configs/.config/
-cp -rvf ~/.config/fuzzel         ../configs/.config/
 cp -rvf ~/.config/gtk-3.0        ../configs/.config/
 cp -rvf ~/.config/swww           ../configs/.config/
 cp -rvf ~/.config/swaylock       ../configs/.config/
-cp -rvf ~/.config/mako           ../configs/.config/
+cp -rvf ~/.config/fuzzel         ../configs/.config/
+cp -rvf ~/.config/foot           ../configs/.config/
 cp -rvf ~/.config/wofi           ../configs/.config/
+cp -rvf ~/.config/rofi           ../configs/.config/
 cp -rvf ~/.config/hypr           ../configs/.config/
 cp -rvf ~/.config/waybar         ../configs/.config/
 cp -rvf ~/.config/neofetch       ../configs/.config/
@@ -31,11 +30,15 @@ cp -rvf /etc/issue               ../configs/etc/
 cp -rvf /etc/motd                ../configs/etc/
 cp -rvf ~/.bashrc                ../configs/
 
-cp -rvf ~/.local/share/dolphin/ ../configs/.local/share/
-cp -rvf ~/.local/share/kxmlgui5/dolphin/ ../configs/.local/share/kxmlgui5/
-
-cp -rvf ~/.gtkrc-2.0             ../configs/
+cp -rvf ~/.gtkrc-2.0                         ../configs/
 cp -rvf ~/.icons/default/index.theme         ../configs/.icons/default/
 cp -rvf ~/.tmux.conf                         ../configs/
 cp -rvf ~/.bin                               ../configs/
 # nice
+#
+#
+# temporary hack
+cp -rvf ./.static/dolphinrc                          ../configs/.config/
+cp -rvf ./.static/kdeglobals                         ../configs/.config/
+cp -rvf ./.static/.local                             ../configs/
+
