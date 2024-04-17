@@ -17,27 +17,22 @@ window#waybar {
 tooltip {
     background: @surface;
     border-color: @base;
-    border-radius: 10px;
+    border-radius: 15px;
     border-width: 2px;
     border-style: solid;
 }
 
 #workspaces {
-    background: @workspacesbackground1;
-    padding: 0px 1px;
-    border-radius: 10px;
-    border: 0px;
+    background: @base;
     font-weight: bold;
     font-style: normal;
-    opacity: 0.8;
     font-size: 16px;
-    color: @textcolor1;
+    color: @text;
 }
 
 #workspaces button {
-    border-radius: 15px;
     color: @text;
-    background-color: @workspacesbackground2;
+    border-radius: 15px;
     transition: all 0.3s ease-in-out;
     opacity: 0.4;
 }
@@ -60,6 +55,9 @@ tooltip {
 }
 
 
+#custom-padding_bg,
+#custom-padding_left,
+#custom-padding_right,
 #custom-waybar_switcher,
 #custom-theme_settings,
 #custom-power_button,
@@ -81,40 +79,25 @@ tooltip {
 #tray,
 #backlight {
     background: @surface;
-    opacity: 9.9;
-    padding: 0px 10px;
-    border: 2px solid @base;
+    opacity: 1;
+    margin: 4px 0px 4px 0px;
+
+    padding-left: 7.6px;
+    padding-right: 7.6px;
+    padding-top: 3.5px;
+    padding-bottom: 3.5px;
 }
 
 #backlight {
-    border-radius: 10px 0px 0px 10px;
-}
-
-#tray {
-    border-radius: 10px;
-}
-
-#keyboard-state {
-    color: @rose;
-    border-radius: 10px;
-    margin-left: 10px;
-    padding-right: 0px;
-    padding-left: 5px;
+    border-radius: 15px 0px 0px 10px;
 }
 
 #clock {
     color: @foam;
-    border-radius: 10px 10px 10px 10px;
-    margin-left: 10px;
-    border-right: 0px;
 }
 
 #disk {
     color: @love;
-    border-radius: 10px 0px 0px 10px;
-    border-left: 0px;
-    margin-left: 10px;
-    border-right: 0px;
 }
 
 #memory {
@@ -126,17 +109,10 @@ tooltip {
 
 #cpu {
     color: @iris;
-    border-radius: 0px 10px 10px 0px;
-    border-left: 0px;
-    border-right: 0px;
-    margin-right: 10px;
 }
 
 #network {
     color: @gold;
-    border-radius: 10px 0px 0px 10px;
-    border-left: 0px;
-    border-right: 0px;
 }
 
 #pulseaudio {
@@ -147,72 +123,41 @@ tooltip {
 
 #pulseaudio.microphone {
     color: @love;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
 }
 
 #battery {
     color: @battery;
-    border-radius: 10px 10px 10px 10px;
-    margin-right: 10px;
-    border-left: 0px;
+
+    /* hack */
+    border-radius: 21px 21px 21px 21px;
+    margin-right: 9px;
+    margin-left: 9px;
 }
 
 #custom-weather {
     color: @foam;
-    border-radius: 10px 10px 10px 10px;
-    border-right: 0px;
-    margin-right: 10px;
+
+    /* hack */
+    border-radius: 21px 21px 21px 21px;
+    margin-right: 9px;
+    margin-left: 9px;
 }
 
 #custom-waybar_switcher,
 #custom-theme_settings,
-#custom-power_button,
+#custom-wall_switcher,
 #custom-theme_switcher,
-#custom-wall_switcher {
-    padding-left: 7px;
-    padding-right: 7px;
-}
-
-#custom-waybar_switcher {
-    background-color: @surface;
-    color: @rose;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
-    padding-right: 15px;
-}
-
-#custom-theme_settings {
-    background-color: @surface;
-    color: @rose;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 10px 0px 0px 10px;
-    margin-left: 10px;
-    padding-left: 10px;
-}
-
-#custom-wall_switcher {
-    background-color: @surface;
-    color: @rose;
-    border-left: 0px;
-    border-right: 0px;
-}
-
-#custom-theme_switcher {
-    background-color: @surface;
-    color: @rose;
-    border-left: 0px;
-    border-right: 0px;
-}
-
 #custom-power_button {
     background-color: @surface;
     color: @rose;
-    border-left: 0px;
-    border-right: 0px;
+}
+
+#custom-padding_left {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+}
+
+#custom-padding_right {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
 }

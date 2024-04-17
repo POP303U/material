@@ -6,31 +6,45 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "height": 37,
+    "height": 0,
     "modules-left": [
+        "custom/padding",
+        "custom/padding_left",
         "clock",
+        "custom/padding_right",
+        "custom/padding_left",
         "disk",
         "memory",
         "cpu",
+        "custom/padding_right",
     ],
     // "user",
 
     "modules-center": [
+        "custom/padding_left",
         "hyprland/workspaces",
+        "custom/padding_right",
     ],
 
     "modules-right": [
         "battery",
+        "custom/padding_left",
         "network",
         "pulseaudio",
         "pulseaudio#microphone",
+        "custom/padding_right",
         "custom/weather", 
+        "custom/padding_left",
         "tray",
+        "custom/padding_right",
+        "custom/padding_left",
         "custom/theme_settings",
         "custom/power_button", 
         "custom/wall_switcher",
         "custom/theme_switcher",
         "custom/waybar_switcher",
+        "custom/padding_right",
+        "custom/padding",
     ],
 
     "hyprland/workspaces" : {
@@ -165,7 +179,7 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
+        "format": "{icon} {volume}",
         "tooltip": false,
         "format-muted": " Muted",
         "on-click": "pamixer -t",
@@ -186,11 +200,12 @@
 
     "pulseaudio#microphone": {
         "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " Muted",
+        "format-source": "",
+        "format-source-muted": "",
         "on-click": "pamixer --default-source -t",
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
+        "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
 
@@ -198,7 +213,7 @@
         "tooltip": true,
         "format-wifi": " ",
         "rotate": 0,
-        "format-ethernet": "󰈀 {ipaddr}",
+        "format-ethernet": "󰈀 ",
         "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
         "format-linked": "󰈀 {ifname} (No IP)",
         "format-disconnected": "󰖪 ",
@@ -228,5 +243,29 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "custom/padding_right": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_bg": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
     },
 }

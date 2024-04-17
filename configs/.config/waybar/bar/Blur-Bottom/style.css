@@ -3,7 +3,6 @@
     font-family: "JetbrainsMono Nerd Font";
     font-weight: bold;
     font-size: 16px;
-    min-height: 0;
 }
 
 @import "../../themes/theme.css";
@@ -18,43 +17,12 @@ tooltip {
     border-style: solid;
     border-radius: 25px;
     border-width: 2px;
-    padding: 100px;
     margin: 100px;
 }
 
-#workspaces button {
-    all: initial;
-    padding: 5px;
-    padding-right: 8px;
-    padding-left: 8px;
-    margin-right: 5px;
-    color: @workspace-button-inactive;
-    transition: all 0.2s ease-in-out;
-    border-radius: 10px;
-}
-
-#workspaces button.active {
-    color: @workspace-button-active
-}
-
-#workspaces button.focused {
-    color: @workspace-button-active;
-    border-radius: 10px;
-}
-
-#workspaces button.urgent {
-    background: @love;
-    border-radius: 10px;
-}
-
-#workspaces button:hover {
-    background: @base;
-    color: @subtle;
-    border-radius: 10px;
-    transition: all 0.2s ease-in-out;
-    border-radius: 10px;
-}
-
+#custom-padding_bg,
+#custom-padding_left,
+#custom-padding_right,
 #custom-waybar_switcher,
 #custom-theme_settings,
 #custom-power_button,
@@ -72,33 +40,56 @@ tooltip {
 #tray,
 #backlight {
     background: @surface;
-    opacity: 9.9;
-    padding: 0px 10px;
-    margin: 0px 0px;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    opacity: 1;
+    margin: 4px 0px 4px 0px;
+
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 3.5px;
+    padding-bottom: 3.5px;
 }
 
 #backlight {
     border-radius: 10px 0px 0px 10px;
 }
 
-#tray {
-    border-radius: 10px;
+#workspaces {
+    background: @surface;
+    border: 0px;
+    font-weight: bold;
+    font-style: normal;
+    opacity: 0.8;
+    font-size: 16px;
+    color: @textcolor1;
 }
 
-#workspaces {
-    border-radius: 10px;
-    margin-left: 10px;
-    padding-right: 0px;
-    padding-left: 0px;
+#workspaces button {
+    border-radius: 15px;
+    background: @surface;
+    color: @text;
+    transition: all 0.3s ease-in-out;
+    opacity: 0.4;
+}
+
+#workspaces button.active {
+    color: @surface;
+    background: @foam;
+    border-radius: 15px;
+    min-width: 40px;
+    transition: all 0.3s ease-in-out;
+    opacity: 1.0;
+}
+
+#workspaces button:hover {
+    color: @text;
+    background: @pine;
+    border-radius: 15px;
+    min-width: 40px;
+    opacity: 0.7;
 }
 
 #clock {
     color: @foam;
-    border-radius: 10px 10px 10px 10px;
-    border-right: 0px;
-    margin-left: 10px;
 }
 
 
@@ -107,12 +98,22 @@ tooltip {
     border-radius: 10px 0px 0px 10px;
     border-left: 0px;
     border-right: 0px;
+
+    /* hack */
+    border-radius: 21px 21px 21px 21px;
+    margin-right: 9px;
+    margin-left: 9px;
 }
 
 #battery {
     color: @battery;
     border-right: 0px;
     border-left: 0px;
+
+    /* hack */
+    border-radius: 21px 21px 21px 21px;
+    margin-right: 9px;
+    margin-left: 9px;
 }
 
 #network {
@@ -123,16 +124,10 @@ tooltip {
 
 #pulseaudio {
     color: @rose;
-    border-left: 0px;
-    border-right: 0px;
 }
 
 #pulseaudio.microphone {
     color: @love;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
 }
 
 #custom-waybar_switcher,
@@ -149,9 +144,6 @@ tooltip {
     color: @rose;
     border-left: 0px;
     border-right: 0px;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
-    padding-right: 15px;
 }
 
 #custom-theme_settings {
@@ -159,9 +151,6 @@ tooltip {
     color: @rose;
     border-left: 0px;
     border-right: 0px;
-    border-radius: 10px 0px 0px 10px;
-    margin-left: 10px;
-    padding-left: 10px;
 }
 
 #custom-wall_switcher {
@@ -183,4 +172,14 @@ tooltip {
     color: @rose;
     border-left: 0px;
     border-right: 0px;
+}
+
+#custom-padding_left {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+}
+
+#custom-padding_right {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
 }

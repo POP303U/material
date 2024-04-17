@@ -7,25 +7,37 @@
     "gtk-layer-shell": true,
     "height": 30,
     "modules-left": [
+        "custom/padding_left",
         "hyprland/workspaces",
+        "custom/padding_right",
+        "custom/padding_left",
         "custom/theme_settings",
         "custom/power_button", 
         "custom/wall_switcher",
         "custom/theme_switcher",
         "custom/waybar_switcher",
+        "custom/padding_right",
+        "custom/padding_left",
         "tray",
+        "custom/padding_right",
     ],
     
     "modules-center": [
+        "battery",
+        "custom/padding_left",
         "clock",
+        "custom/padding_right",
+        "custom/weather", 
     ],
 
     "modules-right": [
-        "custom/weather", 
-        "battery",
+        "custom/padding_left",
         "network",
+        "custom/padding_right",
+        "custom/padding_left",
         "pulseaudio",
         "pulseaudio#microphone",
+        "custom/padding_right",
     ],
 
     "hyprland/workspaces": {
@@ -34,19 +46,6 @@
         "on-click": "activate",
         "format": "{icon}",
         "urgent": " ",
-        "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "7": "",
-            "8": "",
-            "9": "",
-            "10": "",
-            "urgent": "",
-        },
     },
     
     "hyprland/window": {
@@ -175,9 +174,9 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
+        "format": "{icon} {volume}% ",
         "tooltip": false,
-        "format-muted": " Muted",
+        "format-muted": " Muted ",
         "on-click": "pamixer -t",
         "on-click-right": "~/.config/hypr/scripts/audiomixer-launch",
         "on-scroll-up": "pamixer -i 5",
@@ -238,5 +237,29 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "custom/padding_right": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_bg": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
     },
 }
