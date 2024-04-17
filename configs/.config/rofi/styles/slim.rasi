@@ -19,8 +19,8 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                      28em;
-    width:                       38em;
+    height:                       12em;
+    width:                        42em;
     x-offset:                     0em;
     y-offset:                     0em;
     spacing:                      0em;
@@ -38,36 +38,32 @@ window {
 /* ---- Mainbox ---- */
 mainbox {
     enabled:                      true;
+    orientation:                  vertical;
     spacing:                      0px;
     margin:                       0px;
     background-color:             @background;
     background-image:             url("~/.config/swww/wallpaper.rofi");
-    children:                     [ "inputbar",  "listbox" ];
-}
-
-
-// Inputs //
-inputmode {
-    width: 10px;
-    padding:                     0em;
-    spacing:                     0em;
-    orientation:                 vertical;
-    children:                    [ "inputbar" , "mode-switcher" ];
-    background-color:            transparent;
+    children:                     [ "listbox", "inputmode" ];
 }
 
 /* ---- Listbox ---- */
 listbox {
-    spacing:                     20px;
     children:                    [ "message", "listview" ];
+}
+
+/* ---- Listbox ---- */
+inputmode {
+    orientation:                 horizontal;
+    children:                    [ "inputbar", "mode-switcher"];
 }
 
 /* ---- Inputbar ---- */
 inputbar {
     enabled:                      true;
     text-color:                   @foreground;
-    padding:                      0.75em;
-    margin:                       0.5em 0.5em 0em 0.5em;
+    padding:                      0.9em;
+    margin:                       1.6em 1.5em 1.6em 1.5em;
+    width:                        22em;
     border-radius:                15px;
     border-color:                 @foreground;
     background-color:             @background;
@@ -94,11 +90,11 @@ entry {
 
 /* ---- Mode Switcher ---- */
 mode-switcher {
-    orientation:                  vertical;
+    orientation:                  horizontal;
     enabled:                      true;
-    spacing:                      1em;
-    margin:                       7em 15em 0em 0em;
-    padding:                      0em 0.5em 0.5em 0.5em;
+    spacing:                      1.0em;
+    margin:                       1.6em 1.5em 1.5em 1.5em;
+    width:                        18em;
     border-radius:                15px;
     text-color:                   @foreground;
     background-color:             transparent;
@@ -112,7 +108,7 @@ button {
     cursor:                       pointer;
     border:                       0px;
     vertical-align:               0.50;
-    horizontal-align:             0.45;
+    horizontal-align:             0.40;
 }
 
 button selected {
@@ -124,11 +120,12 @@ button selected {
 listview {
     background-color:             @transparent-background;
     enabled:                      true;
-    margin:                       1em 0em 0em 0em;
+    columns:                      5;
+    lines:                        1;
     cycle:                        true;
     dynamic:                      true;
+    expand:                       false;
     scrollbar:                    false;
-    layout:                       vertical;
     reverse:                      false;
     fixed-height:                 true;
     fixed-columns:                true;
@@ -140,18 +137,11 @@ listview {
 /* ---- Element ---- */
 element {
     enabled:                      true;
-    padding:                      0.4em 0em 0.5em 0.6em;
+    padding:                      0.7em;
     margin:                       0.25em;
     cursor:                       pointer;
     background-color:             @bg;
-    orientation:                  vertical;
     border-radius:                15px;
-}
-
-@media(max-aspect-ratio: 1.8) {
-    element {
-        orientation:             vertical;
-    }
 }
 
 element normal.normal {
@@ -179,12 +169,10 @@ element alternate.normal {
     text-color:                  @foreground;
 }
 
-
-
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        0em;
+    size:                        2.4em;
     cursor:                      inherit;
 }
 

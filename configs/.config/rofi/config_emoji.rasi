@@ -162,7 +162,7 @@ element normal.normal {
 }
 
 element selected.normal {
-    background-color:            @ora;
+    background-color:            @selected-background;
     text-color:                  @foreground;
 }
 
