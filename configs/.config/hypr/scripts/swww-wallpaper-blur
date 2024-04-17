@@ -29,11 +29,11 @@ if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}" ]; then
 fi
 
 if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" ]; then
-    convert -strip -blur 0x3 -resize 2000 -gravity center -extent 2000 -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" &
+    convert -strip -blur 0x3 -resize 2000 -gravity center -thumbnail 1000x1000^ -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" &
 fi
 
 if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" ]; then
-    convert -strip -blur 0x3 -resize 2000 -gravity center -extent 2000 -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" &
+    ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi"
 fi
 
 if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" ]; then
@@ -48,3 +48,9 @@ ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}" "${HOME}/.config/swww/wallpa
 ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" "${HOME}/.config/swww/wallpaper.blur"
 ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" "${HOME}/.config/swww/wallpaper.rofi"
 ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" "${HOME}/.config/swww/wallpaper.wofi"
+
+# debug dont use
+#rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}"
+#rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur"
+#rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi"
+#rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi"
