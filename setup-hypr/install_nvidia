@@ -32,7 +32,7 @@ if package_installed grub && [ -f /boot/grub/grub.cfg ]; then
         sudo cp /boot/grub/grub.cfg /boot/grub/grub.bak
 
         LINE=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT=" "/etc/default/grub" | cut -d'"' -f2 | sed 's/\b nvidia_drm.modeset=.\b//g')
-        echo -e "[${PURPLE}info${RESET}] Grub detected adding nvidia_drm_modeset=1 to kernel parameters"
+        echo -e "[${PURPLE}info${RESET}] Grub detected... adding nvidia_drm_modeset=1 to kernel parameters"
         sudo sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/c\GRUB_CMDLINE_LINUX_DEFAULT=\"${LINE} nvidia_drm.modeset=1\"" /etc/default/grub
         echo -e "[${BLUE}ok${RESET}] Configured grub kernel parameters"
 
@@ -46,7 +46,7 @@ fi
 
 # (systemd-boot) Enable nvidia in kernel parameters
 if package_installed systemd && [ $(bootctl status 2> /dev/null | awk '{if ($1 == "Product:") print $2}') == "systemd-boot" ]; then
-    echo -e "[${PURPLE}info${RESET}] systemd-boot detected adding nvidia_drm_modeset=1 to kernel parameters"
+    echo -e "[${PURPLE}info${RESET}] systemd-boot detected... adding nvidia_drm_modeset=1 to kernel parameters"
     if [ $(ls -l /boot/loader/entries/*.conf.bak 2> /dev/null | wc -l) -ne $(ls -l /boot/loader/entries/*.conf 2> /dev/null | wc -l) ]; then
         echo "nvidia detected, adding nvidia_drm.modeset=1 to boot option..."
         find /boot/loader/entries/ -type f -name "*.conf" | while read ENTRY; do
