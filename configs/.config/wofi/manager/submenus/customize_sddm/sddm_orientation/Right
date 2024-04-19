@@ -1,3 +1,0 @@
-#!/bin/sh
-
-sed -i 's|^FormPosition.*|FormPosition="right"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf

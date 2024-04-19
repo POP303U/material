@@ -1,3 +1,0 @@
-#!/bin/sh
-
-sed -i 's|rice-transition.*|rice-transition = bottom|' ~/.config/material/config

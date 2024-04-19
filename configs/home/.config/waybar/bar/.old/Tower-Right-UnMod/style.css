@@ -1,0 +1,209 @@
+* {
+    border: none;
+    font-family: "JetbrainsMono Nerd Font";
+    font-weight: bold;
+    font-size: 16px;
+}
+
+@import "../../themes/theme.css";
+
+#tooltip {
+    background: @bar-tr;
+    border-color: @base;
+    border-width: 2px;
+    border-style: solid;
+}
+
+window#waybar {
+    background: @bar-tr;
+    border-radius: 21px;
+}
+
+window#waybar > box {
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#memory,
+#disk,
+#cpu,
+#bluetooth,
+#temperature,
+#workspaces,
+#window,
+#tray,
+#backlight 
+#language,
+#keyboard-state,
+#custom-weather,
+#custom-arch_logo,
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher,
+#custom-seperator,
+#pulseaudio {
+    background: @surface;
+    color: @base;
+    opacity: 9.9;
+    margin: 5px 7px;
+    border-radius: 10px 10px 10px 10px;
+    padding: 5px;
+    border: 0px solid transparent;
+}
+
+#tray {
+    margin: 10px;
+    margin-bottom: 10px;
+}
+
+#clock {
+    background-color: @foam;
+}
+
+#battery {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#battery.charging, #battery.plugged {
+    color: #ffffff;
+    background-color: #26A65B;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#backlight {
+    background-color: #90b1b1;
+}
+
+#network {
+    background-color: #ab45ff;
+}
+
+#network.disconnected {
+    background-color: #f53c3c;
+}
+
+#disk {
+    background-color: @love;
+}
+
+#memory {
+    background-color: @pine;
+}
+
+#cpu {
+    background-color: @iris;
+}
+
+#network {
+    color: @gold;
+    border-radius: 10px 0px 0px 10px;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
+}
+
+#workspaces {
+    background-color: transparent;
+    font-weight: bold;
+    font-style: normal;
+    opacity: 0.8;
+    font-size: 16px;
+    color: @text;
+}
+
+#workspaces button {
+  background-color: transparent;
+  color: @text;
+  transition: all 0.3s ease-in-out;
+  opacity: 0.4;
+}
+
+#workspaces button.active {
+  background-color: @foam;
+  opacity: 0.9;
+  border-radius: 5px;
+  margin-bottom: 11px;
+  margin-top: 11px;
+}
+
+#workspaces button:hover {
+  opacity: 0.8;
+  margin-right: 4px;
+  margin-left: 4px;
+  color: white;
+}
+
+#pulseaudio {
+    background-color: @gold;
+}
+
+#pulseaudio.microphone {
+    background-color: @love;
+    color: @base;
+}
+
+#keyboard-state {
+    background-color: @rose;
+}
+
+#custom-arch_logo {
+    margin-top: 10px;
+    background-color: @foam;
+}
+
+#custom-seperator {
+    background: @bar-tr;
+    opacity: 0.0;
+    margin: 0px;
+    padding: 0px;
+    border: 0px solid transparent;
+}
+
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher {
+    background: transparent;
+    color: @rose;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+#custom-waybar_switcher {
+    border-radius: 0px 0px 10px 10px;
+    padding-bottom: 10px;
+}
+
+#custom-theme_settings {
+    border-radius: 10px 10px 0px 0px;
+    padding-top: 8px;
+}

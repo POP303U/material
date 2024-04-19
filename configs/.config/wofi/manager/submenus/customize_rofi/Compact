@@ -1,3 +1,0 @@
-#!/bin/sh
-
-cat ~/.config/rofi/styles/compact.rasi > ~/.config/rofi/config.rasi

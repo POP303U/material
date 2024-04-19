@@ -1,0 +1,19 @@
+@define-color bar-bg rgba(0,0,0,0);
+@define-color bar-tr rgba(23, 26, 37, 0.7);
+
+@define-color base #272F4C;
+@define-color surface #171A25;
+@define-color overlay #5A627F;
+@define-color muted #83899F;
+@define-color subtle #83899F;
+@define-color text #F1EEE3;
+@define-color love #8C5975;
+@define-color gold #4E6878;
+@define-color rose #4F8394;
+@define-color pine #C76272;
+@define-color foam #4F8394;
+@define-color iris #5A627F;
+
+@define-color battery #5E455E;
+@define-color workspace-button-inactive #495768;
+@define-color workspace-button-active #F1EEE3;

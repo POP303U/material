@@ -1,3 +1,0 @@
-#!/bin/sh
-
-~/.config/wofi/scripts/wofi-manager "toggle_animations"

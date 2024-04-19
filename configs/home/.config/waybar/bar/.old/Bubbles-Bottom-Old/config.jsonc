@@ -1,0 +1,232 @@
+{
+    "layer": "top",
+    "position": "bottom",
+    "mod": "dock",
+    "margin": "0 0 10 0",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 37,
+    "modules-left": [
+        "clock",
+        "disk",
+        "memory",
+        "cpu",
+    ],
+    // "user",
+
+    "modules-center": [
+        "hyprland/workspaces",
+    ],
+
+    "modules-right": [
+        "battery",
+        "network",
+        "pulseaudio",
+        "pulseaudio#microphone",
+        "custom/weather", 
+        "tray",
+        "custom/theme_settings",
+        "custom/power_button", 
+        "custom/wall_switcher",
+        "custom/theme_switcher",
+        "custom/waybar_switcher",
+    ],
+
+    "hyprland/workspaces" : {
+        "on-click": "activate",
+        "active-only": false,
+        "all-outputs": true,
+        "format": "{}",
+        "format-icons": {
+			"urgent": "",
+			"active": "",
+			"default": ""
+        },
+        "persistent-workspaces": {
+            "*": 5
+        }       
+    },
+    
+    "hyprland/window": {
+        "max-length": 80,
+        "seperate-outputs": true,
+    },
+
+    "custom/weather" : {
+        //shows the current weather and forecast
+        "tooltip" : true,
+        "format" : "{}",
+        "interval" : 30,
+        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "return-type" : "json"
+    },
+
+    "custom/waybar_switcher": {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   switch waybar",
+        "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/power_button" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   show logout",
+        "on-click": "~/.config/hypr/scripts/manage-wlogout",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/theme_settings" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   launch settings",
+        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click-right": "~/.config/hypr/scripts/system-upgrade",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/theme_switcher" : {
+        "rotate": 0,
+        "format" : "{}",
+        "exec": "echo ; echo   change theme",
+        "on-click": "~/.config/hypr/scripts/rice-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "custom/wall_switcher" : {
+        "rotate": 0,
+        "format": "󰋩{}",
+        "exec": "echo ; echo 󰋩  change wallpaper",
+        "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
+        "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
+        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "interval": 86400,
+        "tooltip": true
+    },
+
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": {
+            "capslock": " Caps: {icon}",                                                                                                                                                       
+            "numlock": " Num: {icon} "
+        },
+        "format-icons": {
+            "locked": " ",
+            "unlocked": " "
+        }
+    }, 
+
+    "user": {
+        "format": " {user} (up {work_H}h ↑) ",
+        "interval": 60,
+        "height": 30,
+        "width": 30,
+        "icon": false,
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+
+    "clock": {
+        "format": " {:%I:%M %p}",
+        "format-alt": " {:%I:%M %p  󰃭 %a, %b %e}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "󱛟 {}%",
+        "path": "/"
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "max-length": 10
+    },
+
+    "cpu": {
+        "interval": 1,
+        "format": "󰻠 {usage}%",
+        "max-length": 10
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-muted": " Muted",
+        "on-click": "pamixer -t",
+        "on-click-right": "~/.config/hypr/scripts/audiomixer-launch",
+        "on-scroll-up": "pamixer -i 5",
+        "on-scroll-down": "pamixer -d 5",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": " Muted",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "scroll-step": 5
+    },
+
+    "network": {
+        "tooltip": true,
+        "format-wifi": " ",
+        "rotate": 0,
+        "format-ethernet": "󰈀 {ipaddr}",
+        "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "󰖪 ",
+        "tooltip-format-disconnected": "Disconnected",
+        "format-alt": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "interval": 2,
+    },
+
+    "bluetooth": {
+        "format": " {status}",
+        "format-disabled": "", // an empty format will hide the module
+        "format-connected": " {num_connections}",
+        "tooltip-format": "{device_alias}",
+        "tooltip-format-connected": " {device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}"
+    },
+
+    "battery": {
+        "interval": 10,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+}

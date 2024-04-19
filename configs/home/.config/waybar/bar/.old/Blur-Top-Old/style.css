@@ -1,0 +1,184 @@
+* {
+    border: none;
+    font-family: "JetbrainsMono Nerd Font";
+    font-weight: bold;
+    font-size: 16px;
+    min-height: 0;
+}
+
+@import "../../themes/theme.css";
+
+window#waybar {
+    background: @bar-tr;
+}
+
+tooltip {
+    background: @surface;
+    border-color: @base;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+}
+
+#workspaces button {
+    all: initial;
+    padding: 5px;
+    padding-right: 8px;
+    padding-left: 8px;
+    margin-right: 5px;
+    color: @workspace-button-inactive;
+    transition: all 0.2s ease-in-out;
+    border-radius: 10px;
+}
+
+#workspaces button.active {
+    color: @workspace-button-active
+}
+
+#workspaces button.focused {
+    color: @workspace-button-active;
+    border-radius: 10px;
+}
+
+#workspaces button.urgent {
+    background: @love;
+    border-radius: 10px;
+}
+
+#workspaces button:hover {
+    background: @base;
+    color: @subtle;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    border-radius: 10px;
+}
+
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher,
+#custom-weather,
+#keyboard-state,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#bluetooth,
+#temperature,
+#workspaces,
+#tray,
+#backlight {
+    background: @surface;
+    opacity: 9.9;
+    padding: 0px 10px;
+    margin: 0px 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+#backlight {
+    border-radius: 10px 0px 0px 10px;
+}
+
+#tray {
+    border-radius: 10px;
+}
+
+#workspaces {
+    border-radius: 10px;
+    margin-left: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#clock {
+    color: @foam;
+    border-radius: 10px 10px 10px 10px;
+    border-right: 0px;
+    margin-left: 10px;
+}
+
+
+#custom-weather {
+    color: @foam;
+    border-radius: 10px 0px 0px 10px;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#battery {
+    color: @battery;
+    border-right: 0px;
+    border-left: 0px;
+}
+
+#network {
+    color: @gold;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#pulseaudio {
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#pulseaudio.microphone {
+    color: @love;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 10px;
+}
+
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+#custom-waybar_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 10px;
+    padding-right: 15px;
+}
+
+#custom-theme_settings {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 10px 0px 0px 10px;
+    margin-left: 10px;
+    padding-left: 10px;
+}
+
+#custom-wall_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-theme_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-power_button {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}

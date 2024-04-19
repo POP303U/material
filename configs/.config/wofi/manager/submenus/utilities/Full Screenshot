@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# Again wait for wofi to bye bye go away
-sleep 1
-grim - | swappy -f -

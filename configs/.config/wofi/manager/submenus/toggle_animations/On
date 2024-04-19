@@ -1,4 +1,0 @@
-#!/bin/sh
-
-sed -i 's|enabled =.*|enabled = yes|' ~/.config/hypr/animations.conf
-sed -i 's|animations-state.*|animations-state = on|' ~/.config/material/config
