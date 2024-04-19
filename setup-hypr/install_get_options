@@ -33,6 +33,33 @@ if [[ $STAGE -lt 1 || $STAGE -gt 4 ]]; then
     exit 1
 fi
 
+echo -e "
+${GREEN}    ___   __  ______  
+${GREEN}   /   | / / / / __ \ 
+${GREEN}  / /| |/ / / / /_/ / 
+${GREEN} / ___ / /_/ / _, _/  
+${GREEN}/_/  |_\____/_/ |_| 
+
+${WHITE_BOLD}Choose your AUR helper ${RESET}
+Anything other than yay or paru is not tested and is to be used with caution.
+${CYAN}1${RESET}. Yay (${GREEN}recommended${RESET})
+${CYAN}2${RESET}. Paru (${GREEN}recommended${RESET})
+${CYAN}3${RESET}. Pikaur
+${CYAN}4${RESET}. Pakku
+${CYAN}5${RESET}. Pacaur
+${CYAN}6${RESET}. Trizen
+${CYAN}7${RESET}. Aura
+${CYAN}8${RESET}. Aurman 
+"
+
+read -n1 -rep "(1/2/3/4/5/6/7/8) $: " OVERRIDE_AUR
+
+if [[ $OVERRIDE_AUR -lt 1 || $OVERRIDE_AUR -gt 8 ]]; then 
+    echo -e "${RED}Choose a valid option${RESET}"
+    exit 1
+fi
+export OVERRIDE_AUR=${AUR_HELPERS[(($OVERRIDE_AUR - 1))]} # Index with the current value to get string + array offsets
+
 echo -e " 
 ${GREEN}    __  ___          ___ _____              
 ${GREEN}   /  |/  /___  ____/ (_) __(_)__  _____         
