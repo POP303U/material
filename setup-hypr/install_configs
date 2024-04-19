@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# import functions
+source ./functions
+if [ $? -ne 0 ]; then
+    echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
+    exit 1
+fi
+
+# Enable dotglob to include files starting with a dot
+shopt -s dotglob
+
+# Function to copy files recursively
+copy_files() {
+    local SOURCE="$1"
+    local DESTINATION="$2"
+    local RELATIVE_PATH="$3"
+    local MODE="$4"
+
+    for ITEM in "$SOURCE"/*; do
+        local ITEM_NAME=$(basename "$ITEM")
+
+        if [ -f "$ITEM" ]; then
+            mkdir -p "$DESTINATION/$RELATIVE_PATH"
+            cp "$ITEM" "$DESTINATION/$RELATIVE_PATH" >$VERBOSE_FLAGS 2>$VERBOSE_FLAGS
+            echo -e "[${BLUE}ok${RESET}] Copied $ITEM_NAME to $DESTINATION/$RELATIVE_PATH" >$VERBOSE_FLAGS 2>$VERBOSE_FLAGS
+        elif [ -d "$ITEM" ]; then
+            copy_files "$ITEM" "$DESTINATION" "$RELATIVE_PATH/$ITEM_NAME"
+        fi
+    done
+}
+
+# Source directory
+SOURCE_HOME="$(realpath ../configs/home)"
+SOURCE_ROOT="$(realpath ../configs/root)"
+
+# Destination directory
+DESTINATION_HOME="$(realpath $HOME)"
+
+# Call the function to copy files recursively
+copy_files "$SOURCE_HOME" "$DESTINATION_HOME" "" "home"
+
+# Disable dotglob to restore default behavior
+shopt -u dotglob
+
+# Fixing colors with wofi by symlinking to pywal path
+if [ -e "$HOME/.cache/wal" ]; then
+    rm -rf "$HOME/.cache/wal"
+fi
+
+mkdir $HOME/.cache/wal
+ln -sf $HOME/.config/wofi/themes/$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config) $HOME/.cache/wal/colors 
+
+sudo rm -f /etc/issue ; sudo cp -r ../configs/root/etc/issue /etc && echo -e "[${BLUE}ok${RESET}] Copied issue to /etc/issue"
+sudo rm -f /etc/motd ; sudo cp -r ../configs/root/etc/motd /etc && echo -e "[${BLUE}ok${RESET}] Copied motd to /etc/motd"
+
+# Set some files as exacutable 
+chmod +x ~/.config/hypr/scripts/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
+chmod +x ~/.config/swww/scripts/init_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/config/swww/scripts/init_wallpaper' is executable: .wxr-xr-x "
+chmod +x ~/.config/swww/scripts/change_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/.config/swww/scripts/change_wallpaper' is executable: .wxr-xr-x "
+chmod +x ~/.config/waybar/scripts/waybar-wttr.py && echo -e "[${BLUE}ok${RESET}] '~/.config/waybar/scripts/waybar-wttr.py' is executable: .wxr-xr-x "
+chmod -R +x ~/.config/hypr/scripts
+chmod -R +x ~/.config/swww/scripts
+chmod -R +x ~/.config/wofi/manager
+
+echo -e "[${PURPLE}info${RESET}] Cleaning out conflicting xdg portals..."
+sudo pacman -R $FLAGS xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null >$VERBOSE_FLAGS 2>$VERBOSE_FLAGS

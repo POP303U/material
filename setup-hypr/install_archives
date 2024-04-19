@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# import functions
 source ./functions
 if [ $? -ne 0 ]; then
     echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
@@ -21,3 +22,4 @@ extract_archive() {
 extract_archive "Font" "$HOME/.local/share/fonts" # Fonts
 extract_archive "Gtk" "$HOME/.local/share/themes" # Gtk themes
 extract_archive "Icon" "$HOME/.local/share/icons" # Icon themes
+extract_archive "Sddm" "/usr/share/sddm/themes" # Icon themes
