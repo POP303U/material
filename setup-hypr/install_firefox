@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# import functions
 source ./functions
 if [ $? -ne 0 ]; then
     echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"

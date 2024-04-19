@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# import functions
 source ./functions
 if [ $? -ne 0 ]; then
     echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
@@ -7,7 +8,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Define the source directory
-SOURCE_DIR="../configs/.config"
+SOURCE_DIR="../configs/home"
 
 # Iterate through all symlinks in the directory
 for SYMLINK in $(find "$SOURCE_DIR" -type l); do
@@ -21,6 +22,6 @@ for SYMLINK in $(find "$SOURCE_DIR" -type l); do
     NEW_TARGET="${TARGET/$USER_PATH/$FIX_USER_PATH}"
     
     # Update the SYMLINK
-    echo "Updating SYMLINK: $SYMLINK"
+    echo -e "[${BLUE}ok${RESET}] Updated symlink: $SYMLINK"
     ln -sf "$NEW_TARGET" "$SYMLINK"
 done

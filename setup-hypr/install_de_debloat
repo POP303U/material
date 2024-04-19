@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# import functions
 source ./functions
 if [ $? -ne 0 ]; then
     echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
@@ -12,14 +13,14 @@ ROFI=($(get_yaml_packages de_bloat.yaml rofi))
 
 if [[ $FLAG_REMOVE_GENERIC == "y" || "$FLAG_REMOVE_GENERIC" == "Y" || "$FLAG_REMOVE_GENERIC" == " " ]]; then
     for GENERIC_ENTRY in "${GENERIC[@]}"; do
-        sudo rm /usr/share/applications/$GENERIC_ENTRY.desktop >/dev/null 2>&1
+        sudo rm /usr/share/applications/$GENERIC_ENTRY.desktop "$VERBOSE_FLAGS"
         echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $GENERIC_ENTRY" 
     done
 fi
 
 if [[ $FLAG_REMOVE_QT == "y" || "$FLAG_REMOVE_QT" == "Y" || "$FLAG_REMOVE_QT" == " " ]]; then
     for QT_ENTRY in "${QT[@]}"; do
-        sudo rm /usr/share/applications/$QT_ENTRY.desktop >/dev/null 2>&1
+        sudo rm /usr/share/applications/$QT_ENTRY.desktop "$VERBOSE_FLAGS"
         echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $QT_ENTRY" 
     done
 fi
@@ -27,7 +28,7 @@ fi
 
 if [[ $FLAG_REMOVE_ROFI == "y" || "$FLAG_REMOVE_ROFI" == "Y" || "$FLAG_REMOVE_ROFI" == " " ]]; then
     for ROFI_ENTRY in "${ROFI[@]}"; do
-        sudo rm /usr/share/applications/$ROFI_ENTRY.desktop >/dev/null 2>&1
+        sudo rm /usr/share/applications/$ROFI_ENTRY.desktop "$VERBOSE_FLAGS"
         echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $ROFI_ENTRY" 
     done
 fi

@@ -11,6 +11,10 @@ export RESET='\033[0m'
 export PURPLE='\033[01;35m'
 export WHITE='\033[01;37m'
 
+# Check for AUR helpers
+export AUR_HELPERS=(yay paru pikaur pakku pacaur trizen aura aurman)
+export CURRENT_PTS=$(ps | tail -n 1 | awk '{print $2}' | awk -F '/' '{print $2}')
+
 # Usage: get_yaml_packages "your_yaml_file.yaml" "base_packages"
 # Description: Returns package names from yaml block
 get_yaml_packages() {
@@ -64,6 +68,29 @@ package_installed() {
     fi
 }
 
+show_help() {
+    local EXIT_CODE=$1
+    echo "-h: Show this help message"
+    echo "-s: Silence most output"
+    echo "-v: Enable maximum verbosity"
+    echo "-w: Ignore all network checks"
+    echo "-e: Developer mode, dumps all bash code into stdout. Not for users"
+    exit $EXIT_CODE
+}
+
+check_installed() {
+    ARRAY="$1"
+    local INPUT_LIST=("${@:2}")
+    for PACKAGE in "${INPUT_LIST[@]}"; do
+        if package_installed "${PACKAGE}"; then
+            printf -v "${ARRAY}" "%s" "${PACKAGE}"
+            export "${ARRAY}"
+            return 0
+        fi
+    done
+    return 1
+}
+
 # Usage: install_packages "bash_array" "aur_helper"
 # Description: Installs packages provided in an bash array
 install_packages() {
@@ -77,7 +104,7 @@ install_packages() {
             continue
         fi
 
-        if $AUR_HELPER -S --noconfirm "$PACKAGE" >/dev/null 2>&1; then
+        if $AUR_HELPER -S $FLAGS "$PACKAGE" >$VERBOSE_FLAGS; then
             echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
         else
             echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
@@ -98,36 +125,6 @@ set_tty_font() {
     echo -e '\nFONT=ter-v28b\n' | sudo tee -a /etc/vconsole.conf
 }
 
-# Usage: install_yay
-# Description: Installs yay through git
-install_yay() {
-    YAY_EXISTS=/sbin/yay
-
-    if [ -f "$YAY_EXISTS" ]; then
-        AUR_HELPER=yay
-        echo -e "[${PURPLE}info${RESET}] Yay was detected, using yay..."
-    else
-        echo -e "[${PURPLE}info${RESET}] Performing full system sync"
-        sudo pacman -Syu >/dev/null 2>&1 
-
-        # install yay
-        sudo pacman -S --needed base-devel --noconfirm >/dev/null 2>&1
-
-        git clone https://aur.archlinux.org/yay.git >/dev/null 2>&1
-        echo -e "[${BLUE}ok${RESET}] Cloned yay from the AUR"
-
-        cd yay
-        echo -e "[${PURPLE}info${RESET}] Installing yay..."
-        makepkg -si --noconfirm && echo -e "[${BLUE}ok${RESET}] Building yay from the AUR"
-
-        echo -e "[${PURPLE}info${RESET}] Removing temporary files..."
-        cd ..
-        rm -rf yay
-
-        AUR_HELPER=yay
-    fi
-}
-
 # Usage: configure_pacman 
 # Description: Gives pacman better defaults, and enables multilib
 configure_pacman() {
@@ -144,7 +141,7 @@ configure_pacman() {
         sudo sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman\.d\/mirrorlist/c\[multilib]\nInclude = /etc/pacman.d/mirrorlist' /etc/pacman.conf
         echo -e "[${PURPLE}info${RESET}] Syncing multilib repositories"
 
-        sudo pacman -Fy --noconfirm >/dev/null 2>&1
+        sudo pacman -Fy $FLAGS >$VERBOSE_FLAGS
     else
         echo -e "[${PURPLE}info${RESET}] Enabling multilib"
     fi
@@ -154,7 +151,7 @@ configure_pacman() {
 # Description: Starts the bluetooth and NetworkManager services
 start_services() {
     # Start the bluetooth service
-    sudo systemctl enable --now bluetooth.service >/dev/null 2>&1
+    sudo systemctl enable --now bluetooth.service >$VERBOSE_FLAGS
     sleep 2
 
     ### Disable wifi powersave mode ###
@@ -173,8 +170,13 @@ start_services() {
 # Usage: check_wifi
 # Description: Checks if internet is available returns exit code of 1 if not found, 0 if found
 check_wifi() {
+    # use the -w flag to ignore wifi checks
+    if [ ! -z $IGNORE_NETWORK ]; then
+        return 0
+    fi
+
     # check for internet
-    if ping -w 1 x.org >/dev/null 2>&1; then
+    if ping -w 1 x.org >$VERBOSE_FLAGS; then
         return 0
     else 
         return 1
@@ -186,55 +188,6 @@ check_wifi() {
 extract_tar_gz() {
     local FILE=$1
     tar -xzf $FILE
-}
-
-# Usage: copy_config
-# Description: Copies config to your users home folder and sets all permissions + symlinks
-copy_config() {
-    # Fixing colors with wofi by symlinking to pywal path
-    RICE_CURRENT=$(awk '/rice-current/ {print $NF}' ../configs/.config/material/config)
-    mkdir $HOME/.cache/wal
-    ln -sf $HOME/.config/wofi/themes/$RICE_CURRENT $HOME/.cache/wal/colors 
-
-    echo -e "[${PURPLE}info${RESET}] Copying configs..."
-
-    rm -rf ../configs_backup
-    mkdir ../configs_backup # create backup dir
-
-    for CONFIG in ../configs/.config/*; do
-        CONFIG_NAME=$(basename "$CONFIG")
-    	cp -r ~/.config/$CONFIG_NAME ../configs_backup # backup important
-
-        if [ ! -f "$CONFIG" ]; then
-            if cp -r "$CONFIG" ~/.config; then
-                echo -e "[${BLUE}ok${RESET}] Copied $CONFIG_NAME to ~/.config/$CONFIG_NAME"
-            else
-                echo -e "[${RED}fail${RESET}] Copied $CONFIG_NAME to ~/.config/$CONFIG_NAME"
-            fi	
-        fi
-    done
-
-    rm -rf ~/.tmux.conf;           cp -r    ../configs/.tmux.conf            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied tmux to ~/.tmux.conf"
-    rm -rf ~/.bashrc;              cp -r    ../configs/.bashrc               ~ &&         echo -e "[${BLUE}ok${RESET}] Copied bashrc to ~/.bashrc"
-    rm -rf ~/.gtkrc-2.0;           cp -r    ../configs/.gtkrc-2.0            ~ &&         echo -e "[${BLUE}ok${RESET}] Copied gtkrc-2.0 to ~/.gtkrc-2.0"
-    rm -rf ~/.local;               cp -r    ../configs/.local                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .local to ~/.local"
-    rm -rf ~/.icons;               cp -r    ../configs/.icons                ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
-    rm -rf ~/.bin;                 cp -r    ../configs/.bin                  ~ &&         echo -e "[${BLUE}ok${RESET}] Copied .icons to ~/.icons"
-    sudo rm -f /etc/issue ; sudo cp -r ../configs/etc/issue /etc && echo -e "[${BLUE}ok${RESET}] Copied issue to /etc/issue"
-    sudo rm -f /etc/motd ; sudo cp -r ../configs/etc/motd /etc && echo -e "[${BLUE}ok${RESET}] Copied motd to /etc/motd"
-
-    # Set some files as exacutable 
-    chmod +x ~/.config/hypr/scripts/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
-    chmod +x ~/.config/swww/scripts/init_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/config/swww/scripts/init_wallpaper' is executable: .wxr-xr-x "
-    chmod +x ~/.config/swww/scripts/change_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/.config/swww/scripts/change_wallpaper' is executable: .wxr-xr-x "
-    chmod +x ~/.config/waybar/scripts/waybar-wttr.py && echo -e "[${BLUE}ok${RESET}] '~/.config/waybar/scripts/waybar-wttr.py' is executable: .wxr-xr-x "
-    chmod -R +x ~/.config/hypr/scripts
-    chmod -R +x ~/.config/swww/scripts
-    chmod -R +x ~/.config/wofi/manager
-
-    # Clean out other portals
-    echo -e "[${PURPLE}info${RESET}] Cleaning out conflicting xdg portals..."
-    $AUR_HELPER -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null 2>&1
 }
 
 # Usage: detect_nvidia
@@ -252,24 +205,9 @@ detect_nvidia()
 # Usage: copy_config
 # Description: Pulls rose-pine-sddm from my github, applies patches
 install_custom_sddm() {
-    sudo rm -rf /usr/share/sddm/themes/rose-pine-sddm
-    git clone https://github.com/POP303U/rose-pine-sddm ~/rose-pine-sddm >/dev/null 2>&1
-    sudo mv ~/rose-pine-sddm /usr/share/sddm/themes/
-    sudo cp /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf
-
     # use sed for modifying the theme
     sudo sed -i 's|Current=.*|Current=rose-pine-sddm|' /etc/sddm.conf
     sudo sed -i 's|CursorSize=.*|CursorSize=24|' /etc/sddm.conf
     sudo sed -i 's|CursorTheme=.*|CursorTheme=Bibata-Modern-Ice|' /etc/sddm.conf
     echo -e "[${BLUE}ok${RESET}] Installed custom adaptive sddm theme"
-
-    # time to get hacky, dont want to create extra repo so here we areee
-    sed -i 's|Background="Backgrounds/cat_leaves.png"|Background="Backgrounds/current"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
-    sed -i 's|PartialBlur="false"|PartialBlur="true"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
-    sed -i 's|BlueRadius="0"|BlurRadius="35"|' /usr/share/sddm/themes/rose-pine-sddm/theme.conf
-
-    # making sure sddm uses the correct background
-    RICE_CURRENT=$(awk '/rice-current/ {print $NF}' ../configs/.config/material/config)
-    WALLPAPER_CURRENT=$(awk '/wallpaper-current/ {print $NF}' ../configs/.config/material/config)
-    sudo cp ../configs/.config/swww/walls/$RICE_CURRENT/$WALLPAPER_CURRENT /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 }

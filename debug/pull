@@ -1,44 +1,41 @@
 #!/bin/sh
 
-rm -r ../configs/.config # really fucking dangerous operation
-mkdir -pv ../configs/etc
-mkdir -pv ../configs/.config
-mkdir -pv ../configs/.icons/default
+rm -r ../configs/home/.config # really fucking dangerous operation
+mkdir -pv ../configs/root/etc
+mkdir -pv ../configs/home/.config
+mkdir -pv ../configs/home/.icons/default
     
-cp -rvf ~/.config/swaylock       ../configs/.config/
-cp -rvf ~/.config/wlogout        ../configs/.config/
-cp -rvf ~/.config/gtk-3.0        ../configs/.config/
-cp -rvf ~/.config/swww           ../configs/.config/
-cp -rvf ~/.config/swaylock       ../configs/.config/
-cp -rvf ~/.config/fuzzel         ../configs/.config/
-cp -rvf ~/.config/foot           ../configs/.config/
-cp -rvf ~/.config/wofi           ../configs/.config/
-cp -rvf ~/.config/rofi           ../configs/.config/
-cp -rvf ~/.config/hypr           ../configs/.config/
-cp -rvf ~/.config/waybar         ../configs/.config/
-cp -rvf ~/.config/neofetch       ../configs/.config/
-cp -rvf ~/.config/dunst          ../configs/.config/
-cp -rvf ~/.config/kitty          ../configs/.config/
-cp -rvf ~/.config/cava           ../configs/.config/
-cp -rvf ~/.config/btop           ../configs/.config/
-cp -rvf ~/.config/qt5ct          ../configs/.config/
-cp -rvf ~/.config/qt6ct          ../configs/.config/
-cp -rvf ~/.config/Kvantum        ../configs/.config/
-cp -rvf ~/.config/material       ../configs/.config/
-cp -rvf ~/.config/xsettingsd     ../configs/.config/
-cp -rvf /etc/issue               ../configs/etc/
-cp -rvf /etc/motd                ../configs/etc/
-cp -rvf ~/.bashrc                ../configs/
+cp -rvf ~/.config/swaylock       ../configs/home/.config/
+cp -rvf ~/.config/wlogout        ../configs/home/.config/
+cp -rvf ~/.config/gtk-3.0        ../configs/home/.config/
+cp -rvf ~/.config/swww           ../configs/home/.config/
+cp -rvf ~/.config/swaylock       ../configs/home/.config/
+cp -rvf ~/.config/rofi           ../configs/home/.config/
+cp -rvf ~/.config/hypr           ../configs/home/.config/
+cp -rvf ~/.config/waybar         ../configs/home/.config/
+cp -rvf ~/.config/neofetch       ../configs/home/.config/
+cp -rvf ~/.config/dunst          ../configs/home/.config/
+cp -rvf ~/.config/kitty          ../configs/home/.config/
+cp -rvf ~/.config/cava           ../configs/home/.config/
+cp -rvf ~/.config/btop           ../configs/home/.config/
+cp -rvf ~/.config/qt5ct          ../configs/home/.config/
+cp -rvf ~/.config/qt6ct          ../configs/home/.config/
+cp -rvf ~/.config/Kvantum        ../configs/home/.config/
+cp -rvf ~/.config/material       ../configs/home/.config/
+cp -rvf ~/.config/xsettingsd     ../configs/home/.config/
+cp -rvf /etc/issue               ../configs/root/etc/
+cp -rvf /etc/motd                ../configs/root/etc/
+cp -rvf ~/.bashrc                ../configs/home
 
-cp -rvf ~/.gtkrc-2.0                         ../configs/
-cp -rvf ~/.icons/default/index.theme         ../configs/.icons/default/
-cp -rvf ~/.tmux.conf                         ../configs/
-cp -rvf ~/.bin                               ../configs/
+cp -rvf ~/.gtkrc-2.0                         ../configs/home/
+cp -rvf ~/.icons/default/index.theme         ../configs/home/.icons/default/
+cp -rvf ~/.tmux.conf                         ../configs/home/
+cp -rvf ~/.bin                               ../configs/home/
 # nice
 #
 #
 # temporary hack
-cp -rvf ./.static/dolphinrc                          ../configs/.config/
-cp -rvf ./.static/kdeglobals                         ../configs/.config/
-cp -rvf ./.static/.local                             ../configs/
+cp -rvf ./.static/dolphinrc                          ../configs/home/.config/
+cp -rvf ./.static/kdeglobals                         ../configs/home/.config/
+cp -rvf ./.static/.local                             ../configs/home/
 
