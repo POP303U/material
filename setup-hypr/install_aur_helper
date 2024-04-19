@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# import functions
+source ./functions
+if [ $? -ne 0 ]; then
+    echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
+    exit 1
+fi
+
+_PWD="$PWD" # fix for not respecting current directory
+
+if check_installed "AUR_HELPER" "${AUR_HELPERS[@]}" && [ -z "$OVERRIDE_AUR" ]; then
+    echo -e "[${BLUE}ok${RESET}] Aur helper detected: ${CYAN}${AUR_HELPERS}${RESET}"
+    exit 0
+fi
+
+if package_installed "$OVERRIDE_AUR"; then
+    echo -e "[${BLUE}ok${RESET}] ${CYAN}${AUR_HELPERS}${RESET} already installed."
+    exit 0
+fi
+
+AUR_HELPER="${1:-$OVERRIDE_AUR}"
+
+mkdir "/tmp/${AUR_HELPER}"
+if package_installed git; then
+    git clone "https://aur.archlinux.org/${AUR_HELPER}.git" "/tmp/${AUR_HELPER}"
+else
+    echo -e "[${RED}fail${RESET}] Git is not installed, please install git"
+    exit 1
+fi
+
+cd "/tmp/${AUR_HELPER}"
+makepkg -si --noconfirm
+
+ERROR_CODE=$?
+if [ $ERROR_CODE -eq 0 ]; then
+    echo -e "[${BLUE}ok${RESET}] Aur helper installed! // ${AUR_HELPER} //"
+else
+    echo -e "[${RED}fail${RESET}] Aur helper installation failed!"
+fi
+
+cd $_PWD # fix for not respecting current directory

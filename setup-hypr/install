@@ -7,6 +7,42 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# argument parsing #
+export VERBOSE_FLAGS="/dev/null"
+export FLAGS=" --noconfirm "
+export DEVELOPER_MODE=" -- "
+while getopts svewh ARGS; do
+    case $ARGS in
+    s)  
+        export VERBOSE_FLAGS="/dev/null"
+        export FLAGS=" --noconfirm "
+        export DEVELOPER_MODE=" -- "
+        ;;
+    v)  
+        export VERBOSE_FLAGS="/dev/pts/$CURRENT_PTS" 
+        export FLAGS=" --noconfirm "
+        export DEVELOPER_MODE=" -- "
+        ;;
+    e)
+        export VERBOSE_FLAGS="/dev/pts/$CURRENT_PTS" 
+        export FLAGS="  "
+        export DEVELOPER_MODE=" -x "
+        ;;
+    w)
+        export IGNORE_NETWORK="true"
+        ;;
+    h)
+        show_help 0
+        ;;
+    *)  
+        show_help 1
+        ;;
+    esac
+done
+
+# set -x for ./install -e, e.g debug mode
+set $DEVELOPER_MODE
+
 # Get Packages using imported functions from `packages.yaml`
 BASE_PACKAGES=$(get_yaml_packages packages.yaml base_packages)
 MINIMAL_PACKAGES=$(get_yaml_packages packages.yaml minimal_packages)
@@ -16,32 +52,26 @@ SDDM_PACKAGES=$(get_yaml_packages packages.yaml sddm_packages)
 OPTIONAL_PACKAGES_RUST=$(get_yaml_packages packages.yaml optional_packages_rust)
 TTY_PACKAGES=$(get_yaml_packages packages.yaml tty_packages)
 
-# Detect nvidia and install drivers
-if detect_nvidia; then
-    echo -e "[${PURPLE}info${RESET}] Found an nvidia card installing dkms to package list..."
-    ./install_nvidia
-    install_packages nvidia-dkms pacman
-else
-    echo -e "[${PURPLE}info${RESET}] No nvidia card detected skipping dkms..."
-fi
-
 # check for wifi and configure pacman + get options
 check_wifi
 if [ $? -ne 0 ]; then
     echo -e "[${RED}fail${RESET}] Internet connection required, please connect to a network!"
     exit 1
-else
-    echo -e "[${BLUE}ok${RESET}] Found internet connection" 
-    configure_pacman
-    fix_groups
-    install_yay
-
-    source ./install_get_options
 fi
+
+echo -e "[${BLUE}ok${RESET}] Found internet connection" 
+configure_pacman # Add some better defaults to pacman
+fix_groups # Add current user to input group (for waybar input module)
+
+source ./install_get_options # Source all variables for user configuration
+./install_aur_helper # Install AUR Helper ($OVERRIDE_AUR used here)
+
+# Fix wrong symlinks because they depend on the username
+./install_fix_symlinks
 
 # Remove desktop entry if you want
 if [[ $FLAG_REMOVE_GENERIC == "y" || $FLAG_REMOVE_GENERIC == "Y" || $FLAG_REMOVE_GENERIC == "" || $FLAG_REMOVE_QT == "y" || $FLAG_REMOVE_QT == "Y" || $FLAG_REMOVE_QT == ""  || $FLAG_REMOVE_ROFI == "y" || $FLAG_REMOVE_ROFI == "Y" || $FLAG_REMOVE_ROFI == "" ]]; then
-    ./install_de_debloat 
+    ./install_de_debloat # Removes chosen desktop entries
 fi
 
 ### These are functions used in the script, 
@@ -91,8 +121,8 @@ stage_1() {
         install_packages $PACKAGE yay
     done
 
-    echo -e "[${PURPLE}info${RESET}] Copying config files..."
-    copy_config 
+    echo -e "[${PURPLE}info${RESET}] Copying configs..."
+    ./install_configs
     set_hypr_modkey $MODKEY # change to user preferred modkey
 
     echo -e "[${PURPLE}info${RESET}] Starting Services..."
@@ -173,11 +203,17 @@ stage_4() {
 
 stage_1
 
+# Detect nvidia and install drivers
+if detect_nvidia; then
+    echo -e "[${PURPLE}info${RESET}] Found an nvidia card installing dkms to package list..."
+    ./install_nvidia
+    install_packages nvidia-dkms pacman
+else
+    echo -e "[${PURPLE}info${RESET}] No nvidia card detected skipping dkms..."
+fi
+
 # Extract gtk themes and fonts into correct directories
 ./install_archives
-
-# Fix wrong symlinks because they depend on the username
-./install_fix_symlinks
 
 # Ask to reboot
 echo -e "[${BLUE}ok${RESET}] Installation finished, please reboot to apply all changes" 
