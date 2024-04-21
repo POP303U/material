@@ -176,7 +176,7 @@ check_wifi() {
     fi
 
     # check for internet
-    if ping -w 1 x.org >$VERBOSE_FLAGS; then
+    if ping -c1 x.org >$VERBOSE_FLAGS; then
         return 0
     else 
         return 1
