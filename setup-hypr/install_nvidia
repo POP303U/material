@@ -25,6 +25,9 @@ if package_installed linux-hardened; then
     install_packages linux-hardened-headers
 fi
 
+# Source nvidia env variables in hyprland.conf
+sed -i 's|^#.*nvidia.conf|source = ~/.config/hypr/nvidia|' $HOME/.config/hypr/hyprland.conf
+
 # (Grub) Enable nvidia in kernel parameters
 if package_installed grub && [ -f /boot/grub/grub.cfg ]; then
     if [ ! -f /etc/default/grub.bak ] && [ ! -f /boot/grub/grub.bak ]; then
