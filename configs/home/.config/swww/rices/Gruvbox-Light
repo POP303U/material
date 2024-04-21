@@ -1,1 +1,6 @@
-Gruvbox-Light,light,gruvbox-light-mountains.png,colors,perltone=off
+name = Gruvbox-Light
+system-theme = light
+wallpaper = gruvbox-light-mountains.png
+type = colors
+perltone = off
+icons = Tela-circle-green

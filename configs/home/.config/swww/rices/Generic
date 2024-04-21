@@ -1,1 +1,6 @@
-Generic,dark,beach.jpg,colors,perltone=force
+name = Generic
+system-theme = dark
+wallpaper = beach.jpg
+type = colors
+perltone = force
+icons = Tela-circle-grey

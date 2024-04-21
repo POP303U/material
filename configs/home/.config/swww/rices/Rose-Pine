@@ -1,1 +1,6 @@
-Rose-Pine,dark,pine-anime_city.png,colors,perltone=off
+name = Rose-Pine
+system-theme = dark
+wallpaper = pine-anime_city.png
+type = colors
+perltone = off
+icons = Tela-circle-dracula

@@ -1,1 +1,6 @@
-Solarized-Dark,dark,solarized-dark-construction.png,colors,perltone=off
+name = Solarized-Dark
+system-theme = dark
+wallpaper = solarized-dark-construction.png
+type = colors
+perltone = off
+icons = Tela-circle-blue

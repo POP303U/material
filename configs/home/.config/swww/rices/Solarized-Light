@@ -1,1 +1,6 @@
-Solarized-Light,light,solarized-light-post-modern.png,colors,perltone=off
+name = Solarized-Light
+system-theme = light
+wallpaper = solarized-light-post-modern.png
+type = colors
+perltone = off
+icons = Tela-circle-grey

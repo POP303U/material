@@ -1,1 +1,6 @@
-Catppuccin-Mocha,dark,rain_world1.png,colors,perltone=off
+name = Catppuccin-Mocha
+system-theme = dark
+wallpaper = rain_world1.png
+perltone = off
+icons = Tela-circle-dracula
+type = colors

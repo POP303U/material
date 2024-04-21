@@ -1,1 +1,6 @@
-Nord,dark,misty-mountain.jpg,colors,perltone=off
+name = Nord
+system-theme = dark
+wallpaper = misty-mountain.jpg
+type = colors
+perltone = off
+icons = Tela-circle-blue

@@ -1,1 +1,6 @@
-Gruvbox-Dark,dark,gruvbox-garden.png,colors,perltone=off
+name = Gruvbox-Dark
+system-theme = dark
+wallpaper = gruvbox-garden.png
+type = colors
+perltone = off
+icons = Tela-circle-green

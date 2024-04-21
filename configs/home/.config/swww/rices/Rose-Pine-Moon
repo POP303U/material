@@ -1,1 +1,6 @@
-Rose-Pine-Moon,dark,moon-leafy.png,colors,perltone=off
+name = Rose-Pine-Moon
+system-theme = dark
+wallpaper = moon-leafy.png
+type = colors
+perltone = off
+icons = Tela-circle-dracula

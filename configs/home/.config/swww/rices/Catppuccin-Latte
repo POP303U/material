@@ -1,1 +1,6 @@
-Catppuccin-Latte,light,latte-cloud.png,colors,perltone=off
+name = Catppuccin-Latte
+system-theme = light
+wallpaper = latte-cloud.png
+perltone = off
+icons = Tela-circle-grey
+type = colors
