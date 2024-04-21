@@ -1,19 +1,21 @@
 #!/bin/sh
 
 # Set variables for script through rice configs
-CURRENT_RICE=${1:-$(awk '/rice-current/ {print $NF}' "$HOME/.config/material/config")}
-CURRENT_BG=${2:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $3}')} # make manual wallpapers possible
-MODE=${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $2}')} # make manual wallpapers possible
-CURRENT_ICONS="$(grep -m 2 "=" "${CONF_DIR}/gtk-3.0/settings.ini" | tail -n 1 | awk -F '=' '{print $2}')"
-sed -i 's|^rice-current.*|rice-current = '${1}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
+CURRENT_RICE=${1:-$(awk '/rice-current/ {print $NF}' "${HOME}/.config/material/config" | xargs)}
+CURRENT_BG=${2:-$(awk '/wallpaper/ {print $NF}' "${HOME}/.config/swww/rices/${CURRENT_RICE}" | xargs)} # make manual wallpapers possible
+MODE=$(awk '/system-theme/ {print $NF}' "${HOME}/.config/swww/rices/${CURRENT_RICE}" | xargs)
+CURRENT_ICONS="${3:-$(awk '/icons/ {print $NF}' "${HOME}/.config/swww/rices/${CURRENT_RICE}" | xargs)}"
+
+# Set all variables in the config file
+sed -i 's|^rice-current.*|rice-current = '${CURRENT_RICE}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
 sed -i 's|^system-theme.*|system-theme = '${MODE}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
 sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
 
 # Launch into perltone if enabled
-PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
-PERLTONE_OVERRIDE=${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $5}')} # make manual wallpapers possible
+PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "${HOME}/.config/material/config" | xargs)
+PERLTONE_OVERRIDE=$(awk '/perltone/ {print $NF}' "${HOME}/.config/swww/rices/${CURRENT_RICE}" | xargs)
 
-if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" || "$(echo $PERLTONE_OVERRIDE | xargs)" == "perltone=force" ]]; then
+if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" || "$(echo $PERLTONE_OVERRIDE | xargs)" == "force" ]]; then
     sed -i 's|^perltone-status.*|perltone-status = on|' ~/.config/material/config # set forced perltone on before continuing
     WARNING_STATUS=$(awk '/perltone-warn-on-mono/ {print $NF}' $HOME/.config/material/config | xargs)
     if [[ "$WARNING_STATUS" == "on" && "$COLOR_PALETTE" == "mono" ]]; then 
@@ -66,12 +68,11 @@ kvantummanager --set ${CURRENT_RICE}
 
 # qt5ct 
 sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt5ct/colors/${CURRENT_RICE}.conf|" $HOME/.config/qt5ct/qt5ct.conf
+sed -i "s|^icon_theme=.*|icon_theme=${CURRENT_ICONS}|" $HOME/.config/qt5ct/qt5ct.conf
 
 # qt6ct
 sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt6ct/colors/${CURRENT_RICE}.conf|" $HOME/.config/qt6ct/qt6ct.conf
-
-# gtk2
-ln -sf ~/.local/share/themes/${CURRENT_RICE}/gtk-2.0/gtkrc ~/.config/swww/gtkrc
+sed -i "s|^icon_theme=.*|icon_theme=${CURRENT_ICONS}|" $HOME/.config/qt6ct/qt6ct.conf
 
 # gtk3
 sed -i 's|^gtk-theme-name.*|gtk-theme-name='${CURRENT_RICE}'|' ~/.config/gtk-3.0/settings.ini
@@ -79,10 +80,6 @@ sed -i 's|^gtk-theme-name.*|gtk-theme-name='${CURRENT_RICE}'|' ~/.config/gtk-3.0
 # gtk4
 rm -rf ~/.config/gtk-4.0
 ln -s ~/.local/share/themes/${CURRENT_RICE}/gtk-4.0 ~/.config/gtk-4.0
-
-# Reloading gtk changes
-wait
-~/.config/hypr/scripts/import-gsettings
 
 # flatpak gtk
 flatpak --user override --env=GTK_THEME="${CURRENT_RICE}" # flatpak gtk is not intended to work, and very hacky not all apps will work with this
@@ -130,3 +127,5 @@ swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
     --transition-fps 144                   \
     --invert-y                             \
     --transition-pos "2502, 1410"
+
+hyprctl reload
