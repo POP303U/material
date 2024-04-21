@@ -1,0 +1,283 @@
+* {
+    border: none;
+    font-family: "JetbrainsMono Nerd Font";
+    font-weight: bold;
+    font-size: 16px;
+    min-height: 0;
+}
+
+@import "../../themes/theme.css";
+
+window#waybar {
+    background: @bar-bg;
+}
+
+tooltip {
+    border-width: 3px;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: @base;
+    background: @surface;
+}
+
+/* tooltip content */
+tooltip label {
+    all: inherit;
+    color: @text;
+    text-shadow: none;
+}
+
+#workspaces {
+    padding-top: 3.2px;
+    padding-bottom: 3.2px;
+}
+
+#workspaces button {
+    background: @rose;
+    margin-right: 3px;
+    margin-left: 3px;
+    color: @text;
+    opacity: 0.4;
+    border-radius: 21;
+    transition: all 0.26s ease-in-out;
+}
+
+#workspaces button.active {
+    color: @surface;
+    background: @rose;
+    border-color: @rose;
+    border-radius: 15px;
+    border: 3px; 
+    min-width: 50px;
+    transition: all 0.26s ease-in-out;
+    opacity: 1.0;
+}
+
+#workspaces button:hover {
+    color: @text;
+    background: @rose;
+    border-radius: 21;
+    min-width: 50px;
+    opacity: 0.7;
+}
+
+#custom-padding_bg,
+#custom-padding_left,
+#custom-padding_right,
+#custom-padding_left_love,
+#custom-padding_right_love,
+#custom-padding_left_gold,
+#custom-padding_right_gold,
+#custom-padding_left_rose,
+#custom-padding_right_rose,
+#custom-padding_left_pine,
+#custom-padding_right_pine,
+#custom-padding_left_foam,
+#custom-padding_right_foam,
+#custom-padding_left_iris,
+#custom-padding_right_iris,
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher, 
+#custom-weather,
+#custom-arch_logo,
+#keyboard-state,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#memory,
+#disk,
+#cpu,
+#bluetooth,
+#temperature,
+#workspaces,
+#window,
+#tray,
+#backlight {
+    color: @base;
+    background: @surface;
+    opacity: 1;
+    margin: 4px 0px 4px 0px;
+
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#backlight {
+    border-radius: 10px 0px 0px 10px;
+}
+
+#clock {
+    background: @foam;
+    border-radius: 10px 10px 10px 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#window {
+    background: @surface;
+    color: @text;
+    border-radius: 10px 10px 10px 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#custom-weather {
+    background: @rose;
+}
+
+#disk,
+#memory,
+#cpu {
+    background: @foam;
+}
+
+#battery {
+    background: @battery;
+}
+
+#network {
+    background: @gold;
+}
+
+#pulseaudio {
+    background: @rose;
+}
+
+#pulseaudio.microphone {
+    background: @rose;
+}
+
+#tray {
+    background: @pine;
+}
+
+
+#custom-waybar_switcher,
+#custom-theme_settings,
+#custom-power_button,
+#custom-theme_switcher,
+#custom-wall_switcher {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+#custom-waybar_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-theme_settings {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-wall_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-theme_switcher {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-power_button {
+    background-color: @surface;
+    color: @rose;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-padding_left {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+}
+
+#custom-padding_right {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+}
+
+#custom-padding_left_love {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @love;
+}
+
+#custom-padding_right_love {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @love;
+}
+
+#custom-padding_left_gold {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @gold;
+}
+
+#custom-padding_right_gold {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @gold;
+}
+
+#custom-padding_left_rose {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @rose;
+}
+
+#custom-padding_right_rose {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @rose;
+}
+
+#custom-padding_left_pine {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @pine;
+}
+
+#custom-padding_right_pine {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @pine;
+}
+
+#custom-padding_left_foam {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @foam;
+}
+
+#custom-padding_right_foam {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @foam;
+}
+
+#custom-padding_left_iris {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @iris;
+}
+
+#custom-padding_right_iris {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @iris;
+}
