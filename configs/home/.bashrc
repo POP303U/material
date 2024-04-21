@@ -35,13 +35,10 @@ HISTCONTROL=ignoreboth
 ################################################################################
 
 export PROMPT_COMMAND=shortened_pwd # store current shortened path in $CURRENT_PATH
-export PATH=$PATH:~/.cargo/bin
-export PATH=$PATH:~/.config/emacs/bin
+export PATH=$PATH:~/.config/hypr/scripts
 export PATH=$PATH:~/.config/wofi/scripts
 export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/.bin/colorscripts
-export PATH=$PATH:~/.config/hypr/scripts
-export PATH=$PATH:~/.bin
+export PATH=$PATH:~/.cargo/bin
 export SUDO_PROMPT='sudo (%p@%h) password: ' # doas like password thing
 export SUDO=sudo
 export TERM_PROGRAM=tmux
