@@ -14,7 +14,6 @@ base_packages:
   cliphist
   kitty 
   waybar
-  swaylock-effects
   polkit-gnome
   swww
   wofi 
@@ -67,16 +66,16 @@ minimal_packages:
   -- Audio --
   pavucontrol-qt
 
+  -- Locking --
+  hypridle
+  hyprlock
+
   -- Extra Applications for other rices --
   fuzzel
   rofi-lbonn-wayland-git
   fuzzel
   dunst
-  thunar
-
-  -- Terminal --
-  foot
-  alacritty
+  udiskie
 
   -- Shell --
   pokemon-colorscripts-git
