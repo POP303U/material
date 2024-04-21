@@ -54,6 +54,9 @@ material-documentation = rustup doc
 # LAUNCHER
 launcher-runlevel = desktop
 
+# ROFI -
+rofi-style = slim
+
 # PERLTONE
 perltone-colors = vibrant
 perltone-backend = fast

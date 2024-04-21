@@ -45,7 +45,7 @@ blur-size = 4
 blur-passes = 4
 
 # LAUNCHERS
-material-launcher = wofi
+material-launcher = rofi
 material-explorer = dolphin
 material-terminal = kitty
 material-browser = firefox
@@ -53,6 +53,9 @@ material-documentation = rustup doc
 
 # LAUNCHER
 launcher-runlevel = desktop
+
+# ROFI -
+rofi-style = default
 
 # PERLTONE
 perltone-colors = vibrant

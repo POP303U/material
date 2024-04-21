@@ -44,7 +44,7 @@ border-size = 0
 blur-size = 4
 blur-passes = 2
 
-material-launcher = fuzzel
+material-launcher = rofi
 material-explorer = dolphin 
 material-terminal = kitty
 material-browser = firefox
@@ -52,6 +52,9 @@ material-documentation = rustup doc
 
 # LAUNCHER
 launcher-runlevel = desktop
+
+# ROFI -
+rofi-style = functional
 
 # PERLTONE
 perltone-colors = vibrant

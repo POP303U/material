@@ -47,6 +47,11 @@ ANIMATIONS_CURRENT=$(awk '/animations-current/ {print $NF}' $SEL_CONFIG)
 sed -i 's|source =.*|source = ~/.config/hypr/animations/'$ANIMATIONS_CURRENT'.conf |' "$HYPR_PATH/animations.conf"
 sed -i 's|enabled =.*|enabled = '$ANIMATIONS_STATE'|' "$HYPR_PATH/animations.conf"
 
+## config.rasi
+ROFI_STYLE=$(awk '/rofi-style/ {print $NF}' $SEL_CONFIG | xargs)
+
+ln -sf $HOME/.config/rofi/styles/${ROFI_STYLE}.rasi $HOME/.config/rofi/config.rasi 
+
 ### LOAD ALL NECESSARY CHANGES ###
 RICE_CURRENT=$(awk '/rice-current/ {print $NF}' $SEL_CONFIG)
 WAYBAR_CURRENT=$(awk '/bar-current/ {print $NF}' $SEL_CONFIG)
