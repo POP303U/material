@@ -1,0 +1,35 @@
+#!/bin/sh
+set -euo pipefail
+
+function create_name() {
+	NAME_FILE="$WALLPAPER_PATH/current/name"
+	if [[ ! -f "$NAME_FILE" ]]; then
+		touch "$NAME_FILE"
+	fi
+
+	# empty the file for new text
+	echo -n > $NAME_FILE
+	echo "$WALLPAPER_NAME" > $NAME_FILE
+}
+
+WALLPAPER_PATH="/home/${USER}/.config/swww"
+WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls | wofi -p "wallpaper" --dmenu -i)
+WALLPAPER="/home/${USER}/.config/swww/walls/${WALLPAPER_NAME}"
+
+if [[ ! -f "$WALLPAPER" ]]; then
+    echo "Error: Wallpaper file with the name '$WALLPAPER_NAME' not found in the specified directory."
+    exit 1
+fi
+
+create_name
+
+swww img "/home/${USER}/.config/swww/walls/$WALLPAPER_NAME" \
+    \
+    \
+    --transition-bezier .6,.94,.86,.23\
+    --transition-type "grow" \
+    --transition-duration 1 \
+    --transition-fps 144 \
+    --invert-y \
+    --transition-pos "$( hyprctl cursorpos )" \
+# Options up here ^
