@@ -14,10 +14,18 @@ window#waybar {
 }
 
 tooltip {
+    border-width: 3px;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: @base;
     background: @surface;
+}
+
+/* tooltip content */
+tooltip label {
+    all: inherit;
     color: @text;
-    border-radius: 7px;
-    border-width: 0px;
+    text-shadow: none;
 }
 
 #workspaces button {

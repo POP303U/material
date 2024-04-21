@@ -13,21 +13,34 @@ window#waybar {
 }
 
 tooltip {
-    background: @surface;
-    border-color: @base;
-    border-radius: 10px;
-    border-width: 2px;
+    border-width: 3px;
+    border-radius: 15px;
     border-style: solid;
+    border-color: @base;
+    background: @surface;
+}
+
+/* tooltip content */
+tooltip label {
+    all: inherit;
+    color: @text;
+    text-shadow: none;
+}
+
+#workspaces {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 #workspaces button {
     all: initial;
-    padding: 5px;
     padding-left: 10px;
     padding-right: 12px;
     color: @workspace-button-inactive;
     transition: all 0.25s ease-in-out;
-    border-radius: 10px;
+    border-radius: 21px;
 }
 
 #workspaces button.active {
@@ -36,25 +49,34 @@ tooltip {
     min-width: 30px;
 }
 
-#workspaces button.focused {
-    color: @workspace-button-active;
-    border-radius: 10px;
-}
-
 #workspaces button.urgent {
     background: @love;
-    border-radius: 10px;
+    border-radius: 21px;
 }
 
 #workspaces button:hover {
     background: @pine;
     color: @base;
-    border-radius: 10px;
-    transition: all 0.2s ease-in-out;
-    border-radius: 10px;
+    border-radius: 21px;
+    transition: all 0.26s ease-in-out;
     min-width: 30px;
 }
 
+#custom-padding_bg,
+#custom-padding_left,
+#custom-padding_right,
+#custom-padding_left_love,
+#custom-padding_right_love,
+#custom-padding_left_gold,
+#custom-padding_right_gold,
+#custom-padding_left_rose,
+#custom-padding_right_rose,
+#custom-padding_left_pine,
+#custom-padding_right_pine,
+#custom-padding_left_foam,
+#custom-padding_right_foam,
+#custom-padding_left_iris,
+#custom-padding_right_iris,
 #custom-weather,
 #custom-waybar_switcher,
 #custom-theme_settings,
@@ -71,109 +93,64 @@ tooltip {
 #cpu,
 #bluetooth,
 #temperature,
-#workspaces,
 #tray,
 #backlight {
     color: @base;
-    opacity: 9.9;
-    padding: 0px 10px;
-    margin: 0px 0px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-}
-
-#backlight {
-    border-radius: 10px 0px 0px 10px;
+    opacity: 1;
+    margin: 4px 0px 4px 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 #tray {
     background-color: @base;
-    border-radius: 10px;
 }
 
 #workspaces {
     background-color: @base;
-    border-radius: 10px;
-    margin-left: 10px;
-    padding-right: 0px;
-    padding-left: 0px;
 }
 
 #keyboard-state {
     background-color: @rose;
-    border-radius: 10px;
-    margin-left: 10px;
-    padding-right: 0px;
-    padding-left: 5px;
 }
 
 #clock {
     background-color: @foam;
-    border-radius: 10px 10px 10px 10px;
-    border-right: 0px;
-    margin-left: 10px;
 }
 
 
 #custom-weather {
     background-color: @foam;
-    border-radius: 10px;
-    border-left: 0px;
-    margin-right: 10px;
-    border-right: 0px;
 }
 
 #disk {
     background-color: @love;
-    border-radius: 10px 0px 0px 10px;
-    border-left: 0px;
-    margin-left: 10px;
-    border-right: 0px;
 }
 
 #memory {
     background-color: @pine;
-    border-radius: 0px 0px 0px 0px;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 10px;
 }
 
 #cpu {
     background-color: @iris;
-    border-left: 0px;
-    border-right: 0px;
 }
 
 #battery {
     background-color: @battery;
-    border-right: 0px;
-    border-left: 0px;
 }
 
 #network {
     background-color: @rose;
-    border-left: 0px;
-    border-right: 0px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding-right: 12.5px;
-    border-radius: 10px;
 }
 
 #pulseaudio {
     background-color: @gold;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 10px 0px 0px 10px;
 }
 
 #pulseaudio.microphone {
     background-color: @gold;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
 }
 
 #custom-waybar_switcher,
@@ -183,45 +160,89 @@ tooltip {
 #custom-wall_switcher {
     padding-left: 7px;
     padding-right: 7px;
+    background: @rose;
 }
 
-#custom-waybar_switcher {
-    background-color: @rose;
-    color: @surface;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
-    padding-right: 15px;
+#custom-padding_left {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @base;
 }
 
-#custom-theme_settings {
-    background-color: @rose;
-    color: @surface;
-    border-left: 0px;
-    border-right: 0px;
-    border-radius: 10px 0px 0px 10px;
-    margin-left: 10px;
-    padding-left: 10px;
+#custom-padding_right {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @base;
 }
 
-#custom-wall_switcher {
-    background-color: @rose;
-    color: @surface;
-    border-left: 0px;
-    border-right: 0px;
+#custom-padding_left_love {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @love;
 }
 
-#custom-theme_switcher {
-    background-color: @rose;
-    color: @surface;
-    border-left: 0px;
-    border-right: 0px;
+#custom-padding_right_love {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @love;
 }
 
-#custom-power_button {
+#custom-padding_left_gold {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @gold;
+}
+
+#custom-padding_right_gold {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @gold;
+}
+
+#custom-padding_left_rose {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
     background-color: @rose;
-    color: @surface;
-    border-left: 0px;
-    border-right: 0px;
+}
+
+#custom-padding_right_rose {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @rose;
+}
+
+#custom-padding_left_pine {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @pine;
+}
+
+#custom-padding_right_pine {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @pine;
+}
+
+#custom-padding_left_foam {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @foam;
+}
+
+#custom-padding_right_foam {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @foam;
+}
+
+#custom-padding_left_iris {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @iris;
+}
+
+#custom-padding_right_iris {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @iris;
 }

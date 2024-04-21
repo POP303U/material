@@ -7,26 +7,42 @@
     "gtk-layer-shell": true,
     "height": 30,
     "modules-left": [
+        "custom/padding_left_rose",
         "network",
+        "custom/padding_right_rose",
+        "custom/padding_left_gold",
         "pulseaudio",
         "pulseaudio#microphone",
+        "custom/padding_right_gold",
+        "custom/padding_left_foam",
         "custom/weather", 
+        "custom/padding_right_foam",
+        "custom/padding_left_pine",
         "memory",
+        "custom/padding_right_pine",
         "battery",
     ],
 
     "modules-center": [
+        "custom/padding_left_foam",
         "clock",
+        "custom/padding_right_foam",
     ],
 
     "modules-right": [
+        "custom/padding_left",
         "tray",
+        "custom/padding_right",
+        "custom/padding_left",
         "hyprland/workspaces",
+        "custom/padding_right",
+        "custom/padding_left_rose",
         "custom/theme_settings",
         "custom/power_button", 
         "custom/wall_switcher",
         "custom/theme_switcher",
         "custom/waybar_switcher",
+        "custom/padding_right_rose",
     ],
 
     "hyprland/workspaces": {
@@ -234,5 +250,101 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "custom/padding_right": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_love": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_love": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_gold": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_gold": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_rose": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_rose": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_pine": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_pine": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_foam": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_foam": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_iris": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_iris": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_bg": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
     },
 }

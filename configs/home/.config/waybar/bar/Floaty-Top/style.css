@@ -11,33 +11,48 @@
 window#waybar {
     background: @surface;
     border: 3px solid @base;
-    border-radius: 10px;
+    border-radius: 21px;
 }
 
 tooltip {
-    background: @surface;
-    border-color: @base;
-    border-width: 2px;
+    border-width: 3px;
+    border-radius: 15px;
     border-style: solid;
+    border-color: @base;
+    background: @surface;
+}
+
+/* tooltip content */
+tooltip label {
+    all: inherit;
+    color: @text;
+    text-shadow: none;
 }
 
 #workspaces button {
     all: initial;
-    padding: 5px;
-    padding-right: 8px;
-    padding-left: 8px;
-    margin-right: 5px;
-    color: @workspace-button-inactive;
-    animation: ws_hover 20s ease-in-out 1;
+    color: @base;
+    background: @subtle;
+    margin-right: 4px;
+    margin-left: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-right: 12px;
+    padding-left: 12px;
+    opacity: 0.7;
+    border-radius: 360px;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
 #workspaces button.active {
-    color: @workspace-button-active;
-}
-
-#workspaces button.focused {
-    color: @workspace-button-active;
+    color: @base;
+    background: @rose;
+    border-color: @rose;
+    border-radius: 360px;
+    border: 3px; 
+    min-width: 40px;
+    transition: all 0.26s cubic-bezier(.55,-0.68,.48,1.682);
+    opacity: 1.0;
 }
 
 #workspaces button.urgent {
@@ -45,11 +60,27 @@ tooltip {
 }
 
 #workspaces button:hover {
-    background: @base;
-    color: @subtle;
-    transition: all 0.3s ease-in-out;
+    background: @pine;
+    color: @base;
+    min-width: 40px;
+    transition: all 0.26s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
+#custom-padding_bg,
+#custom-padding_left,
+#custom-padding_right,
+#custom-padding_left_love,
+#custom-padding_right_love,
+#custom-padding_left_gold,
+#custom-padding_right_gold,
+#custom-padding_left_rose,
+#custom-padding_right_rose,
+#custom-padding_left_pine,
+#custom-padding_right_pine,
+#custom-padding_left_foam,
+#custom-padding_right_foam,
+#custom-padding_left_iris,
+#custom-padding_right_iris,
 #custom-waybar_switcher,
 #custom-theme_settings,
 #custom-power_button,
@@ -67,11 +98,16 @@ tooltip {
 #cpu,
 #bluetooth,
 #temperature,
-#workspaces,
 #tray,
 #backlight {
-    margin-right: 10px;
-    margin-left: 10px;
+    background: transparent;
+    color: @rose;
+    opacity: 1;
+    margin: 4px 0px 4px 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 #keyboard-state {
@@ -79,43 +115,31 @@ tooltip {
 }
 
 #clock {
-    color: @foam;
+    color: @base;
+    background: @rose;
 }
 
-#disk {
-    color: @love;
-}
-
-#memory {
-    color: @foam;
-}
-
+#disk,
+#memory,
 #cpu {
-    color: @iris;
+    color: @base;
+    background: @foam;
 }
 
-#network {
-    color: @gold;
-}
-
-#pulseaudio {
-    color: @rose;
-}
-
+#network,
+#pulseaudio,
 #pulseaudio.microphone {
-    color: @love;
+    color: @base;
+    background: @love;
 }
 
 #battery {
     color: @battery;
 }
 
-#custom-seperator {
-    color: @muted;
-}
-
 #custom-weather {
-    color: @foam;
+    color: @base;
+    background: @iris;
 }
 
 #custom-waybar_switcher,
@@ -123,28 +147,116 @@ tooltip {
 #custom-power_button,
 #custom-theme_switcher,
 #custom-wall_switcher {
-    background-color: @surface;
-    color: @rose;
-    border-top: 1px;
-    padding-left: 0px;
-    padding-right: 0px;
+    color: @gold;
     margin-right: 7px;
-    margin-left: 7px;
-    border-top: 3px solid @base;
-    border-bottom: 3px solid @base;
 }
 
-#custom-waybar_switcher {
-    background-color: @surface;
-    color: @rose;
+#custom-padding_1px {
+    padding-left: 1px;
+    padding-right: 1px;
+    margin-right: 1px;
+    margin-left: 1px;
+}
+
+#custom-padding_3px {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+#custom-padding_5px {
+    padding-left: 5px;
+    padding-right: 5px;
     margin-right: 5px;
-    padding-right: 10px;
+    margin-left: 5px;
 }
 
-#custom-theme_settings {
-    background-color: @surface;
-    color: @rose;
-    margin-left: 10px;
+#custom-padding_10px {
     padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
+#custom-padding_left {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+}
+
+#custom-padding_right {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+}
+
+#custom-padding_left_love {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @love;
+}
+
+#custom-padding_right_love {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @love;
+}
+
+#custom-padding_left_gold {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @gold;
+}
+
+#custom-padding_right_gold {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @gold;
+}
+
+#custom-padding_left_rose {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @rose;
+}
+
+#custom-padding_right_rose {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @rose;
+}
+
+#custom-padding_left_pine {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @pine;
+}
+
+#custom-padding_right_pine {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @pine;
+}
+
+#custom-padding_left_foam {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @foam;
+}
+
+#custom-padding_right_foam {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @foam;
+}
+
+#custom-padding_left_iris {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @iris;
+}
+
+#custom-padding_right_iris {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @iris;
+}

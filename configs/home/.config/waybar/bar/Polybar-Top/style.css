@@ -15,11 +15,20 @@ window#waybar {
 }
 
 tooltip {
-    background: @surface;
-    border-color: @base;
-    border-width: 2px;
+    border-width: 3px;
+    border-radius: 15px;
     border-style: solid;
+    border-color: @base;
+    background: @surface;
 }
+
+/* tooltip content */
+tooltip label {
+    all: inherit;
+    color: @text;
+    text-shadow: none;
+}
+
 
 #workspaces button {
     all: initial;

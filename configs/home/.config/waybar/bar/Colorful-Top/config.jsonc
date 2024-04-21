@@ -8,27 +8,42 @@
     "gtk-layer-shell": true,
     "height": 34,
     "modules-left": [
+        "custom/padding",
+        "custom/padding_left",
         "hyprland/workspaces",
+        "custom/padding_right",
     ],
 
     "modules-center": [
+        "custom/padding_left",
         "custom/theme_settings",
         "custom/power_button", 
         "custom/wall_switcher",
         "custom/theme_switcher",
         "custom/waybar_switcher",
+        "custom/padding_right",
     ],
 
     "modules-right": [
+        "custom/padding_left_rose",
         "custom/weather", 
+        "custom/padding_right_rose",
+        "custom/padding_left_foam",
         "disk",
         "memory",
         "cpu",
+        "custom/padding_right_foam",
+        "custom/padding_left_gold",
         "battery",
         "network",
+        "custom/padding_right_gold",
+        "custom/padding_left_rose",
         "pulseaudio",
         "pulseaudio#microphone",
+        "custom/padding_right_rose",
+        "custom/padding_left_pine",
         "tray",
+        "custom/padding_right_pine",
     ],
 
     "hyprland/workspaces": {
@@ -38,31 +53,12 @@
         "format": "{icon}",
         "urgent": " ",
         "warp-on-scroll": false,
-        "format": "{icon}",
-        "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "7": "",
-            "8": "",
-            "9": "",
-            "10": "",
-            "urgent": "",
-            "active": "",
-            "default": ""
-        },
         "persistent-workspaces": {
             "1": [],
             "2": [],
             "3": [],
-            "4": [],
-            "5": [],
         }
     },
-
 
     "hyprland/window": {
         "max-length": 80,
@@ -244,5 +240,101 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "custom/padding_right": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_love": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_love": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_gold": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_gold": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_rose": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_rose": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_pine": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_pine": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_foam": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_foam": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_iris": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_iris": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_bg": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
     },
 }

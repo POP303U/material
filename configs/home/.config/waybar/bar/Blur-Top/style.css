@@ -12,12 +12,18 @@ window#waybar {
 }
 
 tooltip {
-    background: @surface;
-    border-color: @base;
+    border-width: 3px;
+    border-radius: 15px;
     border-style: solid;
-    border-radius: 25px;
-    border-width: 2px;
-    margin: 100px;
+    border-color: @base;
+    background: @surface;
+}
+
+/* tooltip content */
+tooltip label {
+    all: inherit;
+    color: @text;
+    text-shadow: none;
 }
 
 #workspaces {

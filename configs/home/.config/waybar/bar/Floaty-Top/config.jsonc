@@ -8,27 +8,39 @@
     "gtk-layer-shell": true,
     "height": 40,
     "modules-left": [
+        "custom/padding_3px",
         "custom/theme_settings",
         "custom/power_button", 
         "custom/wall_switcher",
         "custom/theme_switcher",
         "custom/waybar_switcher",
-        "network",
+        "custom/padding_1px",
+        "tray",
+        "custom/padding_1px",
         "hyprland/workspaces",
     ],
     
     "modules-center": [
+        "custom/padding_left_rose",
         "clock",
+        "custom/padding_right_rose",
     ],
 
     "modules-right": [
-        "custom/weather",
+        "custom/padding_left_foam",
         "disk",
         "memory",
         "cpu",
+        "custom/padding_right_foam",
+        "custom/padding_left_iris",
+        "custom/weather",
+        "custom/padding_right_iris",
+        "custom/padding_left_love",
+        "network",
         "pulseaudio",
         "pulseaudio#microphone",
-        "tray",
+        "custom/padding_right_love",
+        "custom/padding_3px",
     ],
 
     "hyprland/workspaces": {
@@ -37,21 +49,11 @@
         "on-click": "activate",
         "format": "{icon}",
         "urgent": " ",
-        "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "7": "",
-            "8": "",
-            "9": "",
-            "10": "",
-        },
 
         "persistent-workspaces": {
             "1": [],
+            "2": [],
+            "3": [],
         }
     },
 
@@ -173,13 +175,14 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
+        "format": "{icon} {volume}",
         "tooltip": false,
         "format-muted": " Muted",
         "on-click": "pamixer -t",
         "on-click-right": "~/.config/hypr/scripts/audiomixer-launch",
         "on-scroll-up": "pamixer -i 5",
         "on-scroll-down": "pamixer -d 5",
+        "tooltip-format": "{icon} {desc} // {volume}%",
         "scroll-step": 5,
         "format-icons": {
             "headphone": "",
@@ -194,11 +197,12 @@
 
     "pulseaudio#microphone": {
         "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " Muted",
+        "format-source": "",
+        "format-source-muted": "",
         "on-click": "pamixer --default-source -t",
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
+        "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
 
@@ -236,5 +240,120 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+
+    "custom/padding_right": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_love": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_love": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_gold": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_gold": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_rose": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_rose": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_pine": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_pine": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_foam": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_foam": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left_iris": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+    
+    "custom/padding_right_iris": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_10px": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_3px": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_1px": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_5px": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_bg": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
     },
 }
