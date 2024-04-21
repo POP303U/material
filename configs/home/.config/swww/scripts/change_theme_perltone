@@ -7,8 +7,7 @@ MATERIAL="$HOME/.config/material"
 WALLPAPER="$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_BG"
 PERLTONE="$HOME/.config/hypr/scripts/perltone"
 PERLTONE_TEMPLATE="$HOME/.config/hypr/scripts/perltone-template"
-COLOR_SCHEME="--${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $2}')}"
-COLOR_PALETTE="${3:-$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F ',' '{print $4}')}"
+COLOR_SCHEME="--$(awk '/system-theme/ {print $NF}' ~/.config/swww/rices/${CURRENT_RICE})"
 
 COLOR_MODULATION="--$(awk '/perltone-colors/ {print $NF}' $HOME/.config/material/config)"
 PERLTONE_BACKEND="--$(awk '/perltone-backend/ {print $NF}' $HOME/.config/material/config)"
@@ -38,14 +37,16 @@ TEMPLATES=(
     "$MATERIAL/templates/foot.template:$HOME/.config/foot/themes/Perltone.ini"
     "$MATERIAL/templates/waybar.template:$HOME/.config/waybar/themes/Perltone.css"
     "$MATERIAL/templates/wlogout.template:$HOME/.config/wlogout/themes/Perltone.css"
-    "$MATERIAL/templates/qt5ct.template:$HOME/.config/qt5ct/colors/Perltone.conf"
-    "$MATERIAL/templates/qt6ct.template:$HOME/.config/qt6ct/colors/Perltone.conf"
     "$MATERIAL/templates/tty.template:$HOME/.bin/colors/Perltone"
     "$MATERIAL/templates/cava.template:$HOME/.config/cava/themes/Perltone"
-    "$MATERIAL/templates/perltone-kvconfig.template:$HOME/.config/Kvantum/Perltone/Perltone.kvconfig"
-    "$MATERIAL/templates/perltone-svg.template:$HOME/.config/Kvantum/Perltone/Perltone.svg"
+    "$MATERIAL/templates/qt/qt5ct.template:$HOME/.config/qt5ct/colors/Perltone.conf"
+    "$MATERIAL/templates/qt/qt6ct.template:$HOME/.config/qt6ct/colors/Perltone.conf"
+    "$MATERIAL/templates/qt/perltone-kvconfig.template:$HOME/.config/Kvantum/Perltone/Perltone.kvconfig"
+    "$MATERIAL/templates/qt/perltone-svg.template:$HOME/.config/Kvantum/Perltone/Perltone.svg"
     "$MATERIAL/templates/spotify.template:$HOME/.config/spicetify/Themes/Perltone/color.ini"
     "$MATERIAL/templates/sddm.template:/usr/share/sddm/themes/rose-pine-sddm/theme.conf"
+    "$MATERIAL/templates/gtk/gtk4.template:$HOME/.local/share/themes/Perltone/gtk-4.0/gtk.css"
+    "$MATERIAL/templates/gtk/gtk3.template:$HOME/.local/share/themes/Perltone/gtk-3.0/colors.css"
     "$MATERIAL/templates/discord.template:$HOME/.config/vesktop/themes/Perltone.css"
 )
 
@@ -80,9 +81,11 @@ kvantummanager --set Perltone
 
 # qt5ct 
 sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt5ct/colors/Perltone.conf|" $HOME/.config/qt5ct/qt5ct.conf
+sed -i "s|^icon_theme=.*|icon_theme=Tela-circle-grey|" $HOME/.config/qt5ct/qt5ct.conf
 
 # qt6ct
 sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt6ct/colors/Perltone.conf|" $HOME/.config/qt6ct/qt6ct.conf
+sed -i "s|^icon_theme=.*|icon_theme=Tela-circle-grey|" $HOME/.config/qt6ct/qt6ct.conf
 
 # Hyprland
 ln -sf ~/.config/hypr/themes/Perltone.conf ~/.config/hypr/themes/theme.conf 
@@ -92,6 +95,13 @@ ln -sf $HOME/.config/fuzzel/themes/Perltone.ini $HOME/.config/fuzzel/fuzzel.ini
 
 # Rofi
 ln -sf $HOME/.config/rofi/themes/Perltone.rasi $HOME/.config/rofi/themes/theme.rasi
+
+# gtk3
+sed -i 's|^gtk-theme-name.*|gtk-theme-name=Perltone|' ~/.config/gtk-3.0/settings.ini
+
+# gtk4
+rm -rf ~/.config/gtk-4.0
+ln -s ~/.local/share/themes/Perltone/gtk-4.0 ~/.config/gtk-4.0
 
 # Wofi (hacky symlink to pywal path but who cares)
 ln -sf $HOME/.config/wofi/themes/Perltone $HOME/.cache/wal/colors 
@@ -135,6 +145,8 @@ swww img "$WALLPAPER" \
     --transition-fps 144                   \
     --invert-y                             \
     --transition-pos "2502, 1410"
+
+hyprctl reload
 
 sleep 2
 pkill -x dunst
