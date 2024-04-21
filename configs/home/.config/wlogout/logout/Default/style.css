@@ -1,0 +1,78 @@
+* {
+    background-image: none;
+    font-size: ${FONT_SIZE};
+    font-family: MapleMono;
+    font-weight: normal;
+}
+
+@import "${HOME}/.config/wlogout/themes/theme.css";
+@import "${HOME}/.config/waybar/themes/theme.css";
+
+window {
+    background: transparent;
+}
+
+button {
+    color: @text;
+    background-color: @surface;
+    outline-style: none;
+    border: none;
+    border-width: 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20%;
+    box-shadow: none;
+    text-shadow: none;
+    animation: gradient_f 20s ease-in infinite;
+
+	border-style: solid;
+	background-color: @surface;
+    margin: 0.5em;
+}
+
+button:focus {
+    background-color: @color-focus;
+    background-size: 30%;
+}
+
+button:hover {
+    background-color: @color-hover;
+    background-size: 30%;
+    border-radius: 30px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55,0.0,.28,1.682);
+}
+
+#lock {
+    margin-left: 8em;
+    background-image: image(url("${HOME}/.config/wlogout/icons/lock_${BUTTON_COLOR}.png"));
+    border-radius: ${CORNER_ROUNDING}px;
+}
+
+#logout {
+    background-image: image(url("${HOME}/.config/wlogout/icons/logout_${BUTTON_COLOR}.png"));
+    border-radius: ${CORNER_ROUNDING}px;
+}
+
+#suspend {
+    background-image: image(url("${HOME}/.config/wlogout/icons/suspend_${BUTTON_COLOR}.png"));
+    border-radius: ${CORNER_ROUNDING}px;
+    margin-right: 8em;
+}
+
+#shutdown {
+    background-image: image(url("${HOME}/.config/wlogout/icons/shutdown_${BUTTON_COLOR}.png"));
+    border-radius: ${CORNER_ROUNDING}px;
+}
+
+#hibernate {
+    margin-left: 8em;
+    background-image: image(url("${HOME}/.config/wlogout/icons/hibernate_${BUTTON_COLOR}.png"));
+    border-radius: ${CORNER_ROUNDING}px;
+}
+
+#reboot {
+    background-image: image(url("${HOME}/.config/wlogout/icons/reboot_${BUTTON_COLOR}.png"));
+    border-radius: ${CORNER_ROUNDING}px;
+    margin-right: 8em;
+}
