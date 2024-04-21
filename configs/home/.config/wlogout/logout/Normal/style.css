@@ -2,12 +2,13 @@
     background-image: none;
     font-size: ${FONT_SIZE};
     font-family: MapleMono;
+    font-weight: normal;
 }
 
 @import "${HOME}/.config/wlogout/themes/theme.css";
 
 window {
-    background-color: rgba(0,0,0,.7);
+    background: transparent;
 }
 
 button {
