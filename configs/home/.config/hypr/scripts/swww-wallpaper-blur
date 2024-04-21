@@ -24,12 +24,8 @@ if ! [ -f "$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER" ]; then
 fi
 
 # Generate modified wallpapers, if they don't exist
-if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}" ]; then
-    convert -strip "$WALLPAPER_PATH"[0] -thumbnail 500x500^ -gravity center -extent 500x500 "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}" &
-fi
-
 if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" ]; then
-    convert -strip -blur 0x3 -resize 2000 -gravity center -thumbnail 1000x1000^ -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" &
+    convert -strip -blur 0x3 -resize 2000 -gravity center -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" &
 fi
 
 if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" ]; then
@@ -39,18 +35,16 @@ fi
 if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" ]; then
     convert -strip -blur 0x3 -thumbnail 500x500^ -gravity center "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" &
 fi
-
-
 wait
-
-# Symlink to default directory
-ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}" "${HOME}/.config/swww/wallpaper"
-ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" "${HOME}/.config/swww/wallpaper.blur"
-ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" "${HOME}/.config/swww/wallpaper.rofi"
-ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" "${HOME}/.config/swww/wallpaper.wofi"
 
 # debug dont use
 #rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}"
 #rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur"
 #rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi"
 #rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi"
+
+# Symlink to default directory
+ln -sfv "$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER" "${HOME}/.config/swww/wallpaper"
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" "${HOME}/.config/swww/wallpaper.blur"
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" "${HOME}/.config/swww/wallpaper.rofi"
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" "${HOME}/.config/swww/wallpaper.wofi"
