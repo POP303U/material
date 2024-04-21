@@ -53,6 +53,9 @@ case "$STYLE" in
     Compact|Blocks)
         BUTTON_NUM="-b 2"
         ;;
+    Default)
+        ARGS=""
+        ;;
     *)
         export X_MARGIN=$(( X_RESOLUTION * 27 / SCALING_FACTOR ))
         export Y_MARGIN=$(( Y_RESOLUTION * 17 / SCALING_FACTOR ))

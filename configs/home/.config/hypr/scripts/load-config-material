@@ -14,8 +14,7 @@ DEFAULT_DIR="$HOME/.config/material"
 DEFAULT_CONFIG="config"
 SEL_CONFIG="${1:-$DEFAULT_DIR/$DEFAULT_CONFIG}"
 
-### BACKUP AND OVERWRITE CONFIG ###
-cp -dvfr ~/.config/material/config ~/.config/material/backups/config_${RANDOM}.bak
+### OVERWRITE CONFIG ###
 [[ $SEL_CONFIG == ~/.config/material/config ]] || cp -dvfr $SEL_CONFIG ~/.config/material/config
 
 ### RESTORE MATERIAL SETTINGS ###
@@ -72,4 +71,4 @@ else
     echo "There is no # at the beginning of the statement, not modifying blur"
 fi
 
-~/.config/swww/scripts/change_theme $RICE_CURRENT $WALLPAPER_CURRENT
+~/.config/swww/scripts/change_theme $RICE_CURRENT $WALLPAPER_CURRENT 
