@@ -11,6 +11,7 @@ cp -rvf ~/.config/gtk-3.0        ../configs/home/.config/
 cp -rvf ~/.config/swww           ../configs/home/.config/
 cp -rvf ~/.config/swaylock       ../configs/home/.config/
 cp -rvf ~/.config/rofi           ../configs/home/.config/
+cp -rvf ~/.config/wofi           ../configs/home/.config/
 cp -rvf ~/.config/hypr           ../configs/home/.config/
 cp -rvf ~/.config/waybar         ../configs/home/.config/
 cp -rvf ~/.config/neofetch       ../configs/home/.config/
@@ -37,5 +38,9 @@ cp -rvf ~/.bin                               ../configs/home/
 # temporary hack
 cp -rvf ./.static/dolphinrc                          ../configs/home/.config/
 cp -rvf ./.static/kdeglobals                         ../configs/home/.config/
+cp -rvf ./.static/arkrc                              ../configs/home/.config/
+cp -rvf ./.static/spotify-flags.conf                 ../configs/home/.config/
+cp -rvf ./.static/code-flags.conf                    ../configs/home/.config/
 cp -rvf ./.static/.local                             ../configs/home/
+cp -rvf ./.static/trizen                             ../configs/home/.config/
 

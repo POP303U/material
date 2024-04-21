@@ -1,0 +1,14 @@
+StatusBar=Disabled
+
+[ExtractDialog]
+2560x1440 screen: Window-Maximized=true
+
+[General]
+LockSidebar=true
+ShowSidebar=true
+ShowWelcomeScreenOnStartup=true
+
+[MainWindow]
+MenuBar=Disabled
+StatusBar=Disabled
+ToolBarsMovable=Disabled
