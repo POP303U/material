@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sed -i 's|layout =.*|layout = dwindle|' ~/.config/hypr/hyprland.conf
+sed -i 's|tiling-layout.*|tiling-layout = dwindle|' ~/.config/material/config

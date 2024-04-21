@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|^wlogout-keybinds-show.*|wlogout-keybinds-show = on|' ~/.config/material/config

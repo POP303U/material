@@ -1,0 +1,6 @@
+#!/bin/sh
+
+sed -i 's|size =.*|size = 6| ' ~/.config/hypr/decoration.conf
+sed -i 's|passes =.*|passes = 2|' ~/.config/hypr/decoration.conf
+sed -i 's|blur-size.*|blur-size = 6|' ~/.config/material/config
+sed -i 's|blur-passes.*|blur-passes = 2|' ~/.config/material/config

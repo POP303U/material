@@ -1,0 +1,6 @@
+#!/bin/sh
+
+sed -i 's|border_size.*|border_size = 2| ' ~/.config/hypr/hyprland.conf
+sed -i 's|border-size.*|border-size = 2| ' ~/.config/material/config
+
+touch ~/.config/hypr/hyprland.conf

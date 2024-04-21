@@ -1,0 +1,82 @@
+* {
+}
+
+#window {
+    margin: 0px;
+    border: 3px solid --wofi-color8;
+    font-size: 15px;
+    background-color: --wofi-color1;
+    border-radius: 20px;
+}
+
+#input {
+    padding: 4px;
+    margin: 4px;
+    padding-left: 10px;
+    padding-top: 6px;
+    padding-right: 10px;
+    padding-bottom: 6px;
+    border: none;
+    font: "JetbrainsMono Nerd Font";
+    font-weight: bold;
+    background-color: --wofi-color1;
+   	outline: none;
+    border-radius: 15px;
+    border: 4px solid --wofi-color0;
+    margin: 10px;
+    margin-bottom: 2px;
+}
+
+#input:focus {
+    color: --wofi-color5;
+}
+
+#inner-box {
+    margin: 4px;
+    border: 10px solid --wofi-color1;
+    color: --wofi-color5;
+    font-weight: bold;
+    background-color: --wofi-color1;
+    border-radius: 15px;
+}
+
+#outer-box {
+    margin: 5px;
+    border: none;
+    border-radius: 15px;
+}
+
+#scroll {
+    margin-top: 5px;
+    border: none;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+#text:selected {
+    color: --wofi-color1;
+    background-color: transparent;
+    margin: 0px 0px;
+    border: none;
+    border-radius: 15px;
+}
+
+#entry {
+    background-color: transparent;
+    margin: 0px 0px;
+    border: none;
+    border-radius: 15px;
+}
+
+#entry:selected {
+    margin: 0px 0px;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(90deg, --wofi-color10 0%,  --wofi-color5 100%);
+}
+
+#img {
+    background-color: transparent;
+}

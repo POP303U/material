@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|rice-transition.*|rice-transition = center|' ~/.config/material/config

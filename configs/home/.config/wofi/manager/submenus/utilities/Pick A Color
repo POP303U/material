@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Wait for wofi to disappear
+sleep 1 
+hyprpicker | wl-copy

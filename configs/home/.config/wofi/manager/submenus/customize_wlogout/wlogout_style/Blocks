@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|wlogout-theme.*|wlogout-theme = Blocks|' ~/.config/material/config

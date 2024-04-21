@@ -1,0 +1,8 @@
+#!/bin/sh
+
+sed -i 's|gaps_in.*|gaps_in = 7| ' ~/.config/hypr/hyprland.conf
+sed -i 's|gaps_out.*|gaps_out = 20| ' ~/.config/hypr/hyprland.conf
+sed -i 's|gaps-in.*|gaps-in = 7| ' ~/.config/material/config
+sed -i 's|gaps-out.*|gaps-out = 20| ' ~/.config/material/config
+
+touch ~/.config/hypr/hyprland.conf
