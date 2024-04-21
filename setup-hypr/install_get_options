@@ -18,9 +18,14 @@ ${GREEN} / __  / /_/ / /_/ / /  / / /_/ / / / / /_/ /
 ${GREEN}/_/ /_/\__, / .___/_/  /_/\__,_/_/ /_/\__,_/   
 ${GREEN}      /____/_/                                 ${RESET}
 
-# ${YELLOW}Easy Hyprland installer${RESET} #
-
-${WHITE_BOLD}Tip: See installed packages at the top of the script${RESET}
+// ${YELLOW}Easy Material installer${RESET} //
+${WHITE_BOLD}* The installation can take about 10 minutes depending on your cpu or wifi connection.
+* Don't install this on top of other dotfiles or breakage will occur!
+* You don't have to worry about nvidia drivers because they will installed automatically.
+${RESET}
+${WHITE_BOLD}Choose installation type${RESET}
+The Base package is not recommended since it doesn't install enough to be usable, 
+select the Minimal option for a basic installation.
 ${CYAN}1${RESET}. Base     (${RED}not recommended${RESET}) (only what's needed to run, you will experience issues)
 ${CYAN}2${RESET}. Minimal  (${GREEN}recommended${RESET})     (all needed dependencies, incl. filebrowser, shell scripts)
 ${CYAN}3${RESET}. Extended (extra packages, like browser, calculator, office suite and vencord)
