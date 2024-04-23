@@ -1,0 +1,38 @@
+program_options:
+  # Configure defaults for command line options
+  tray:             auto    # [bool] Enable the tray icon. "auto"
+                            # means auto-hide the tray icon when
+                            # there are no handled devices.
+  menu:             flat    # ["flat" | "nested"] Set the
+                            # systray menu behaviour.
+  automount:        true    # [bool] Enable automatic mounting.
+  notify:           true    # [bool] Enable notifications.
+  password_cache:   30
+  file_manager:     'dolphin'
+  terminal:         'kitty'
+
+notifications:
+  timeout:          2.5     # set the default for all notifications
+  device_mounted:   5       # mount notification
+  device_unmounted: false   # unmount notification
+  device_added:     false   # device has appeared
+  device_removed:   false   # device has disappeared
+  device_unlocked:  -1      # encrypted device was unlocked
+  device_locked:    -1      # encrypted device was locked
+  job_failed:       -1      # mount/unlock/.. has failed
+
+quickmenu_actions: [mount, unmount, unlock, terminal, detach, delete]
+
+notification_actions:
+  device_mounted:   [browse]
+  device_added:     [mount]
+
+icon_names:
+  browse:  [document-open, folder-open]
+  mount:   [udiskie-mount]
+  unmount: [udiskie-unmount]
+  unlock:  [udiskie-unlock]
+  lock:    [udiskie-lock]
+  eject:   [udiskie-eject, media-eject]
+  detach:  [udiskie-detach]
+  delete:  [udiskie-eject]
