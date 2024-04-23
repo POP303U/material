@@ -12,13 +12,13 @@ SOURCE_DIR="../configs/home"
 
 # Iterate through all symlinks in the directory
 for SYMLINK in $(find "$SOURCE_DIR" -type l); do
-    TARGET=$(readlink -f "$SYMLINK")
+    TARGET=$(readlink "$SYMLINK")
     
     # Extract the path corresponding to the user from the TARGET
     USER_PATH=$(echo "$TARGET" | grep -oE '/home/[^/]+')
 
     # Replace the user path with the correct user's path
-    FIX_USER_PATH="/home/$USER" # Change this to the correct user's path
+    FIX_USER_PATH="/home/${USER}" # Change this to the correct user's path
     NEW_TARGET="${TARGET/$USER_PATH/$FIX_USER_PATH}"
     
     # Update the SYMLINK
