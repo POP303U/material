@@ -2662,7 +2662,7 @@ tabbar tab:not(:backdrop):checked {
 @define-color headerbar_border_color #<material.hex.white>;
 @define-color headerbar_backdrop_color @window_bg_color;
 @define-color headerbar_shade_color <material.hex.base-transparent>;
-@define-color card_bg_color #<material.hex.surface>;
+@define-color card_bg_color #<material.hex.base>;
 @define-color card_fg_color #<material.hex.white>;
 @define-color card_shade_color <material.hex.base-transparent>;
 @define-color dialog_bg_color #<material.hex.darkest>;

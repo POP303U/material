@@ -8,10 +8,10 @@
 	--background-mentioned-hover: #<material.hex.gradient7> !important;
 	--background-modifier-hover: #<material.hex.color3> !important;
 	--background-modifier-active: #<material.hex.surface> !important;
-	--text-normal: #<material.hex.text4> !important;
-	--text-positive: #<material.hex.text3> !important;
-	--text-muted: #<material.hex.text2> !important;
-	--text-link: #<material.hex.text0> !important;
+	--text-normal: #<material.hex.white> !important;
+	--text-positive: #<material.hex.white> !important;
+	--text-muted: #<material.hex.white> !important;
+	--text-link: #<material.hex.color1> !important;
 	--button-background: #<material.hex.surface> !important;
 	--button-background-hover: #<material.hex.surface> !important;
 	--button-background-active: #<material.hex.surface> !important;

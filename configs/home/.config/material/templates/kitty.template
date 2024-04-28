@@ -21,4 +21,4 @@ color13  #<material.hex.color5>
 color14  #<material.hex.color6>
 color15  #<material.hex.color7>
 
-background_opacity 0.70
+background_opacity <material.hex.opacity>
