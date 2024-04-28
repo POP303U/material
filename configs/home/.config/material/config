@@ -17,7 +17,7 @@
 # BAR -
 blur-state = off
 bar-state = on
-bar-current = Bubbles-Top
+bar-current = Compact-Bottom
 
 # ANIMATIONS -
 animations-state = on
@@ -34,11 +34,11 @@ wlogout-keybinds-show = off
 system-theme = dark
 
 # HYPRLAND -
-corner-rounding = 20
+corner-rounding = 25
 tiling-layout = master
-gaps-in = 5
-gaps-out = 15
-border-size = 3
+gaps-in = 7
+gaps-out = 20
+border-size = 4
 
 # BLUR -
 blur-size = 4
