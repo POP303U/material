@@ -12,6 +12,13 @@ BLUR_CURRENT=$(grep "layerrule" ~/.config/hypr/decoration.conf | xargs)
 BLUR_FLAG="$(grep "blurls" "$HOME/.config/waybar/rices/$BAR_CURRENT" | awk -F '=' '{print $2}' | xargs)"
 WAYBAR="waybar -c $HOME/.config/waybar/bar/${BAR_CURRENT}/config.jsonc -s $HOME/.config/waybar/bar/${BAR_CURRENT}/style.css"
 
+if pgrep -x "waybar" >/dev/null; then
+    pkill -x "waybar"
+    $WAYBAR >/dev/null 2>&1 &
+else 
+    $WAYBAR >/dev/null 2>&1 &
+fi
+
 # Checking if blur needs to enabled and checking if we have to modify decoration.conf pretty simple
 if [[ $BLUR_CURRENT =~ ^\s*# ]]; then
     if [[ $BLUR_FLAG == "true" ]]; then
@@ -24,11 +31,4 @@ else
         hyprctl reload
     fi
     echo "There is no # at the beginning of the statement, not modifying blur"
-fi
-
-if pgrep -x "waybar" >/dev/null; then
-    pkill -x "waybar"
-    $WAYBAR #>/dev/null 2>&1 &
-else 
-    $WAYBAR #>/dev/null 2>&1 &
 fi
