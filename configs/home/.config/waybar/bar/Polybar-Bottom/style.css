@@ -10,8 +10,8 @@
 
 window#waybar {
     background: @surface;
-    border-radius: 12px;
-    border: 2px solid @base;
+    border-radius: 21px;
+    border: 3px solid @base;
 }
 
 tooltip {
@@ -29,34 +29,9 @@ tooltip label {
     text-shadow: none;
 }
 
-#workspaces button {
-    all: initial;
-    padding: 1px;
-    padding-right: 8px;
-    padding-left: 8px;
-    margin-right: 3px;
-    color: @workspace-button-inactive;
-    transition: all 0.3s ease-in-out;
-}
-
-#workspaces button.active {
-    color: @workspace-button-active;
-}
-
-#workspaces button.focused {
-    color: @workspace-button-active;
-}
-
-#workspaces button.urgent {
-    background: @love;
-}
-
-#workspaces button:hover {
-    background: @base;
-    color: @subtle;
-    transition: all 0.3s ease-in-out;
-}
-
+#custom-padding_bg,
+#custom-padding_left,
+#custom-padding_right,
 #custom-power_profile,
 #custom-weather,
 #custom-power_button,
@@ -74,8 +49,47 @@ tooltip label {
 #workspaces,
 #tray,
 #backlight {
-    margin-right: 10px;
-    margin-left: 10px;
+    background: @surface;
+    opacity: 1;
+    margin: 4px 0px 4px 0px;
+
+    padding-left: 7.6px;
+    padding-right: 7.6px;
+    padding-top: 3.5px;
+    padding-bottom: 3.5px;
+}
+
+#workspaces {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background: @surface;
+    opacity: 0.8;
+    color: @textcolor1;
+}
+
+#workspaces button {
+    border-radius: 15px;
+    background: @surface;
+    color: @text;
+    transition: all 0.3s ease-in-out;
+    opacity: 0.4;
+}
+
+#workspaces button.active {
+    color: @surface;
+    background: @foam;
+    border-radius: 21px;
+    min-width: 40px;
+    transition: all 0.3s ease-in-out;
+    opacity: 1.0;
+}
+
+#workspaces button:hover {
+    color: @text;
+    background: @pine;
+    border-radius: 15px;
+    min-width: 40px;
+    opacity: 0.7;
 }
 
 #keyboard-state {
@@ -102,12 +116,9 @@ tooltip label {
     color: @gold;
 }
 
-#pulseaudio {
-    color: @rose;
-}
-
+#pulseaudio,
 #pulseaudio.microphone {
-    color: @love;
+    color: @rose;
 }
 
 #battery {
@@ -144,5 +155,15 @@ tooltip label {
 #custom-theme_settings {
     color: @rose;
     padding-left: 3px;
+}
+
+#custom-padding_left {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+}
+
+#custom-padding_right {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
 }
 

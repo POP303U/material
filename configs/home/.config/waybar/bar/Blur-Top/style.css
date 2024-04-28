@@ -26,42 +26,6 @@ tooltip label {
     text-shadow: none;
 }
 
-#workspaces {
-    background: @surface;
-    border: 0px;
-    font-weight: bold;
-    font-style: normal;
-    opacity: 0.8;
-    font-size: 16px;
-    color: @textcolor1;
-}
-
-#workspaces button {
-    border-radius: 15px;
-    background: @surface;
-    color: @text;
-    transition: all 0.3s ease-in-out;
-    opacity: 0.4;
-}
-
-#workspaces button.active {
-    color: @surface;
-    background: @foam;
-    border-radius: 15px;
-    min-width: 40px;
-    transition: all 0.3s ease-in-out;
-    opacity: 1.0;
-}
-
-#workspaces button:hover {
-    color: @text;
-    background: @pine;
-    border-radius: 15px;
-    min-width: 40px;
-    opacity: 0.7;
-}
-
-
 #custom-padding_bg,
 #custom-padding_left,
 #custom-padding_right,
@@ -87,12 +51,40 @@ tooltip label {
 
     padding-left: 4px;
     padding-right: 4px;
-    padding-top: 3.5px;
-    padding-bottom: 3.5px;
 }
 
-#backlight {
-    border-radius: 10px 0px 0px 10px;
+#workspaces {
+    background: @surface;
+    border: 0px;
+    font-weight: bold;
+    font-style: normal;
+    opacity: 0.8;
+}
+
+#workspaces button {
+    margin: 0px 0px 0px 0px;
+    border-radius: 15px;
+    background: @surface;
+    color: @text;
+    transition: all 0.3s ease-in-out;
+    opacity: 0.4;
+}
+
+#workspaces button.active {
+    color: @surface;
+    background: @foam;
+    border-radius: 15px;
+    min-width: 40px;
+    transition: all 0.3s ease-in-out;
+    opacity: 1.0;
+}
+
+#workspaces button:hover {
+    color: @text;
+    background: @pine;
+    border-radius: 15px;
+    min-width: 40px;
+    opacity: 0.7;
 }
 
 #clock {
@@ -116,6 +108,7 @@ tooltip label {
     color: @battery;
     border-right: 0px;
     border-left: 0px;
+
     /* hack */
     border-radius: 21px 21px 21px 21px;
     margin-right: 9px;

@@ -8,35 +8,35 @@
     "gtk-layer-shell": true,
     "height": 40,
     "modules-left": [
-        "hyprland/workspaces",
-        "custom/seperator",
-        "clock",
-        "custom/seperator",
-        "custom/weather",
-    ],
-    
-    "modules-center": [
+        "custom/padding",
         "custom/theme_settings",
         "custom/power_button", 
         "custom/wall_switcher",
         "custom/theme_switcher",
         "custom/waybar_switcher",
-    ],
-
-    "modules-right": [
+        "custom/padding",
+        "hyprland/workspaces",
+        "custom/padding",
         "disk",
         "custom/seperator",
         "memory",
         "custom/seperator",
         "cpu",
-        "custom/seperator",
+    ],
+    
+    "modules-center": [
+        "clock",
+    ],
+
+    "modules-right": [
+        "custom/padding",
         "network",
-        "custom/seperator",
+        "custom/padding",
         "pulseaudio",
-        "custom/seperator",
         "pulseaudio#microphone",
-        "custom/seperator",
+        "custom/padding",
         "tray",
+        "custom/padding",
     ],
 
     "hyprland/workspaces": {
@@ -121,10 +121,6 @@
         "tooltip": true
     },
 
-    "custom/seperator" : {
-        "format" : "|",
-    },
-
     "keyboard-state": {
         "numlock": true,
         "capslock": true,
@@ -159,13 +155,14 @@
 
     "disk": {
         "interval": 30,
-        "format": "󱛟 {used}",
+        "format": "󱛟 {percentage_used}%",
         "path": "/"
     },
 
     "memory": {
         "interval": 30,
-        "format": " {used}GiB",
+        "format": " {percentage}%",
+        "format-alt": " {free}GiB",
         "max-length": 10
     },
 
@@ -176,13 +173,14 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
+        "format": "{icon} {volume}",
         "tooltip": false,
         "format-muted": " Muted",
         "on-click": "pamixer -t",
         "on-click-right": "~/.config/hypr/scripts/audiomixer-launch",
         "on-scroll-up": "pamixer -i 5",
         "on-scroll-down": "pamixer -d 5",
+        "tooltip-format": "{icon} {desc} // {volume}%",
         "scroll-step": 5,
         "format-icons": {
             "headphone": "",
@@ -197,11 +195,12 @@
 
     "pulseaudio#microphone": {
         "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " Muted",
+        "format-source": "",
+        "format-source-muted": "",
         "on-click": "pamixer --default-source -t",
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
+        "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
 
@@ -209,7 +208,7 @@
         "tooltip": true,
         "format-wifi": " ",
         "rotate": 0,
-        "format-ethernet": "󰈀 {ipaddr}",
+        "format-ethernet": "󰈀",
         "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
         "format-linked": "󰈀 {ifname} (No IP)",
         "format-disconnected": "󰖪 ",
@@ -239,5 +238,35 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    
+    "custom/padding_right": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_left": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padding_bg": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/seperator" : {
+        "format" : "|",
+        "interval" : "once",
+        "tooltip": false
     },
 }
