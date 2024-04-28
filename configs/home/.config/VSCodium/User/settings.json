@@ -1,0 +1,72 @@
+{
+    "editor.cursorStyle": "block",
+    "editor.fontFamily": "'CaskaydiaCove Nerd Font'",
+    "editor.fontSize": 14,
+
+    "workbench.settings.applyToAllProfiles": [
+        "editor.fontFamily"
+    ],
+
+    "workbench.colorTheme": "Rosé Pine",
+    "workbench.statusBar.visible": true,
+    "editor.minimap.enabled": false,
+    "editor.fontLigatures": true,
+    "security.workspace.trust.enabled": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.workspace.trust.startupPrompt": "never",
+    "workbench.sideBar.location": "right",
+    "window.menuBarVisibility": "toggle",
+    "editor.cursorBlinking": "phase",
+    "workbench.startupEditor": "none",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true
+    },
+    "explorer.autoRevealExclude": {
+        "**/node_modules": true,
+        "**/bower_components": true
+    },
+    "search.defaultViewMode": "tree",
+    "git.openRepositoryInParentFolders": "always",
+
+    "telemetry.telemetryLevel": "off",
+
+    "terminal.external.linuxExec": "kitty",
+    "terminal.explorerKind": "both",
+
+    "editor.scrollbar.vertical": "hidden",
+    "editor.scrollbar.verticalScrollbarSize": 0,
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.horizontalScrollbarSize": 0,
+
+    "editor.cursorSmoothCaretAnimation": "on",
+    "vim.cursorStylePerMode.insert": "block",
+    "vim.cursorStylePerMode.normal": "block",
+    "vim.cursorStylePerMode.replace": "block",
+    "vim.cursorStylePerMode.visual": "block",
+    "vim.cursorStylePerMode.visualblock": "block",
+    "vim.cursorStylePerMode.visualline": "block",
+    "editor.experimentalInlineEdit.backgroundColoring": true,
+
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<leader>", "d"],
+            "after": ["d", "d"]
+        },
+        {
+            "before": ["<leader>", "n", "h"],
+            "commands": [":nohl"]
+        }
+    ],
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false
+    }
+}
