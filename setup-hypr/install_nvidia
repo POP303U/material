@@ -10,23 +10,23 @@ fi
 ### Make sure kernel modules work by installing headers for the kernel
 # Hacky way but ok (should move it to a file)
 if package_installed linux; then
-    install_packages linux-headers
+    install_packages linux-headers pacman
 fi
 
 if package_installed linux-zen; then
-    install_packages linux-zen-headers
+    install_packages linux-zen-headers pacman
 fi
 
 if package_installed linux-lts; then
-    install_packages linux-lts-headers
+    install_packages linux-lts-headers pacman
 fi
 
 if package_installed linux-hardened; then
-    install_packages linux-hardened-headers
+    install_packages linux-hardened-headers pacman
 fi
 
 # Source nvidia env variables in hyprland.conf
-sed -i 's|^#.*nvidia.conf|source = ~/.config/hypr/nvidia|' $HOME/.config/hypr/hyprland.conf
+sed -i 's|^#.*nvidia.conf|source = ~/.config/hypr/nvidia.conf|' $HOME/.config/hypr/hyprland.conf
 
 # (Grub) Enable nvidia in kernel parameters
 if package_installed grub && [ -f /boot/grub/grub.cfg ]; then
