@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+set -x
 
 CURRENT_RICE=$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)
 CURRENT_BG=$(awk '/wallpaper-current/ {print $NF}' $HOME/.config/material/config)
@@ -16,11 +18,16 @@ PERLTONE_BACKEND="--$(awk '/perltone-backend/ {print $NF}' $HOME/.config/materia
 echo -e "DEBUG:\n----------------------\n\nCURRENT_RICE: $CURRENT_RICE\nCURRENT_BG: $CURRENT_BG\nWALLPAPER: $WALLPAPER\nCOLOR_SCHEME: $COLOR_SCHEME\nPERLTONE_BACKEND: $PERLTONE_BACKEND\nCOLOR_MODULATION: $COLOR_MODULATION\n\n----------------------"
 
 # Generate colors
-~/.config/hypr/scripts/perltone $WALLPAPER $COLOR_SCHEME $COLOR_MODULATION $PERLTONE_BACKEND > $HOME/.config/material/colors/colors
-if [ $? -eq 1 ]; then
-    echo "Error: Perltone couldn't generate colors."
-    exit 1
+if [ ! -e "${HOME}/.cache/material/${CURRENT_RICE}/${CURRENT_BG}.colors" ]; then
+    [ ! -e "${HOME}/.cache/material/${CURRENT_RICE}" ] && mkdir "${HOME}/.cache/material/${CURRENT_RICE}"
+    ~/.config/hypr/scripts/perltone $WALLPAPER $COLOR_SCHEME $PERLTONE_BACKEND > "${HOME}/.cache/material/${CURRENT_RICE}/${CURRENT_BG}.colors"
+    if [ $? -eq 1 ]; then
+        echo "Error: Perltone couldn't generate colors."
+        exit 1
+    fi
 fi
+
+ln -sf "$HOME/.cache/material/${CURRENT_RICE}/${CURRENT_BG}.colors" $HOME/.config/material/colors/colors
 
 # Generated blurred background first since it takes a while
 ~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$CURRENT_BG" &
@@ -75,9 +82,10 @@ pkill -SIGUSR2 cava
 sed -i 's|background.*|'"$(sed -n '1p' $HOME/.config/dunst/themes/Perltone)"'|' $HOME/.config/dunst/dunstrc
 sed -i 's|foreground.*|'"$(sed -n '2p' $HOME/.config/dunst/themes/Perltone)"'|' $HOME/.config/dunst/dunstrc
 sed -i 's|frame_color.*|'"$(sed -n '3p' $HOME/.config/dunst/themes/Perltone)"'|' $HOME/.config/dunst/dunstrc
+pkill -x dunst; dunst & disown # reload
 
 # Kvantum
-kvantummanager --set Perltone
+kvantummanager --set Perltone &
 
 # qt5ct 
 sed -i "s|^color_scheme_path=.*|color_scheme_path=$HOME/.config/qt5ct/colors/Perltone.conf|" $HOME/.config/qt5ct/qt5ct.conf
@@ -148,6 +156,3 @@ swww img "$WALLPAPER" \
 
 hyprctl reload
 
-sleep 2
-pkill -x dunst
-dunst & disown # reload
