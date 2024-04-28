@@ -115,6 +115,11 @@ if [ "$(hyprctl -j clients | jq --arg wid "$ACTIVE_WORKSPACE" '.[] | select(.wor
     dolphin &
 fi
 
+# Code (OSS) / vscode
+VSCODE_THEME=$(awk -F '=' '/vscode/ {print $2}' "${HOME}/.config/swww/rices/${CURRENT_RICE}" | xargs)
+sed -i "s|\"workbench.colorTheme\".*|\"workbench.colorTheme\": \"${VSCODE_THEME}\",|" ~/.config/Code/User/settings.json
+sed -i "s|\"workbench.colorTheme\".*|\"workbench.colorTheme\": \"${VSCODE_THEME}\",|" ~/.config/Code\ -\ OSS/User/settings.json
+
 # Swww
 TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/config")
 
@@ -122,10 +127,10 @@ TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/co
 cp -vrf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
     --transition-bezier .6,.94,.86,.23     \
-    --transition-type "${TRANSITION_TYPE}" \
-    --transition-duration 0.7              \
+    --transition-type grow \
+    --transition-duration 0.6              \
     --transition-fps 144                   \
     --invert-y                             \
-    --transition-pos "2502, 1410"
+    --transition-pos "$(hyprctl cursorpos)"
 
 hyprctl reload
