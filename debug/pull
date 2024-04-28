@@ -32,7 +32,6 @@ cp -rvf ~/.bashrc                ../configs/home
 cp -rvf ~/.gtkrc-2.0                         ../configs/home/
 cp -rvf ~/.icons/default/index.theme         ../configs/home/.icons/default/
 cp -rvf ~/.tmux.conf                         ../configs/home/
-cp -rvf ~/.bin                               ../configs/home/
 # nice
 
 # temporary hack
