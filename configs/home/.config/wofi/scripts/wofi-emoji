@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euox pipefail
 
-LAUNCHER=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
-[[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -config ~/.config/rofi/config_emoji.rasi -dmenu " || LAUNCHER="$LAUNCHER --dmenu" # patch for rofi
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
 
-EMOJI="$(sed '1,/^### DATA ###$/d' $0 | $LAUNCHER --dmenu -p "Select a emoji: " -i | cut -d ' ' -f 1 | tr -d '\n')"
+EMOJI="$(sed '1,/^### DATA ###$/d' $0 | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -p "Select a emoji: " -i | cut -d ' ' -f 1 | tr -d '\n')"
 wtype "$EMOJI"; wl-copy "$EMOJI"
 exit
 

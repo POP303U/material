@@ -4,16 +4,17 @@ set -euox pipefail
 # Credits to: https://github.com/debxp/dmenu-scripts/blob/master/dmenu-kill-process
 # Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
 
-#launcher="wofi --dmenu"
-launcher=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
-[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
 prompt="-p Manual: "
 
 # terminal to open manual
 terminal="kitty"
 
 # list all manuals
-manual="$(man -k . | $launcher $prompt | awk '{print $1}')"
+manual="$(man -k . | 
+rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" $prompt | awk '{print $1}')"
 
 # open selected manual with terminal
 if [[ ! -z "$manual" ]]; then

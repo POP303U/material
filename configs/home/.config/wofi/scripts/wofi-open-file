@@ -7,14 +7,14 @@ set -euox pipefail
 # search root
 root_path=$HOME
 
-launcher="$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)"
-[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
 
 prompt="-p Folder: "
 
 file_path="$(find $root_path -maxdepth 5 -type d \( ! -regex '.*/\..*' \) | \
              sed 's|^'$root_path/'||' | sort | \
-             $launcher -i $prompt )"
+             rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -i $prompt )"
 
 if [[ ! -z $file_path ]]; then
 
@@ -34,7 +34,7 @@ if [[ ! -z $file_path ]]; then
 
     file_name="$(find "$search_path" -maxdepth 1 -type f | \
                  awk -F'/' '{print $NF}' | \
-                 $launcher -i -p "$prompt" )"
+                 rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -i -p "$prompt" )"
 
     if [[ ! -z $file_name ]]; then
         xdg-open "$search_path/$file_name"

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Global scaling variables
+X_RESOLUTION=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .width')
+SCALING_FACTOR=$(hyprctl -j monitors | jq '.[] | select (.focused == true) | .scale' | sed 's/\.//')
+HYPR_BORDER="$(hyprctl -j getoption decoration:rounding | jq '.int')"
+HYPR_WIDTH="$(hyprctl -j getoption general:border_size | jq '.int')"
+
+FONT_SIZE_ROFI=$(( ( $X_RESOLUTION / $SCALING_FACTOR / 2 ) + 2))
+FONT_SIZE_KITTY=$(( ( $X_RESOLUTION / $SCALING_FACTOR / 2 ) + 3))
+[[ "${FONT_SIZE_ROFI}" =~ ^[0-9]+$ ]] || FONT_SIZE_ROFI=10
+[[ "${FONT_SIZE_KITTY}" =~ ^[0-9]+$ ]] || FONT_SIZE_KITTY=10
+FONT_OVERRIDE_ROFI="configuration {font: \"JetBrainsMono Nerd Font ${FONT_SIZE_ROFI}\";}"
+BORDER_OVERRIDE_ROFI="window {border: ${HYPR_WIDTH}px; border-radius: ${HYPR_BORDER}px;} element {border-radius: ${HYPR_BORDER}px;}"
+
+# Export for other code to use
+export FONT_OVERRIDE_ROFI
+export FONT_SIZE_ROFI
+export FONT_SIZE_KITTY
+export HYPR_BORDER
+export HYPR_WIDTH

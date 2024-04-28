@@ -1,12 +1,12 @@
 #!/bin/sh
 set -euox pipefail
 
-LAUNCHER=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
-[[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || LAUNCHER="$LAUNCHER --dmenu" # patch for rofi
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
 
 SWWW_DIR="/home/${USER}/.config/swww"
 CURRENT_RICE="$(awk '/rice-current/ {print $NF}' /home/${USER}/.config/material/config)"
-WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls/${CURRENT_RICE} | $LAUNCHER -p "~ Material wallpaper selector ~ " -i)
+WALLPAPER_NAME=$(dir -1 /home/${USER}/.config/swww/walls/${CURRENT_RICE} | rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -p "~ Material wallpaper selector ~ " -i)
 WALLPAPER="/home/${USER}/.config/swww/walls/${CURRENT_RICE}/${WALLPAPER_NAME}"
 
 if [[ ! -f "$WALLPAPER" ]]; then

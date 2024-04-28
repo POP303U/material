@@ -1,7 +1,3 @@
 #!/bin/sh
 
-LAUNCHER=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
-[[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -modi drun -show drun" # patch for rofi
-[[ "$(echo $LAUNCHER | xargs)" == "dmenu" ]] && LAUNCHER="dmenu_run" # patch for wofi
-
-$LAUNCHER
+~/.config/hypr/scripts/manage-wofi wofi

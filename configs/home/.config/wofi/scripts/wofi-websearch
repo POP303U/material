@@ -4,10 +4,12 @@ set -euo pipefail
 # Credits to: https://github.com/debxp/dmenu-scripts/blob/master/dmenu-kill-process
 # Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
 
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
 sources_file="$HOME/.config/wofi/scripts/wofi-websearch-sources"
-prompt="-p Search: "
-launcher="$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)"
-[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
+prompt="-p Search:"
+
 
 se_data="$( 
     awk -F'"' '
@@ -53,7 +55,7 @@ se_data="$(
 eval "$se_data"
 
 # Output label string to rofi...
-search="$($launcher $prompt <<< $wofi_labels)"
+search="$(rofi -dmenu -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" $prompt <<< $wofi_labels)"
 
 if [[ ! -z "$search" ]]; then
 

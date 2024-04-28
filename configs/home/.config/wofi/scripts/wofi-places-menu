@@ -4,16 +4,17 @@ set -euox pipefail
 # Credits to: https://github.com/debxp/dmenu-scripts/blob/master/dmenu-kill-process
 # Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
 
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
 prompt="-p Path:"
 root_path="$HOME"
 launcher="$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)"
 file_manager="$(awk -F '=' '/material-explorer/ {print $2}' $HOME/.config/material/config)"
 
-[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
-
 find_path="$(find $root_path -maxdepth 3 -type d | \
              sed 's|^'$root_path/'||' | \
-             $launcher -i $prompt )"
+             rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -i $prompt )"
 
 if [[ ! -z "$find_path" ]]; then
     $file_manager "$find_path"

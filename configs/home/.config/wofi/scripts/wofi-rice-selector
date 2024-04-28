@@ -1,8 +1,8 @@
 #!/bin/sh
 set -euo pipefail
 
-LAUNCHER=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
-[[ $(echo $LAUNCHER | xargs) == "rofi" ]] && LAUNCHER="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || LAUNCHER="$LAUNCHER --dmenu" # patch for rofi
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
 
 function change_rice() {
 	CHANGE_RICE="/home/${USER}/.config/swww/scripts/change_theme"
@@ -10,7 +10,7 @@ function change_rice() {
 }
 
 # use --cache-file /dev/null to use predefined order
-RICE_SEL_NAME=$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/swww/rices/#entries# | $LAUNCHER -i "~ Material rice selector ~ " ) 
+RICE_SEL_NAME=$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/swww/rices/#entries# | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -i -p "~ Material rice selector ~ " ) 
 RICE_FULL_NAME="$(echo $RICE_SEL_NAME | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
 RICE_FILE="/home/${USER}/.config/swww/rices/${RICE_FULL_NAME}"
 

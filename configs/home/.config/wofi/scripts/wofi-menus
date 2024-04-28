@@ -4,13 +4,14 @@ set -euox pipefail
 # Credits to: https://github.com/debxp/dmenu-scripts/blob/master/dmenu-kill-process
 # Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
 
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
 script_path="$HOME/.config/wofi/scripts"
-launcher="$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)"
-[[ $(echo $launcher | xargs) == "rofi" ]] && launcher="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || launcher="$launcher --dmenu" # patch for rofi
 
 # Check if wofi is already running
-if pgrep -x "$launcher" >/dev/null; then
-    pkill -x "$launcher"
+if pgrep -x "rofi" >/dev/null; then
+    pkill -x "rofi"
     exit 0
 fi
 
@@ -19,7 +20,7 @@ run_wofi="$(find $script_path/wofi-* -maxdepth 1 -type f -executable \
           -exec grep -Iq . {} \; -print \
           | sed 's|^'$script_path/'||' \
           | sort \
-          | $launcher -i -p "~ Material scripts ~ ")"
+          | rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -i -p "~ Material scripts ~ ")"
 
 eval "$script_path/$run_wofi"
 

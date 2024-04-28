@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
 # Source: https://codeberg.org/dnkl/fuzzel/issues/11
 FUZZEL_IGNORED_BINDIRS=/usr/bin:/usr/bin/core_perl:/usr/bin/site_perl:/usr/bin/vendor_perl
 
@@ -14,9 +17,6 @@ is_bindir_enabled() {
   fi
   return 0
 }
-
-_fuzzel_exec=$(awk -F '=' '/material-launcher/ {print $2}' $HOME/.config/material/config)
-[[ $(echo $_fuzzel_exec | xargs) == "rofi" ]] && _fuzzel_exec="rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu " || _fuzzel_exec="$_fuzzel_exec --dmenu" # patch for rofi
 
 _ignored_bindirs=""
 if [ -n "$FUZZEL_IGNORED_BINDIRS" ]; then
@@ -33,7 +33,9 @@ for _bindir in "${_bindirs[@]}"; do
 done
 
 if [ -n "$_lsdirs" ]; then
-  _execfile="$(ls ${_lsdirs[@]} | sort | uniq | sed '/^$/d' | $_fuzzel_exec -p "Binaries: ")"
+  _execfile="$(ls ${_lsdirs[@]} | sort | uniq | sed '/^$/d' | rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}"
+
+ -p "Binaries: ")"
 
   [ -n "$_execfile" ] || { echo "No executable was selected!"; exit; }
 
