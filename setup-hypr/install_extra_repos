@@ -1,0 +1,61 @@
+#!/bin/sh
+
+# import functions
+source ./functions
+if [ $? -ne 0 ]; then
+    echo "Error: can't source functions, execute the script from $(dirname "$(realpath "$0")")"
+    exit 1
+fi
+
+# Check if [chaotic-aur] is already in /etc/pacman.conf
+install_chaotic() {
+    if grep -q "\[chaotic-aur\]" /etc/pacman.conf; then
+        echo -e "[${PURPLE}info${RESET}] [chaotic-aur] repository is already configured in pacman.conf. Skipping..." 
+    else
+        # Install the primary key
+        sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+        sudo pacman-key --lsign-key 3056513887B78AEB
+
+        # Install the Chaotic keyring and mirrorlist
+        sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+        sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+
+        # Append Chaotic AUR repository to /etc/pacman.conf
+        echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
+
+        echo -e "[${BLUE}ok${RESET}] Chaotic AUR installation completed!" 
+        _TRIGGERED="true"
+    fi
+}
+
+install_asus() {
+    if grep -q "\[g14\]" /etc/pacman.conf; then
+        echo -e "[${PURPLE}info${RESET}] [g14] repository is already configured in pacman.conf. Skipping..." 
+    else
+        gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys A5E9288C4FA415FA
+        gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 647F28654894E3BD457199BE38DBBDC86092693E
+        gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys ABAF11C65A2970B130ABE3C479BE3E4300411886
+    
+        echo -e "[g14]\nSigLevel = Optional TrustAll\nServer = https://arch.asus-linux.org" | sudo tee -a /etc/pacman.conf > /dev/null
+
+        echo -e "[${BLUE}ok${RESET}] Asus repository installation completed!" 
+        _TRIGGERED="true"
+    fi
+}
+ 
+#
+if [[ $FLAG_REPO_CHAOTIC == "y" || "$FLAG_REPO_CHAOTIC" == "Y" || "$FLAG_REPO_CHAOTIC" == " " ]]; then
+    install_chaotic
+else
+    echo -e "[${PURPLE}info${RESET}] Skipping Chaotic AUR installation..." 
+fi
+
+if [[ $FLAG_REPO_ASUS == "y" || "$FLAG_REPO_ASUS" == "Y" || "$FLAG_REPO_ASUS" == " " ]]; then
+    install_asus
+else
+    echo -e "[${PURPLE}info${RESET}] Skipping Asus repo installation..." 
+fi
+
+if [ ! -z "$_TRIGGERED" ]; then
+    sudo pacman -Syy
+fi

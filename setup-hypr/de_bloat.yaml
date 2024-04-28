@@ -1,6 +1,10 @@
 generic:
   -- List of desktop entries that are unnecessary --
   avahi-discover
+  bssh
+  bvnc
+
+  -- NetworkManager --
   nm-connection-editor
   nm-applet
 

@@ -13,7 +13,7 @@ export WHITE='\033[01;37m'
 
 # Check for AUR helpers
 export AUR_HELPERS=(yay paru pikaur pakku pacaur trizen aura aurman)
-export CURRENT_PTS=$(ps | tail -n 1 | awk '{print $2}' | awk -F '/' '{print $2}')
+export CURRENT_PTS="/dev/pts/$(ps | tail -n 1 | awk '{print $2}' | awk -F '/' '{print $2}')"
 
 # Usage: get_yaml_packages "your_yaml_file.yaml" "base_packages"
 # Description: Returns package names from yaml block

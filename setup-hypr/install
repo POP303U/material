@@ -19,12 +19,12 @@ while getopts svewh ARGS; do
         export DEVELOPER_MODE=" -- "
         ;;
     v)  
-        export VERBOSE_FLAGS="/dev/pts/$CURRENT_PTS" 
+        export VERBOSE_FLAGS="$CURRENT_PTS" 
         export FLAGS=" --noconfirm "
         export DEVELOPER_MODE=" -- "
         ;;
     e)
-        export VERBOSE_FLAGS="/dev/pts/$CURRENT_PTS" 
+        export VERBOSE_FLAGS="$CURRENT_PTS" 
         export FLAGS="  "
         export DEVELOPER_MODE=" -x "
         ;;
