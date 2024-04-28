@@ -37,6 +37,8 @@ HISTCONTROL=ignoreboth
 export PROMPT_COMMAND=shortened_pwd # store current shortened path in $CURRENT_PATH
 export PATH=$PATH:~/.config/hypr/scripts
 export PATH=$PATH:~/.config/wofi/scripts
+export PATH=$PATH:~/.local/bin/colorscripts
+export PATH=$PATH:~/.local/bin/colors
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/.cargo/bin
 export SUDO_PROMPT='sudo (%p@%h) password: ' # doas like password thing
@@ -55,7 +57,6 @@ export LESS_TERMCAP_us=$'\e[01;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[45;93m' 
 export LESS_TERMCAP_se=$'\e[0m'
-
 export GRC="$(command -v grc)"
 
 # get list of packages that needs this package
@@ -139,7 +140,6 @@ alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias free='free -mt'
 alias pacman='sudo pacman --color auto'
 alias sudo='sudo '
 
@@ -181,6 +181,9 @@ alias yt-dlpa='yt-dlp --add-metadata '${1}''
 
 # print image with kitty
 alias kt-img='kitty +kitten icat '${1}''
+
+# the old helix is better
+alias hx='helix'
 
 # resizing
 alias res16x9='convert '$1' -resize 1920x1080^ -gravity center -extent 1920x1080 '$2''
@@ -718,11 +721,10 @@ if [ ! -z "$DISPLAY" ]; then
     #screenfetch
     #fastfetch
     #hyprfetch
-    #pokemon-colorscripts --no-title -r 
-    ~/.local/bin/colorscripts/colorwheel 
+    pokemon-colorscripts --no-title -r 1,3,6
 else 
     # load colorscheme (tty only)
-    ~/.local/bin/colors/Perltone
+    Perltone
 
     ################################
     #
@@ -731,11 +733,5 @@ else
     ################################
     default_artix_iso      # prompt based on artix live iso
     nice_arrow             # simple fat blue arrow 
-    ~/.local/bin/colorscripts/colorwheel 
+    colorwheel 
 fi
-
-PATH="/home/pops/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/pops/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/pops/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/pops/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/pops/perl5"; export PERL_MM_OPT;
