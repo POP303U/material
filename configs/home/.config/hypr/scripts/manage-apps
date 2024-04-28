@@ -2,6 +2,9 @@
 
 set -euox pipefail
 
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
 case $1 in
     explorer|e)
         MATERIAL_EXPLORER="$(awk -F '=' '/material-explorer/ {print $2}' $HOME/.config/material/config)"
@@ -13,7 +16,7 @@ case $1 in
         ;;
     terminal|t)
         MATERIAL_TERMINAL="$(awk -F '=' '/material-terminal/ {print $2}' $HOME/.config/material/config)"
-        $MATERIAL_TERMINAL & 
+        $MATERIAL_TERMINAL --override=font_size=${FONT_SIZE_KITTY} & 
         ;;
     browser|b)
         MATERIAL_BROWSER="$(awk -F '=' '/material-browser/ {print $2}' $HOME/.config/material/config)"
