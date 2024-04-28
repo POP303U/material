@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Get CPU model
+CPU_MODEL=$(cat /proc/cpuinfo | grep "model name" | head -n 1 | awk -F: '{print $2}' | sed 's/^[ \t]*//')
+
+# Get CPU usage
+_CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}')
+CPU_USAGE=$(echo $_CPU_USAGE | awk -F ',' '{print $1}')
+CPU_TEXT="󰻠 $CPU_USAGE"
+
+# Get CPU load average
+LOAD_AVG=$(uptime | awk -F 'average:' '{print $2}' | sort | awk '{print $NF}')
+
+# Get CPU temperature
+CPU_TEMP=$(sensors | grep "T" | awk '{print $2}' | awk 'NR>2 {print $1}')
+
+# Get Cpu architecture
+CPU_KRNL="$(uname -r) // $(uname -m)"
+
+# Get Cpu frequency
+CPU_FREQ="$(cat /proc/cpuinfo | grep "MHz" | awk '{print $4}' | xargs | awk '{ total += $1 } END { print total/NR }')MHz"
+
+# Get most intensive process
+CPU_INTENSIVE=$(ps -eo pid,%cpu,comm --sort=-%cpu | head | sed '/python3/d' | sed '/ps/d' | awk 'NR==2 {print $3,$4,$5,$6,$7}' | xargs) # printing $3-$7 as a safeguard
+
+# Construct JSON output
+JSON="{ \"text\": \"$CPU_TEXT%\", \"tooltip\": \"󰻠 Cpu: $CPU_MODEL\n異 Freq: $CPU_FREQ\n  Kernel: $CPU_KRNL\n󰏰 Usage: $_CPU_USAGE%\n Load: $LOAD_AVG\n Temp: $CPU_TEMP\n Burner: $CPU_INTENSIVE\"}"
+
+echo $JSON

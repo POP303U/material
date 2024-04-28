@@ -15,10 +15,10 @@
         "pulseaudio#microphone",
         "custom/padding_right_gold",
         "custom/padding_left_foam",
-        "custom/weather", 
+        "custom/cpu", 
         "custom/padding_right_foam",
         "custom/padding_left_pine",
-        "memory",
+        "custom/memory",
         "custom/padding_right_pine",
         "battery",
     ],
@@ -75,11 +75,10 @@
     },
 
     "custom/weather" : {
-        //shows the current weather and forecast
         "tooltip" : true,
         "format" : "{}",
-        "interval" : 30,
-        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "interval": 1,
+        "exec" : "~/.config/hypr/scripts/cpustats",
         "return-type" : "json"
     },
 
@@ -173,17 +172,20 @@
         "path": "/"
     },
 
-    "memory": {
-        "interval": 30,
-        "format": " {percentage}%",
-        "format-alt": " {free}GiB",
-        "max-length": 10
+    "custom/memory": {
+        "tooltip" : true,
+        "format" : "{}",
+        "interval": 1,
+        "exec" : "~/.config/hypr/scripts/memstats",
+        "return-type" : "json"
     },
 
-    "cpu": {
+    "custom/cpu": {
+        "tooltip" : true,
+        "format" : "{}",
         "interval": 1,
-        "format": "󰻠 {}%",
-        "max-length": 10
+        "exec" : "~/.config/hypr/scripts/cpustats",
+        "return-type" : "json"
     },
 
     "pulseaudio": {

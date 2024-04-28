@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Collect system RAM information
+MEM_TOTAL=$(free -m | awk '/^Mem:/{print $2}')
+SWAP_TOTAL=$(free -m | awk '/^Swap:/{print $2}')
+SWAP_FREE=$(free -m | awk '/^Swap:/{print $4}')
+MEM_FREE=$(free -m | awk '/^Mem:/{print $6}')
+MEM_USED=$(free -m | awk '/^Mem:/{print $3}')
+MEM_USED_PER=$(free | grep Mem | awk '{ printf("%.0f", $5 * 0.0001) }')
+SWAP_CACHED=$(cat /proc/meminfo | awk '/^SwapCached/ {print $2}')
+
+# Format the information into JSON
+JSON="{\"text\": \" $MEM_USED_PER%\", \"tooltip\": \" Memory installed: $MEM_TOTAL MB\n Memory used: $MEM_USED MB\n Memory free: $MEM_FREE MB\n󱛟 Swap total: $SWAP_TOTAL MB\n󱛟 Swap free: $SWAP_FREE MB\n󱛟 Swap cached: $SWAP_CACHED kB\"}"
+
+echo $JSON

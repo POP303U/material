@@ -9,7 +9,7 @@
 @import "../../themes/theme.css";
 
 window#waybar {
-    background: @surface;
+    background: @bar-tr;
 }
 
 tooltip {
@@ -83,14 +83,14 @@ tooltip label {
 #custom-power_button,
 #custom-theme_switcher,
 #custom-wall_switcher,
+#custom-cpu,
 #keyboard-state,
 #clock,
 #battery,
 #pulseaudio,
 #network,
-#memory,
+#custom-memory,
 #disk,
-#cpu,
 #bluetooth,
 #temperature,
 #tray,
@@ -120,8 +120,11 @@ tooltip label {
     background-color: @foam;
 }
 
-
 #custom-weather {
+    background-color: @foam;
+}
+
+#custom-cpu {
     background-color: @foam;
 }
 
@@ -129,7 +132,7 @@ tooltip label {
     background-color: @love;
 }
 
-#memory {
+#custom-memory {
     background-color: @pine;
 }
 
