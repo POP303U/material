@@ -68,11 +68,8 @@ my $cache_dir = "$ENV{HOME}/.cache/material/perltone";
 
 my $image_colors = 4;
 my $image_fuzz = 70;
-my $cache_image = fileparse($image_file);
-
-my $image_raw = "$ENV{HOME}/.cache/material/perltone/$cache_image";
-
-
+my $cache_colors = fileparse($image_file) . ".perltone";
+print STDERR $cache_colors;
 
 ### Evaluate cli arguments
 my $options = "";
@@ -147,9 +144,9 @@ foreach my $color (@adjusted_colors) {
 
             if ($luminance < 0.2) {
                 my $adjusted_luminance = 0.2;  # Minimum luminance threshold
-                my $adjusted_r = int($r * $adjusted_luminance / $luminance / 10);
-                my $adjusted_g = int($g * $adjusted_luminance / $luminance / 10);
-                my $adjusted_b = int($b * $adjusted_luminance / $luminance / 10);
+                my $adjusted_r = int($r * $adjusted_luminance / $luminance);
+                my $adjusted_g = int($g * $adjusted_luminance / $luminance);
+                my $adjusted_b = int($b * $adjusted_luminance / $luminance);
                 $color = sprintf("%02X%02X%02X", $adjusted_r, $adjusted_g, $adjusted_b);
             } elsif ($luminance > $max_background_luminance) {
                 my $adjusted_luminance = $max_background_luminance;  # Maximum luminance threshold
@@ -162,12 +159,12 @@ foreach my $color (@adjusted_colors) {
             # Loop until the color isn't too bright
             do {
                 $color = adjust_color_brightness($color, 0.99, 'darken');
-            } until(!is_color_bright($color, 160));
+            } until(!is_color_bright($color, 130));
 
             # Loop until the color isn't dark bright
             do {
                 $color = adjust_color_brightness($color, 0.03, 'brighten');
-            } until(is_color_bright($color, 100));
+            } until(is_color_bright($color, 120));
         }
         
         push @adjusted_colors, $color;
@@ -203,8 +200,6 @@ while (scalar @adjusted_colors < 8) {
     push @adjusted_colors, $most_vibrant;
 }
 
-
-
 ### Choose a primary color 
 my $main_color;
 my $main_limit = 1;
@@ -220,8 +215,6 @@ while (!$main_color) {
     $main_limit = $main_limit + 1;
     last if $main_color;
 }   
-
-
 
 ### Choose a secondary color 
 my $secondary_color = adjust_color_brightness($main_color, 0.15, 'brighten');
@@ -324,9 +317,11 @@ push @output_array, "muted=$muted\n"; # foreground
 push @output_array, "subtle=$subtle\n"; # foreground
 push @output_array, "white=$foreground_color\n"; # foreground
 
-# Generate color palette (raw image mode)
+# Generate color palette (raw image mode ok i don't care)
 for (my $i = 0; $i <= 7; $i++) {
     my $_i_ = adjust_color_brightness($adjusted_colors[$i], 0.2, 'brighten');
+    $_i_ = adjust_color_brightness($adjusted_colors[$i], 0.86, 'darken') if $light;
+    $_i_ = adjust_color_brightness($_i_, 0.09, 'brighten') if $light;
     push @output_array, "color$i=$_i_\n"; # color0 - color7
 }
 
@@ -348,7 +343,11 @@ for (my $i = 0; $i < scalar @$gradient_text; $i++) {
     push @output_array, "text$i=$gradient_text->[$i]\n";
 }
 
-# Print the entire array, this can be redirected by the user with shellutils
+# Decide transparency based on colorscheme
+push @output_array, "opacity=0.60" if $dark;
+push @output_array, "opacity=0.25" if $light;
+
+# Print the entire array, this can be redirected by the user with shutil's
 print @output_array;
 
 ## Generate main color palette (derived from main_color)
