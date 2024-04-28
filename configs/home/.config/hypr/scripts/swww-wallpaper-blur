@@ -18,33 +18,22 @@ if [ ! -e "$CACHE_DIR/$CURRENT_RICE" ]; then
 fi
 
 # Check if input image exists
-if ! [ -f "$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER" ]; then
+if ! [ -f "$WALLPAPER_PATH" ]; then
   echo "Error: Input image '$WALLPAPER' not found."
   exit 1
 fi
 
+if file "$WALLPAPER_PATH" | grep -q GIF; then
+    convert "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.temp.png"
+else
+    ln -sf "$WALLPAPER_PATH" "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.temp.png"
+fi
+
 # Generate modified wallpapers, if they don't exist
-if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" ]; then
-    convert -strip -blur 0x3 -resize 2000 -gravity center -quality 90 "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" &
-fi
-
-if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" ]; then
-    ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi"
-fi
-
-if [ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" ]; then
-    convert -strip -blur 0x3 -thumbnail 500x500^ -gravity center "$WALLPAPER_PATH"[0] "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" &
-fi
+[ ! -f "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.thumb" ] && convert -strip -resize 1000 -gravity center -extent 1000 -quality 90 "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.temp.png" "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.thumb" &
 wait
-
-# debug dont use
-#rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}"
-#rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur"
-#rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi"
-#rm "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi"
 
 # Symlink to default directory
 ln -sfv "$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER" "${HOME}/.config/swww/wallpaper"
-ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.blur" "${HOME}/.config/swww/wallpaper.blur"
-ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.rofi" "${HOME}/.config/swww/wallpaper.rofi"
-ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.wofi" "${HOME}/.config/swww/wallpaper.wofi"
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.thumb" "${HOME}/.config/swww/wallpaper.thumb"
+ln -sfv "${CACHE_DIR}/${CURRENT_RICE}/${WALLPAPER}.temp.png" "${HOME}/.config/swww/wallpaper.hyprlock"
