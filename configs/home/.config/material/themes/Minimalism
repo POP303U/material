@@ -24,7 +24,7 @@ animations-state = off
 animations-current = Swiftly
 
 # RICE -
-wallpaper-current = diamond-forest.jpg
+wallpaper-current = canyon.png
 rice-current = Nord
 rice-transition = wave
 
@@ -46,8 +46,8 @@ blur-passes = 4
 
 # APPS
 material-launcher = rofi
-material-explorer = thunar
-material-terminal = foot
+material-explorer = dolphin
+material-terminal = kitty
 material-browser = firefox
 material-documentation = rustup doc
 

@@ -17,7 +17,7 @@
 # BAR -
 blur-state = off
 bar-state = on
-bar-current = Blur-Top
+bar-current = Hyprdots-Bottom
 
 # ANIMATIONS -
 animations-state = on
@@ -34,7 +34,7 @@ wlogout-keybinds-show = on
 system-theme = dark
 
 # HYPRLAND -
-corner-rounding = 22
+corner-rounding = 0
 tiling-layout = master
 gaps-in = 7
 gaps-out = 20
@@ -55,7 +55,7 @@ material-documentation = rustup doc
 launcher-runlevel = desktop
 
 # ROFI -
-rofi-style = slim
+rofi-style = default
 
 # PERLTONE
 perltone-colors = vibrant
