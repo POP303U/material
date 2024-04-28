@@ -19,7 +19,7 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                       12em;
+    height:                       14em;
     width:                        42em;
     x-offset:                     0em;
     y-offset:                     0em;
@@ -31,7 +31,7 @@ window {
     cursor:                       "default";
     transparency:                 "real";
     enabled:                      true;
-    border-radius:                15px;
+    border-radius:                21px;
     background-color:             transparent;
 }
 
@@ -42,8 +42,9 @@ mainbox {
     spacing:                      0px;
     margin:                       0px;
     background-color:             @background;
-    background-image:             url("~/.config/swww/wallpaper.rofi");
+    background-image:             url("~/.config/swww/wallpaper.thumb", width);
     children:                     [ "listbox", "inputmode" ];
+    padding:                      20px;
 }
 
 /* ---- Listbox ---- */

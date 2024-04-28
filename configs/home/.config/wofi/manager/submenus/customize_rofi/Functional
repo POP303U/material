@@ -1,3 +1,4 @@
 #!/bin/sh
 
-cat ~/.config/rofi/styles/functional.rasi > ~/.config/rofi/config.rasi
+ln -sf ~/.config/rofi/styles/functional.rasi ~/.config/rofi/config.rasi
+sed -i 's|rofi-style.*|rofi-style = functional|' "$HOME/.config/material/config"

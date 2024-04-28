@@ -19,7 +19,7 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                       31.182em;
+    height:                       33em;
     width:                        52em;
     x-offset:                     0em;
     y-offset:                     0em;
@@ -31,7 +31,7 @@ window {
     cursor:                       "default";
     transparency:                 "real";
     enabled:                      true;
-    border-radius:                15px;
+    border-radius:                21px;
     background-color:             transparent;
 }
 
@@ -42,13 +42,13 @@ mainbox {
     spacing:                      0px;
     margin:                       0px;
     background-color:             @background;
-    background-image:             url("~/.config/swww/wallpaper.rofi");
+    background-image:             url("~/.config/swww/wallpaper.thumb", height);
     children:                     ["imagebox","listbox"];
+    padding:                      20px;
 }
 
 /* ---- Imagebox ---- */
 imagebox {
-    padding:                      18px;
     background-color:             transparent;
     children:                     [ "inputbar", "dummy", "mode-switcher" ];
 }
@@ -69,7 +69,8 @@ inputbar {
     enabled:                      true;
     text-color:                   @foreground;
     spacing:                      0.5em;
-    padding:                      0.75em;
+    padding:                      0.85em;
+    margin:                       0.0em 2.0em 0em 0.0em;
     border-radius:                15px;
     border-color:                 @foreground;
     background-color:             @background;
@@ -99,21 +100,21 @@ mode-switcher {
     orientation:                  vertical;
     enabled:                      true;
     spacing:                      1em;
-    margin:                       0em 19em 0em 0em;
+    margin:                       0em 20em 0em 0em;
     padding:                      20px;
-    border-radius:                15px;
+    border-radius:                21px;
     text-color:                   @foreground;
     background-color:             @background;
 }
 
 button {
     padding:                      15px 10px 15px 10px;
-    border-radius:                15px;
+    border-radius:                21px;
     text-color:                   inherit;
     cursor:                       pointer;
     border:                       0px;
     vertical-align:               0.50;
-    horizontal-align:             0.45;
+    horizontal-align:             0.40;
 }
 
 button selected {

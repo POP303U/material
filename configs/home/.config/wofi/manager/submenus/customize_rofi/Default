@@ -1,3 +1,4 @@
 #!/bin/sh
 
-cat ~/.config/rofi/styles/default.rasi > ~/.config/rofi/config.rasi
+ln -sf ~/.config/rofi/styles/default.rasi ~/.config/rofi/config.rasi
+sed -i 's|rofi-style.*|rofi-style = default|' "$HOME/.config/material/config"

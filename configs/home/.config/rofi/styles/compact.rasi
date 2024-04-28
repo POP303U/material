@@ -19,8 +19,8 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                      28em;
-    width:                       38em;
+    height:                      29em;
+    width:                       40em;
     x-offset:                     0em;
     y-offset:                     0em;
     spacing:                      0em;
@@ -42,8 +42,9 @@ mainbox {
     spacing:                      0px;
     margin:                       0px;
     background-color:             @background;
-    background-image:             url("~/.config/swww/wallpaper.rofi");
+    background-image:             url("~/.config/swww/wallpaper.thumb", height);
     children:                     [ "inputmode",  "listbox" ];
+    padding:                      20px;
 }
 
 
@@ -68,7 +69,7 @@ inputbar {
     enabled:                      true;
     text-color:                   @foreground;
     padding:                      0.75em;
-    margin:                       0.5em 0.5em 0em 0.5em;
+    margin:                       0.0em 2.0em 0em 0.0em;
     border-radius:                15px;
     border-color:                 @foreground;
     background-color:             @background;
@@ -98,16 +99,16 @@ mode-switcher {
     orientation:                  vertical;
     enabled:                      true;
     spacing:                      1em;
-    margin:                       7em 15em 0em 0em;
-    padding:                      0em 0.5em 0.5em 0.5em;
+    margin:                       7em 15.5em 0em 0em;
+    padding:                      0em 0.5em 0.5em 0.0em;
     border-radius:                15px;
     text-color:                   @foreground;
     background-color:             transparent;
 }
 
 button {
-    padding:                      15px 10px 15px 10px;
-    border-radius:                15px;
+    padding:                      20px 10px 20px 10px;
+    border-radius:                21px;
     text-color:                   inherit;
     background-color:             @background;
     cursor:                       pointer;

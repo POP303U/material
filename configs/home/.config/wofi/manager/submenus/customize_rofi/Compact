@@ -1,3 +1,4 @@
 #!/bin/sh
 
-cat ~/.config/rofi/styles/compact.rasi > ~/.config/rofi/config.rasi
+ln -sf ~/.config/rofi/styles/compact.rasi ~/.config/rofi/config.rasi
+sed -i 's|rofi-style.*|rofi-style = compact|' "$HOME/.config/material/config"
