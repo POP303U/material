@@ -12,6 +12,7 @@ cp -rvf ~/.config/swww           ../configs/home/.config/
 cp -rvf ~/.config/swaylock       ../configs/home/.config/
 cp -rvf ~/.config/rofi           ../configs/home/.config/
 cp -rvf ~/.config/wofi           ../configs/home/.config/
+cp -rvf ~/.config/nwg-look       ../configs/home/.config/
 cp -rvf ~/.config/hypr           ../configs/home/.config/
 cp -rvf ~/.config/waybar         ../configs/home/.config/
 cp -rvf ~/.config/udiskie        ../configs/home/.config/
