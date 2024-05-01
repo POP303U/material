@@ -137,7 +137,7 @@ listview {
     fixed-columns:                true;
     padding:                      0.35em;
     border:                       0px;
-    border-radius:                15px;
+    border-radius:                21px;
 }
 
 /* ---- Element ---- */

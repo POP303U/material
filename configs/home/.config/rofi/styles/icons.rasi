@@ -19,14 +19,14 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                       14em;
-    width:                        42em;
+    height:                       33em;
+    width:                        36em;
     x-offset:                     0em;
     y-offset:                     0em;
     spacing:                      0em;
     padding:                      0em;
     margin:                       0em; 
-    border:                       3;
+    border:                       4;
     border-color:                 @bordercolor;
     cursor:                       "default";
     transparency:                 "real";
@@ -38,18 +38,30 @@ window {
 /* ---- Mainbox ---- */
 mainbox {
     enabled:                      true;
-    orientation:                  vertical;
+    orientation:                  horizontal;
     spacing:                      0px;
     margin:                       0px;
     background-color:             @background;
-    background-image:             url("~/.config/swww/wallpaper.thumb", width);
-    children:                     [ "listbox", "inputmode" ];
+    background-image:             url("~/.config/swww/wallpaper.thumb", height);
+    children:                     [ "imagebox", "listbox" ];
     padding:                      20px;
+}
+
+/* ---- Imagebox ---- */
+imagebox {
+    background-color:             transparent;
+    children:                     [ "inputbar", "dummy", "mode-switcher" ];
 }
 
 /* ---- Listbox ---- */
 listbox {
+    spacing:                     20px;
     children:                    [ "message", "listview" ];
+}
+
+/* ---- Dummy ---- */
+dummy {
+    background-color:            transparent;
 }
 
 /* ---- Listbox ---- */
@@ -63,9 +75,8 @@ inputbar {
     enabled:                      true;
     text-color:                   @foreground;
     padding:                      0.9em;
-    margin:                       1.8em 1.5em 1.6em 1.5em;
+    margin:                       0em 1.5em 1.6em 0em;
     border-radius:                21px;
-    width:                        22em;
     border-color:                 @foreground;
     background-color:             @background;
     children:                     [ "textbox-prompt-colon", "entry"];
@@ -91,18 +102,18 @@ entry {
 
 /* ---- Mode Switcher ---- */
 mode-switcher {
-    orientation:                  horizontal;
+    orientation:                  vertical;
     enabled:                      true;
-    spacing:                      1.0em;
-    margin:                       1.8em 1.5em 1.5em 1.5em;
-    width:                        18em;
+    spacing:                      1em;
+    margin:                       7em 13.5em 5em 0em;
+    padding:                      0em 0.5em 0.5em 0.0em;
     border-radius:                21px;
     text-color:                   @foreground;
     background-color:             transparent;
 }
 
 button {
-    padding:                      15px 10px 15px 10px;
+    padding:                      20px 10px 20px 10px;
     border-radius:                21px;
     text-color:                   inherit;
     background-color:             @background;
@@ -121,8 +132,8 @@ button selected {
 listview {
     background-color:             @transparent-background;
     enabled:                      true;
-    columns:                      5;
-    lines:                        1;
+    columns:                      2;
+    lines:                        4;
     cycle:                        true;
     dynamic:                      true;
     expand:                       false;
@@ -135,14 +146,15 @@ listview {
     border-radius:                21px;
 }
 
-/* ---- Element ---- */
+// Elements //
 element {
-    enabled:                      true;
-    padding:                      0.7em;
-    margin:                       0.25em;
-    cursor:                       pointer;
-    background-color:             @bg;
-    border-radius:                15px;
+    orientation:                 vertical;
+    enabled:                     true;
+    spacing:                     0.2em;
+    padding:                     0.9em;
+    cursor:                      pointer;
+    text-color:                  @foreground;
+    border-radius:               15px;
 }
 
 element normal.normal {
@@ -171,19 +183,20 @@ element alternate.normal {
 }
 
 element-icon {
+    size:                        4.5em;
+    cursor:                      inherit;
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        2.4em;
-    cursor:                      inherit;
 }
 
 element-text {
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+    cursor:                      inherit;
     background-color:            transparent;
     text-color:                  inherit;
-    cursor:                      inherit;
-    vertical-align:              0.5;
-    horizontal-align:            0.0;
 }
+
 
 /*****----- Message -----*****/
 message {

@@ -19,7 +19,7 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                       29em;
+    height:                       28em;
     width:                        52em;
     x-offset:                     0em;
     y-offset:                     0em;
@@ -127,7 +127,7 @@ listview {
     fixed-columns:                true;
     padding:                      0.35em;
     border:                       0px;
-    border-radius:                15px;
+    border-radius:                21px;
 }
 
 /* ---- Element ---- */
