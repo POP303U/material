@@ -28,6 +28,11 @@ fi
 # Source nvidia env variables in hyprland.conf
 sed -i 's|^#.*nvidia.conf|source = ~/.config/hypr/nvidia.conf|' $HOME/.config/hypr/hyprland.conf
 
+# Fix if you chose to disable WLR_DRM_NO_ATOMIC
+if [[ $FLAG_WLR_FIX == "y" || $FLAG_WLR_FIX == "Y" || $FLAG_WLR_FIX == "" ]]; then
+    sed -i 's|env = WLR_DRM_NO_ATOMIC,1|#env = WLR_DRM_NO_ATOMIC,1|' $HOME/.config/hypr/nvidia.conf
+fi
+
 # (Grub) Enable nvidia in kernel parameters
 if package_installed grub && [ -f /boot/grub/grub.cfg ]; then
     if [ ! -f /etc/default/grub.bak ] && [ ! -f /boot/grub/grub.bak ]; then
@@ -48,7 +53,7 @@ else
 fi
 
 # (systemd-boot) Enable nvidia in kernel parameters
-if package_installed systemd && [ $(bootctl status 2> /dev/null | awk '{if ($1 == "Product:") print $2}') == "systemd-boot" ]; then
+if package_installed systemd && [[ $(bootctl status 2> /dev/null | awk '{if ($1 == "Product:") print $2}') == "systemd-boot" ]]; then
     echo -e "[${PURPLE}info${RESET}] systemd-boot detected... adding nvidia_drm_modeset=1 to kernel parameters"
     if [ $(ls -l /boot/loader/entries/*.conf.bak 2> /dev/null | wc -l) -ne $(ls -l /boot/loader/entries/*.conf 2> /dev/null | wc -l) ]; then
         echo "nvidia detected, adding nvidia_drm.modeset=1 to boot option..."
