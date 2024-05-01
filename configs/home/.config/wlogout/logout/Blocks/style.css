@@ -20,6 +20,7 @@ button {
     background-size: 23%;
     border-color: @border;
     border-width: 5px;
+    border-radius: ${CORNER_ROUNDING}px;
 }
 
 button:focus {

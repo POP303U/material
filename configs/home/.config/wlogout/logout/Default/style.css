@@ -20,7 +20,7 @@ button {
     border-width: 0px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 20%;
+    background-size: 21%;
     box-shadow: none;
     text-shadow: none;
     animation: gradient_f 20s ease-in infinite;
@@ -28,6 +28,8 @@ button {
 	border-style: solid;
 	background-color: @surface;
     margin: 0.5em;
+
+    border-radius: ${CORNER_ROUNDING}px;
 }
 
 button:focus {
@@ -44,7 +46,6 @@ button:hover {
 }
 
 #lock {
-    margin-left: 8em;
     background-image: image(url("${HOME}/.config/wlogout/icons/lock_${BUTTON_COLOR}.png"));
     border-radius: ${CORNER_ROUNDING}px;
 }
@@ -57,7 +58,6 @@ button:hover {
 #suspend {
     background-image: image(url("${HOME}/.config/wlogout/icons/suspend_${BUTTON_COLOR}.png"));
     border-radius: ${CORNER_ROUNDING}px;
-    margin-right: 8em;
 }
 
 #shutdown {
@@ -66,7 +66,6 @@ button:hover {
 }
 
 #hibernate {
-    margin-left: 8em;
     background-image: image(url("${HOME}/.config/wlogout/icons/hibernate_${BUTTON_COLOR}.png"));
     border-radius: ${CORNER_ROUNDING}px;
 }
@@ -74,5 +73,4 @@ button:hover {
 #reboot {
     background-image: image(url("${HOME}/.config/wlogout/icons/reboot_${BUTTON_COLOR}.png"));
     border-radius: ${CORNER_ROUNDING}px;
-    margin-right: 8em;
 }
