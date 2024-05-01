@@ -19,10 +19,10 @@ else
 fi
 
 cp -vrf ${WALLPAPER_PATH} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
-swww img ${WALLPAPER_PATH} \
-    --transition-bezier .6,.94,.86,.23\
-    --transition-type "${TRANSITION_TYPE}" \
-    --transition-duration 1 \
-    --transition-fps 144 \
-    --invert-y \
-    --transition-pos "${RESOLUTION}" 
+swww img ${WALLPAPER_PATH}                 \
+    --transition-bezier .6,.94,.86,.23     \
+    --transition-type grow                 \
+    --transition-duration 1                \
+    --transition-fps 144                   \
+    --invert-y                             \
+    --transition-pos "$(hyprctl cursorpos)"

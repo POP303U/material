@@ -32,24 +32,6 @@ $HOME/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$CURRENT_BG" &
 # Tmux
 sed -i 's|^set -g status-bg.*|set -g status-bg '$([[ "$MODE" == "light" ]] && echo "white" || echo "black" )'|' $HOME/.tmux.conf
 
-# Neovim
-_NVIM_THEME="$CURRENT_RICE"
-[[ "$CURRENT_RICE" == "Titanium-Mono" ]]                                            && _NVIM_THEME="monochrome"
-[[ "$CURRENT_RICE" == "Gruvbox-Dark"  || "$CURRENT_RICE" == "Gruvbox-Light" ]]      && _NVIM_THEME="gruvbox"
-[[ "$CURRENT_RICE" == "Solarized-Dark" || "$CURRENT_RICE" == "Solarized-Light" ]]   && _NVIM_THEME="solarized"  
-[[ "$CURRENT_RICE" == "Nord" ]]                                                     && _NVIM_THEME="nord"
-NVIM_THEME=$(echo $_NVIM_THEME | tr '[:upper:]' '[:lower:]')
-
-sed -i 's|^vim.cmd.*|vim.cmd.colorscheme("'${NVIM_THEME}'")|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
-sed -i 's|^vim.opt.*|vim.opt.background = "'${MODE}'"|' $HOME/.config/nvim/lua/core/plugins/colorscheme.lua
-# works only with my neovim dotfiles: https://github.com/POP303U/kickstart-nvim and these plugins:
-#    'rose-pine/neovim',
-#    'shaunsingh/solarized.nvim',
-#    'catppuccin/nvim',
-#    'fxn/vim-monochrome',
-#    'shaunsingh/nord.nvim',
-#    'ellisonleao/gruvbox.nvim',
-
 # Dunst
 sed -i 's|background.*|'"$(sed -n '1p' $HOME/.config/dunst/themes/${CURRENT_RICE})"'|' $HOME/.config/dunst/dunstrc
 sed -i 's|foreground.*|'"$(sed -n '2p' $HOME/.config/dunst/themes/${CURRENT_RICE})"'|' $HOME/.config/dunst/dunstrc
@@ -96,14 +78,8 @@ ln -sf ~/.config/wlogout/themes/${CURRENT_RICE}.css ~/.config/wlogout/themes/the
 ln -sf ~/.config/waybar/themes/${CURRENT_RICE}.css ~/.config/waybar/themes/theme.css
 ~/.config/hypr/scripts/manage-waybar & # reload
 
-# Fuzzel
-ln -sf $HOME/.config/fuzzel/themes/${CURRENT_RICE}.ini $HOME/.config/fuzzel/fuzzel.ini
-
 # Rofi
 ln -sf $HOME/.config/rofi/themes/${CURRENT_RICE}.rasi $HOME/.config/rofi/themes/theme.rasi
-
-# Wofi (hacky symlink to pywal path but who cares)
-ln -sf $HOME/.config/wofi/themes/${CURRENT_RICE} $HOME/.cache/wal/colors 
 
 # Hyprland
 ln -sf ~/.config/hypr/themes/${CURRENT_RICE}.conf ~/.config/hypr/themes/theme.conf 
@@ -127,8 +103,8 @@ TRANSITION_TYPE=$(awk '/rice-transition/ {print $NF}' "$HOME/.config/material/co
 cp -vrf ~/.config/swww/walls/${CURRENT_RICE}/${CURRENT_BG} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG" \
     --transition-bezier .6,.94,.86,.23     \
-    --transition-type grow \
-    --transition-duration 0.6              \
+    --transition-type grow                 \
+    --transition-duration 0.65             \
     --transition-fps 144                   \
     --invert-y                             \
     --transition-pos "$(hyprctl cursorpos)"
