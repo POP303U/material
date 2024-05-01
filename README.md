@@ -1,12 +1,8 @@
 <div align="center">
 <h1> Material Design Hyprland </h1>
-// My Personal Hyprland dotfiles //
-</div>
+<p><b><u>// My Personal Hyprland dotfiles //</u></b></p>
 
-<p align="center">
-    Default configuration when installed:
-    <img src="https://github.com/POP303U/material/assets/115036828/32a208e7-8e3d-4ad1-86f9-43bf37d6ebbe" alt="Material Bread logo">
-</p>
+<br><br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/Rose-Pine_Preview.png"/><br><br><br></div>
 
 ## Installation
 
@@ -17,8 +13,8 @@ After a minimal Arch install clone and execute -
 
 ```sh
 sudo pacman -Syu git
-git clone https://github.com/POP303U/material ~/material
-cd ~/material/setup-hypr
+git clone https://github.com/POP303U/material ~/Material
+cd ~/Material/setup-hypr
 ./install
 ```
 
