@@ -5,10 +5,10 @@
     follow = none
 
     ### Geometry ###
-    width = (300, 500)
-    height = (300, 500)
+    width = (335, 600)
+    height = (300, 600)
     origin = top-right
-    offset = 10x10
+    offset = 15x15
     scale = 0
     notification_limit = 20
 
@@ -20,7 +20,7 @@
     progress_bar_max_width = 300
     progress_bar_corner_radius = 15
     separator_height = 2
-    padding = 8
+    padding = 21
     horizontal_padding = 8
     text_icon_padding = 0
     frame_width = 3
@@ -64,8 +64,8 @@
     title = Dunst
     class = Dunst
 
-    corner_radius = 15
-    icon_corner_radius = 15
+    corner_radius = 21
+    icon_corner_radius = 21
 
     ignore_dbusclose = false
 

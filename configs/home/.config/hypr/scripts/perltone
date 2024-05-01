@@ -344,8 +344,8 @@ for (my $i = 0; $i < scalar @$gradient_text; $i++) {
 }
 
 # Decide transparency based on colorscheme
-push @output_array, "opacity=0.60" if $dark;
-push @output_array, "opacity=0.25" if $light;
+push @output_array, "opacity=0.65" if $dark;
+push @output_array, "opacity=0.28" if $light;
 
 # Print the entire array, this can be redirected by the user with shutil's
 print @output_array;
