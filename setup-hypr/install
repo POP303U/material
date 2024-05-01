@@ -215,6 +215,9 @@ fi
 # Extract gtk themes and fonts into correct directories
 ./install_archives
 
+# Fixes for old versions of Material
+./install_compat
+
 # Ask to reboot
 echo -e "[${BLUE}ok${RESET}] Installation finished, please reboot to apply all changes" 
 echo -e "\n${WHITE_BOLD}Do you want to reboot now? (y/n)${RESET}"
