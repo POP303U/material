@@ -209,3 +209,7 @@ done
 
 echo -e ""
 read -n1 -rep "Remove these rofi desktop entries? (y/n) $: " FLAG_REMOVE_ROFI
+echo -e ""
+echo -e "This environment variable is shown to sometimes crash Hyprland on some nvidia cards."
+echo -e "You can return to this installer and disable it if crashes Hyprland"
+read -n1 -rep "Unset \"WLR_DRM_NO_ATOMIC\"? (y/n) $: " FLAG_WLR_FIX
