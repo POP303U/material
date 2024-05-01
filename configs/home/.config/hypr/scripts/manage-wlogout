@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 
-set -x 
 # Check if wlogout is already running
 if pgrep -x "wlogout" >/dev/null; then
     pkill -x "wlogout"
@@ -54,7 +53,10 @@ case "$STYLE" in
         BUTTON_NUM="-b 2"
         ;;
     Default)
-        ARGS=""
+        ARGS="-L $(( $X_MARGIN * 56 / $SCALING_FACTOR ))
+              -R $(( $X_MARGIN * 56 / $SCALING_FACTOR )) 
+              -T $(( $X_MARGIN * 28 / $SCALING_FACTOR )) 
+              -B $(( $X_MARGIN * 28 / $SCALING_FACTOR )) "
         ;;
     *)
         export X_MARGIN=$(( X_RESOLUTION * 27 / SCALING_FACTOR ))
