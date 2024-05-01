@@ -5,7 +5,7 @@
 
 ## Installation
 
-The installation script is made for Arch, but **could** work on some Arch based distros with **systemd**.
+The installation script is made for [Arch Linux](https://archlinux.org), but **could** work on some Arch based distros with **[systemd](https://systemd.io)**.
 It only currently works with AMD Cards with experimental Nvidia support.
 
 After a minimal Arch install clone and execute -
@@ -23,7 +23,7 @@ It is not recommended to mix and match this with other rices / distros since it 
 To update material you will need to pull the latest changes from github and restore the configs by doing -
 
 ```sh
-cd ~/material/setup-hypr
+cd ~/Material/setup-hypr
 git pull
 ./install
 ```
