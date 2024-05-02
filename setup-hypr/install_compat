@@ -5,7 +5,7 @@
 rm -r "${HOME}/.config/hypr/resolutions"
 rm -r "${HOME}/.cache/material"
 
-mkdir -r "${HOME}/.cache/material"
+mkdir -p "${HOME}/.cache/material"
 
 $HOME/.config/hypr/scripts/load-config-material >/dev/null 2>&1 & disown >/dev/null 2>&1
 sleep 5

@@ -11,6 +11,10 @@ GENERIC=($(get_yaml_packages de_bloat.yaml generic))
 QT=($(get_yaml_packages de_bloat.yaml qt))
 ROFI=($(get_yaml_packages de_bloat.yaml rofi))
 
+FLAG_REMOVE_GENERIC="${1}"
+FLAG_REMOVE_QT="${2}"
+FLAG_REMOVE_ROFI="${3}"
+
 if [[ $FLAG_REMOVE_GENERIC == "y" || "$FLAG_REMOVE_GENERIC" == "Y" || "$FLAG_REMOVE_GENERIC" == " " ]]; then
     for GENERIC_ENTRY in "${GENERIC[@]}"; do
         if [ -e "/usr/share/applications/$GENERIC_ENTRY.desktop" ]; then

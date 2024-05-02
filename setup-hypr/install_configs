@@ -65,4 +65,4 @@ chmod -R +x ~/.config/swww/scripts
 chmod -R +x ~/.config/wofi/manager
 
 echo -e "[${PURPLE}info${RESET}] Cleaning out conflicting xdg portals..."
-sudo pacman -R $FLAGS xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null >$VERBOSE_FLAGS 2>$VERBOSE_FLAGS
+sudo pacman -R $FLAGS xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null

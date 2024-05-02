@@ -56,9 +56,7 @@ source ./install_get_options # Source all variables for user configuration
 ./install_fix_symlinks
 
 # Remove desktop entry if you want
-if [[ $FLAG_REMOVE_GENERIC == "y" || $FLAG_REMOVE_GENERIC == "Y" || $FLAG_REMOVE_GENERIC == "" || $FLAG_REMOVE_QT == "y" || $FLAG_REMOVE_QT == "Y" || $FLAG_REMOVE_QT == ""  || $FLAG_REMOVE_ROFI == "y" || $FLAG_REMOVE_ROFI == "Y" || $FLAG_REMOVE_ROFI == "" ]]; then
-    ./install_de_debloat # Removes chosen desktop entries
-fi
+./install_de_debloat $FLAG_REMOVE_GENERIC $FLAG_REMOVE_QT $FLAG_REMOVE_ROFI # Removes chosen desktop entries
 
 ### These are functions used in the script, 
 # See the bottom of the file for the call into `stage_1`

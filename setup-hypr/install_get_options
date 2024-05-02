@@ -193,6 +193,7 @@ done
 
 echo -e ""
 read -n1 -rep "Remove these generic desktop entries? (y/n) $: " FLAG_REMOVE_GENERIC
+export FLAG_REMOVE_GENERIC
 
 QT=($(get_yaml_packages de_bloat.yaml qt))
 for ENTRY in "${QT[@]}"; do
@@ -201,6 +202,7 @@ done
 
 echo -e ""
 read -n1 -rep "Remove these qt desktop entries? (y/n) $: " FLAG_REMOVE_QT
+export FLAG_REMOVE_QT
 
 ROFI=($(get_yaml_packages de_bloat.yaml rofi))
 for ENTRY in "${ROFI[@]}"; do
@@ -209,6 +211,8 @@ done
 
 echo -e ""
 read -n1 -rep "Remove these rofi desktop entries? (y/n) $: " FLAG_REMOVE_ROFI
+export FLAG_REMOVE_ROFI
+
 echo -e ""
 echo -e "This environment variable is shown to sometimes crash Hyprland on some nvidia cards."
 echo -e "You can return to this installer and disable it if crashes Hyprland"
