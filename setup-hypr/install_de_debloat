@@ -28,7 +28,7 @@ fi
 
 if [[ $FLAG_REMOVE_QT == "y" || "$FLAG_REMOVE_QT" == "Y" || "$FLAG_REMOVE_QT" == " " ]]; then
     for QT_ENTRY in "${QT[@]}"; do
-        if [ -e "/usr/share/applications/$QT_ENTRY.desktop"]; then
+        if [ -e "/usr/share/applications/$QT_ENTRY.desktop" ]; then
             sudo rm /usr/share/applications/$QT_ENTRY.desktop 
             echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $QT_ENTRY" 
         else
