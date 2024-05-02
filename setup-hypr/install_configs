@@ -22,8 +22,8 @@ copy_files() {
 
         if [ -f "$ITEM" ]; then
             mkdir -p "$DESTINATION/$RELATIVE_PATH"
-            cp "$ITEM" "$DESTINATION/$RELATIVE_PATH" >$VERBOSE_FLAGS 2>$VERBOSE_FLAGS
-            echo -e "[${BLUE}ok${RESET}] Copied $ITEM_NAME to $DESTINATION/$RELATIVE_PATH" >$VERBOSE_FLAGS 2>$VERBOSE_FLAGS
+            cp "$ITEM" "$DESTINATION/$RELATIVE_PATH"
+            echo -e "[${BLUE}ok${RESET}] Copied $ITEM_NAME to $DESTINATION/$RELATIVE_PATH"
         elif [ -d "$ITEM" ]; then
             copy_files "$ITEM" "$DESTINATION" "$RELATIVE_PATH/$ITEM_NAME"
         fi
