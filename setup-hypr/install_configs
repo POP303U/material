@@ -57,7 +57,6 @@ sudo rm -f /etc/sddm.conf ; sudo cp -r ../configs/root/etc/sddm.conf /etc && ech
 
 # Set some files as exacutable 
 chmod +x ~/.config/hypr/scripts/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
-chmod +x ~/.config/swww/scripts/init_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/config/swww/scripts/init_wallpaper' is executable: .wxr-xr-x "
 chmod +x ~/.config/swww/scripts/change_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/.config/swww/scripts/change_wallpaper' is executable: .wxr-xr-x "
 chmod +x ~/.config/waybar/scripts/waybar-wttr.py && echo -e "[${BLUE}ok${RESET}] '~/.config/waybar/scripts/waybar-wttr.py' is executable: .wxr-xr-x "
 chmod -R +x ~/.config/hypr/scripts
