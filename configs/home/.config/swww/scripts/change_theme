@@ -11,6 +11,24 @@ sed -i 's|^rice-current.*|rice-current = '${CURRENT_RICE}'|' ~/.config/material/
 sed -i 's|^system-theme.*|system-theme = '${MODE}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
 sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
 
+if [ ! -e "${HOME}/.cache/material/${CURRENT_RICE}" ]; then
+    mkdir -pv "${HOME}/.cache/material/${CURRENT_RICE}"
+fi
+
+# Read the text file
+HOOKS_TEXT=$(<"${HOME}/.config/swww/rices/${CURRENT_RICE}")
+
+# Find and extract the bash code inside the "hooks" keyword
+HOOKS_CODE=$(echo "$HOOKS_TEXT" | sed -n '/hooks/{:a;N;/}/!ba;p}' | sed 's/hooks\s*=\s*{//;s/}//')
+
+# Execute each LINE of bash code
+while IFS= read -r LINE; do
+    LINE=$(echo "$LINE" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')  # Remove leading and trailing whitespace
+    if [ -n "$LINE" ]; then
+        eval "$LINE"
+    fi
+done <<< "$HOOKS_CODE"
+
 # Launch into perltone if enabled
 PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "${HOME}/.config/material/config" | xargs)
 PERLTONE_OVERRIDE=$(awk '/perltone/ {print $NF}' "${HOME}/.config/swww/rices/${CURRENT_RICE}" | xargs)

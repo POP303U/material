@@ -14,7 +14,7 @@ WALLPAPER_PATH="$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER"
 CACHE_DIR="$HOME/.cache/material"
 
 if [ ! -e "$CACHE_DIR/$CURRENT_RICE" ]; then
-    mkdir "$CACHE_DIR/$CURRENT_RICE"
+    mkdir -pv "$CACHE_DIR/$CURRENT_RICE"
 fi
 
 # Check if input image exists
