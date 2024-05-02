@@ -45,7 +45,7 @@ export X_HOVER=$(( X_RESOLUTION * 32 / SCALING_FACTOR ))
 export Y_HOVER=$(( Y_RESOLUTION * 20 / SCALING_FACTOR )) 
 export X_HOVER_OLD=$(( X_RESOLUTION * 32 / SCALING_FACTOR / 100))
 export Y_HOVER_OLD=$(( Y_RESOLUTION * 20 / SCALING_FACTOR / 100)) 
-export CORNER_ROUNDING="$(awk '/corner-rounding/ {print $NF}' $HOME/.config/material/config)"
+export CORNER_ROUNDING="$(hyprctl -j getoption decoration:rounding | jq '.int')"
 
 ARGS=" -c 0 -r 0 -m 0" # Settings margins to 0 and letting style.css handle it
 case "$STYLE" in
