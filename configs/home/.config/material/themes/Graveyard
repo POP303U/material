@@ -46,7 +46,7 @@ blur-passes = 4
 
 # LAUNCHERS
 material-launcher = rofi
-material-explorer = thunar
+material-explorer = dolphin
 material-terminal = kitty
 material-browser = firefox
 material-documentation = rustup doc
