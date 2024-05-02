@@ -1,0 +1,101 @@
+{
+    "logo": {
+        "source": "$(find \"$HOME/.config/fastfetch/img/\" -name \"*.png\" | sort -R | tail -1)",
+        "height": 18
+    },
+    "display": {
+        "separator": " => ",
+    },
+    "modules": [
+        {
+            "type": "custom",
+            "format": "\u001b[33m \u001b[35mマテリアルデザイン",
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[35m┌──────────────────────────────────────────┐",
+        },
+        {
+            "type": "host",
+            "key": "  OS",
+            "keyColor": "red",
+        },
+        {
+            "type": "kernel",
+            "key": "  Kernel",
+            "keyColor": "red",
+        },
+        {
+            "type": "packages",
+            "key": "  Packages",
+            "keyColor": "cyan",
+        },
+        {
+            "type": "display",
+            "key": "  Resolution",
+            "keyColor": "cyan",
+        },
+        {
+            "type": "wm",
+            "key": "  WM",
+            "keyColor": "yellow",
+        },
+        {
+            "type": "theme",
+            "key": "  Theme",
+            "keyColor": "yellow",
+        },
+        {
+            "type": "icons",
+            "key": "  Icons",
+            "keyColor": "magenta",
+        },
+        {
+            "type": "terminal",
+            "key": "  Terminal",
+            "keyColor": "magenta",
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[35m└──────────────────────────────────────────┘",
+        },
+        {
+            "type": "colors",
+            "paddingLeft": 2,
+            "symbol": "circle",
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[35m┌──────────────────────────────────────────┐",
+        },
+        {
+            "type": "cpu",
+            "key": "  CPU",
+            "keyColor": "cyan",
+        },
+        {
+            "type": "gpu",
+            "key": "  GPU",
+            "keyColor": "cyan",
+        },
+        {
+            "type": "gpu",
+            "key": "  GPU Driver",
+            "keyColor": "blue",
+            "format": "{3}",
+        },
+        {
+            "type": "memory",
+            "key": " ﬙ Memory",
+            "keyColor": "blue",
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[35m└──────────────────────────────────────────┘",
+        },
+        {
+            "type": "custom",
+            "format": "\n",
+        },
+    ]
+}
