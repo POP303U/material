@@ -8,24 +8,10 @@ if [ $? -ne 0 ]; then
 fi
 
 # argument parsing #
-export VERBOSE_FLAGS="/dev/null"
-export FLAGS=" --noconfirm "
 export DEVELOPER_MODE=" -- "
-while getopts svewh ARGS; do
+while getopts ewh ARGS; do
     case $ARGS in
-    s)  
-        export VERBOSE_FLAGS="/dev/null"
-        export FLAGS=" --noconfirm "
-        export DEVELOPER_MODE=" -- "
-        ;;
-    v)  
-        export VERBOSE_FLAGS="$CURRENT_PTS" 
-        export FLAGS=" --noconfirm "
-        export DEVELOPER_MODE=" -- "
-        ;;
     e)
-        export VERBOSE_FLAGS="$CURRENT_PTS" 
-        export FLAGS="  "
         export DEVELOPER_MODE=" -x "
         ;;
     w)

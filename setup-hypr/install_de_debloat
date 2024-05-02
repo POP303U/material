@@ -13,19 +13,34 @@ ROFI=($(get_yaml_packages de_bloat.yaml rofi))
 
 if [[ $FLAG_REMOVE_GENERIC == "y" || "$FLAG_REMOVE_GENERIC" == "Y" || "$FLAG_REMOVE_GENERIC" == " " ]]; then
     for GENERIC_ENTRY in "${GENERIC[@]}"; do
-        sudo rm /usr/share/applications/$GENERIC_ENTRY.desktop >/$CURRENT_PTS && echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $GENERIC_ENTRY" || echo -e "[${PURPLE}info${RESET}] Already removed desktop entry: $GENERIC_ENTRY"
+        if [ -e "/usr/share/applications/$GENERIC_ENTRY.desktop" ]; then
+            sudo rm /usr/share/applications/$GENERIC_ENTRY.desktop 
+            echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $GENERIC_ENTRY" 
+        else
+            echo -e "[${PURPLE}info${RESET}] Already removed desktop entry: $GENERIC_ENTRY"
+        fi
     done
 fi
 
 if [[ $FLAG_REMOVE_QT == "y" || "$FLAG_REMOVE_QT" == "Y" || "$FLAG_REMOVE_QT" == " " ]]; then
     for QT_ENTRY in "${QT[@]}"; do
-        sudo rm /usr/share/applications/$QT_ENTRY.desktop >/$CURRENT_PTS  && echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $QT_ENTRY" || echo -e "[${PURPLE}info${RESET}] Already removed desktop entry: $QT_ENTRY"
+        if [ -e "/usr/share/applications/$QT_ENTRY.desktop"]; then
+            sudo rm /usr/share/applications/$QT_ENTRY.desktop 
+            echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $QT_ENTRY" 
+        else
+            echo -e "[${PURPLE}info${RESET}] Already removed desktop entry: $QT_ENTRY"
+        fi
     done
 fi
 
 
 if [[ $FLAG_REMOVE_ROFI == "y" || "$FLAG_REMOVE_ROFI" == "Y" || "$FLAG_REMOVE_ROFI" == " " ]]; then
     for ROFI_ENTRY in "${ROFI[@]}"; do
-        sudo rm /usr/share/applications/$ROFI_ENTRY.desktop >/$CURRENT_PTS  && echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $ROFI_ENTRY" || echo -e "[${PURPLE}info${RESET}] Already removed desktop entry: $ROFI_ENTRY"
+        if [ -e "/usr/share/applications/$ROFI_ENTRY.desktop" ]; then
+            sudo rm /usr/share/applications/$ROFI_ENTRY.desktop 
+            echo -e "[${BLUE}ok${RESET}] Removed desktop entry: $ROFI_ENTRY" 
+        else
+            echo -e "[${PURPLE}info${RESET}] Already removed desktop entry: $ROFI_ENTRY"
+        fi
     done
 fi

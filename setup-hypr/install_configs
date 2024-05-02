@@ -53,6 +53,7 @@ ln -sf $HOME/.config/wofi/themes/$(awk '/rice-current/ {print $NF}' $HOME/.confi
 
 sudo rm -f /etc/issue ; sudo cp -r ../configs/root/etc/issue /etc && echo -e "[${BLUE}ok${RESET}] Copied issue to /etc/issue"
 sudo rm -f /etc/motd ; sudo cp -r ../configs/root/etc/motd /etc && echo -e "[${BLUE}ok${RESET}] Copied motd to /etc/motd"
+sudo rm -f /etc/sddm.conf ; sudo cp -r ../configs/root/etc/sddm.conf /etc && echo -e "[${BLUE}ok${RESET}] Copied sddm.conf to /etc/sddm.conf"
 
 # Set some files as exacutable 
 chmod +x ~/.config/hypr/scripts/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "

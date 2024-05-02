@@ -22,4 +22,5 @@ extract_archive() {
 extract_archive "Font" "$HOME/.local/share/fonts" # Fonts
 extract_archive "Gtk" "$HOME/.local/share/themes" # Gtk themes
 extract_archive "Icon" "$HOME/.local/share/icons" # Icon themes
+extract_archive "Cursor" "$HOME/.local/share/icons" # Icon themes
 extract_archive "Sddm" "/usr/share/sddm/themes" # Icon themes

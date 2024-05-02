@@ -13,7 +13,6 @@ export WHITE='\033[01;37m'
 
 # Check for AUR helpers
 export AUR_HELPERS=(yay paru pikaur pakku pacaur trizen aura aurman)
-export CURRENT_PTS="/dev/pts/$(ps | tail -n 1 | awk '{print $2}' | awk -F '/' '{print $2}')"
 
 # Usage: get_yaml_packages "your_yaml_file.yaml" "base_packages"
 # Description: Returns package names from yaml block
@@ -71,8 +70,6 @@ package_installed() {
 show_help() {
     local EXIT_CODE=$1
     echo "-h: Show this help message"
-    echo "-s: Silence most output"
-    echo "-v: Enable maximum verbosity"
     echo "-w: Ignore all network checks"
     echo "-e: Developer mode, dumps all bash code into stdout. Not for users"
     exit $EXIT_CODE
@@ -104,7 +101,7 @@ install_packages() {
             continue
         fi
 
-        if $AUR_HELPER -S $FLAGS "$PACKAGE" >$VERBOSE_FLAGS; then
+        if $AUR_HELPER -S --noconfirm "$PACKAGE"; then
             echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
         else
             echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
@@ -141,7 +138,7 @@ configure_pacman() {
         sudo sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman\.d\/mirrorlist/c\[multilib]\nInclude = /etc/pacman.d/mirrorlist' /etc/pacman.conf
         echo -e "[${PURPLE}info${RESET}] Syncing multilib repositories"
 
-        sudo pacman -Fy $FLAGS >$VERBOSE_FLAGS
+        sudo pacman -Fy --noconfirm
     else
         echo -e "[${PURPLE}info${RESET}] Enabling multilib"
     fi
@@ -151,7 +148,7 @@ configure_pacman() {
 # Description: Starts the bluetooth and NetworkManager services
 start_services() {
     # Start the bluetooth service
-    sudo systemctl enable --now bluetooth.service >$VERBOSE_FLAGS
+    sudo systemctl enable --now bluetooth.service 
     sleep 2
 
     ### Disable wifi powersave mode ###
@@ -176,7 +173,7 @@ check_wifi() {
     fi
 
     # check for internet
-    if ping -c1 x.org >$VERBOSE_FLAGS; then
+    if ping -c1 x.org; then
         return 0
     else 
         return 1
