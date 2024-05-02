@@ -83,8 +83,6 @@ minimal_packages:
   wlr-randr
   fastfetch
   neovim
-  neofetch
-  pfetch
   btop
   grc
 
