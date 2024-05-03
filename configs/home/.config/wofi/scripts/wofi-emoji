@@ -4,7 +4,7 @@ set -euox pipefail
 # Source scaling variables
 source ~/.config/hypr/scripts/globalvars
 
-EMOJI="$(sed '1,/^### DATA ###$/d' $0 | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -p "Select a emoji: " -i | cut -d ' ' -f 1 | tr -d '\n')"
+EMOJI="$(sed '1,/^### DATA ###$/d' $0 | rofi -config ~/.config/rofi/emoji.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -p "Select a emoji: " -i | cut -d ' ' -f 1 | tr -d '\n')"
 wtype "$EMOJI"; wl-copy "$EMOJI"
 exit
 

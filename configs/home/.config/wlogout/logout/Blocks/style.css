@@ -6,6 +6,7 @@
 }
 
 @import "${HOME}/.config/wlogout/themes/theme.css";
+@import "${HOME}/.config/waybar/themes/theme.css";
 
 window {
     background: transparent;
@@ -13,7 +14,7 @@ window {
 
 button {
     color: @text;
-    background-color: @surface;
+    background-color: @bar-tr;
     outline-style: none;
     background-repeat: no-repeat;
     background-position: center;

@@ -62,9 +62,9 @@ inputmode {
 inputbar {
     enabled:                      true;
     text-color:                   @foreground;
-    padding:                      0.9em;
+    padding:                      0.85em;
     margin:                       1.0em 1.5em 1.6em 1.5em;
-    border-radius:                15px;
+    border-radius:                21px;
     border-color:                 @foreground;
     background-color:             @background;
     children:                     [ "textbox-prompt-colon", "entry"];
@@ -152,8 +152,8 @@ element normal.normal {
 }
 
 element selected.normal {
-    background-color:            @selected-background;
-    text-color:                  @foreground;
+    background-color:            @ora;
+    text-color:                  @background;
 }
 
 element selected.urgent {

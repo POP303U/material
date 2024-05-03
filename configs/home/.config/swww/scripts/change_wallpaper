@@ -22,7 +22,7 @@ cp -vrf ${WALLPAPER_PATH} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/curr
 swww img ${WALLPAPER_PATH}                 \
     --transition-bezier .6,.94,.86,.23     \
     --transition-type grow                 \
-    --transition-duration 1                \
+    --transition-duration 0.6              \
     --transition-fps 144                   \
     --invert-y                             \
     --transition-pos "$(hyprctl cursorpos)"

@@ -14,7 +14,7 @@
 	background: @bg;
 	active-background: @cur;
 	urgent-background: @red;
-    transparent-background: rgb(30, 30, 46, 0.5);
+    transparent-background: rgb(22, 22, 37, 1);
 
 	selected-background: @active-background;
 	selected-urgent-background: @urgent-background;

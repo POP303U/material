@@ -8,7 +8,7 @@ BAR_STATE="$(awk '/bar-state/ {print $NF}' $HOME/.config/material/config)"
 [[ "$BAR_STATE" == "off" ]] && exit 128
 
 BAR_CURRENT="$(awk '/bar-current/ {print $NF}' $HOME/.config/material/config)"
-BLUR_CURRENT=$(grep "layerrule" ~/.config/hypr/decoration.conf | xargs)
+BLUR_CURRENT=$(grep "layerrule = blur,waybar" ~/.config/hypr/decoration.conf | xargs)
 BLUR_FLAG="$(grep "blurls" "$HOME/.config/waybar/rices/$BAR_CURRENT" | awk -F '=' '{print $2}' | xargs)"
 WAYBAR="waybar -c $HOME/.config/waybar/bar/${BAR_CURRENT}/config.jsonc -s $HOME/.config/waybar/bar/${BAR_CURRENT}/style.css"
 

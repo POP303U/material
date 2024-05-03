@@ -16,7 +16,7 @@ cp -rvf ~/.config/nwg-look       ../configs/home/.config/
 cp -rvf ~/.config/hypr           ../configs/home/.config/
 cp -rvf ~/.config/waybar         ../configs/home/.config/
 cp -rvf ~/.config/udiskie        ../configs/home/.config/
-cp -rvf ~/.config/neofetch       ../configs/home/.config/
+cp -rvf ~/.config/fastfetch      ../configs/home/.config/
 cp -rvf ~/.config/dunst          ../configs/home/.config/
 cp -rvf ~/.config/kitty          ../configs/home/.config/
 cp -rvf ~/.config/cava           ../configs/home/.config/

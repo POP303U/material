@@ -12,7 +12,7 @@ MENU_PATH="/home/${USER}/.config/wofi/manager/submenus"
 SUBMENU_TYPE="${1:-"main"}"
 
 # use --cache-file /dev/null to use predefined order
-SUBMENU="$(sed '/^### ENTRIES ###$/d' ${MENU_PATH}/${SUBMENU_TYPE}/#entries# | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -p "~ Material settings ~ " -i)"
+SUBMENU="$(sed '/^### ENTRIES ###$/d' ${MENU_PATH}/${SUBMENU_TYPE}/#entries# | rofi -config ~/.config/rofi/settings.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -p "~ Material settings ~ " -i)"
 MENU_NAME="$(echo $SUBMENU | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
 MENU_SCRIPT="$MENU_PATH/$SUBMENU_TYPE/$MENU_NAME"
 

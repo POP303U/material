@@ -19,8 +19,8 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                       34em;
-    width:                        52em;
+    height:                       36em;
+    width:                        54em;
     x-offset:                     0em;
     y-offset:                     0em;
     spacing:                      0em;
@@ -31,8 +31,8 @@ window {
     cursor:                       "default";
     transparency:                 "real";
     enabled:                      true;
-    border-radius:                21px;
     background-color:             transparent;
+    border-radius:                21px;
 }
 
 /* ---- Mainbox ---- */
@@ -44,11 +44,11 @@ mainbox {
     background-color:             @background;
     background-image:             url("~/.config/swww/wallpaper.thumb", height);
     children:                     ["imagebox","listbox"];
-    padding:                      20px;
 }
 
 /* ---- Imagebox ---- */
 imagebox {
+    padding:                      20px;
     background-color:             transparent;
     children:                     [ "inputbar", "dummy", "mode-switcher" ];
 }
@@ -71,7 +71,7 @@ inputbar {
     spacing:                      0.5em;
     padding:                      0.85em;
     margin:                       0.0em 2.0em 0em 0.0em;
-    border-radius:                15px;
+    border-radius:                21px;
     border-color:                 @foreground;
     background-color:             @background;
     children:                     [ "textbox-prompt-colon", "entry" ];
@@ -101,7 +101,7 @@ mode-switcher {
     enabled:                      true;
     spacing:                      1em;
     margin:                       0em 20em 0em 0em;
-    padding:                      20px;
+    padding:                      21px;
     border-radius:                21px;
     text-color:                   @foreground;
     background-color:             @background;
@@ -149,7 +149,7 @@ element {
     margin:                       0.25em;
     cursor:                       pointer;
     background-color:             @bg;
-    border-radius:                15px;
+    border-radius:                21px;
 }
 
 element normal.normal {
@@ -158,8 +158,8 @@ element normal.normal {
 }
 
 element selected.normal {
-    background-color:            @selected-background;
-    text-color:                  @foreground;
+    background-color:            @ora;
+    text-color:                  @background;
 }
 
 element selected.urgent {

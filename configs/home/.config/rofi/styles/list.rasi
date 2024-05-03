@@ -150,8 +150,8 @@ element normal.normal {
 }
 
 element selected.normal {
-    background-color:            @selected-background;
-    text-color:                  @foreground;
+    background-color:            @ora;
+    text-color:                  @background;
 }
 
 element selected.urgent {

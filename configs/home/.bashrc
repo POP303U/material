@@ -37,9 +37,9 @@ HISTCONTROL=ignoreboth
 export PROMPT_COMMAND=shortened_pwd # store current shortened path in $CURRENT_PATH
 export PATH=$PATH:~/.config/hypr/scripts
 export PATH=$PATH:~/.config/wofi/scripts
-export PATH=$PATH:~/.local/bin/colorscripts
-export PATH=$PATH:~/.local/bin/colors
-export PATH=$PATH:~/.local/bin
+export PATH=$PATH:~/.local/share/bin/colorscripts
+export PATH=$PATH:~/.local/share/bin/colors
+export PATH=$PATH:~/.local/share/bin
 export PATH=$PATH:~/.cargo/bin
 export SUDO_PROMPT='sudo (%p@%h) password: ' # doas like password thing
 export SUDO=sudo
@@ -84,11 +84,10 @@ alias 3.='cd ../../..'
 alias 4.='cd ../../../..'
 
 # Set editor to neovim
-alias edit='${EDITOR}'
 alias v='nvim'
 
-# neofetch btw
-alias btw='clear -T $TERM; neofetch' # i use arch btw 
+# fastfetch btw
+alias fastfetch='clear -T $TERM; fastfetch' # i use arch btw 
 
 # coloring with grc + make commands defaults better
 alias colourify="$([[ $GRC != "" ]] && echo "grc -es")"

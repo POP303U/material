@@ -30,7 +30,7 @@ case "$1" in
         ~/.config/wofi/scripts/wofi-waybar-selector
         ;;
     "cliphist")
-        cliphist list | rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -p "~ Material clipboard selection ~ " -i | cliphist decode | wl-copy
+        cliphist list | rofi -config ~/.config/rofi/clipboard.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -p "~ Material clipboard selection ~ " -i | cliphist decode | wl-copy
         ;;
     *)
         echo "Invalid choice $1"

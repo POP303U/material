@@ -14,7 +14,7 @@ window {
 
 button {
     color: @text;
-    background-color: @surface;
+    background-color: @bar-tr;
     outline-style: none;
     border: none;
     border-width: 0px;
@@ -26,7 +26,6 @@ button {
     animation: gradient_f 20s ease-in infinite;
 
 	border-style: solid;
-	background-color: @surface;
     margin: 0.5em;
 
     border-radius: ${CORNER_ROUNDING}px;

@@ -74,7 +74,7 @@ inputmode {
 inputbar {
     enabled:                      true;
     text-color:                   @foreground;
-    padding:                      0.9em;
+    padding:                      0.8em;
     margin:                       0em 1.5em 1.6em 0em;
     border-radius:                21px;
     border-color:                 @foreground;
@@ -154,7 +154,7 @@ element {
     padding:                     0.9em;
     cursor:                      pointer;
     text-color:                  @foreground;
-    border-radius:               15px;
+    border-radius:               21px;
 }
 
 element normal.normal {
@@ -163,8 +163,8 @@ element normal.normal {
 }
 
 element selected.normal {
-    background-color:            @selected-background;
-    text-color:                  @foreground;
+    background-color:            @ora;
+    text-color:                  @background;
 }
 
 element selected.urgent {

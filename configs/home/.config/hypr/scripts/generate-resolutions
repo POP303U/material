@@ -27,7 +27,7 @@ generate_conf_file() {
     echo -e '# see https://wiki.hyprland.org/configuring/monitors/'         >> $CONF_FILE
     echo -e '#'                                                             >> $CONF_FILE
     echo -e '#        <monitor>  <resolution@hz>     0x0    1      bitdepth  <bitdepth-value>' >> $CONF_FILE
-    echo -e 'monitor=          , '$RESOLUTION'  , auto , auto , bitdepth , 10'                 >> $CONF_FILE
+    echo -e 'monitor=          , '$RESOLUTION'  ,  auto ,   1 ,    bitdepth , 10'                 >> $CONF_FILE
 }
 
 while true; do

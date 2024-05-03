@@ -58,12 +58,11 @@ tooltip label {
     border: 0px;
     font-weight: bold;
     font-style: normal;
-    opacity: 0.8;
 }
 
 #workspaces button {
     margin: 0px 0px 0px 0px;
-    border-radius: 15px;
+    border-radius: 21px;
     background: @surface;
     color: @text;
     transition: all 0.3s ease-in-out;
@@ -73,7 +72,7 @@ tooltip label {
 #workspaces button.active {
     color: @surface;
     background: @foam;
-    border-radius: 15px;
+    border-radius: 21px;
     min-width: 40px;
     transition: all 0.3s ease-in-out;
     opacity: 1.0;

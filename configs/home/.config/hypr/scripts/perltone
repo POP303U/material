@@ -52,8 +52,6 @@ if (!-e "$ENV{HOME}/.cache/material/perltone") {
     system("mkdir -pv \$HOME/.cache/material/perltone");
 }
 
-
-
 # // Variables here // #
 my $background_cv_threshold = 40; # Threshold for maximum color brightness and luminance on backgrounds
 my $saturation_threshold = 0.4;
@@ -62,9 +60,8 @@ my $max_background_luminance = 1; # Maximum luminance allowed for the colors
 my $lighten_colors_fact = 0.12;
 my $image_resize_fact= 25;
 
-my $material_cache_image = fileparse($image_file);
-my $material_cache_theme = (fileparse(dirname($image_file)))[0];
 my $cache_dir = "$ENV{HOME}/.cache/material/perltone";
+my $cache_mpc = "$ENV{HOME}/.cache/material/perltone/cache.mpc";
 
 my $image_colors = 4;
 my $image_fuzz = 70;
@@ -105,7 +102,8 @@ if (!$raw_colors) {
     show_help();
 }
 
-
+#my $_null = qx/magick -quiet -regard-warnings "$image_file" -alpha off +repage "$cache_mpc"/;
+#$raw_colors = system("magick \"$cache_mpc\" -depth 8 -fuzz $image_fuzz% +dither -kmeans $image_colors -depth 8 -format \"%c\" histogram:info: | sed -n 's/^[ ]*\(.*\):.*[#]\([0-9a-fA-F]*\) .*\$/\1,\2/p' | sort -r -n -k 1 -t ","");
 
 ### Adjust luminance for colors that are too dark or too bright
 my @adjusted_colors = split('\n', $raw_colors);
@@ -344,8 +342,18 @@ for (my $i = 0; $i < scalar @$gradient_text; $i++) {
 }
 
 # Decide transparency based on colorscheme
-push @output_array, "opacity=0.65" if $dark;
-push @output_array, "opacity=0.28" if $light;
+push @output_array, "opacity=0.65\n" if $dark;
+push @output_array, "opacity=0.28\n" if $light;
+
+my $hack = hex_to_rgba($darkest, 1);
+push @output_array, "darkest-rgba=$hack\n";
+
+$hack = hex_to_rgba($base, 1);
+push @output_array, "base-rgba=$hack\n";
+
+$hack = hex_to_rgba(adjust_color_brightness($darkest, 0.025, 'brighten'), 1) if $dark;
+$hack = hex_to_rgba(adjust_color_brightness($darkest, 0.965, 'darken'), 1) if $light;
+push @output_array, "rofi-backdrop=$hack\n";
 
 # Print the entire array, this can be redirected by the user with shutil's
 print @output_array;
