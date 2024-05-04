@@ -19,8 +19,8 @@ extract_archive() {
 }
 
 # Extract archives using the functions above
-extract_archive "Font" "$HOME/.local/share/fonts" # Fonts
-extract_archive "Gtk" "$HOME/.local/share/themes" # Gtk themes
-extract_archive "Icon" "$HOME/.local/share/icons" # Icon themes
-extract_archive "Cursor" "$HOME/.local/share/icons" # Icon themes
+extract_archive "Font" "/usr/share/fonts" # Fonts
+extract_archive "Gtk" "/usr/share/themes" # Gtk themes
+extract_archive "Icon" "/usr/share/icons" # Icon themes
+extract_archive "Cursor" "/usr/share/icons" # Icon themes
 extract_archive "Sddm" "/usr/share/sddm/themes" # Icon themes
