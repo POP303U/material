@@ -9,7 +9,7 @@
 @import "${HOME}/.config/waybar/themes/theme.css";
 
 window {
-    background: transparent;
+    background: ${TRANSPARENCY}
 }
 
 button {

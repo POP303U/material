@@ -18,11 +18,13 @@ WLOGOUT_LAYOUT="$HOME/.config/wlogout/logout/$STYLE/layout.json"
 WLOGOUT_TEMPLATE="$HOME/.config/wlogout/logout/$STYLE/style.css"
 BUTTON_COLOR="$(awk '/system-theme/ {print $NF}' $HOME/.config/material/config | xargs)"
 
-# Reverse the button colors
+# Reverse the button colors + blur
 if [[ "$(echo $BUTTON_COLOR | xargs)" == "dark" ]]; then
     export BUTTON_COLOR="light"
+    export TRANSPARENCY="rgba(0,0,0,0.2)"
 else
     export BUTTON_COLOR="dark"
+    export TRANSPARENCY="rgba(255,255,255,0.2)"
 fi
 
 # detect monitor res
