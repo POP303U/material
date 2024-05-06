@@ -22,5 +22,6 @@ extract_archive() {
 extract_archive "Font" "/usr/share/fonts" # Fonts
 extract_archive "Gtk" "/usr/share/themes" # Gtk themes
 extract_archive "Icon" "/usr/share/icons" # Icon themes
-extract_archive "Cursor" "/usr/share/icons" # Icon themes
-extract_archive "Sddm" "/usr/share/sddm/themes" # Icon themes
+extract_archive "Cursor" "/usr/share/icons" # Cursors
+extract_archive "Sddm" "/usr/share/sddm/themes" # Sddm themes
+extract_archive "Firefox" "${HOME}/.cache/material" # Firefox prefs

@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Check if we are running in bash 
+#if [[ $(sh -c 'ps -p $$ -o ppid=' | xargs ps -o comm= -p) != "bash" ]]; then
+#    echo "Error: not running in a bash shell, please run $(command -v bash) before running this script"
+#    exit 1
+#fi
+
 # import functions
 source ./functions
 if [ $? -ne 0 ]; then
@@ -29,165 +35,48 @@ done
 # set -x for ./install -e, e.g debug mode
 set $DEVELOPER_MODE
 
-# Get Packages using imported functions from `packages.yaml`
-BASE_PACKAGES=$(get_yaml_packages packages.yaml base_packages)
-MINIMAL_PACKAGES=$(get_yaml_packages packages.yaml minimal_packages)
-EXTENDED_PACKAGES=$(get_yaml_packages packages.yaml extended_packages)
-GAMING_PACKAGES=$(get_yaml_packages packages.yaml gaming_packages)
-SDDM_PACKAGES=$(get_yaml_packages packages.yaml sddm_packages)
-OPTIONAL_PACKAGES_RUST=$(get_yaml_packages packages.yaml optional_packages_rust)
-TTY_PACKAGES=$(get_yaml_packages packages.yaml tty_packages)
-
 # check for wifi and configure pacman + get options
 check_wifi
 if [ $? -ne 0 ]; then
     echo -e "[${RED}fail${RESET}] Internet connection required, please connect to a network!"
     exit 1
 fi
-
 echo -e "[${BLUE}ok${RESET}] Found internet connection" 
-configure_pacman # Add some better defaults to pacman
-fix_groups # Add current user to input group (for waybar input module)
 
-source ./install_get_options # Source all variables for user configuration
-./install_aur_helper # Install AUR Helper ($OVERRIDE_AUR used here)
+# Source all variables for user configuration
+source ./install_get_options
 
-# Fix wrong symlinks because they depend on the username
-./install_fix_symlinks
+# Get Packages using imported functions from `packages.yaml`
+PACKAGES=($(get_yaml_packages packages.yaml base_packages))
 
-# Remove desktop entry if you want
-./install_de_debloat $FLAG_REMOVE_GENERIC $FLAG_REMOVE_QT $FLAG_REMOVE_ROFI # Removes chosen desktop entries
+# Construct the user packages defined into one variable called $PACKAGES
+[ $STAGE -gt 1 ] && PACKAGES+=($(get_yaml_packages packages.yaml minimal_packages))
+[ $STAGE -gt 2 ] && PACKAGES+=($(get_yaml_packages packages.yaml extended_packages))
+[ $STAGE -gt 3 ] && PACKAGES+=($(get_yaml_packages packages.yaml gaming_packages))
+if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
+    PACKAGES+=($(get_yaml_packages packages.yaml sddm_packages))
+fi
+if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]]; then
+    PACKAGES+=($(get_yaml_packages packages.yaml tty_packages))
+fi
+if [[ $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" ]]; then
+    PACKAGES+=($(get_yaml_packages packages.yaml optional_packages_rust))
+fi
 
-### These are functions used in the script, 
-# See the bottom of the file for the call into `stage_1`
-enable_sddm_quest() {
-    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" || $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
+# Install AUR Helper ($OVERRIDE_AUR used here)
+./install_aur_helper
 
-        echo -e "\n${WHITE_BOLD}Do you want to enable sddm now? (y/n)${RESET}"
-        read -n1 -rep "$: " SDDM_ENABLE
+# Add some better defaults to pacman (then install packages)
+configure_pacman 
 
-        if [[ $SDDM_ENABLE == "y" || $SDDM_ENABLE == "Y" || $SDDM_ENABLE == "" ]]; then
-            echo -e "[${BLUE}ok${RESET}] Enabled sddm successfully"
-            sudo systemctl enable sddm.service
-            sudo systemctl start sddm.service
-        else
-            echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
-            echo -e "[${PURPLE}info${RESET}] You can enable sddm manually with:"
-            echo -e "[${PURPLE}info${RESET}] 'sudo systemctl enable sddm.service'"
-        fi
-    else 
-        echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
-    fi 
-}
+### Main installation for the packages ###
+for PACKAGE in ${PACKAGES[@]}; do
+    echo -e "[${PURPLE}info${RESET}] Installing packages"
+    install_packages $PACKAGE $AUR_HELPER
+done
+echo -e "[${BLUE}ok${RESET}] Installed all packages"
 
-install_sddm() {
-    if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
-        echo -e "[${PURPLE}info${RESET}] Installing sddm packages"
-        for PACKAGE in ${SDDM_PACKAGES[@]}; do
-            install_packages $PACKAGE yay
-        done
-
-        if [[ $SDDM_CUSTOM_INSTALL == "y" || $SDDM_CUSTOM_INSTALL == "Y" || $SDDM_CUSTOM_INSTALL == "" ]]; then
-            install_custom_sddm
-        else 
-            echo -e "[${PURPLE}info${RESET}] Skipping custom sddm theme"
-        fi
-    else
-        echo -e "[${PURPLE}info${RESET}] Skipping sddm packages"
-    fi
-}
-
-stage_1() {
-    echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
-
-    echo -e "[${PURPLE}info${RESET}] Installing base packages"
-    for PACKAGE in ${BASE_PACKAGES[@]}; do
-        install_packages $PACKAGE yay
-    done
-
-    echo -e "[${PURPLE}info${RESET}] Copying configs..."
-    ./install_configs
-    set_hypr_modkey $MODKEY # change to user preferred modkey
-
-    echo -e "[${PURPLE}info${RESET}] Starting Services..."
-    start_services
-    install_sddm
-
-    if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" || $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]]; then
-        for PACKAGE in ${TTY_PACKAGES[@]}; do
-            install_packages $PACKAGE yay
-        done
-        
-        set_tty_font
-    fi
-
-    if [[ $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" || $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" ]]; then
-        for PACKAGE in ${OPTIONAL_PACKAGES_RUST[@]}; do
-            install_packages $PACKAGE yay
-        done
-    fi
-
-    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
-    if [ $STAGE -gt 1 ]; then 
-        echo -e "[${PURPLE}info${RESET}] Entering stage 2"
-        stage_2
-    else 
-        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
-        enable_sddm_quest
-    fi
-}
-
-stage_2() {
-    echo -e "Executing Stage 2"
-
-    echo -e "[${PURPLE}info${RESET}] Installing minimal packages"
-    for PACKAGE in ${MINIMAL_PACKAGES[@]}; do
-        install_packages $PACKAGE yay
-    done
-   
-    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
-    if [ $STAGE -gt 2 ]; then 
-        echo -e "[${PURPLE}info${RESET}] Entering stage 3"
-        stage_3
-    else 
-        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
-        enable_sddm_quest
-    fi
-}
-
-stage_3() {
-    echo -e "[${PURPLE}info${RESET}] Executing Stage 3"
-
-    echo -e "[${PURPLE}info${RESET}] Installing extended packages..."
-    for PACKAGE in ${EXTENDED_PACKAGES[@]}; do
-        install_packages $PACKAGE yay
-    done
-
-    echo -e "[${PURPLE}info${RESET}] Trying to switch stage..."
-    if [ $STAGE -gt 3 ]; then 
-        echo -e "[${PURPLE}info${RESET}] Entering stage 4"
-        stage_4
-    else 
-        echo -e "[${BLUE}ok${RESET}] Stage-${STAGE} installation finished!"
-        enable_sddm_quest
-    fi
-}
-
-stage_4() {
-    echo -e "[${PURPLE}info${RESET}] Executing Stage 4"
-
-    echo -e "[${PURPLE}info${RESET}] Installing gaming packages"
-    for PACKAGE in ${GAMING_PACKAGES[@]}; do
-        install_packages $PACKAGE yay
-    done
-
-    echo -e "Stage-${STAGE} installation finished!"
-    enable_sddm_quest
-}
-
-stage_1
-
-# Detect nvidia and install drivers
+### Detect nvidia and install drivers
 if detect_nvidia; then
     echo -e "[${PURPLE}info${RESET}] Found an nvidia card installing dkms to package list..."
     ./install_nvidia
@@ -196,17 +85,64 @@ else
     echo -e "[${PURPLE}info${RESET}] No nvidia card detected skipping dkms..."
 fi
 
+# Add current user to input group (for waybar input module)
+echo -e "[${PURPLE}info${RESET}] Setting user permissions..."
+fix_groups
+
+# Fix wrong symlinks because they depend on the username
+echo -e "[${PURPLE}info${RESET}] Fixing symlinks..."
+./install_fix_symlinks
+
+# Remove desktop entry if you want
+echo -e "[${PURPLE}info${RESET}] Debloating desktop entries..."
+./install_de_debloat $FLAG_REMOVE_GENERIC $FLAG_REMOVE_QT $FLAG_REMOVE_ROFI # Removes chosen desktop entries
+
+# Install configs
+echo -e "[${PURPLE}info${RESET}] Installing configs..."
+./install_configs
+
+# Change to user preferred modkey
+echo -e "[${PURPLE}info${RESET}] Changing to user preferred modifier key..."
+set_hypr_modkey $MODKEY 
+
+# Start all services
+echo -e "[${PURPLE}info${RESET}] Starting Services..."
+start_services
+
 # Extract gtk themes and fonts into correct directories
+echo -e "[${PURPLE}info${RESET}] Installing themes/icons/cursors..."
 ./install_archives
 
 # Fixes for old versions of Material
+echo -e "[${PURPLE}info${RESET}] Testing compatibility on old versions..."
 ./install_compat
 
+# Set tty font if installed
+if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]] && set_tty_font
+
+### Check if sddm is installed
+if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
+    echo -e "[${GREEN}action${RESET}] Do you want to enable sddm now? (y/n)${RESET}"
+    read -n1 -rep "$: " SDDM_ENABLE
+
+    if [[ $SDDM_ENABLE == "y" || $SDDM_ENABLE == "Y" || $SDDM_ENABLE == "" ]]; then
+        echo -e "[${BLUE}ok${RESET}] Enabled sddm successfully"
+        sudo systemctl enable sddm.service
+    else
+        echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
+        echo -e "[${PURPLE}info${RESET}] You can enable sddm manually with:"
+        echo -e "[${PURPLE}info${RESET}] 'sudo systemctl enable sddm.service'"
+    fi
+else 
+    echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
+fi 
+
 # Ask to reboot
-echo -e "[${BLUE}ok${RESET}] Installation finished, please reboot to apply all changes" 
-echo -e "\n${WHITE_BOLD}Do you want to reboot now? (y/n)${RESET}"
+echo -e "[${GREEN}action${RESET}] Installation finished, please reboot to apply all changes (y/n)${RESET}"
+echo -e "${WHITE_BOLD}Do you want to reboot now? (y/n)${RESET}"
 read -n1 -rep "$: " REBOOT_FLAG
 
+# Reboot if you choose to (you should)
 if [[ $REBOOT_FLAG == "y" || $REBOOT_FLAG == "Y" || $REBOOT_FLAG == "" ]]; then
     systemctl reboot
 fi

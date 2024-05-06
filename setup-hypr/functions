@@ -198,13 +198,3 @@ detect_nvidia()
         return 1
     fi
 }
-
-# Usage: copy_config
-# Description: Pulls rose-pine-sddm from my github, applies patches
-install_custom_sddm() {
-    # use sed for modifying the theme
-    sudo sed -i 's|Current=.*|Current=rose-pine-sddm|' /etc/sddm.conf
-    sudo sed -i 's|CursorSize=.*|CursorSize=24|' /etc/sddm.conf
-    sudo sed -i 's|CursorTheme=.*|CursorTheme=Bibata-Modern-Ice|' /etc/sddm.conf
-    echo -e "[${BLUE}ok${RESET}] Installed custom adaptive sddm theme"
-}

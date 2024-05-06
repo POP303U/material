@@ -7,8 +7,27 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-SEARCH_DIRECTORY_1="$HOME/.cache/mozilla/firefox"
-SEARCH_DIRECTORY_2="$HOME/.mozilla/firefox"
+if package_installed firefox; then
+    echo -e "[${BLUE}ok${RESET}] Firefox already installed"
+else
+    echo -e "[${PURPLE}info${RESET}] Installing firefox"
+    install_packages firefox pacman
+fi
 
-echo "script unfinished"
-exit 1
+FIREFOX_DIR="${HOME}/.mozilla/firefox"
+PROFILE_DIR=$(find "${FIREFOX_DIR}" -maxdepth 1 -type d -name "*.default*")
+
+PROFILES=($(echo ${PROFILE_DIR}))
+for PROFILE in "${PROFILES[@]}"; do
+    SOURCE_DIR="${HOME}/.cache/material/Firefox_Preferences"
+
+    if [ -e "$PROFILE" ]; then
+        [ -e "${PROFILE}/chrome" ] || mkdir -p "${PROFILE}/chrome"
+        cp "${SOURCE_DIR}/userChrome.css" "${PROFILE}/chrome/userChrome.css"
+        cp "${SOURCE_DIR}/userContent.css" "${PROFILE}/chrome/userContent.css"
+        cp "${SOURCE_DIR}/user.js" "${PROFILE}/user.js"
+        echo -e "[${BLUE}ok${RESET}] Copied Firefox preferences to ${PROFILE}"
+    else
+        echo "Firefox profile directory not found."
+    fi
+done

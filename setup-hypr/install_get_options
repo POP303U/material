@@ -11,16 +11,16 @@ fi
 # - https://patorjk.com/software/taag/#p=display&f=Slant&t=Hyprland
 # - echo "Hyprland" | figlet -f slant
 echo -e "
-${GREEN}    __  __                 __                __
-${GREEN}   / / / /_  ______  _____/ /___ _____  ____/ /
-${GREEN}  / /_/ / / / / __ \/ ___/ / __ \`/ __ \/ __  / 
-${GREEN} / __  / /_/ / /_/ / /  / / /_/ / / / / /_/ /  
-${GREEN}/_/ /_/\__, / .___/_/  /_/\__,_/_/ /_/\__,_/   
-${GREEN}      /____/_/                                 ${RESET}
+${GREEN}    __  ___      __            _       __ 
+${GREEN}   /  |/  /___ _/ /____  _____(_)___ _/ / 
+${GREEN}  / /|_/ / __ '/ __/ _ \/ ___/ / __ '/ /  
+${GREEN} / /  / / /_/ / /_/  __/ /  / / /_/ / /  
+${GREEN}/_/  /_/\__,_/\__/\___/_/  /_/\__,_/_/   
+${GREEN}                                        ${RESET}
 
 // ${YELLOW}Easy Material installer${RESET} //
 ${WHITE_BOLD}* The installation can take about 10 minutes depending on your cpu or wifi connection.
-* Don't install this on top of other dotfiles or breakage will occur!
+* Don't install this on top of other dotfiles or breakage may occur!
 * You don't have to worry about nvidia drivers because they will installed automatically.
 ${RESET}
 ${WHITE_BOLD}Choose installation type${RESET}
@@ -64,32 +64,36 @@ if [[ $OVERRIDE_AUR -lt 1 || $OVERRIDE_AUR -gt 8 ]]; then
     exit 1
 fi
 export OVERRIDE_AUR=${AUR_HELPERS[(($OVERRIDE_AUR - 1))]} # Index with the current value to get string + array offsets
+export AUR_HELPER=$OVERRIDE_AUR
 
-echo -e "
-${GREEN}    ____                        _ __             _          
-${GREEN}   / __ \___  ____  ____  _____(_) /_____  _____(_)__  _____
-${GREEN}  / /_/ / _ \/ __ \/ __ \/ ___/ / __/ __ \/ ___/ / _ \/ ___/
-${GREEN} / _, _/  __/ /_/ / /_/ (__  ) / /_/ /_/ / /  / /  __(__  ) 
-${GREEN}/_/ |_|\___/ .___/\____/____/_/\__/\____/_/  /_/\___/____/  
-${GREEN}          /_/                                               
-
-${WHITE_BOLD}Choose extra repositories to install ${RESET}
-External repositories are not verified by the arch maintainers and
-are used to be with caution.
-${CYAN}1${RESET}. Chaotic AUR [Useful for prebuilt AUR packages and tkg builds.]
-${CYAN}2${RESET}. Asus (g14)  [Useful for Asus laptops which have tools like asusctl]
-${CYAN}3${RESET}. Both
-"
-
-read -n1 -rep "(1/2/3) $: " REPOS
-if [[ $REPOS -lt 1 || $REPOS -gt 3 ]]; then 
-    echo -e "${RED}Choose a valid option${RESET}"
-    exit 1
-else
-    [ $REPOS -eq 1 ] && REPOS=(chaotic-aur)
-    [ $REPOS -eq 2 ] && REPOS=(g14)
-    [ $REPOS -eq 3 ] && REPOS=(chaotic-aur g14)
-fi
+#echo -e "
+#${GREEN}    ____                        _ __             _          
+#${GREEN}   / __ \___  ____  ____  _____(_) /_____  _____(_)__  _____
+#${GREEN}  / /_/ / _ \/ __ \/ __ \/ ___/ / __/ __ \/ ___/ / _ \/ ___/
+#${GREEN} / _, _/  __/ /_/ / /_/ (__  ) / /_/ /_/ / /  / /  __(__  ) 
+#${GREEN}/_/ |_|\___/ .___/\____/____/_/\__/\____/_/  /_/\___/____/  
+#${GREEN}          /_/                                               
+#
+#${WHITE_BOLD}Choose extra repositories to install ${RESET}
+#External repositories are not verified by the arch maintainers and
+#are used to be with caution.
+#${CYAN}1${RESET}. Chaotic AUR [Useful for prebuilt AUR packages and tkg builds.]
+#${CYAN}2${RESET}. Asus (g14)  [Useful for Asus laptops which have tools like asusctl]
+#${CYAN}3${RESET}. Both
+#${CYAN}4${RESET}. None
+#"
+#
+#read -n1 -rep "(1/2/3) $: " REPOS
+#if [[ $REPOS -lt 1 || $REPOS -gt 4 ]]; then 
+#    echo -e "${RED}Choose a valid option${RESET}"
+#    exit 1
+#else
+#    [ $REPOS -eq 1 ] && REPOS=(chaotic-aur)
+#    [ $REPOS -eq 2 ] && REPOS=(g14)
+#    [ $REPOS -eq 3 ] && REPOS=(chaotic-aur g14)
+#    [ $REPOS -eq 4 ] && REPOS=()
+#fi
+#export REPOS
 
 echo -e " 
 ${GREEN}    __  ___          ___ _____              
@@ -136,11 +140,8 @@ ${GREEN}/____/\__,_/\__,_/_/ /_/ /_/  ${RESET}
 "
 echo -e "\n${WHITE_BOLD}Install sddm? ${RESET}"
 read -n1 -rep "(y/n) $: " SDDM_INSTALL
-
-if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
-    echo -e "${WHITE_BOLD}\nInstall custom adaptive sddm? [https://github.com/POP303U/rose-pine-sddm]${RESET}"
-    read -n1 -rep "(y/n) $: " SDDM_CUSTOM_INSTALL
-fi
+export SDDM_INSTALL
+export SDDM_CUSTOM_INSTALL="y"
 
 echo -e "
 ${GREEN}    ____             __ 
