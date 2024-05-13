@@ -32,6 +32,7 @@ base_packages:
 
   -- CLI Tools --
   python-requests
+  archlinux-xdg-menu
   wl-clipboard
   xdotool
   pamixer
