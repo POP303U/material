@@ -83,6 +83,17 @@ git pull
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9]
 | <kbd>Print</kbd> | take screenshot
 
+## Gallery
+
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_1"/><br></div>
+
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_2"/><br></div>
+
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_3"/><br></div>
+
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_4"/><br></div>
+
+
 Vim Keybindings can be used instead of arrow bindings and are encouraged.
 
 ## Credits
