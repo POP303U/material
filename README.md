@@ -5,10 +5,11 @@
 
 ## Installation
 
-The installation script is made for [Arch Linux](https://archlinux.org), but **could** work on some Arch based distros with **[systemd](https://systemd.io)**.
-It only currently works with AMD Cards with experimental Nvidia support.
+> [!Important] 
+> The installation script is made for [Arch Linux](https://archlinux.org), but **could** work on some Arch based distros with **[systemd](https://systemd.io)**.
+> It only currently works with AMD Cards with experimental Nvidia support.
 
-After a minimal Arch install clone and execute -
+After a minimal Arch install clone and execute:
 
 ```sh
 sudo pacman -Syu git
@@ -17,7 +18,9 @@ cd ~/Material/setup-hypr
 ./install
 ```
 
-It is not recommended to mix and match this with other rices / distros since it will break 99.9% of the time because of package conflicts / clashing configuration paths.
+> [!Caution]
+> It is not recommended to mix and match this with other rices / distros since it will break 99.9% of the time because of package conflicts / clashing configuration paths.
+> This rice also modifies a lot of configs, so be sure to check out `~/Material/configs/` to see which configs it overrides. 
 
 ### Updating
 To update material you will need to pull the latest changes from github and restore the configs by doing -
@@ -27,6 +30,11 @@ cd ~/Material/setup-hypr
 git pull
 ./install
 ```
+
+## Collaboration / Requests
+> [!Note] 
+> If you want your waybar configs / wallpapers / ideas implemented in this rice feel free to submit a PR. 
+> I am welcome to improvements to my rice, just be sure to follow the design of the other bars / themes and implement theming correctly.
 
 ## Custom created themes with Thememanager
 
