@@ -83,6 +83,8 @@ git pull
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9]
 | <kbd>Print</kbd> | take screenshot
 
+Vim Keybindings can be used instead of arrow bindings and are encouraged.
+
 ## Gallery
 
 <br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_1.png"/><br></div>
@@ -93,8 +95,7 @@ git pull
 
 <br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_4.png"/><br></div>
 
-
-Vim Keybindings can be used instead of arrow bindings and are encouraged.
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_5.png"/><br></div>
 
 ## Credits
 - [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
