@@ -85,13 +85,13 @@ git pull
 
 ## Gallery
 
-<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_1"/><br></div>
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_1.png"/><br></div>
 
-<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_2"/><br></div>
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_2.png"/><br></div>
 
-<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_3"/><br></div>
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_3.png"/><br></div>
 
-<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_4"/><br></div>
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_4.png"/><br></div>
 
 
 Vim Keybindings can be used instead of arrow bindings and are encouraged.
