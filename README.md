@@ -71,7 +71,6 @@ git pull
 | <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>←</kbd> | previous wallpaper
 | <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>↑</kbd> | next waybar style
 | <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>↓</kbd> | previous waybar style
-| <kbd>Shift</kbd> + <kbd>Print</kbd>  | select area for a screenshot
 | <kbd>Alt</kbd> + <kbd>P</kbd> | launch hex colorpicker (hyprpicker)
 | <kbd>Alt</kbd> + <kbd>RightClick</kbd> | resize the window
 | <kbd>Alt</kbd> + <kbd>LeftClick</kbd> | change the window position
@@ -81,6 +80,7 @@ git pull
 | <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| resize currently focused window (1px)
 | <kbd>Alt</kbd> + <kbd>[0-9]</kbd> | switch to workspace [0-9]
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9]
+| <kbd>Shift</kbd> + <kbd>Print</kbd>  | select area for a screenshot
 | <kbd>Print</kbd> | take screenshot
 
 Vim Keybindings can be used instead of arrow bindings and are encouraged.
@@ -96,6 +96,10 @@ Vim Keybindings can be used instead of arrow bindings and are encouraged.
 <br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_4.png"/><br></div>
 
 <br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_5.png"/><br></div>
+
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_6.png"/><br></div>
+
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_7.png"/><br></div>
 
 ## Credits
 - [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
