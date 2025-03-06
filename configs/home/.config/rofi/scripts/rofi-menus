@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euox pipefail
+
+# Credits to: https://github.com/debxp/dmenu-scripts/blob/master/dmenu-kill-process
+# Replace your launcher in the $launcher variable eg. rofi -dmenu or dmenu
+
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
+script_path="$HOME/.config/rofi/scripts"
+
+# Check if wofi is already running
+if pgrep -x "rofi" >/dev/null; then
+    pkill -x "rofi"
+    exit 0
+fi
+
+# list only executable non-binary files
+run_rofi="$(find $script_path/rofi-* -maxdepth 1 -type f -executable \
+          -exec grep -Iq . {} \; -print \
+          | sed 's|^'$script_path/'||' \
+          | sort \
+          | rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -i -p "~ Material scripts ~ ")"
+
+eval "$script_path/$run_rofi"
+
+exit 0

@@ -1,0 +1,51 @@
+#!/bin/sh
+set -euo pipefail
+
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
+RICE_DIR="$HOME/.config/swww/rices"
+RICES=()
+
+for FILE in "$RICE_DIR"/*; do
+    [[ -f "$FILE" && "$(basename "$FILE")" != "#entries#" ]] || continue
+
+    NAME=$(grep '^name *= *' "$FILE" | cut -d '=' -f2- | xargs)
+    WALLPAPER=$(grep '^wallpaper *= *' "$FILE" | cut -d '=' -f2- | xargs)
+
+    if [[ -n "$NAME" && -n "$WALLPAPER" ]]; then
+        RICES+=("$NAME/$WALLPAPER")
+    fi
+done
+
+SWWW_DIR="/home/${USER}/.config/swww"
+CURRENT_RICE="$(awk '/rice-current/ {print $NF}' /home/${USER}/.config/material/config)"
+
+# Set some variables
+WALLPAPERS="${SWWW_DIR}/walls"
+CACHE_DIR="${HOME}/.cache/material/swww/rice-thumb/"
+
+# Create cache dir if not exists
+if [ ! -d "${CACHE_DIR}" ] ; then
+    mkdir -p "${CACHE_DIR}"
+fi
+
+for ENTRY in "${RICES[@]}"; do
+    FILE_PATH="$HOME/.config/swww/walls/$ENTRY"
+
+    [[ -e "${CACHE_DIR}" ]] && continue
+    # check if the file exists
+    if [[ -f $FILE_PATH ]]; then
+        RICE=$(basename "$(dirname "$FILE_PATH")")
+		convert -strip "$FILE_PATH" -thumbnail 500x500^ -gravity center -extent 500x500 "${CACHE_DIR}/${RICE}"
+        notify-send "Caching thumbnails..."
+    else
+        echo "Missing file: $FILE_PATH, this should normally never happen but it can"
+    fi
+done
+
+# Select a picture with rofi
+SELECTION=$(find "${CACHE_DIR}" -maxdepth 1 -exec basename {} \; | sed 's/thumb//g' | tail -n +2 | sort | while read -r A ; do  echo -en "$A\x00icon\x1f""${CACHE_DIR}"/"$A\n" ; done | rofi -config ~/.config/rofi/wallpaper.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}")
+
+# Set the rice
+~/.config/hypr/scripts/swww-theme $SELECTION

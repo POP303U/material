@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -euox pipefail
+
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
+SELECTION="$(sed '/^### ENTRIES ###$/d' /home/${USER}/.config/waybar/rices/#entries# | rofi -config ~/.config/rofi/config_no-icons.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -p "~ Material bar changer ~ " -i)"
+BAR_FULL_NAME="$(echo $SELECTION | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
+BAR_FILE="/home/${USER}/.config/waybar/rices/${BAR_FULL_NAME}"
+BAR_NAME="$(grep "name" "$BAR_FILE" | awk -F '=' '{print $2}')" # eg: Blur-Top
+
+if [[ ! -f "$BAR_FILE" ]]; then
+    echo "Error: Rice file with the name '$RICE_FULL_NAME' not found in the specified directory."
+    exit 1
+fi
+
+sed -i 's|^bar-current.*|bar-current = '$BAR_NAME'|' ~/.config/material/config
+~/.config/hypr/scripts/manage-waybar

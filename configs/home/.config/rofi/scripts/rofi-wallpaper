@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -euox pipefail
+
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
+SWWW_DIR="/home/${USER}/.config/swww"
+CURRENT_RICE="$(awk '/rice-current/ {print $NF}' /home/${USER}/.config/material/config)"
+
+# Set some variables
+WALLPAPERS="${SWWW_DIR}/walls/${CURRENT_RICE}"
+CACHE_DIR="${HOME}/.cache/material/swww/wall-thumb/${CURRENT_RICE}"
+
+# Set the wallpaper later
+CHANGE_WALLPAPER="${HOME}/.config/swww/scripts/change_wallpaper"
+
+# Create cache dir if not exists
+if [ ! -d "${CACHE_DIR}" ] ; then
+    mkdir -p "${CACHE_DIR}"
+fi
+
+# Convert images in directory and save to cache dir
+for IMAGES in "$WALLPAPERS"/*.{jpg,jpeg,png,webp}; do
+	if [ -f "$IMAGES" ]; then
+		IMAGE_NAME=$(basename "$IMAGES")
+		if [ ! -f "${CACHE_DIR}/${IMAGE_NAME}" ] ; then
+            notify-send "Caching thumbnails..."
+		    convert -strip "$IMAGES" -thumbnail 500x500^ -gravity center -extent 500x500 "${CACHE_DIR}/${IMAGE_NAME}"
+        fi
+    fi
+done
+
+# Select a picture with rofi
+SELECTION=$(find "${WALLPAPERS}"  -maxdepth 1  -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -exec basename {} \; | sort | while read -r A ; do  echo -en "$A\x00icon\x1f""${CACHE_DIR}"/"$A\n" ; done | rofi -config ~/.config/rofi/wallpaper.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}")
+
+echo $SELECTION
+# Set the wallpaper
+[[ -n "$SELECTION" ]] || exit 1
+~/.config/hypr/scripts/swww-wallpaper "$CURRENT_RICE" "${SELECTION}"

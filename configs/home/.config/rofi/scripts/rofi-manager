@@ -1,0 +1,24 @@
+#!/bin/sh
+set -euox pipefail
+
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
+function run_submenu() {
+    "$MENU_SCRIPT"
+}
+
+MENU_PATH="/home/${USER}/.config/rofi/manager/submenus"
+SUBMENU_TYPE="${1:-"main"}"
+
+# use --cache-file /dev/null to use predefined order
+SUBMENU="$(sed '/^### ENTRIES ###$/d' ${MENU_PATH}/${SUBMENU_TYPE}/#entries# | rofi -config ~/.config/rofi/settings.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -p "~ Material settings ~ " -i)"
+MENU_NAME="$(echo $SUBMENU | awk '{sub(/^[^ ]+ /, ""); print}' | xargs)"
+MENU_SCRIPT="$MENU_PATH/$SUBMENU_TYPE/$MENU_NAME"
+
+if [[ ! -f "$MENU_SCRIPT" ]]; then
+    echo "Error: Script with the name '$MENU_SCRIPT' not found in the specified directory."
+    exit 1
+fi
+
+run_submenu
