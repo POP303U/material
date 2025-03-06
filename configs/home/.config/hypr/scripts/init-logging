@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Set up a log file for debugging
-mkdir -pv /tmp/material/null 
+mkdir /tmp/material/null 
 
 echo "--------------------------------------------
    Material Log File
