@@ -1,5 +1,0 @@
-#!/bin/sh
-
-### Grep and kill all autoclickers
-dunstify "Material" "Stopped Autoclicker" --timeout=2500
-pkill -SIGKILL $(ps -A | grep 'clicker-start' | tail -1 | awk '{print $4}')

@@ -1,7 +1,0 @@
-#!/bin/sh
-
-### Click 'Til Death
-dunstify "Material" "Started Autoclicker" --timeout=2500
-while true; do
-    xdotool click 1
-done
