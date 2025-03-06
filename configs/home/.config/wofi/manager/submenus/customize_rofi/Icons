@@ -1,4 +1,0 @@
-#!/bin/sh
-
-ln -sf ~/.config/rofi/styles/slim_icons.rasi ~/.config/rofi/config.rasi
-sed -i 's|rofi-style.*|rofi-style = slim_icons|' "$HOME/.config/material/config"

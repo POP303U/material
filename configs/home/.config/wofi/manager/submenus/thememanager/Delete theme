@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# Source scaling variables
-source ~/.config/hypr/scripts/globalvars
-
-THEME=$(dir -1 $HOME/.config/material/themes | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -i -p "~ Delete your preferred theme ~")
-CHOICE=$(dir -1 $HOME/.config/wofi/manager/submenus/thememanager/confirm | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -i -p "Theme '$THEME' will be deleted permantly, are you sure?")
-
-[[ "$CHOICE" == "Yes" ]] && rm -f $HOME/.config/material/themes/$THEME

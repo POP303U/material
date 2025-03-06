@@ -1,4 +1,0 @@
-#!/bin/sh
-
-sed -i 's|perltone-colors.*|perltone-colors = pastel|' ~/.config/material/config
-~/.config/hypr/scripts/load-config-material >/dev/null 2>&1

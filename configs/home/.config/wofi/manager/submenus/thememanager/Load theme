@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# Source scaling variables
-source ~/.config/hypr/scripts/globalvars
-
-THEME=$(dir -1 $HOME/.config/material/themes | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -i -p "~ Load your preferred theme ~")
-~/.config/hypr/scripts/load-config-material ~/.config/material/themes/$THEME 

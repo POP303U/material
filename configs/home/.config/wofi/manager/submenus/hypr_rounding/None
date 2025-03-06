@@ -1,4 +1,0 @@
-#!/bin/sh
-
-sed -i 's|rounding =.*|rounding = 0| ' ~/.config/hypr/decoration.conf
-sed -i 's|corner-rounding.*|corner-rounding = 0| ' ~/.config/material/config

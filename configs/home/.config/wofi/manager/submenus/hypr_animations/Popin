@@ -1,4 +1,0 @@
-#!/bin/sh
-
-sed -i 's|source.*|source = ~/.config/hypr/animations/Popin.conf|' ~/.config/hypr/animations.conf
-sed -i 's|animations-current.*|animations-current = Popin|' ~/.config/material/config
