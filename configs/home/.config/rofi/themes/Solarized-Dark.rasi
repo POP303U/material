@@ -12,7 +12,6 @@
 
 	foreground: @fgd;
 	background: @bg;
-	active-background: @cur;
 	urgent-background: @red;
     transparent-background: rgba(0, 33, 44, 1);
 
