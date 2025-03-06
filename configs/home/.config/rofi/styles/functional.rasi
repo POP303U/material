@@ -98,7 +98,7 @@ mode-switcher {
 
 button {
     padding:                      15px 10px 15px 10px;
-    border-radius:                21px;
+    border-radius:                999px;
     text-color:                   inherit;
     background-color:             @background;
     cursor:                       pointer;

@@ -20,7 +20,7 @@ configuration {
 /* ---- Window ---- */
 window {
     height:                      36em;
-    width:                       26em;
+    width:                       24em;
     x-offset:                     0em;
     y-offset:                     0em;
     spacing:                      0em;
@@ -40,9 +40,9 @@ mainbox {
     enabled:                      true;
     spacing:                      0px;
     margin:                       0px;
-    background-color:             @background;
+    background-color:             @transparent-background;
     children:                     [ "imagebox", "listview" ];
-    padding:                      21px;
+    border-radius:                0px;
 }
 
 /* ---- Imagebox ---- */
@@ -51,8 +51,7 @@ imagebox {
     padding:                      0em;
     background-image:             url("~/.config/swww/wallpaper.thumb", height);
     children:                     [ "inputmode" ];
-    padding:                      0.7em;
-    border-radius:                21px;
+    padding:                      21px;
     background-color:             transparent;
 }
 
@@ -65,20 +64,13 @@ inputmode {
     background-color:            transparent;
 }
 
-/* ---- Listbox ---- */
-listbox {
-    spacing:                      0em;
-    padding:                      0em;
-    children:                     [ "listview" ];
-}
-
 /* ---- Inputbar ---- */
 inputbar {
     enabled:                      true;
     text-color:                   @foreground;
     padding:                      0.75em;
     margin:                       0.5em 0.5em 0em 0.5em;
-    border-radius:                21px;
+    border-radius:                999px;
     border-color:                 @foreground;
     background-color:             @background;
     children:                     [ "textbox-prompt-colon", "entry"];
@@ -106,7 +98,7 @@ entry {
 listview {
     background-color:             @transparent-background;
     enabled:                      true;
-    margin:                       1em 0em 0em 0em;
+    margin:                       0.5em 1em 0em 1em;
     cycle:                        true;
     dynamic:                      true;
     scrollbar:                    false;
@@ -114,9 +106,7 @@ listview {
     reverse:                      false;
     fixed-height:                 true;
     fixed-columns:                true;
-    padding:                      0.35em;
     border:                       0px;
-    border-radius:                21px;
 }
 
 /* ---- Element ---- */

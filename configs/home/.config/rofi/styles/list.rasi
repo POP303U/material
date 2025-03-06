@@ -19,7 +19,7 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                       38em;
+    height:                       35em;
     width:                        24em;
     x-offset:                     0em;
     y-offset:                     0em;
@@ -64,7 +64,7 @@ inputbar {
     text-color:                   @foreground;
     padding:                      0.9em;
     margin:                       1.0em 1.5em 1.6em 1.5em;
-    border-radius:                21px;
+    border-radius:                999px;
     border-color:                 @foreground;
     background-color:             @background;
     children:                     [ "textbox-prompt-colon", "entry"];
@@ -93,21 +93,21 @@ mode-switcher {
     orientation:                  horizontal;
     enabled:                      true;
     spacing:                      1.0em;
-    margin:                       1.5em 1.5em 0.5em 1.5em;
+    margin:                       0em 3em 0em 3em;
+    padding:                      1em 0em 1em 0em;
     width:                        18em;
-    border-radius:                21px;
     text-color:                   @foreground;
     background-color:             transparent;
 }
 
 button {
-    padding:                      15px 10px 15px 10px;
-    border-radius:                21px;
+    padding:                      26px 0px 26px 0px;
+    border-radius:                999px;
     text-color:                   inherit;
     background-color:             @background;
     cursor:                       pointer;
     border:                       0px;
-    vertical-align:               0.50;
+    vertical-align:               0.30;
     horizontal-align:             0.45;
 }
 
@@ -121,7 +121,7 @@ listview {
     background-color:             @transparent-background;
     enabled:                      true;
     columns:                      1;
-    lines:                        6;
+    lines:                        5;
     cycle:                        true;
     dynamic:                      true;
     expand:                       false;

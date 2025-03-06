@@ -1,6 +1,6 @@
-@define-color border #2F2F38;
-@define-color surface #1A1A1D;
-@define-color text #EEEEEB;
+@define-color border #E8E1E8;
+@define-color surface #FFFFFF;
+@define-color text #000000;
 
-@define-color color-focus #9E6278;
-@define-color color-hover #D498AE;
+@define-color color-focus #834661;
+@define-color color-hover #B97C97;

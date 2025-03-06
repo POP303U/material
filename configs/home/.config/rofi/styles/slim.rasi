@@ -63,7 +63,7 @@ inputbar {
     text-color:                   @foreground;
     padding:                      0.9em;
     margin:                       1.8em 1.5em 2.3em 1.5em;
-    border-radius:                21px;
+    border-radius:                999px;
     width:                        22em;
     border-color:                 @foreground;
     background-color:             @background;
@@ -93,7 +93,7 @@ mode-switcher {
     orientation:                  horizontal;
     enabled:                      true;
     spacing:                      1.0em;
-    margin:                       1.8em 1.5em 2.3em 1.5em;
+    margin:                       1.8em 1.9em 2.3em 2.0em;
     width:                        18em;
     border-radius:                21px;
     text-color:                   @foreground;
@@ -101,8 +101,8 @@ mode-switcher {
 }
 
 button {
-    padding:                      15px 10px 15px 10px;
-    border-radius:                21px;
+    padding:                      20px 10px 20px 10px;
+    border-radius:                999px;
     text-color:                   inherit;
     background-color:             @background;
     cursor:                       pointer;
@@ -131,7 +131,7 @@ listview {
     fixed-columns:                true;
     padding:                      0.35em;
     border:                       0px;
-    border-radius:                21px;
+    border-radius:                0px 0px 21px 21px;
 }
 
 /* ---- Element ---- */

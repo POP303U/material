@@ -1,19 +1,19 @@
 @define-color bar-bg rgba(0,0,0,0);
-@define-color bar-tr rgba(26, 26, 29, 0.7);
+@define-color bar-tr rgba(255, 255, 255, 0.27);
 
-@define-color base #2F2F38;
-@define-color surface #1A1A1D;
-@define-color overlay #62626B;
-@define-color muted #898990;
-@define-color subtle #898990;
-@define-color text #EEEEEB;
-@define-color love #A36D83;
-@define-color gold #BF8399;
-@define-color rose #E19FB3;
-@define-color pine #F3C9DA;
-@define-color foam #E19FB3;
-@define-color iris #62626B;
+@define-color base #E8E1E8;
+@define-color surface #FFFFFF;
+@define-color overlay #916D92;
+@define-color muted #937094;
+@define-color subtle #937094;
+@define-color text #000000;
+@define-color love #D67E51;
+@define-color gold #6972B7;
+@define-color rose #CF6D97;
+@define-color pine #D5A2A6;
+@define-color foam #CF6D97;
+@define-color iris #856A86;
 
-@define-color battery #6A5361;
-@define-color workspace-button-inactive #895E73;
-@define-color workspace-button-active #EEEEEB;
+@define-color battery #642C57;
+@define-color workspace-button-inactive #B83F59;
+@define-color workspace-button-active #000000;

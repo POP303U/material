@@ -734,3 +734,5 @@ else
     nice_arrow             # simple fat blue arrow 
     colorwheel 
 fi
+
+export PATH=$PATH:/home/pops/.spicetify

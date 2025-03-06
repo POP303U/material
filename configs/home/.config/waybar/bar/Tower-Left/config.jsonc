@@ -1,35 +1,27 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "left", // Waybar position (top|bottom|left|right)
-    "margin": "10 0 10 10",
+    "margin": "0 0 0 0",
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
     // Modules configuration
 
     "modules-left": [
-        "custom/arch_logo",
-        "keyboard-state",
-        "memory",
-        "disk",
-        "cpu",
-    ],
-
-    "modules-center": [
         "hyprland/workspaces",
-    ],
-
-    "modules-right": [
         "custom/theme_settings",
         "custom/power_button", 
         "custom/wall_switcher",
         "custom/theme_switcher",
         "custom/waybar_switcher",
+    ],
+
+    "modules-right": [
         "custom/seperator",
         "pulseaudio", 
         "pulseaudio#microphone",
-        "clock", 
         "tray",
+        "clock", 
     ],
 
    "hyprland/workspaces": {
@@ -79,7 +71,7 @@
         "exec": "echo ; echo   switch waybar",
         "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-waybar-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -97,7 +89,7 @@
         "rotate": 0,
         "format" : "{}",
         "exec": "echo ; echo   launch settings",
-        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click": "~/.config/rofi/scripts/rofi-manager",
         "on-click-right": "~/.config/hypr/scripts/system-upgrade",
         "interval": 86400,
         "tooltip": true
@@ -109,7 +101,7 @@
         "exec": "echo ; echo   change theme",
         "on-click": "~/.config/hypr/scripts/rice-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-rice-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -120,7 +112,7 @@
         "exec": "echo ; echo 󰋩  change wallpaper",
         "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-wallpaper",
         "interval": 86400,
         "tooltip": true
     },
@@ -194,13 +186,14 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}",
+        "format": "{icon}",
         "tooltip": false,
-        "format-muted": " Mute",
+        "format-muted": "",
         "on-click": "pamixer -t",
         "on-click-right": "~/.config/hypr/scripts/audiomixer-launch",
         "on-scroll-up": "pamixer -i 5",
         "on-scroll-down": "pamixer -d 5",
+        "tooltip-format": "{icon} {desc} // {volume}%",
         "scroll-step": 5,
         "format-icons": {
             "headphone": "",
@@ -213,14 +206,14 @@
         }
     },
 
-
     "pulseaudio#microphone": {
         "format": "{format_source}",
-        "format-source": " {volume}",
-        "format-source-muted": " Mute",
+        "format-source": "",
+        "format-source-muted": " ",
         "on-click": "pamixer --default-source -t",
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
+        "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
 
@@ -229,7 +222,7 @@
         "tooltip" : true,
         "format" : "{}",
         "interval" : 30,
-        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "exec" : "~/.config/waybar/scripts/waybar-weather.py",
         "return-type" : "json"
     },
 

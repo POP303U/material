@@ -4,7 +4,7 @@
 source ~/.config/hypr/scripts/globalvars
 
 [ ! -e $HOME/.config/hypr/resolutions ] && $HOME/.config/hypr/scripts/generate-resolutions
-RESOLUTION=$(dir -1 $HOME/.config/hypr/resolutions | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -i -p "~ Load your preferred resolution ~")
+RESOLUTION=$(dir -1 $HOME/.config/hypr/resolutions | rofi -config ~/.config/rofi/settings.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -i -p "~ Load your preferred resolution ~")
 
 [[ $RESOLUTION == "" ]] && exit 1
 

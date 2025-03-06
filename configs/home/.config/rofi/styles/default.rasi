@@ -100,21 +100,22 @@ mode-switcher {
     orientation:                  vertical;
     enabled:                      true;
     spacing:                      1em;
-    margin:                       0em 20em 0em 0em;
-    padding:                      21px;
-    border-radius:                21px;
+    margin:                       7em 15em 7em 0em;
+    padding:                      0em 7em 1em 0em;
     text-color:                   @foreground;
-    background-color:             @background;
+    border-radius:                21px;
+    background-color:             transparent;
 }
 
 button {
-    padding:                      15px 10px 15px 10px;
-    border-radius:                21px;
+    padding:                      25px 0px 25px 0px;
+    border-radius:                999px;
     text-color:                   inherit;
+    background-color:             @background;
     cursor:                       pointer;
     border:                       0px;
     vertical-align:               0.50;
-    horizontal-align:             0.40;
+    horizontal-align:             0.44;
 }
 
 button selected {

@@ -4,10 +4,11 @@
     "mod": "dock",
     "exclusive": true,
     "passthrough": false,
+    "height": 0,
     "gtk-layer-shell": true,
     "modules-left": [
         "custom/padding_left",
-        "hyprland/workspaces",
+        "wlr/taskbar",
         "custom/padding_right",
         "custom/padding_left",
         "custom/theme_settings",
@@ -26,39 +27,27 @@
         "custom/padding_left",
         "clock",
         "custom/padding_right",
-        "custom/weather", 
     ],
 
     "modules-right": [
         "custom/padding_left",
         "network",
         "custom/padding_right",
+        "custom/weather", 
         "custom/padding_left",
         "pulseaudio",
         "pulseaudio#microphone",
         "custom/padding_right",
     ],
 
-    "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
+    "wlr/taskbar": {
         "on-click": "activate",
-        "format": "{icon}",
-        "urgent": " ",
+        "format": "{icon}"
     },
-    
+
     "hyprland/window": {
         "max-length": 80,
         "seperate-outputs": true,
-    },
-
-    "custom/weather" : {
-        //shows the current weather and forecast
-        "tooltip" : true,
-        "format" : "{}",
-        "interval" : 30,
-        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
-        "return-type" : "json"
     },
 
     "custom/waybar_switcher": {
@@ -67,7 +56,7 @@
         "exec": "echo ; echo   switch waybar",
         "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-waybar-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -85,7 +74,7 @@
         "rotate": 0,
         "format" : "{}",
         "exec": "echo ; echo   launch settings",
-        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click": "~/.config/rofi/scripts/rofi-manager",
         "on-click-right": "~/.config/hypr/scripts/system-upgrade",
         "interval": 86400,
         "tooltip": true
@@ -97,7 +86,7 @@
         "exec": "echo ; echo   change theme",
         "on-click": "~/.config/hypr/scripts/rice-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-rice-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -108,7 +97,7 @@
         "exec": "echo ; echo 󰋩  change wallpaper",
         "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-wallpaper",
         "interval": 86400,
         "tooltip": true
     },
@@ -118,7 +107,7 @@
         "tooltip" : true,
         "format" : "{}",
         "interval" : 30,
-        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "exec" : "~/.config/hypr/scripts/waybar-weather.py",
         "return-type" : "json"
     },
 

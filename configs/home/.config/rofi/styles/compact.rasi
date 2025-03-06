@@ -98,16 +98,15 @@ mode-switcher {
     orientation:                  vertical;
     enabled:                      true;
     spacing:                      1em;
-    margin:                       7em 15em 0em 0em;
+    margin:                       6em 15em 0em 0em;
     padding:                      0em 0.5em 0.5em 0.0em;
-    border-radius:                21px;
     text-color:                   @foreground;
     background-color:             transparent;
 }
 
 button {
     padding:                      20px 10px 20px 10px;
-    border-radius:                21px;
+    border-radius:                999px;
     text-color:                   inherit;
     background-color:             @background;
     cursor:                       pointer;

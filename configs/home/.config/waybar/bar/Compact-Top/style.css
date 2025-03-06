@@ -83,13 +83,13 @@ tooltip label {
 #custom-power_button,
 #custom-theme_switcher,
 #custom-wall_switcher,
-#custom-cpu,
 #keyboard-state,
 #clock,
 #battery,
 #pulseaudio,
 #network,
-#custom-memory,
+#memory,
+#cpu,
 #disk,
 #bluetooth,
 #temperature,
@@ -124,7 +124,7 @@ tooltip label {
     background-color: @foam;
 }
 
-#custom-cpu {
+#cpu {
     background-color: @foam;
 }
 
@@ -132,12 +132,8 @@ tooltip label {
     background-color: @love;
 }
 
-#custom-memory {
+#memory {
     background-color: @pine;
-}
-
-#cpu {
-    background-color: @iris;
 }
 
 #battery {

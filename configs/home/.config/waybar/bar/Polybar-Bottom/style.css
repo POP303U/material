@@ -11,7 +11,7 @@
 window#waybar {
     background: @surface;
     border-radius: 21px;
-    border: 3px solid @base;
+    border: 3px solid @surface;
 }
 
 tooltip {
@@ -121,12 +121,16 @@ tooltip label {
     color: @rose;
 }
 
-#battery {
-    color: @battery;
+#custom-seperator {
+    color: @pine;
 }
 
-#custom-seperator {
-    color: @muted;
+#custom-seperator2x {
+    color: @pine;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-right: 4px;
+    margin-left: 4px;
 }
 
 #custom-weather {
@@ -167,3 +171,30 @@ tooltip label {
     margin-right: 9px;
 }
 
+#custom-padding_1px {
+    padding-left: 1px;
+    padding-right: 1px;
+    margin-right: 1px;
+    margin-left: 1px;
+}
+
+#custom-padding_3px {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+#custom-padding_5px {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#custom-padding_10px {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}

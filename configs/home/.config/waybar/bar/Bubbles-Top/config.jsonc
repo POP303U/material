@@ -72,7 +72,7 @@
         "tooltip" : true,
         "format" : "{}",
         "interval" : 30,
-        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "exec" : "~/.config/hypr/scripts/waybar-weather.py",
         "return-type" : "json"
     },
 

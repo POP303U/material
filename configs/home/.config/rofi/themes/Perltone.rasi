@@ -1,19 +1,19 @@
 * {
-	bg: #121018;
-	cur: #50576F;
-	fgd: #EDEFE7;
+	bg: #FFFFFF;
+	cur: #B83F59;
+	fgd: #000000;
 	cmt: #928374;
-	cya: #645F75;
-	grn: #53495A;
-	ora: #50576F;
-	pur: #804F6B;
-	red: #6B778D;
-	yel: #AB7296;
+	cya: #856A86;
+	grn: #642C57;
+	ora: #B83F59;
+	pur: #D67E51;
+	red: #6972B7;
+	yel: #CF6D97;
 
 	foreground: @fgd;
 	background: @bg;
 	urgent-background: @red;
-    transparent-background: rgba(23, 21, 29, 1);
+    transparent-background: rgba(246, 246, 246, 1);
 
 	selected-background: @active-background;
 	selected-urgent-background: @urgent-background;

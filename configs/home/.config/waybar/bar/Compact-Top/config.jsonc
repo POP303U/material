@@ -15,10 +15,10 @@
         "pulseaudio#microphone",
         "custom/padding_right_gold",
         "custom/padding_left_foam",
-        "custom/cpu", 
+        "cpu", 
         "custom/padding_right_foam",
         "custom/padding_left_pine",
-        "custom/memory",
+        "memory",
         "custom/padding_right_pine",
         "battery",
     ],
@@ -74,21 +74,13 @@
         "seperate-outputs": true,
     },
 
-    "custom/weather" : {
-        "tooltip" : true,
-        "format" : "{}",
-        "interval": 1,
-        "exec" : "~/.config/hypr/scripts/cpustats",
-        "return-type" : "json"
-    },
-
     "custom/waybar_switcher": {
         "rotate": 0,
         "format" : "{}",
         "exec": "echo ; echo   switch waybar",
         "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-waybar-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -106,7 +98,7 @@
         "rotate": 0,
         "format" : "{}",
         "exec": "echo ; echo   launch settings",
-        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click": "~/.config/rofi/scripts/rofi-manager",
         "on-click-right": "~/.config/hypr/scripts/system-upgrade",
         "interval": 86400,
         "tooltip": true
@@ -118,7 +110,7 @@
         "exec": "echo ; echo   change theme",
         "on-click": "~/.config/hypr/scripts/rice-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-rice-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -129,7 +121,7 @@
         "exec": "echo ; echo 󰋩  change wallpaper",
         "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-wallpaper",
         "interval": 86400,
         "tooltip": true
     },
@@ -172,20 +164,16 @@
         "path": "/"
     },
 
-    "custom/memory": {
-        "tooltip" : true,
-        "format" : "{}",
-        "interval": 1,
-        "exec" : "~/.config/hypr/scripts/memstats",
-        "return-type" : "json"
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "max-length": 10
     },
 
-    "custom/cpu": {
-        "tooltip" : true,
-        "format" : "{}",
+    "cpu": {
         "interval": 1,
-        "exec" : "~/.config/hypr/scripts/cpustats",
-        "return-type" : "json"
+        "format": "󰻠 {usage}%",
+        "max-length": 10
     },
 
     "pulseaudio": {

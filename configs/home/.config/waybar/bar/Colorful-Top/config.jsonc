@@ -25,25 +25,21 @@
     ],
 
     "modules-right": [
-        "custom/padding_left_rose",
-        "custom/weather", 
-        "custom/padding_right_rose",
         "custom/padding_left_foam",
         "disk",
         "memory",
         "cpu",
         "custom/padding_right_foam",
-        "custom/padding_left_gold",
-        "battery",
+        "custom/padding_left_pine",
         "network",
-        "custom/padding_right_gold",
+        "custom/padding_right_pine",
         "custom/padding_left_rose",
         "pulseaudio",
         "pulseaudio#microphone",
         "custom/padding_right_rose",
-        "custom/padding_left_pine",
+        "custom/padding_left",
         "tray",
-        "custom/padding_right_pine",
+        "custom/padding_right",
     ],
 
     "hyprland/workspaces": {
@@ -70,7 +66,7 @@
         "tooltip" : true,
         "format" : "{}",
         "interval" : 30,
-        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "exec" : "~/.config/hypr/scripts/waybar-weather.py",
         "return-type" : "json"
     },
 
@@ -80,7 +76,7 @@
         "exec": "echo ; echo   switch waybar",
         "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-waybar-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -98,7 +94,7 @@
         "rotate": 0,
         "format" : "{}",
         "exec": "echo ; echo   launch settings",
-        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click": "~/.config/rofi/scripts/rofi-manager",
         "on-click-right": "~/.config/hypr/scripts/system-upgrade",
         "interval": 86400,
         "tooltip": true
@@ -110,7 +106,7 @@
         "exec": "echo ; echo   change theme",
         "on-click": "~/.config/hypr/scripts/rice-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-rice-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -121,7 +117,7 @@
         "exec": "echo ; echo 󰋩  change wallpaper",
         "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-wallpaper",
         "interval": 86400,
         "tooltip": true
     },

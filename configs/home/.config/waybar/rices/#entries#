@@ -2,17 +2,15 @@
 Change the bar used.
 󱝊  Blur-Top 
 󱝊  Blur-Bottom
-󰣇  Hyprdots-Bottom
-󰣇  Hyprdots-Top
-󰇅  Tower-Left
-󰇅  Tower-Right
 󰗣  Bubbles-Bottom
 󰗣  Bubbles-Top
   Colorful-Bottom
   Colorful-Top
-󱓻  Compact-Bottom
-󱓻  Compact-Top
+󰣇  Compact-Bottom
+󰣇  Compact-Top
 󰅟  Floaty-Bottom
 󰅟  Floaty-Top
   Polybar-Bottom
   Polybar-Top
+󰇅  Tower-Left
+󰇅  Tower-Right

@@ -217,7 +217,7 @@ while (!$main_color) {
 ### Choose a secondary color 
 my $secondary_color = adjust_color_brightness($main_color, 0.15, 'brighten');
 my $secondary_limit = 1;
-while (!$main_color) {
+while (!$secondary_color) {
     foreach my $color (@adjusted_colors) {
         if (is_color_vibrant($color, $saturation_threshold / $secondary_limit, $brightness_threshold / $secondary_limit)) {
             $secondary_color = $color;

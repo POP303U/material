@@ -10,7 +10,7 @@
 
 window#waybar {
     background: @surface;
-    border: 3px solid @base;
+    border: 4px solid @surface;
     border-radius: 21px;
 }
 
@@ -30,17 +30,13 @@ tooltip label {
 }
 
 #workspaces button {
-    all: initial;
-    color: @base;
-    background: @subtle;
-    margin-right: 4px;
-    margin-left: 4px;
+    color: @text;
     margin-top: 4px;
     margin-bottom: 4px;
-    padding-right: 12px;
-    padding-left: 12px;
+    padding-right: 10px;
+    padding-left: 10px;
     opacity: 0.7;
-    border-radius: 360px;
+    border-radius: 21px;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
@@ -48,9 +44,9 @@ tooltip label {
     color: @base;
     background: @rose;
     border-color: @rose;
-    border-radius: 360px;
+    border-radius: 21px;
     border: 3px; 
-    min-width: 40px;
+    min-width: 43px;
     transition: all 0.26s cubic-bezier(.55,-0.68,.48,1.682);
     opacity: 1.0;
 }
@@ -71,6 +67,8 @@ tooltip label {
 #custom-padding_right,
 #custom-padding_left_love,
 #custom-padding_right_love,
+#custom-padding_left_base,
+#custom-padding_right_base,
 #custom-padding_left_gold,
 #custom-padding_right_gold,
 #custom-padding_left_rose,
@@ -115,22 +113,22 @@ tooltip label {
 }
 
 #clock {
-    color: @base;
-    background: @rose;
+    color: @text;
+    background: @base;
 }
 
 #disk,
 #memory,
 #cpu {
     color: @base;
-    background: @pine;
+    background: @foam;
 }
 
 #network,
 #pulseaudio,
 #pulseaudio.microphone {
     color: @base;
-    background: @foam;
+    background: @love;
 }
 
 #battery {
@@ -187,6 +185,18 @@ tooltip label {
 #custom-padding_right {
     border-radius: 0px 21px 21px 0px;
     margin-right: 9px;
+}
+
+#custom-padding_left_base {
+    border-radius: 21px 0px 0px 21px;
+    margin-left: 9px;
+    background-color: @base;
+}
+
+#custom-padding_right_base {
+    border-radius: 0px 21px 21px 0px;
+    margin-right: 9px;
+    background-color: @base;
 }
 
 #custom-padding_left_love {
