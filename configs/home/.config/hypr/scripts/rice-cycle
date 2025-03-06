@@ -10,7 +10,7 @@ touch "${LOCKFILE}"
 trap 'rm -f ${LOCKFILE}' EXIT
 
 
-CHANGE_RICE="/home/${USER}/.config/swww/scripts/change_theme"
+CHANGE_RICE="/home/${USER}/.config/hypr/scripts/swww-theme"
 CURRENT_RICE="$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)"
 RICE_DIR="$HOME/.config/swww/walls"
 mapfile -t RICE_ARRAY < <(dir -1 "$RICE_DIR")

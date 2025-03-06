@@ -40,4 +40,3 @@ TIMESHIFT_STATUS='$(pacman -Si | grep timeshift | xargs)'
 sudo timeshift --create --comments 'after update: pacman -Syyu with material' --tags D
 sudo pacman -Syyu
 "
-

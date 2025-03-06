@@ -71,4 +71,4 @@ else
     echo "There is no # at the beginning of the statement, not modifying blur"
 fi
 
-~/.config/swww/scripts/change_theme $RICE_CURRENT $WALLPAPER_CURRENT 
+~/.config/hypr/scripts/swww-theme $RICE_CURRENT $WALLPAPER_CURRENT 

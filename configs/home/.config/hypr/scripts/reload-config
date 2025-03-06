@@ -1,1 +1,74 @@
-/home/pops/.config/hypr/scripts/load-config-material
+#!/bin/sh
+
+set -euox pipefail
+
+# lock instance, since two instances of this script will destroy your personal config
+
+LOCKFILE="/tmp/material/$(id -u)load-config-material.lock"
+[ -e "$LOCKFILE" ] && echo "An instance of the script is already running" && exit 1
+touch "${LOCKFILE}"
+trap 'rm -f ${LOCKFILE}' EXIT
+
+HYPR_PATH="$HOME/.config/hypr"
+DEFAULT_DIR="$HOME/.config/material"
+DEFAULT_CONFIG="config"
+SEL_CONFIG="${1:-$DEFAULT_DIR/$DEFAULT_CONFIG}"
+
+### OVERWRITE CONFIG ###
+[[ $SEL_CONFIG == ~/.config/material/config ]] || cp -dvfr $SEL_CONFIG ~/.config/material/config
+
+### RESTORE MATERIAL SETTINGS ###
+## hyprland.conf
+CORNER_ROUNDING=$(awk '/corner-rounding/ {print $NF}' $SEL_CONFIG)
+TILING_LAYOUT=$(awk '/tiling-layout/ {print $NF}' $SEL_CONFIG)
+GAPS_IN=$(awk '/gaps-in/ {print $NF}' $SEL_CONFIG)
+GAPS_OUT=$(awk '/gaps-out/ {print $NF}' $SEL_CONFIG)
+BORDER_SIZE=$(awk '/border-size/ {print $NF}' $SEL_CONFIG)
+
+sed -i 's|rounding =.*|rounding = '$CORNER_ROUNDING'|' "$HYPR_PATH/decoration.conf"
+sed -i 's|layout =.*|layout = '$TILING_LAYOUT'|' "$HYPR_PATH/hyprland.conf"
+sed -i 's|gaps_in =.*|gaps_in = '$GAPS_IN'|' "$HYPR_PATH/hyprland.conf"
+sed -i 's|gaps_out =.*|gaps_out = '$GAPS_OUT'|' "$HYPR_PATH/hyprland.conf"
+sed -i 's|border_size =.*|border_size = '$BORDER_SIZE'|' "$HYPR_PATH/hyprland.conf"
+
+## decoration.conf
+BLUR_SIZE=$(awk '/blur-size/ {print $NF}' $SEL_CONFIG)
+BLUR_PASSES=$(awk '/blur-passes/ {print $NF}' $SEL_CONFIG)
+BLUR_STATE=$(awk '/blur-state/ {print $NF}' $SEL_CONFIG)
+
+sed -i 's|size =.*|size = '$BLUR_SIZE'|' "$HYPR_PATH/decoration.conf"
+sed -i 's|passes =.*|passes = '$BLUR_PASSES'|' "$HYPR_PATH/decoration.conf"
+
+## animations.conf
+ANIMATIONS_STATE=$(awk '/animations-state/ {print $NF}' $SEL_CONFIG)
+ANIMATIONS_CURRENT=$(awk '/animations-current/ {print $NF}' $SEL_CONFIG)
+
+sed -i 's|source =.*|source = ~/.config/hypr/animations/'$ANIMATIONS_CURRENT'.conf |' "$HYPR_PATH/animations.conf"
+sed -i 's|enabled =.*|enabled = '$ANIMATIONS_STATE'|' "$HYPR_PATH/animations.conf"
+
+## config.rasi
+ROFI_STYLE=$(awk '/rofi-style/ {print $NF}' $SEL_CONFIG | xargs)
+
+ln -sf $HOME/.config/rofi/styles/${ROFI_STYLE}.rasi $HOME/.config/rofi/config.rasi 
+
+### LOAD ALL NECESSARY CHANGES ###
+RICE_CURRENT=$(awk '/rice-current/ {print $NF}' $SEL_CONFIG)
+WAYBAR_CURRENT=$(awk '/bar-current/ {print $NF}' $SEL_CONFIG)
+WALLPAPER_CURRENT=$(awk '/wallpaper-current/ {print $NF}' $SEL_CONFIG)
+
+BLUR_FLAG="$(grep "blurls" "$HOME/.config/waybar/rices/$WAYBAR_CURRENT" | awk -F '=' '{print $2}' | xargs)"
+BLUR_CURRENT=$(grep "layerrule" ~/.config/hypr/decoration.conf | xargs)
+
+# Checking if blur needs to enabled and checking if we have to modify decoration.conf pretty simple
+if [[ $BLUR_CURRENT =~ ^\s*# ]]; then
+    if [[ $BLUR_FLAG == "true" ]]; then
+        sed -i 's|.*layerrule = blur,waybar.*|    layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+    fi
+else
+    if [[ $BLUR_FLAG == "false" ]]; then
+        sed -i 's|.*layerrule = blur,waybar.*|    #layerrule = blur,waybar|' ~/.config/hypr/decoration.conf
+    fi
+    echo "There is no # at the beginning of the statement, not modifying blur"
+fi
+
+~/.config/hypr/scripts/swww-theme $RICE_CURRENT $WALLPAPER_CURRENT 

@@ -23,7 +23,7 @@ function reload_and_save() {
 
     PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
     if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
-        $HOME/.config/swww/scripts/change_theme_perltone
+        ~/.config/hypr/scripts/swww-theme-perltone
         exit 0
     fi
 }
@@ -44,11 +44,12 @@ function apply_wall() {
         --transition-pos "${RESOLUTION}"
 
     # generate blurred wallpapers
-    $HOME/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$NEXT_ELEMENT" &
+    ~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$NEXT_ELEMENT" &
     wait 
 }
 
 function select_wall() {
+    echo "hi"
     # Find the INDEX of the search string in the array
     local INDEX=-1
     local MODE=$1

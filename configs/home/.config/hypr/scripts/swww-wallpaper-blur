@@ -11,7 +11,7 @@ CURRENT_RICE="$1"
 WALLPAPER="$2"
 WALLPAPER_PATH="$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER"
 
-CACHE_DIR="$HOME/.cache/material"
+CACHE_DIR="$HOME/.cache/material/rofi"
 
 if [ ! -e "$CACHE_DIR/$CURRENT_RICE" ]; then
     mkdir -pv "$CACHE_DIR/$CURRENT_RICE"
