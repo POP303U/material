@@ -32,11 +32,6 @@ exit 1
 # Source nvidia env variables in hyprland.conf
 sed -i 's|^#.*nvidia.conf|source = ~/.config/hypr/nvidia.conf|' $HOME/.config/hypr/hyprland.conf
 
-# Fix if you chose to disable WLR_DRM_NO_ATOMIC
-if [[ $FLAG_WLR_FIX == "y" || $FLAG_WLR_FIX == "Y" || $FLAG_WLR_FIX == "" ]]; then
-    sed -i 's|env = WLR_DRM_NO_ATOMIC,1|#env = WLR_DRM_NO_ATOMIC,1|' $HOME/.config/hypr/nvidia.conf
-fi
-
 # (Grub) Enable nvidia in kernel parameters
 if package_installed grub && [ -f /boot/grub/grub.cfg ]; then
     if [ ! -f /etc/default/grub.bak ] && [ ! -f /boot/grub/grub.bak ]; then
