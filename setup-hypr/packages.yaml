@@ -1,4 +1,4 @@
-base_packages:
+base:
   -- Audio Server + Recording --
   pipewire
   pipewire-alsa
@@ -63,10 +63,8 @@ base_packages:
   -- Streaming --
   xdg-desktop-portal-hyprland
 
-minimal_packages:
   -- Audio --
   pavucontrol-qt
-
   ark
 
   -- Locking --
@@ -76,7 +74,6 @@ minimal_packages:
   -- Extra Applications for other rices --
   fuzzel
   rofi-lbonn-wayland-git
-  fuzzel
   dunst
   udiskie
 
@@ -89,40 +86,9 @@ minimal_packages:
   btop
   grc
 
-extended_packages:
-  -- Math --
-  qalculate-qt
-  firefox
-
-  -- Image viewing and editing --
-  nomacs
-  vlc
-  mpv
-  gimp
-  inkscape
-
-  -- Archiving --
-  p7zip 
-  unrar
-  tar
-
-  -- Word processing --
-  libreoffice-fresh
-  ttf-dejavu
-  ttf-droid
-  ttf-bitstream-vera
-  adobe-source-pro-fonts
-
-  -- Discord --
-  vencord-desktop-bin
-
-gaming_packages:
-  steam
-  wine
-  wine-mono
-  wine-gecko
-  bottles
-  lutris
+  eza
+  fd
+  bat
 
 sddm_packages:
   -- sddm and dependencies --
@@ -130,13 +96,3 @@ sddm_packages:
   qt5-quickcontrols2
   qt5-graphicaleffects
   qt5-svg
-
-optional_packages_rust:
-  -- eza replacement for ls, fd for find, bat for cat --
-  eza
-  fd
-  bat
-
-tty_packages:
-  -- just a font --
-  terminus-font
