@@ -1,0 +1,3 @@
+#!/bin/sh
+
+~/.config/hypr/scripts/load-config-material
