@@ -1,14 +1,12 @@
 # See dunst(5) for all configuration options
 [global]
     ### Display ###
-    display = 0
     follow = none
 
     ### Geometry ###
-    width = (335, 600)
-    height = (300, 600)
+    width = (335, 650)
     origin = top-right
-    offset = 15x15
+    offset = 15
     scale = 0
     notification_limit = 20
 
