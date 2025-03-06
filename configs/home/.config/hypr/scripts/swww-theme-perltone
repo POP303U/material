@@ -19,7 +19,7 @@ echo -e "DEBUG:\n----------------------\n\nCURRENT_RICE: $CURRENT_RICE\nCURRENT_
 
 # Generate colors
 if [ ! -e "${HOME}/.cache/material/perltone/${CURRENT_RICE}/${CURRENT_BG}.colors" ]; then
-    [ ! -e "${HOME}/.cache/material/perltone/${CURRENT_RICE}" ] && mkdir "${HOME}/.cache/material/perltone/${CURRENT_RICE}"
+    [ ! -e "${HOME}/.cache/material/perltone/${CURRENT_RICE}" ] && mkdir -p "${HOME}/.cache/material/perltone/${CURRENT_RICE}"
     ~/.config/hypr/scripts/perltone $WALLPAPER $COLOR_SCHEME $PERLTONE_BACKEND > "${HOME}/.cache/material/perltone/${CURRENT_RICE}/${CURRENT_BG}.colors"
     if [ $? -eq 1 ]; then
         echo "Error: Perltone couldn't generate colors."
@@ -31,6 +31,12 @@ ln -sf "$HOME/.cache/material/perltone/${CURRENT_RICE}/${CURRENT_BG}.colors" $HO
 
 # Generated blurred background first since it takes a while
 ~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$CURRENT_BG" &
+
+# need to prerun this
+if ! [ -f "~/.config/spicetify/Themes/Perltone/color.ini" ]; then
+    mkdir -pv ~/.config/spicetify/Themes/Perltone
+    touch ~/.config/spicetify/Themes/Perltone/color.ini
+fi
 
 # Define the list of template files and their corresponding output paths
 # Formatting:     input.template       :      output.template
@@ -54,6 +60,8 @@ TEMPLATES=(
     "$MATERIAL/templates/sddm.template:/usr/share/sddm/themes/rose-pine-sddm/theme.conf"
     "$MATERIAL/templates/gtk/gtk4.template:$HOME/.local/share/themes/Perltone/gtk-4.0/gtk.css"
     "$MATERIAL/templates/gtk/gtk3.template:$HOME/.local/share/themes/Perltone/gtk-3.0/colors.css"
+    "$MATERIAL/templates/gtk/gtk4.template:/usr/share/themes/Perltone/gtk-4.0/gtk.css"
+    "$MATERIAL/templates/gtk/gtk3.template:/usr/share/themes/Perltone/gtk-3.0/colors.css"
     "$MATERIAL/templates/discord.template:$HOME/.config/vesktop/themes/Perltone.css"
 )
 
@@ -115,6 +123,12 @@ ln -s ~/.local/share/themes/Perltone/gtk-4.0 ~/.config/gtk-4.0
 ln -sf $HOME/.config/wofi/themes/Perltone $HOME/.cache/wal/colors 
 
 # Spotify (spicetify)
+if ! [ -f "~/.config/spicetify/Themes/Perltone/color.ini" ]; then
+    mkdir -pv ~/.config/spicetify/Themes/Perltone
+    touch ~/.config/spicetify/Themes/Perltone/color.ini
+fi
+
+sed -i 's/^current_theme[[:space:]]*=[[:space:]]*marketplace$/current_theme = Perltone/' ~/.config/spicetify/config-xpui.ini
 spicetify apply &
 
 # Kitty
