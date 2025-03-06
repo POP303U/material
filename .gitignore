@@ -1,2 +1,10 @@
+# should be deleted automatically but aight
 configs/home/.config/material/backups/
 configs/home/.config/hypr/resolutions/
+
+# unneeded default cava shaders
+configs/home/.config/cava/shaders/spectrogram.frag
+configs/home/.config/cava/shaders/winamp_line_style_spectrum.frag
+
+# old bars not needed
+configs/home/.config/waybar/bar/.old/
