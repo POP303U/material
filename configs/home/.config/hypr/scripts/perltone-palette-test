@@ -1,0 +1,4 @@
+#!/bin/sh
+
+~/.config/hypr/scripts/perltone-palette ~/.config/material/colors/colors /tmp/material/palette.png
+swappy -f /tmp/material/palette.png

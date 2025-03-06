@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Check for input
+if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 <COLOR_FILE> <OUTPUT_IMAGE.PNG>"
+    exit 1
+fi
+
+COLOR_FILE="$1"
+OUTPUT_IMAGE="$2"
+
+# Temporary directory for squares
+TMP_DIR=$(mktemp -d)
+SQUARE_SIZE=64
+INDEX=0
+
+# Read colors from file
+while IFS='=' read -r NAME VALUE; do
+    # Skip empty lines or invalid ones
+    [[ -z "$VALUE" || -z "$NAME" ]] && continue
+
+    COLOR=""
+    # Check if the value is a hex color
+    if [[ "$VALUE" =~ ^[0-9a-fA-F]{6}$ ]]; then
+        COLOR="#$VALUE"
+        # Check if the value is an rgba color
+    elif [[ "$VALUE" == rgba* ]]; then
+        COLOR="$VALUE"
+    else
+        echo "Warning: Invalid color format '$VALUE' for '$NAME'. Skipping."
+        continue
+    fi
+
+  # Make square PNG with the color
+  convert -size ${SQUARE_SIZE}x${SQUARE_SIZE} canvas:"$COLOR" "${TMP_DIR}/${INDEX}.png"
+  ((INDEX++))
+done < "$COLOR_FILE"
+
+# Combine squares horizontally
+convert +append "${TMP_DIR}"/*.png "$OUTPUT_IMAGE"
+
+# Clean up
+rm -r "$TMP_DIR"
+
+echo "Color preview saved to $OUTPUT_IMAGE"
