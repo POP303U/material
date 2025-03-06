@@ -17,6 +17,7 @@
         "memory",
         "cpu",
         "custom/padding_right",
+        "mpris",
     ],
     // "user",
 
@@ -33,7 +34,6 @@
         "pulseaudio",
         "pulseaudio#microphone",
         "custom/padding_right",
-        "custom/weather", 
         "custom/padding_left",
         "tray",
         "custom/padding_right",
@@ -82,7 +82,7 @@
         "exec": "echo ; echo   switch waybar",
         "on-click": "~/.config/hypr/scripts/waybar-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/waybar-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-waybar-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-waybar-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -100,7 +100,7 @@
         "rotate": 0,
         "format" : "{}",
         "exec": "echo ; echo   launch settings",
-        "on-click": "~/.config/wofi/scripts/wofi-manager",
+        "on-click": "~/.config/rofi/scripts/rofi-manager",
         "on-click-right": "~/.config/hypr/scripts/system-upgrade",
         "interval": 86400,
         "tooltip": true
@@ -112,7 +112,7 @@
         "exec": "echo ; echo   change theme",
         "on-click": "~/.config/hypr/scripts/rice-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/rice-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-rice-selector",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-rice-selector",
         "interval": 86400,
         "tooltip": true
     },
@@ -123,7 +123,7 @@
         "exec": "echo ; echo 󰋩  change wallpaper",
         "on-click": "~/.config/hypr/scripts/swww-wallpaper-cycle -p",
         "on-click-right": "~/.config/hypr/scripts/swww-wallpaper-cycle -n",
-        "on-click-middle": "~/.config/wofi/scripts/wofi-wallpaper",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-wallpaper",
         "interval": 86400,
         "tooltip": true
     },
@@ -149,6 +149,30 @@
         "icon": false,
     },
 
+    "mpris": {
+        "interval": 1,
+        "title-len": 18,
+        "ellipsis": "…",
+        "dynamic-order": [
+            "title", 
+            "position", 
+            "length",
+        ],
+	    "format": "{status_icon} {dynamic}",
+        "format-playing": "{status_icon} {dynamic}",
+        "format-paused": "{status_icon} {dynamic}",
+        "format-stopped": "{status_icon} no player attached",
+        "player-icons": {
+		    "default": "▶",
+            "paused": "⏸"
+        },
+        "status-icons": {
+		    "playing": "▶",
+            "paused": "⏸"
+	    },
+	},
+
+
     "tray": {
         "icon-size": 18,
         "spacing": 10
@@ -162,7 +186,7 @@
 
     "disk": {
         "interval": 30,
-        "format": "󱛟 {}%",
+        "format": "󱛟 {percentage_used}%",
         "path": "/"
     },
 

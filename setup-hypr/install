@@ -117,6 +117,9 @@ echo -e "[${PURPLE}info${RESET}] Installing themes/icons/cursors..."
 echo -e "[${PURPLE}info${RESET}] Testing compatibility on old versions..."
 ./install_compat
 
+# Fix for dolphin
+arch- kbuildsycoca6
+
 # Set tty font if installed
 if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]] && set_tty_font
 

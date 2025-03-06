@@ -4,10 +4,11 @@
     "mod": "dock",
     "exclusive": true,
     "passthrough": false,
+    "height": 0,
     "gtk-layer-shell": true,
     "modules-left": [
         "custom/padding_left",
-        "hyprland/workspaces",
+        "wlr/taskbar",
         "custom/padding_right",
         "custom/padding_left",
         "custom/theme_settings",
@@ -26,27 +27,24 @@
         "custom/padding_left",
         "clock",
         "custom/padding_right",
-        "custom/weather", 
     ],
 
     "modules-right": [
         "custom/padding_left",
         "network",
         "custom/padding_right",
+        "custom/weather", 
         "custom/padding_left",
         "pulseaudio",
         "pulseaudio#microphone",
         "custom/padding_right",
     ],
 
-    "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
+    "wlr/taskbar": {
         "on-click": "activate",
-        "format": "{icon}",
-        "urgent": " ",
+        "format": "{icon}"
     },
-    
+
     "hyprland/window": {
         "max-length": 80,
         "seperate-outputs": true,

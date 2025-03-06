@@ -42,48 +42,47 @@ tooltip label {
 #network,
 #bluetooth,
 #temperature,
-#workspaces,
+#taskbar,
 #tray,
 #backlight {
     background: @surface;
+
     opacity: 1;
     margin: 4px 0px 4px 0px;
-
     padding-left: 4px;
     padding-right: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
-#workspaces {
-    background: @surface;
-    border: 0px;
-    font-weight: bold;
-    font-style: normal;
+#taskbar button {
+    box-shadow: none;
+	text-shadow: none;
+    padding: 0px;
+    border-radius: 9px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 0px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-right: 0px;
+    color: @foam;
+    transition: all 0.2s ease-in-out;
 }
 
-#workspaces button {
-    margin: 0px 0px 0px 0px;
-    border-radius: 21px;
-    background: @surface;
-    color: @text;
-    transition: all 0.3s ease-in-out;
-    opacity: 0.4;
-}
-
-#workspaces button.active {
-    color: @surface;
+#taskbar button.active {
     background: @foam;
-    border-radius: 21px;
-    min-width: 40px;
+    margin-left: 3px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-right: 3px;
     transition: all 0.3s ease-in-out;
-    opacity: 1.0;
 }
 
-#workspaces button:hover {
-    color: @text;
-    background: @pine;
-    border-radius: 15px;
-    min-width: 40px;
-    opacity: 0.7;
+#taskbar button:hover {
+    background: @iris;
+    color: @rose;
+    transition: all 0.3s ease-in-out;
 }
 
 #clock {
@@ -98,9 +97,11 @@ tooltip label {
     border-right: 0px;
 
     /* hack */
-    border-radius: 21px 21px 21px 21px;
+    border-radius: 21px;
     margin-right: 9px;
     margin-left: 9px;
+    padding-right: 17px;
+    padding-left: 16px;
 }
 
 #battery {
@@ -126,6 +127,11 @@ tooltip label {
 
 #pulseaudio.microphone {
     color: @love;
+}
+
+#workspaces,
+#taskbar {
+    padding: 0px;
 }
 
 #custom-waybar_switcher,

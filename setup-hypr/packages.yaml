@@ -29,10 +29,10 @@ base:
   qt5-imageformats
   ffmpegthumbs
   kde-cli-tools
+  archlinux-xdg-menu
 
   -- CLI Tools --
   python-requests
-  archlinux-xdg-menu
   wl-clipboard
   xdotool
   pamixer
