@@ -1,5 +1,2 @@
-.config_bak/
-configs_bak/
-.config_backup/
-configs_backup/
-configs/.config/material/backups/
+configs/home/.config/material/backups/
+configs/home/.config/hypr/resolutions/
