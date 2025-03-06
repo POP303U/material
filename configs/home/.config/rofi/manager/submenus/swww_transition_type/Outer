@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -i 's|rice-transition.*|rice-transition = outer|' ~/.config/material/config

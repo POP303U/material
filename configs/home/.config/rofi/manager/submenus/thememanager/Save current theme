@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Source scaling variables
+source ~/.config/hypr/scripts/globalvars
+
+NAME=$(dir -1 $HOME/.config/material/themes | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -i -p "Enter name for your saved theme: ")
+CHOICE=$(dir -1 $HOME/.config/rofi/manager/submenus/thememanager/confirm | rofi -config ~/.config/rofi/config_no-icons.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -dmenu -i -p "Save current theme with name: '$NAME'")
+
+if [[ "$CHOICE" == "Yes" ]]; then
+    cp $HOME/.config/material/config $HOME/.config/material/themes/$NAME
+    sed -i 's|^config-current.*|config-current = '$(basename $HOME/.config/material/themes/$NAME)'|' $HOME/.config/material/themes/$NAME
+    sed -i 's|^config-current.*|config-current = '$(basename $HOME/.config/material/themes/$NAME)'|' $HOME/.config/material/config
+fi

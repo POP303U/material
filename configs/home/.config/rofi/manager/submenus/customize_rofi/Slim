@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ln -sf ~/.config/rofi/styles/slim.rasi ~/.config/rofi/config.rasi
+sed -i 's|rofi-style.*|rofi-style = slim|' "$HOME/.config/material/config"

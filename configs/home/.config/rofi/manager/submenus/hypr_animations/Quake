@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sed -i 's|source.*|source = ~/.config/hypr/animations/Quake.conf|' ~/.config/hypr/animations.conf
+sed -i 's|animations-current.*|animations-current = Quake|' ~/.config/material/config
