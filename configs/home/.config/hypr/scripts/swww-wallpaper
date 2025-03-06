@@ -12,10 +12,10 @@ WALLPAPER_PATH="$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER"
 sed -i 's|wallpaper-current.*|wallpaper-current = '$WALLPAPER'|' ~/.config/material/config
 PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
 if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
-    $HOME/.config/swww/scripts/change_theme_perltone 
+    ~/.config/hypr/scripts/swww-theme-perltone 
     exit 0
 else
-    $HOME/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$WALLPAPER" &
+    ~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$WALLPAPER" &
 fi
 
 cp -vrf ${WALLPAPER_PATH} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current

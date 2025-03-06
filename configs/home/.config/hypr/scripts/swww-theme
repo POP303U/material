@@ -11,10 +11,6 @@ sed -i 's|^rice-current.*|rice-current = '${CURRENT_RICE}'|' ~/.config/material/
 sed -i 's|^system-theme.*|system-theme = '${MODE}'|' ~/.config/material/config # set theme in config before using it as a variable in this script
 sed -i 's|wallpaper-current.*|wallpaper-current = '${CURRENT_BG}'|' ~/.config/material/config
 
-if [ ! -e "${HOME}/.cache/material/${CURRENT_RICE}" ]; then
-    mkdir -pv "${HOME}/.cache/material/${CURRENT_RICE}"
-fi
-
 # Read the text file
 HOOKS_TEXT=$(<"${HOME}/.config/swww/rices/${CURRENT_RICE}")
 
@@ -40,7 +36,7 @@ if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" || "$(echo $PERLTONE_OVERRIDE |
         dunstify "Material" "Warning! Perltone on monochrome themes may not look good, consider disabling Perltone for them." --timeout=7001
     fi
 
-    $HOME/.config/swww/scripts/change_theme_perltone &
+    ~/.config/hypr/scripts/swww-theme-perltone &
     exit 127
 fi
 

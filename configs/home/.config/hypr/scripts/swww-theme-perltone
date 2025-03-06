@@ -1,5 +1,5 @@
 #!/bin/sh
-#
+
 set -x
 
 CURRENT_RICE=$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)
@@ -18,16 +18,16 @@ PERLTONE_BACKEND="--$(awk '/perltone-backend/ {print $NF}' $HOME/.config/materia
 echo -e "DEBUG:\n----------------------\n\nCURRENT_RICE: $CURRENT_RICE\nCURRENT_BG: $CURRENT_BG\nWALLPAPER: $WALLPAPER\nCOLOR_SCHEME: $COLOR_SCHEME\nPERLTONE_BACKEND: $PERLTONE_BACKEND\nCOLOR_MODULATION: $COLOR_MODULATION\n\n----------------------"
 
 # Generate colors
-if [ ! -e "${HOME}/.cache/material/${CURRENT_RICE}/${CURRENT_BG}.colors" ]; then
-    [ ! -e "${HOME}/.cache/material/${CURRENT_RICE}" ] && mkdir "${HOME}/.cache/material/${CURRENT_RICE}"
-    ~/.config/hypr/scripts/perltone $WALLPAPER $COLOR_SCHEME $PERLTONE_BACKEND > "${HOME}/.cache/material/${CURRENT_RICE}/${CURRENT_BG}.colors"
+if [ ! -e "${HOME}/.cache/material/perltone/${CURRENT_RICE}/${CURRENT_BG}.colors" ]; then
+    [ ! -e "${HOME}/.cache/material/perltone/${CURRENT_RICE}" ] && mkdir "${HOME}/.cache/material/perltone/${CURRENT_RICE}"
+    ~/.config/hypr/scripts/perltone $WALLPAPER $COLOR_SCHEME $PERLTONE_BACKEND > "${HOME}/.cache/material/perltone/${CURRENT_RICE}/${CURRENT_BG}.colors"
     if [ $? -eq 1 ]; then
         echo "Error: Perltone couldn't generate colors."
         exit 1
     fi
 fi
 
-ln -sf "$HOME/.cache/material/${CURRENT_RICE}/${CURRENT_BG}.colors" $HOME/.config/material/colors/colors
+ln -sf "$HOME/.cache/material/perltone/${CURRENT_RICE}/${CURRENT_BG}.colors" $HOME/.config/material/colors/colors
 
 # Generated blurred background first since it takes a while
 ~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$CURRENT_BG" &
@@ -155,4 +155,3 @@ swww img "$WALLPAPER" \
     --transition-pos "2502, 1410"
 
 hyprctl reload
-

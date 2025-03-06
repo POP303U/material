@@ -10,24 +10,24 @@ fi
 source ~/.config/hypr/scripts/globalvars
 
 case "$1" in
-    "wofi")
+    "rofi")
         # scale rofi before running
         rofi -show drun -config ~/.config/rofi/config.rasi -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}"
         ;;
     "wallpaper")
-        ~/.config/wofi/scripts/wofi-wallpaper
+        ~/.config/rofi/scripts/rofi-wallpaper
         ;;
     "emoji")
-        ~/.config/wofi/scripts/wofi-emoji
+        ~/.config/rofi/scripts/rofi-emoji
         ;;
     "rice")
-        ~/.config/wofi/scripts/wofi-rice-selector
+        ~/.config/rofi/scripts/rofi-rice-selector
         ;;
     "manager")
-        ~/.config/wofi/scripts/wofi-manager main "${FONT_OVERRIDE}"
+        ~/.config/rofi/scripts/rofi-manager main "${FONT_OVERRIDE}"
         ;;
     "waybar")
-        ~/.config/wofi/scripts/wofi-waybar-selector
+        ~/.config/rofi/scripts/rofi-waybar-selector
         ;;
     "cliphist")
         cliphist list | rofi -config ~/.config/rofi/clipboard.rasi -dmenu -theme-str "${FONT_OVERRIDE_ROFI}" -theme-str "${BORDER_OVERRIDE_ROFI}" -p "~ Material clipboard selection ~ " -i | cliphist decode | wl-copy
