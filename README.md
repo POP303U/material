@@ -1,3 +1,7 @@
+## WARNING
+CONFIGURATION IS CURRENTLY BEING REWORKED DO NOT INSTALL!
+
+
 <div align="center">
 <h1> Material Design Hyprland </h1>
 <p><b><u>// My Personal Hyprland dotfiles //</u></b></p>
