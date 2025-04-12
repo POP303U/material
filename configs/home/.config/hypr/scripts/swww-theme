@@ -74,10 +74,11 @@ sed -i "s|^icon_theme=.*|icon_theme=${CURRENT_ICONS}|" $HOME/.config/qt6ct/qt6ct
 sed -i 's|^gtk-theme-name.*|gtk-theme-name='${CURRENT_RICE}'|' ~/.config/gtk-3.0/settings.ini
 
 # gtk4
-rm -rf ~/.config/gtk-4.0
-ln -s ~/.local/share/themes/${CURRENT_RICE}/gtk-4.0 ~/.config/gtk-4.0
+rm ~/.config/gtk-4.0
+ln -s /usr/share/themes/${CURRENT_RICE}/gtk-4.0 ~/.config/gtk-4.0
 
 # flatpak gtk
+flatpak --user override --filesystem=/usr/share/themes
 flatpak --user override --env=GTK_THEME="${CURRENT_RICE}" # flatpak gtk is not intended to work, and very hacky not all apps will work with this
 flatpak --user override --env=ICON_THEME="${CURRENT_ICONS}"
 

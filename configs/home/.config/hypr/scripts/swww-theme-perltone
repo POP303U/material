@@ -4,6 +4,7 @@ set -x
 
 CURRENT_RICE=$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config)
 CURRENT_BG=$(awk '/wallpaper-current/ {print $NF}' $HOME/.config/material/config)
+CURRENT_ICONS=$(awk '/icons/ {print $NF}' "${HOME}/.config/swww/rices/${CURRENT_RICE}" | xargs)
 
 MATERIAL="$HOME/.config/material"   
 WALLPAPER="$HOME/.config/swww/walls/$CURRENT_RICE/$CURRENT_BG"
@@ -116,8 +117,13 @@ ln -sf $HOME/.config/rofi/themes/Perltone.rasi $HOME/.config/rofi/themes/theme.r
 sed -i 's|^gtk-theme-name.*|gtk-theme-name=Perltone|' ~/.config/gtk-3.0/settings.ini
 
 # gtk4
-rm -rf ~/.config/gtk-4.0
-ln -s ~/.local/share/themes/Perltone/gtk-4.0 ~/.config/gtk-4.0
+rm ~/.config/gtk-4.0
+ln -s /usr/share/themes/Perltone/gtk-4.0 ~/.config/gtk-4.0
+
+# flatpak gtk
+flatpak --user override --filesystem=/usr/share/themes
+flatpak --user override --env=GTK_THEME=Perltone # flatpak gtk is not intended to work, and very hacky not all apps will work with this
+flatpak --user override --env=ICON_THEME="${CURRENT_ICONS}"
 
 # Wofi (hacky symlink to pywal path but who cares)
 ln -sf $HOME/.config/wofi/themes/Perltone $HOME/.cache/wal/colors 
