@@ -31,6 +31,7 @@ cp -rvf ~/.tmux.conf                         ../configs/home/
 # nice
 
 # temporary hack
+cp -rvf ./.static/monitors.conf                      ../configs/home/.config/hypr/monitors.conf
 cp -rvf ./.static/dolphinrc                          ../configs/home/.config/
 cp -rvf ./.static/kdeglobals                         ../configs/home/.config/
 cp -rvf ./.static/arkrc                              ../configs/home/.config/
