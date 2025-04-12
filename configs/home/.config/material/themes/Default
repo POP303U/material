@@ -17,15 +17,15 @@
 # BAR -
 blur-state = off
 bar-state = on
-bar-current = Colorful-Top
+bar-current = Blur-Bottom
 
 # ANIMATIONS -
 animations-state = on
 animations-current = Bouncy
 
 # RICE -
-wallpaper-current = waifu_pink.png
-rice-current = Rose-Pine
+wallpaper-current = rain_world3.png
+rice-current = Catppuccin-Mocha
 rice-transition = fade
 
 # WLOGOUT -
