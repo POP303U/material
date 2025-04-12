@@ -1,9 +1,8 @@
 #!/bin/sh
 
 swww query &> /dev/null
-if [ $? -ne 0 ] ; then
-    swww-daemon --format xrgb &
-else
+if [ $? -eq 0 ] ; then
     pkill -9 swww
-    swww-daemon --format xrgb &
 fi
+
+swww-daemon --format xrgb &

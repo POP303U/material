@@ -11,8 +11,13 @@ RESOLUTION=$(dir -1 $HOME/.config/hypr/resolutions | rofi -config ~/.config/rofi
 rm -v $HOME/.config/hypr/monitors.conf
 touch $HOME/.config/hypr/monitors.conf
 
+# kill swww and set res
+swww-init
 cat $HOME/.config/hypr/resolutions/$RESOLUTION > $HOME/.config/hypr/monitors.conf
-
 hyprctl reload
+
+# respawn swww with correct res
+swww-init
+
 wait
 $HOME/.config/hypr/scripts/load-config-material
