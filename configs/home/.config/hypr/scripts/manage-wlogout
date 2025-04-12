@@ -11,8 +11,13 @@ SHOW_KEYBINDS="$( [[ $(awk '/wlogout-keybinds-show/ {print $NF}' $HOME/.config/m
 STYLE="$(awk '/wlogout-theme/ {print $NF}' $HOME/.config/material/config)"
 ### END
 
-# Add support for passing in arguments
+# This somehow fixes something?? this is weird
+if [ ! -e "/tmp/material/null" ]; then
+    mkdir -p "/tmp/material/null"
+fi
+
 cd /tmp/material/null
+
 STYLE="${1:-$STYLE}"
 WLOGOUT_LAYOUT="$HOME/.config/wlogout/logout/$STYLE/layout.json"
 WLOGOUT_TEMPLATE="$HOME/.config/wlogout/logout/$STYLE/style.css"
