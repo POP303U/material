@@ -32,11 +32,11 @@ fi
 
 for ENTRY in "${RICES[@]}"; do
     FILE_PATH="$HOME/.config/swww/walls/$ENTRY"
+    RICE=$(basename "$(dirname "$FILE_PATH")")
 
-    [[ -e "${CACHE_DIR}" ]] && continue
+    [[ -e "${CACHE_DIR}/${RICE}" ]] && continue
     # check if the file exists
     if [[ -f $FILE_PATH ]]; then
-        RICE=$(basename "$(dirname "$FILE_PATH")")
 		convert -strip "$FILE_PATH" -thumbnail 500x500^ -gravity center -extent 500x500 "${CACHE_DIR}/${RICE}"
         notify-send "Caching thumbnails..."
     else
