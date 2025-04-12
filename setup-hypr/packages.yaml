@@ -1,4 +1,7 @@
 base:
+  -- Important for the installer --
+  rsync 
+
   -- Audio Server + Recording --
   pipewire
   pipewire-alsa

@@ -12,58 +12,61 @@ echo -e "[${PURPLE}info${RESET}] Copying configs..."
 # Enable dotglob to include files starting with a dot
 shopt -s dotglob
 
+# cleanup old confs before installing
+rm -r "$HOME/.config/Code/">/dev/null 2>&1 
+rm -r "$HOME/.config/Code - OSS/">/dev/null 2>&1 
+rm -r "$HOME/.config/Kvantum/">/dev/null 2>&1 
+rm -r "$HOME/.config/VSCodium/">/dev/null 2>&1 
+rm -r "$HOME/.config/btop/">/dev/null 2>&1 
+rm -r "$HOME/.config/cava/">/dev/null 2>&1 
+rm -r "$HOME/.config/dunst/">/dev/null 2>&1 
+rm -r "$HOME/.config/fastfetch/">/dev/null 2>&1 
+rm -r "$HOME/.config/gtk-3.0/">/dev/null 2>&1 
+rm -r "$HOME/.config/hypr/">/dev/null 2>&1 
+rm -r "$HOME/.config/kitty/">/dev/null 2>&1 
+rm -r "$HOME/.config/material/config">/dev/null 2>&1 
+rm -r "$HOME/.config/nwg-look/">/dev/null 2>&1 
+rm -r "$HOME/.config/qt5ct/">/dev/null 2>&1 
+rm -r "$HOME/.config/qt6ct/">/dev/null 2>&1 
+rm -r "$HOME/.config/rofi/">/dev/null 2>&1 
+rm -r "$HOME/.config/swww/">/dev/null 2>&1 
+rm -r "$HOME/.config/udiskie/">/dev/null 2>&1 
+rm -r "$HOME/.config/waybar/">/dev/null 2>&1 
+rm -r "$HOME/.config/wlogout/">/dev/null 2>&1 
+rm -r "$HOME/.config/xsettingsd/">/dev/null 2>&1 
+rm -r "$HOME/.config/arkrc">/dev/null 2>&1 
+rm -r "$HOME/.config/code-flags.conf">/dev/null 2>&1 
+rm -r "$HOME/.config/codium-flags.conf">/dev/null 2>&1 
+rm -r "$HOME/.config/dolphinrc">/dev/null 2>&1 
+rm -r "$HOME/.config/electron-flags.conf">/dev/null 2>&1 
+rm -r "$HOME/.config/kdeglobals">/dev/null 2>&1 
+rm -r "$HOME/.config/spotify-flags.conf">/dev/null 2>&1 
+
 # Function to copy files recursively
 copy_files() {
     local SOURCE="$1"
     local DESTINATION="$2"
     local RELATIVE_PATH="$3"
-    local MODE="$4"
 
-    for ITEM in "$SOURCE"/*; do
-        local ITEM_NAME=$(basename "$ITEM")
-
-        if [ -f "$ITEM" ]; then
-            mkdir -p "$DESTINATION/$RELATIVE_PATH"
-            cp "$ITEM" "$DESTINATION/$RELATIVE_PATH"
-            echo -e "[${BLUE}ok${RESET}] Copied $ITEM_NAME to $DESTINATION/$RELATIVE_PATH"
-        elif [ -d "$ITEM" ]; then
-            copy_files "$ITEM" "$DESTINATION" "$RELATIVE_PATH/$ITEM_NAME"
-        fi
-    done
+    rsync -a --links --info=progress2 "$SOURCE/" "$DESTINATION/$RELATIVE_PATH/"
+    echo -e "[${BLUE}ok${RESET}] Synced $SOURCE → $DESTINATION/$RELATIVE_PATH"
 }
 
 # Source directory
 SOURCE_HOME="$(realpath ../configs/home)"
-SOURCE_ROOT="$(realpath ../configs/root)"
 
 # Destination directory
 DESTINATION_HOME="$(realpath $HOME)"
 
 # Call the function to copy files recursively
-copy_files "$SOURCE_HOME" "$DESTINATION_HOME" "" "home"
+copy_files "$SOURCE_HOME" "$DESTINATION_HOME"
 
 # Disable dotglob to restore default behavior
 shopt -u dotglob
-
-# Fixing colors with wofi by symlinking to pywal path
-if [ -e "$HOME/.cache/wal" ]; then
-    rm -rf "$HOME/.cache/wal"
-fi
-
-mkdir $HOME/.cache/wal
-ln -sf $HOME/.config/wofi/themes/$(awk '/rice-current/ {print $NF}' $HOME/.config/material/config) $HOME/.cache/wal/colors 
 
 sudo rm -f /etc/issue ; sudo cp -r ../configs/root/etc/issue /etc && echo -e "[${BLUE}ok${RESET}] Copied issue to /etc/issue"
 sudo rm -f /etc/motd ; sudo cp -r ../configs/root/etc/motd /etc && echo -e "[${BLUE}ok${RESET}] Copied motd to /etc/motd"
 sudo rm -f /etc/sddm.conf ; sudo cp -r ../configs/root/etc/sddm.conf /etc && echo -e "[${BLUE}ok${RESET}] Copied sddm.conf to /etc/sddm.conf"
 
-# Set some files as exacutable 
-chmod +x ~/.config/hypr/scripts/xdg-portal-hyprland && echo -e "[${BLUE}ok${RESET}] '~/.config/hypr/xdg-portal-hyprland' is executable: .wxr-xr-x "
-chmod +x ~/.config/swww/scripts/change_wallpaper && echo -e "[${BLUE}ok${RESET}] '~/.config/swww/scripts/change_wallpaper' is executable: .wxr-xr-x "
-chmod +x ~/.config/waybar/scripts/waybar-wttr.py && echo -e "[${BLUE}ok${RESET}] '~/.config/waybar/scripts/waybar-wttr.py' is executable: .wxr-xr-x "
-chmod -R +x ~/.config/hypr/scripts
-chmod -R +x ~/.config/swww/scripts
-chmod -R +x ~/.config/wofi/manager
-
 echo -e "[${PURPLE}info${RESET}] Cleaning out conflicting xdg portals..."
-sudo pacman -R $FLAGS xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null
+sudo pacman -R $FLAGS xdg-desktop-portal-gnome xdg-desktop-portal-gtk >/dev/null 2>&1 

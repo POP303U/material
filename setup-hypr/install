@@ -50,17 +50,8 @@ source ./install_get_options
 PACKAGES=($(get_yaml_packages packages.yaml base_packages))
 
 # Construct the user packages defined into one variable called $PACKAGES
-[ $STAGE -gt 1 ] && PACKAGES+=($(get_yaml_packages packages.yaml minimal_packages))
-[ $STAGE -gt 2 ] && PACKAGES+=($(get_yaml_packages packages.yaml extended_packages))
-[ $STAGE -gt 3 ] && PACKAGES+=($(get_yaml_packages packages.yaml gaming_packages))
 if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
     PACKAGES+=($(get_yaml_packages packages.yaml sddm_packages))
-fi
-if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]]; then
-    PACKAGES+=($(get_yaml_packages packages.yaml tty_packages))
-fi
-if [[ $OPTIONAL_DEPS_RUST == "y" || $OPTIONAL_DEPS_RUST == "Y" || $OPTIONAL_DEPS_RUST == "" ]]; then
-    PACKAGES+=($(get_yaml_packages packages.yaml optional_packages_rust))
 fi
 
 # Install AUR Helper ($OVERRIDE_AUR used here)
@@ -113,37 +104,22 @@ start_services
 echo -e "[${PURPLE}info${RESET}] Installing themes/icons/cursors..."
 ./install_archives
 
-# Fixes for old versions of Material
-echo -e "[${PURPLE}info${RESET}] Testing compatibility on old versions..."
-./install_compat
-
 # Fix for dolphin
-arch- kbuildsycoca6
-
-# Set tty font if installed
-if [[ $INSTALL_TTY == "y" || $INSTALL_TTY == "Y" || $INSTALL_TTY == "" ]] && set_tty_font
+kbuildsycoca6 >/dev/null 2>&1
 
 ### Check if sddm is installed
 if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
-    echo -e "[${GREEN}action${RESET}] Do you want to enable sddm now? (y/n)${RESET}"
-    read -n1 -rep "$: " SDDM_ENABLE
-
-    if [[ $SDDM_ENABLE == "y" || $SDDM_ENABLE == "Y" || $SDDM_ENABLE == "" ]]; then
-        echo -e "[${BLUE}ok${RESET}] Enabled sddm successfully"
-        sudo systemctl enable sddm.service
-    else
-        echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
-        echo -e "[${PURPLE}info${RESET}] You can enable sddm manually with:"
-        echo -e "[${PURPLE}info${RESET}] 'sudo systemctl enable sddm.service'"
-    fi
-else 
-    echo -e "[${PURPLE}info${RESET}] Skipping enabling of sddm.service"
+    echo -e "[${BLUE}ok${RESET}] Enabled sddm successfully"
+    sudo systemctl enable sddm.service
 fi 
+
+[ -n "$HYPRLAND_INSTANCE_SIGNATURE" ] && hyprctl reload
 
 # Ask to reboot
 echo -e "[${GREEN}action${RESET}] Installation finished, please reboot to apply all changes (y/n)${RESET}"
 echo -e "${WHITE_BOLD}Do you want to reboot now? (y/n)${RESET}"
 read -n1 -rep "$: " REBOOT_FLAG
+
 
 # Reboot if you choose to (you should)
 if [[ $REBOOT_FLAG == "y" || $REBOOT_FLAG == "Y" || $REBOOT_FLAG == "" ]]; then
