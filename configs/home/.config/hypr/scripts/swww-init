@@ -3,4 +3,7 @@
 swww query &> /dev/null
 if [ $? -ne 0 ] ; then
     swww-daemon --format xrgb &
+else
+    pkill -9 swww
+    swww-daemon --format xrgb &
 fi
