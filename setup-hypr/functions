@@ -149,19 +149,9 @@ configure_pacman() {
 start_services() {
     # Start the bluetooth service
     sudo systemctl enable --now bluetooth.service 
-    sleep 2
 
-    ### Disable wifi powersave mode ###
-    echo -e "[${PURPLE}info${RESET}] Disabling wifi powersave..." 
-
-    LOC="/etc/NetworkManager/conf.d/wifi-powersave.conf"
-    echo -e "[${PURPLE}info${RESET}] The following has been added to $LOC.\n"
-    echo -e "[connection]\nwifi.powersave = 2\n" | sudo tee -a $LOC
-
-    echo -e "[${PURPLE}info${RESET}] Restarting NetworkManager service..."
-    sudo systemctl restart NetworkManager
-    echo -e "[${PURPLE}info${RESET}] Waiting for Internet to reconnect..."
-    sleep 5
+    echo -e "[${PURPLE}info${RESET}] Starting NetworkManager service..."
+    sudo systemctl enable --now NetworkManager
 }
 
 # Usage: check_wifi
