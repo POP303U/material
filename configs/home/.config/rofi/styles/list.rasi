@@ -19,14 +19,14 @@ configuration {
 
 /* ---- Window ---- */
 window {
-    height:                       35em;
-    width:                        24em;
+    height:                       14em;
+    width:                        42em;
     x-offset:                     0em;
     y-offset:                     0em;
     spacing:                      0em;
     padding:                      0em;
     margin:                       0em; 
-    border:                       4;
+    border:                       3;
     border-color:                 @bordercolor;
     cursor:                       "default";
     transparency:                 "real";
@@ -42,9 +42,8 @@ mainbox {
     spacing:                      0px;
     margin:                       0px;
     background-color:             @background;
-    background-image:             url("~/.config/swww/wallpaper.thumb", height);
-    children:                     [ "inputbar", "listbox", "mode-switcher" ];
-    padding:                      20px;
+    background-image:             url("~/.config/swww/wallpaper.thumb", width);
+    children:                     [ "listbox", "inputmode" ];
 }
 
 /* ---- Listbox ---- */
@@ -63,8 +62,9 @@ inputbar {
     enabled:                      true;
     text-color:                   @foreground;
     padding:                      0.9em;
-    margin:                       1.0em 1.5em 1.6em 1.5em;
+    margin:                       1.8em 1.5em 2.3em 1.5em;
     border-radius:                999px;
+    width:                        22em;
     border-color:                 @foreground;
     background-color:             @background;
     children:                     [ "textbox-prompt-colon", "entry"];
@@ -93,22 +93,22 @@ mode-switcher {
     orientation:                  horizontal;
     enabled:                      true;
     spacing:                      1.0em;
-    margin:                       0em 3em 0em 3em;
-    padding:                      1em 0em 1em 0em;
+    margin:                       1.8em 1.9em 2.3em 2.0em;
     width:                        18em;
+    border-radius:                21px;
     text-color:                   @foreground;
     background-color:             transparent;
 }
 
 button {
-    padding:                      26px 0px 26px 0px;
+    padding:                      20px 10px 20px 10px;
     border-radius:                999px;
     text-color:                   inherit;
     background-color:             @background;
     cursor:                       pointer;
     border:                       0px;
-    vertical-align:               0.30;
-    horizontal-align:             0.45;
+    vertical-align:               0.50;
+    horizontal-align:             0.40;
 }
 
 button selected {
@@ -120,8 +120,8 @@ button selected {
 listview {
     background-color:             @transparent-background;
     enabled:                      true;
-    columns:                      1;
-    lines:                        5;
+    columns:                      5;
+    lines:                        1;
     cycle:                        true;
     dynamic:                      true;
     expand:                       false;
@@ -131,7 +131,7 @@ listview {
     fixed-columns:                true;
     padding:                      0.35em;
     border:                       0px;
-    border-radius:                21px;
+    border-radius:                0px 0px 21px 21px;
 }
 
 /* ---- Element ---- */
@@ -183,7 +183,6 @@ element-text {
     vertical-align:              0.5;
     horizontal-align:            0.0;
 }
-
 
 /*****----- Message -----*****/
 message {
