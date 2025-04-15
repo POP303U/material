@@ -59,6 +59,7 @@ my $brightness_threshold = 100;
 my $max_background_luminance = 1; # Maximum luminance allowed for the colors
 my $lighten_colors_fact = 0.12;
 my $image_resize_fact= 25;
+my $mono_skip = 0;
 
 my $cache_dir = "$ENV{HOME}/.cache/material/perltone";
 my $cache_mpc = "$ENV{HOME}/.cache/material/perltone/cache.mpc";
@@ -102,9 +103,6 @@ if (!$raw_colors) {
     show_help();
 }
 
-#my $_null = qx/magick -quiet -regard-warnings "$image_file" -alpha off +repage "$cache_mpc"/;
-#$raw_colors = system("magick \"$cache_mpc\" -depth 8 -fuzz $image_fuzz% +dither -kmeans $image_colors -depth 8 -format \"%c\" histogram:info: | sed -n 's/^[ ]*\(.*\):.*[#]\([0-9a-fA-F]*\) .*\$/\1,\2/p' | sort -r -n -k 1 -t ","");
-
 ### Adjust luminance for colors that are too dark or too bright
 my @adjusted_colors = split('\n', $raw_colors);
 foreach my $color (@adjusted_colors) {
@@ -112,6 +110,12 @@ foreach my $color (@adjusted_colors) {
         if (not $nuclear) {
             my ($r, $g, $b) = map { hex } $color =~ /(..)(..)(..)/;
             my $luminance = (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
+
+            # fix division by zero errors
+            if ($luminance == 0) {
+                $mono_skip = 1;
+                $luminance = 0.2;
+            }
 
             if ($luminance < 0.2) {
                 my $adjusted_luminance = 0.2;  # Minimum luminance threshold
@@ -203,6 +207,10 @@ my $main_color;
 my $main_limit = 1;
 while (!$main_color) {
     foreach my $color (@adjusted_colors) {
+        if ($mono_skip == 1) {
+            $main_color = $color;
+        }
+
         if (is_color_vibrant($color, $saturation_threshold / $main_limit, $brightness_threshold / $main_limit)) {
             $main_color = $color;
             print STDERR "Found primary color: $main_color\n";
@@ -214,11 +222,17 @@ while (!$main_color) {
     last if $main_color;
 }   
 
+print STDERR "DUDE HIIIIIII";
+
 ### Choose a secondary color 
 my $secondary_color = adjust_color_brightness($main_color, 0.15, 'brighten');
 my $secondary_limit = 1;
 while (!$secondary_color) {
     foreach my $color (@adjusted_colors) {
+        if ($mono_skip == 1) {
+            $secondary_color = $color;
+        }
+
         if (is_color_vibrant($color, $saturation_threshold / $secondary_limit, $brightness_threshold / $secondary_limit)) {
             $secondary_color = $color;
             print STDERR "Found secondary color: $secondary_color\n";
@@ -229,7 +243,6 @@ while (!$secondary_color) {
     $secondary_limit = $secondary_limit + 1;
     last if $secondary_color and ($secondary_color != $main_color);
 }   
-
 
 
 ### Adjust background color to be dark enough
@@ -337,6 +350,7 @@ for (my $i = 0; $i < scalar @$gradient_ref; $i++) {
 
 # Generate bright text colors
 my $gradient_text = generate_gradient(adjust_color_brightness(@$gradient_ref[4], 0.35, 'brighten'), 44);
+$gradient_text = generate_gradient(adjust_color_brightness(@$gradient_ref[4], 0.5, 'darken'), 44) if $light;
 for (my $i = 0; $i < scalar @$gradient_text; $i++) {
     push @output_array, "text$i=$gradient_text->[$i]\n";
 }
