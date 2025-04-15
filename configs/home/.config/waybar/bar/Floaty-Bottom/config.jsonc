@@ -158,7 +158,7 @@
 
     "disk": {
         "interval": 30,
-        "format": "󱛟 {}%",
+        "format": "󱛟 {percentage_used}%",
         "path": "/"
     },
 
