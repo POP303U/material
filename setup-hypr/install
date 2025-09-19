@@ -1,11 +1,5 @@
 #!/bin/sh
 
-# Check if we are running in bash 
-#if [[ $(sh -c 'ps -p $$ -o ppid=' | xargs ps -o comm= -p) != "bash" ]]; then
-#    echo "Error: not running in a bash shell, please run $(command -v bash) before running this script"
-#    exit 1
-#fi
-
 # import functions
 source ./functions
 if [ $? -ne 0 ]; then
@@ -45,20 +39,21 @@ echo -e "[${BLUE}ok${RESET}] Found internet connection"
 
 # Source all variables for user configuration
 source ./install_get_options
-
-# Get Packages using imported functions from `packages.yaml`
-PACKAGES=($(get_yaml_packages packages.yaml base_packages))
-
-# Construct the user packages defined into one variable called $PACKAGES
-if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
-    PACKAGES+=($(get_yaml_packages packages.yaml sddm_packages))
-fi
+exit
 
 # Install AUR Helper ($OVERRIDE_AUR used here)
 ./install_aur_helper
 
 # Add some better defaults to pacman (then install packages)
 configure_pacman 
+
+# Packages are sourced from `packages`
+source ./packages
+
+# Construct the user packages defined into one variable called $PACKAGES
+if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
+    PACKAGES+=($SDDM_PACKAGES)
+fi
 
 ### Main installation for the packages ###
 for PACKAGE in ${PACKAGES[@]}; do
@@ -70,7 +65,7 @@ echo -e "[${BLUE}ok${RESET}] Installed all packages"
 ### Detect nvidia and install drivers
 if detect_nvidia; then
     echo -e "[${PURPLE}info${RESET}] Found an nvidia card installing dkms to package list..."
-    ./install_nvidia
+    sudo ./install_nvidia
     install_packages nvidia-dkms pacman
 else
     echo -e "[${PURPLE}info${RESET}] No nvidia card detected skipping dkms..."
@@ -83,10 +78,6 @@ fix_groups
 # Fix wrong symlinks because they depend on the username
 echo -e "[${PURPLE}info${RESET}] Fixing symlinks..."
 ./install_fix_symlinks
-
-# Remove desktop entry if you want
-echo -e "[${PURPLE}info${RESET}] Debloating desktop entries..."
-./install_de_debloat $FLAG_REMOVE_GENERIC $FLAG_REMOVE_QT $FLAG_REMOVE_ROFI # Removes chosen desktop entries
 
 # Install configs
 echo -e "[${PURPLE}info${RESET}] Installing configs..."

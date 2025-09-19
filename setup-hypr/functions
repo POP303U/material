@@ -113,6 +113,7 @@ install_packages() {
 # Description: Adds the user to the input group
 fix_groups() {
     sudo usermod -aG input $USER
+    sudo usermod -aG network $USER
 }
 
 # Usage: set_tty_font
