@@ -5,7 +5,7 @@ CONFIGURATION IS CURRENTLY BEING REWORKED DO NOT INSTALL!
 <div align="center">
 <h1> Material Design Hyprland </h1>
 <p><b><u>// My Personal Hyprland dotfiles //</u></b></p>
-<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/Perltone_Preview.png"/><br></div>
+<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/Material-Design.png"/><br></div>
 
 ## Installation
 
@@ -42,14 +42,7 @@ git pull
 
 ## Custom created themes with Thememanager
 
-* Gruvbox-Picom
-<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/Gruvbox-Picom.png"/><br></div>
-
-* Material-Design
-<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/Material-Design.png"/><br></div>
-
-* Frosty-Peaks (Uses Perltone for color generation)
-<br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/Frosty-Peaks.png"/><br></div>
+* In progress....
 
 ## Keybindings
 
