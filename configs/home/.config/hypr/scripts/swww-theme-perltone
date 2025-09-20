@@ -72,6 +72,7 @@ for TEMPLATE in "${TEMPLATES[@]}"; do
     $PERLTONE_TEMPLATE "$MATERIAL/colors/colors" "${PATHS[0]}" "${PATHS[1]}"
 done
 
+
 # Make sure the script is executable
 chmod +x "$HOME/.bin/colors/Perltone"
 

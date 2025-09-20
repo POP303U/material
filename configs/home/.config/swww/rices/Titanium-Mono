@@ -2,6 +2,6 @@ name = Titanium-Mono
 system-theme = dark
 wallpaper = titanium-mono-gojo.png
 type = mono
-perltone = off
 icons = Tela-circle-black
+perltone = force-disable
 vscode = Gray Theme
