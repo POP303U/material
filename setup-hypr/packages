@@ -53,7 +53,6 @@ PACKAGES=(
   "qt6-wayland"
   "kvantum"
   "kvantum-qt5"
-  "bibata-cursor-theme-bin"
 
 #  -- Networking --
   "networkmanager"

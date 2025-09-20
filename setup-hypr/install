@@ -39,7 +39,6 @@ echo -e "[${BLUE}ok${RESET}] Found internet connection"
 
 # Source all variables for user configuration
 source ./install_get_options
-exit
 
 # Install AUR Helper ($OVERRIDE_AUR used here)
 ./install_aur_helper
@@ -61,6 +60,8 @@ for PACKAGE in ${PACKAGES[@]}; do
     install_packages $PACKAGE $AUR_HELPER
 done
 echo -e "[${BLUE}ok${RESET}] Installed all packages"
+
+exit
 
 ### Detect nvidia and install drivers
 if detect_nvidia; then
