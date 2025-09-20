@@ -5,7 +5,7 @@ PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/co
 PERLTONE_OVERRIDE=$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F 'perltone =' '{print $2}')
 
 if [[ "$(echo $PERLTONE_OVERRIDE | xargs)" == "force-disable" ]]; then
-    dunstify "Material" "Perltone enabled on $CURRENT_RICE, please switch to a normal theme." --timeout=4500
+    dunstify "Material" "Perltone can't be enabled on $CURRENT_RICE, please switch to a normal theme." --timeout=4500
     exit 1
 fi
 

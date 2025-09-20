@@ -21,10 +21,14 @@ function reload_and_save() {
     # Only reload waybar if transparency is present
     echo $CURRENT_BAR
 
+    # Adress Titanium-Mono crashing
+    PERLTONE_OVERRIDE=$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F 'perltone =' '{print $2}')
     PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
-    if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
-        ~/.config/hypr/scripts/swww-theme-perltone
-        exit 0
+    if [[ "$(echo $PERLTONE_OVERRIDE | xargs)" != "force-disable" ]]; then
+        if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
+            ~/.config/hypr/scripts/swww-theme-perltone
+            exit 0
+        fi
     fi
 }
 
