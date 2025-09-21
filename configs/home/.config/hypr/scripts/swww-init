@@ -1,7 +1,20 @@
 #!/bin/sh
 
+CURRENT_RICE=${1:-$(awk '/rice-current/ {print $NF}' "${HOME}/.config/material/config" | xargs)}
+CURRENT_BG=${2:-$(awk '/wallpaper/ {print $NF}' "${HOME}/.config/swww/rices/${CURRENT_RICE}" | xargs)} # make manual wallpapers possible
+
+# do a initial setup if it detects a first boot
+if [ ! -f "${HOME}/.config/material/first_boot" ]; then
+    swww-daemon --format xrgb &
+
+    touch ${HOME}/.config/material/first_boot
+    swww img "$HOME/.config/swww/walls/${CURRENT_RICE}/$CURRENT_BG"
+
+    exit 0
+fi
+
 swww query &> /dev/null
-if [ $? -eq 0 ] ; then
+if [ $? -eq 0 ]; then
     pkill -9 swww
 fi
 
