@@ -2,9 +2,13 @@
 configs/home/.config/material/backups/
 configs/home/.config/hypr/resolutions/
 
+# personal preference
+configs/home/.config/hypr/input.conf
+
 # unneeded default cava shaders
 configs/home/.config/cava/shaders/spectrogram.frag
 configs/home/.config/cava/shaders/winamp_line_style_spectrum.frag
 
 # old bars not needed
 configs/home/.config/waybar/bar/.old/
+
