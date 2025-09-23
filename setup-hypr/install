@@ -61,8 +61,6 @@ for PACKAGE in ${PACKAGES[@]}; do
 done
 echo -e "[${BLUE}ok${RESET}] Installed all packages"
 
-exit
-
 ### Detect nvidia and install drivers
 if detect_nvidia; then
     echo -e "[${PURPLE}info${RESET}] Found an nvidia card installing dkms to package list..."
