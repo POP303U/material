@@ -31,6 +31,7 @@ done
 # If no task PROGRAM was found, exit with an error and log it
 if [ -z "$LAST_FOUND" ]; then
     echo "$ERROR_MSG" >> /tmp/material/$(id -u)audiomixer-launch.log
+    dunstify "$ERROR_MSG" --timeout=4500
     exit 1
 fi
 

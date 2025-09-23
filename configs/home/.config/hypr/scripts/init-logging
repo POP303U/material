@@ -3,7 +3,8 @@
 # Set up a log file for debugging
 mkdir /tmp/material/null 
 
-echo "--------------------------------------------
+echo "
+--------------------------------------------
    Material Log File
 --------------------------------------------
 
@@ -11,7 +12,9 @@ echo "--------------------------------------------
 $(cat $HOME/.config/material/config)
 
 :: Start of logs $(date)
-[$(dirname "$(realpath "$0")")::log] logging started..." > "/tmp/material/$(id -u)material-logfile.log"
+[$(dirname "$(realpath "$0")")::log] logging started..." > "/tmp/material/$(id -u)material-logfile.log
+
+"
 
 CURRENT_SESSION="$(id -u)$DISPLAY$DESKTOP_SESSION$RANDOM$RANDOM$RANDOM"
 touch "/tmp/material/$CURRENT_SESSION.session"
