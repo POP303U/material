@@ -3,10 +3,6 @@
 <p><b><u>// My Personal Hyprland dotfiles //</u></b></p>
 <br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/Material-Design.png"/><br></div>
 
-## Foreword
-> [!Note]
-> This is a personal project and not intended for professional use, I am not liable for anything happening to your system, read, understand and execute the installer at your own risk.
-
 ## Installation
 
 > [!Important] 
@@ -97,6 +93,10 @@ Vim Keybindings can be used instead of arrow bindings and are encouraged.
 <br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_6.png"/><br></div>
 
 <br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/gallery/preview_7.png"/><br></div>
+
+## Liability
+> [!Caution]
+> This is a personal project and not intended for professional use, I am not liable for anything happening to your system, read, understand and execute the installer at your own risk.
 
 ## Credits
 - [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
