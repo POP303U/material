@@ -98,6 +98,13 @@ Vim Keybindings can be used instead of arrow bindings and are encouraged.
 > [!Caution]
 > This is a personal project and not intended for professional use, I am not liable for anything happening to your system, read, understand and execute the installer at your own risk.
 
+## Roadmap 
+- [ ] Have a complete and functional installer with Theme preservation and updates
+- [ ] Full and complete Perltone generation
+- [ ] Support for adding your own wallpapers
+- [ ] Finish all themes + wallpapers
+- [ ] A simple wiki for info
+
 ## Credits
 - [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
 - [gruvbox backgrounds](https://gruvbox-wallpapers.pages.dev)
