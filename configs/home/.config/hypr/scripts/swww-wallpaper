@@ -11,12 +11,14 @@ WALLPAPER_PATH="$HOME/.config/swww/walls/$CURRENT_RICE/$WALLPAPER"
 
 sed -i 's|wallpaper-current.*|wallpaper-current = '$WALLPAPER'|' ~/.config/material/config
 PERLTONE_STATUS=$(awk '/perltone-status/ {print $NF}' "$HOME/.config/material/config")
-if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
-    ~/.config/hypr/scripts/swww-theme-perltone 
-    exit 0
-else
-    ~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$WALLPAPER" &
+PERLTONE_OVERRIDE=$(cat ~/.config/swww/rices/${CURRENT_RICE} | awk -F 'perltone =' '{print $2}')
+if [[ "$(echo $PERLTONE_OVERRIDE | xargs)" != "force-disable" ]]; then
+    if [[ "$(echo $PERLTONE_STATUS | xargs)" == "on" ]]; then
+        ~/.config/hypr/scripts/swww-theme-perltone 
+        exit 0
+    fi
 fi
+~/.config/hypr/scripts/swww-wallpaper-blur "$CURRENT_RICE" "$WALLPAPER" &
 
 cp -vrf ${WALLPAPER_PATH} /usr/share/sddm/themes/rose-pine-sddm/Backgrounds/current
 swww img ${WALLPAPER_PATH}                 \
