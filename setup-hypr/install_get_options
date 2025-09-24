@@ -41,12 +41,10 @@ ${CYAN}1${RESET}. Yay -> (installation is ${GREEN}faster${RESET}, but ${RED}slig
 ${CYAN}2${RESET}. Paru (has a ${GREEN}slight performance${RESET} edge over yay, but takes a while to compile.
 "
 
+# Read input and exit if bad input is detected
 read -rep "(1/2) $: " OVERRIDE_AUR
+[[ $OVERRIDE_AUR -lt 1 || $OVERRIDE_AUR -gt 2 ]] && safe_exit
 
-if [[ $OVERRIDE_AUR -lt 1 || $OVERRIDE_AUR -gt 2 ]]; then 
-    echo -e "${RED}Choose a valid option${RESET}"
-    exit 1
-fi
 export OVERRIDE_AUR=${AUR_HELPERS[(($OVERRIDE_AUR - 1))]} # Index with the current value to get string + array offsets
 export AUR_HELPER=$OVERRIDE_AUR
 clear
@@ -91,31 +89,42 @@ ${WHITE_BOLD}What Modifier do you want to use in Hyprland?${RESET}
 ${CYAN}1${RESET}. Alt -> (personally more ${GREEN}comfortable${RESET}, but ${RED}may interfere with some apps${RESET}, namely emacs)
 ${CYAN}2${RESET}. Win -> (${RED}harder to reach${RESET} than Alt, but ${GREEN}doesn't interfere with apps${RESET})
 "
-read -rep "(1/2) $: " MODKEY
 
-if [[ $MODKEY -lt 1 || $MODKEY -gt 2 ]]; then 
-    echo -e "${RED}Choose a valid option${RESET}"
-    exit 1
-fi
+# Read input and exit if bad input is detected
+read -rep "(1/2) $: " MODKEY
+[[ $MODKEY -lt 1 || $MODKEY -gt 2 ]] && safe_exit
 
 [[ "$MODKEY" == "1" ]] && MODKEY="MOD1" # Alt
 [[ "$MODKEY" == "2" ]] && MODKEY="MOD4" # Win
 clear
 
-#echo -e "
-#${GREEN}    __ __                                
-#${GREEN}   / //_/__  __  ______ ___  ____ _____  
-#${GREEN}  / ,< / _ \/ / / / __ \`__ \/ __ \`/ __ \ 
-#${GREEN} / /| /  __/ /_/ / / / / / / /_/ / /_/ / 
-#${GREEN}/_/ |_\___/\__, /_/ /_/ /_/\__,_/ .___/  
-#${GREEN}          /____/               /_/       ${RESET}
-#
-#${WHITE_BOLD}Choose a keyboard layout:${RESET}
-#${CYAN}1${RESET}. de
-#${CYAN}2${RESET}. en
-#"
-#
-#read -n1 -rep "(Enter name of language) $: " KEYMAP
+echo -e "
+${GREEN}    __ __                                
+${GREEN}   / //_/__  __  ______ ___  ____ _____  
+${GREEN}  / ,< / _ \/ / / / __ \`__ \/ __ \`/ __ \ 
+${GREEN} / /| /  __/ /_/ / / / / / / /_/ / /_/ / 
+${GREEN}/_/ |_\___/\__, /_/ /_/ /_/\__,_/ .___/  
+${GREEN}          /____/               /_/       ${RESET}
+
+${WHITE_BOLD}Enter your prefered keyboard layout (de, us, fr...):${RESET}
+"
+
+# Read input
+read -n1 -rep "(Enter name of language) $: " KEYMAP
+
+### Check if the keymap exists
+source ./keymaps
+while true; do
+    for I in ${KEYMAPS[@]}; do
+        if [[ "$I" == "$KEYMAP" ]]; then
+            echo -e "[${BLUE}ok${RESET}] Found a valid keymap!"
+            EXIT=1
+            break
+        fi
+    done
+    [[ $EXIT -eq 1 ]] && break
+    safe_exit
+done
 
 echo -e "
 ${GREEN}   _____     __    __         
@@ -229,6 +238,7 @@ ${GREEN}                                        ${RESET}"
 
 echo -e "// ${YELLOW}Proceed with these settings?${RESET} //
 * ${WHITE_BOLD}AUR Helper:${RESET} ${AUR_HELPER}
+* ${WHITE_BOLD}Keymap:${RESET} ${KEYMAP}
 * ${WHITE_BOLD}Mod key:${RESET} ${MODKEY_READABLE}
 * ${WHITE_BOLD}Install sddm?:${RESET} ${SDDM_INSTALL_READABLE}
 ${RESET}"
