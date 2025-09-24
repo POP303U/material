@@ -96,7 +96,7 @@ Vim Keybindings can be used instead of arrow bindings and are encouraged.
 
 ## Liability
 > [!Caution]
-> This is a personal project and not intended for professional use, I am not liable for anything happening to your system, read, understand and execute the installer at your own risk.
+> This is a personal project and not intended for professional use, I am not liable for anything happening to your system. Read, understand and execute the installer at your own risk.
 
 ## Roadmap 
 - [ ] Have a complete and functional installer with Theme preservation and updates
