@@ -88,7 +88,7 @@ set_hypr_modkey $MODKEY
 
 # Change to user preferred keymaps
 echo -e "[${PURPLE}info${RESET}] Changing to user preferred keymap..."
-set_hypr_keymap $MODKEY 
+set_hypr_keymap $KEYMAP
 
 # Start all services
 echo -e "[${PURPLE}info${RESET}] Starting Services..."

@@ -50,6 +50,9 @@ copy_files() {
 
     rsync -a --links --info=progress2 "$SOURCE/" "$DESTINATION/$RELATIVE_PATH/"
     echo -e "[${BLUE}ok${RESET}] Synced $SOURCE → $DESTINATION/$RELATIVE_PATH"
+
+    # stop hyprland screaming
+    hyprctl reload >/dev/null 2>&1
 }
 
 # Source directory

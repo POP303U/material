@@ -110,7 +110,7 @@ ${WHITE_BOLD}Enter your prefered keyboard layout (de, us, fr...):${RESET}
 "
 
 # Read input
-read -n1 -rep "(Enter name of language) $: " KEYMAP
+read -rep "(Enter name of language) $: " KEYMAP
 
 ### Check if the keymap exists
 source ./keymaps
@@ -125,6 +125,7 @@ while true; do
     [[ $EXIT -eq 1 ]] && break
     safe_exit
 done
+clear
 
 echo -e "
 ${GREEN}   _____     __    __         
