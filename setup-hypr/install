@@ -37,7 +37,7 @@ if [ $? -ne 0 ]; then
 fi
 echo -e "[${BLUE}ok${RESET}] Found internet connection" 
 
-# Source all variables for user configuration
+# Question the user for input and get that input into variables
 source ./install_get_options
 
 # Install AUR Helper ($OVERRIDE_AUR used here)
@@ -51,12 +51,12 @@ source ./packages
 
 # Construct the user packages defined into one variable called $PACKAGES
 if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; then
-    PACKAGES+=($SDDM_PACKAGES)
+    PACKAGES+=(${SDDM_PACKAGES[@]})
 fi
 
 ### Main installation for the packages ###
 for PACKAGE in ${PACKAGES[@]}; do
-    echo -e "[${PURPLE}info${RESET}] Installing packages"
+    echo -e "[${PURPLE}info${RESET}] Installing package: $PACKAGE"
     install_packages $PACKAGE $AUR_HELPER
 done
 echo -e "[${BLUE}ok${RESET}] Installed all packages"
@@ -86,6 +86,10 @@ echo -e "[${PURPLE}info${RESET}] Installing configs..."
 echo -e "[${PURPLE}info${RESET}] Changing to user preferred modifier key..."
 set_hypr_modkey $MODKEY 
 
+# Change to user preferred keymaps
+echo -e "[${PURPLE}info${RESET}] Changing to user preferred keymap..."
+set_hypr_keymap $MODKEY 
+
 # Start all services
 echo -e "[${PURPLE}info${RESET}] Starting Services..."
 start_services
@@ -103,13 +107,12 @@ if [[ $SDDM_INSTALL == "y" || $SDDM_INSTALL == "Y" || $SDDM_INSTALL == "" ]]; th
     sudo systemctl enable sddm.service
 fi 
 
-[ -n "$HYPRLAND_INSTANCE_SIGNATURE" ] && hyprctl reload
+[ -n "$HYPRLAND_INSTANCE_SIGNATURE" ] && ${HOME}/.config/hypr/scripts/load-config-material
 
 # Ask to reboot
 echo -e "[${GREEN}action${RESET}] Installation finished, please reboot to apply all changes (y/n)${RESET}"
 echo -e "${WHITE_BOLD}Do you want to reboot now? (y/n)${RESET}"
 read -n1 -rep "$: " REBOOT_FLAG
-
 
 # Reboot if you choose to (you should)
 if [[ $REBOOT_FLAG == "y" || $REBOOT_FLAG == "Y" || $REBOOT_FLAG == "" ]]; then
