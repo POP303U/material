@@ -1,11 +1,11 @@
-## WARNING
-CONFIGURATION IS CURRENTLY BEING REWORKED DO NOT INSTALL!
-
-
 <div align="center">
 <h1> Material Design Hyprland </h1>
 <p><b><u>// My Personal Hyprland dotfiles //</u></b></p>
 <br><img src="https://raw.githubusercontent.com/POP303U/material/main/assets/Material-Design.png"/><br></div>
+
+## Foreword
+> [!Note]
+> This is a personal project and not intended for professional use, I am not liable for anything happening to your system, read, understand and execute the installer at your own risk.
 
 ## Installation
 
@@ -101,5 +101,4 @@ Vim Keybindings can be used instead of arrow bindings and are encouraged.
 ## Credits
 - [rose-pine backgrounds](https://github.com/the-argus/wallpapers)
 - [gruvbox backgrounds](https://gruvbox-wallpapers.pages.dev)
-- [inspiration + backgrounds](https://github.com/prasanthrangan/hyprdots)
-- [wallpapers](https://www.wallpaperflare.com)
+- [wallpaperflare](https://www.wallpaperflare.com)
