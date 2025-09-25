@@ -175,8 +175,8 @@ alias jctl="journalctl -p 3 -xb"
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # extract music with metadata, with video
-alias yt-dlpxa='yt-dlp -x --add-metadata '${1}''
-alias yt-dlpa='yt-dlp --add-metadata '${1}''
+alias yt-dlpxa='yt-dlp -x --embed-metadata '${1}''
+alias yt-dlpa='yt-dlp --embed-metadata '${1}''
 
 # print image with kitty
 alias kt-img='kitty +kitten icat '${1}''
