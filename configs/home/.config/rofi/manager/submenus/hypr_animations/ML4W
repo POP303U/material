@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sed -i 's|source.*|source = ~/.config/hypr/animations/ML4W.conf|' ~/.config/hypr/animations.conf
+sed -i 's|animations-current.*|animations-current = ML4W|' ~/.config/material/config

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sed -i 's|source.*|source = ~/.config/hypr/animations/End-4.conf|' ~/.config/hypr/animations.conf
+sed -i 's|animations-current.*|animations-current = End-4|' ~/.config/material/config
