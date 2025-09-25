@@ -30,7 +30,7 @@ mainbox {
     spacing:                      0px;
     margin:                       0px;
     orientation:                  vertical;
-    background-color:             @background;
+    background-color:             @transparent-background;
     children:                     [ "imagebox", "listbox" ];
 }
 
@@ -120,7 +120,7 @@ button selected {
 listview {
     background-color:             @transparent-background;
     enabled:                      true;
-    margin:                       1em 0em 0em 0em;
+    margin:                       0em 0em 0em 0em;
     cycle:                        true;
     dynamic:                      true;
     scrollbar:                    false;
@@ -130,7 +130,7 @@ listview {
     fixed-columns:                true;
     padding:                      0.35em;
     border:                       0px;
-    border-radius:                15px;
+    border-radius:                25px;
 }
 
 /* ---- Element ---- */
@@ -156,8 +156,8 @@ element normal.normal {
 }
 
 element selected.normal {
-    background-color:            @selected-background;
-    text-color:                  @foreground;
+    background-color:            @ora;
+    text-color:                  @background;
 }
 
 element selected.urgent {
@@ -173,6 +173,23 @@ element selected.active {
 element alternate.normal {
     background-color:            @background;
     text-color:                  @foreground;
+}
+
+
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        3.4em;
+    cursor:                      inherit;
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
 }
 
 
