@@ -44,35 +44,35 @@ git pull
 
 | Keys | Action |
 | :--  | :-- |
-| <kbd>Alt</kbd> + <kbd>Enter</kbd>| launch kitty terminal
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd>| launch firefox
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | launch dolphin
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Q</kbd>| quit active/focused window
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>| quit hyprland session
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd> | toggle window on focus to float
+| <kbd>Mod</kbd> + <kbd>Enter</kbd>| launch kitty terminal
+| <kbd>Mod</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd>| launch firefox
+| <kbd>Mod</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | launch dolphin
+| <kbd>Mod</kbd> + <kbd>Shift</kbd> + <kbd>Q</kbd>| quit active/focused window
+| <kbd>Mod</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>| quit hyprland session
+| <kbd>Mod</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd> | toggle window on focus to float
 | <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>L</kbd> | lock screen (hyprlock)
-| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>R</kbd> | rice select menu
-| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>C</kbd> | open clipboard history
-| <kbd>Alt</kbd> + <kbd>D</kbd> | launch desktop applications
-| <kbd>Alt</kbd> + <kbd>S</kbd> | launch material settings menu
-| <kbd>Alt</kbd> + <kbd>F12</kbd> | mute audio output (toggle)
-| <kbd>Alt</kbd> + <kbd>F11</kbd>| increase volume
-| <kbd>Alt</kbd> + <kbd>F10</kbd>| decrease volume
-| <kbd>Alt</kbd> + <kbd>F</kbd> | make current application fullscreen
-| <kbd>Alt</kbd> + <kbd>M</kbd> | launch logout menu (wlogout)
-| <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>→</kbd> | next wallpaper
-| <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>←</kbd> | previous wallpaper
-| <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>↑</kbd> | next waybar style
-| <kbd>Win</kbd> + <kbd>Win</kbd> + <kbd>↓</kbd> | previous waybar style
-| <kbd>Alt</kbd> + <kbd>P</kbd> | launch hex colorpicker (hyprpicker)
-| <kbd>Alt</kbd> + <kbd>RightClick</kbd> | resize the window
-| <kbd>Alt</kbd> + <kbd>LeftClick</kbd> | change the window position
-| <kbd>Alt</kbd> + <kbd>MouseScroll</kbd> | cycle through workspaces
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| move windows
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| resize currently focused window (10px)
-| <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| resize currently focused window (1px)
-| <kbd>Alt</kbd> + <kbd>[0-9]</kbd> | switch to workspace [0-9]
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9]
+| <kbd>Mod</kbd> + <kbd>Ctrl</kbd> + <kbd>R</kbd> | rice select menu
+| <kbd>Mod</kbd> + <kbd>Ctrl</kbd> + <kbd>C</kbd> | open clipboard history
+| <kbd>Mod</kbd> + <kbd>D</kbd> | launch desktop applications
+| <kbd>Mod</kbd> + <kbd>S</kbd> | launch material settings menu
+| <kbd>Mod</kbd> + <kbd>F12</kbd> | mute audio output (toggle)
+| <kbd>Mod</kbd> + <kbd>F11</kbd>| increase volume
+| <kbd>Mod</kbd> + <kbd>F10</kbd>| decrease volume
+| <kbd>Mod</kbd> + <kbd>F</kbd> | make current application fullscreen
+| <kbd>Mod</kbd> + <kbd>M</kbd> | launch logout menu (wlogout)
+| <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>→</kbd> | next wallpaper
+| <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>←</kbd> | previous wallpaper
+| <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>↑</kbd> | next waybar style
+| <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>↓</kbd> | previous waybar style
+| <kbd>Mod</kbd> + <kbd>P</kbd> | launch hex colorpicker (hyprpicker)
+| <kbd>Mod</kbd> + <kbd>RightClick</kbd> | resize the window
+| <kbd>Mod</kbd> + <kbd>LeftClick</kbd> | change the window position
+| <kbd>Mod</kbd> + <kbd>MouseScroll</kbd> | cycle through workspaces
+| <kbd>Mod</kbd> + <kbd>Shift</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| move windows
+| <kbd>Mod</kbd> + <kbd>Shift</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| resize currently focused window (10px)
+| <kbd>Mod</kbd> + <kbd>Ctrl</kbd> + <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>| resize currently focused window (1px)
+| <kbd>Mod</kbd> + <kbd>[0-9]</kbd> | switch to workspace [0-9]
+| <kbd>Mod</kbd> + <kbd>Shift</kbd> + <kbd>[0-9]</kbd> | move active window to workspace [0-9]
 | <kbd>Shift</kbd> + <kbd>Print</kbd>  | select area for a screenshot
 | <kbd>Print</kbd> | take screenshot
 
